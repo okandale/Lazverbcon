@@ -139,7 +139,7 @@ def get_suffixes(tense, region):
             'S2_Plural': 'es',
             'S3_Plural': 'es'
         }
-    elif tense == 'past progressive':
+    elif tense == 'pastpro':
         suffixes = {
             'S1_Singular': 'ert̆u',
             'S2_Singular': 'ert̆u',
@@ -330,7 +330,7 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 
 # Example usage
 infinitive = 'gamaçamu'
-tense = 'present' # insert 'past', 'present','future','past progressive' or 'optative
+tense = 'pastpro' # insert 'past', 'present','future','pastpro' or 'optative
 all_conjugations = collect_conjugations_all(infinitive, subjects, tense=tense)
 
 # Print the formatted conjugations

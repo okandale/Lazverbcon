@@ -167,7 +167,7 @@ def get_suffixes(tense, region, causative):
                 'S2_Plural': 'apinerit',
                 'S3_Plural': 'apinenanu'
                 })
-    elif tense == 'past progressive':
+    elif tense == 'pastpro':
         suffixes = {
             'S1_Singular': 'ert̆i',
             'S2_Singular': 'ert̆i',
@@ -360,7 +360,7 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 
 # Example usage
 infinitive = 'ot̆axu'
-tense = 'past progressive' # insert 'past', 'present', 'future' or 'past progressive'
+tense = 'pastpro' # insert 'past', 'present', 'future' or 'past progressive'
 causative = False # set to "True" or "False" - currently only implemented for present tense!
 all_conjugations = collect_conjugations_all(infinitive, subjects, tense=tense, causative=causative)
 
