@@ -1,0 +1,27 @@
+CAN BE IGNORED DUE TO HTML LINK
+
+new links:
+S-all:
+http://127.0.0.1:5000/conjugate?infinitive=e%C3%A7%CC%8Copu&tense=tve_past
+
+S-all Ox:
+http://127.0.0.1:5000/conjugate?infinitive=obiru&obj=O2_Singular&tense=tve_present
+
+Sx: only one subject
+http://127.0.0.1:5000/conjugate?infinitive=ge%C3%A7amu&subject=S1_Singular&tense=tve_past
+
+S-all O-all:
+http://127.0.0.1:5000/conjugate?infinitive=ge%C3%A7amu&tense=tve_pastpro&all_objects=true
+
+
+
+
+Old links:
+
+http://127.0.0.1:5000/conjugate?infinitive=dvaç̌irs&tense=ivd_present
+
+
+http://127.0.0.1:5000/conjugate?infinitive=dvaç̌irs&obj=O3_Singular&tense=ivd_present
+
+
+http://127.0.0.1:5000/conjugate?infinitive=dvaç̌irs&tense=ivd_present&all_objects=true
