@@ -1,7 +1,8 @@
 import pandas as pd
+import os
 
 # Load the spreadsheet
-file_path = r'C:\Users\Adam\Documents\Okan\Laz\Machine Learning\Dictionary\Test Verb Present tense.xlsx'
+file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.xlsx')
 
 # Read the Excel file
 df = pd.read_excel(file_path, engine='openpyxl')
