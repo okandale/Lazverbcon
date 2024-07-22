@@ -4,7 +4,7 @@ import os
 # Load the spreadsheet
 file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.xlsx')
 
-# Read the Excel file
+# Read the Excel file.
 df = pd.read_excel(file_path, engine='openpyxl')
 
 # Now continue with your original processing logic
