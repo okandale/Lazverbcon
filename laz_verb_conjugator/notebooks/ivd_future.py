@@ -9,7 +9,7 @@ df = pd.read_excel(file_path, engine='openpyxl')
 
 # Now continue with your original processing logic
 
-# Filter for 'IVD' verbs (if you have already added the 'Category' column)
+# Filter for 'IVD' verbs (if you have already added the 'Category' column).
 df_ivd = df[df['Category'] == 'IVD']
 
 # Convert the filtered dataframe to a dictionary
