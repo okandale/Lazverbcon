@@ -119,6 +119,9 @@ def determine_marker(subject, obj, marker_type):
 def handle_marker(infinitive, root, marker):
     if infinitive == 'doguru':
         root = root[1:]  # Remove the first character 'd' from the root
+    if infinitive in ('oç̌k̆omu', 'oşk̆omu') and marker:
+        root = 'çams'
+        marker = ''
     if infinitive == 'geç̌k̆u' and len(root) > 2: #special case for geç̌k̆u.
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
@@ -243,10 +246,11 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
             root = process_compound_verb(third_person)
             print(f"Root after processing: {root}")
 
-            if root in ('imxors', 'ipxors') and infinitive == 'oç̌k̆omu':
-                root = 'ç̌k̆omums'
-            elif root in ('imxors') and infinitive == 'oşk̆omu':
-                root = 'şk̆omums'
+            # keeping it in here in case applicative takes this form 
+            # if root in ('imxors', 'ipxors') and infinitive == 'oç̌k̆omu':
+            #    root = 'ç̌k̆omums'
+            #elif root in ('imxors') and infinitive == 'oşk̆omu':
+            #    root = 'şk̆omums'
                 
             # Remove the preverb from the third-person form if it exists
             if preverb and root.startswith(preverb):
@@ -472,7 +476,9 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                 if root.endswith('ums'):
                     root = root[:-3] + 'ams'
             elif causative:
-                if root.endswith('umers') or root.endswith('amers'):
+                if root == 'çams':
+                    root = root
+                elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'apam'
                 elif root.endswith('ums'):
                     root = root[:-3] + 'apam'
