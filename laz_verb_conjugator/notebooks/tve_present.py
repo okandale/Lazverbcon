@@ -121,6 +121,9 @@ def determine_marker(subject, obj, marker_type):
 def handle_marker(infinitive, root, marker):
     if infinitive == 'doguru':
         root = root[1:]  # Remove the first character 'd' from the root
+    if infinitive in ('oç̌k̆omu', 'oşk̆omu'):
+        root = 'çams'
+        marker = ''
     if infinitive == 'geç̌k̆u' and len(root) > 2: #special case for geç̌k̆u.
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
@@ -233,10 +236,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
 
-            if root in ('imxors', 'ipxors') and infinitive == 'oç̌k̆omu':
-                root = 'ç̌k̆omums'
-            elif root in ('imxors') and infinitive == 'oşk̆omu':
-                root = 'şk̆omums'
                 
             # Remove the preverb from the third-person form if it exists
             if preverb and root.startswith(preverb):
@@ -253,7 +252,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 marker_type = 'causative'
             elif infinitive == 'oxoʒ̆onu' and (subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural']):
                 marker = 'o'  # Default to 'o' for oxoʒ̆onu if neither applicative nor causative
-
 
 
             # Handle special case for verbs starting with 'i' or 'o'
@@ -657,7 +655,7 @@ print(format_conjugations(all_conjugations))
 
 
 # Example usage for Sx conjugations with a specific object and marker
-infinitive = 'doloç̌aru'
+infinitive = 'oç̌k̆omu'
 print(f"All subject conjugations of infinitive '{infinitive}':")
 all_conjugations = collect_conjugations(infinitive, subjects)
 print(format_conjugations(all_conjugations))
