@@ -466,11 +466,15 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                     root = root[:-5] + 'ap'
                 elif root.endswith('rs'):
                     root = root[:-1] + 'ap'
+                elif root.endswith('y'):
+                    root = root[:-2] + 'ap'
             elif applicative:
                 if root in ('işums', 'işups', 'idums'):
                     root = root[:-3] + 'v'
                 elif root.endswith('ums') or root.endswith('ams'):
                     root = root[:-3]
+                elif root.endswith('y'):
+                    root = root[:-2]
             elif causative:
                 if root == 'digurams':
                     root = root
@@ -482,6 +486,8 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                     root = root[:-5] + 'ap'
                 elif root.endswith('rs'):
                     root = root[:-1] + 'ap'
+                elif root.endswith('y'):
+                    root = root[:-2] + 'ap'
             else:
                 if root in ('şums', 'şups', 'dums'):  # remove "am/um/ups" endings from root
                     root = root[:-3] + 'v'
@@ -496,7 +502,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                 
             # Determine the suffix
             if subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular', 'O3_Plural']:
-                suffix = 'sunon' if region == "HO" else 'asen'
+                suffix = 'asunon' if region == "HO" else 'asen'
             elif subject in ('S1_Singular') and obj in ('O1_Singular', 'O2_Singular', 'O3_Singular', 'O3_Plural'):
                 suffix = 'aminon' if region == "HO" else 'are'
             elif subject in ('S2_Singular') and obj in ('O1_Singular', 'O2_Singular', 'O3_Singular', 'O3_Plural'):
@@ -510,7 +516,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             elif subject == 'S3_Plural' and infinitive == 'oxenu' and region == 'HO':         # exception for future tense "oxenu" in Xopa 
                 suffix = 'unonan'
             elif subject == 'S3_Plural':
-                suffix = 'sunonan' if region == "HO" else 'anen'
+                suffix = 'asunonan' if region == "HO" else 'anen'
             else:
                 suffix = suffixes[subject]
 
