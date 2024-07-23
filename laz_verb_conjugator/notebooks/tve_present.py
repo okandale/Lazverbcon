@@ -525,7 +525,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif subject == 'S3_Singular' and mood == 'optative':
                 suffix = 'ay' if region == "AŞ" else 'as'
             elif subject == 'S3_Singular' and root.endswith(('um', 'am', 'ms', 'uy')):
-                suffix = '' if region == "AŞ" else 's'
+                suffix = 'y' if region == "AŞ" else 's'
             else:
                 suffix = suffixes[subject]
 
@@ -668,7 +668,7 @@ print(format_conjugations(all_conjugations))
 
 
 # Example usage for Sx conjugations with optative:
-infinitive = 'obiru'
+infinitive = 'ot̆axu'
 optative = False  # Set to True if you want to include optative, otherwise set to False
 
 print(f"All subject conjugations of infinitive '{infinitive}':")
