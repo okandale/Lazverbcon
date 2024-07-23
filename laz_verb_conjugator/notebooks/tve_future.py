@@ -120,6 +120,9 @@ def determine_marker(subject, obj, marker_type):
 def handle_marker(infinitive, root, marker):
     if infinitive == 'doguru':
         root = root[1:]  # Remove the first character 'd' from the root
+    if infinitive in ('oç̌k̆omu', 'oşk̆omu') and marker:
+        root = 'ç'
+        marker = ''
     if infinitive == 'geç̌k̆u' and len(root) > 2: #special case for geç̌k̆u.
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
