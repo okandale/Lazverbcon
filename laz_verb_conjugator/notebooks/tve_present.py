@@ -472,7 +472,9 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 elif root.endswith('y'):
                     root = root[:-2] + 'ams'
             elif causative:
-                if root.endswith('umers') or root.endswith('amers'):
+                if root == ('çams'): #changed root for oç̌k̆omu/oşk̆omu
+                    root = root
+                elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'apam'
                 elif root.endswith('ums'): 
                     root = root[:-3] + 'apam'
