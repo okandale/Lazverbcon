@@ -86,51 +86,169 @@ const VerbConjugator = () => {
             required
           />
         </div>
-        
-        {/* Add similar input fields for subject, obj, tense, aspect */}
-        
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Regions:
-          </label>
-          <div className="bg-gray-100 p-2 rounded">
-            <button
-              type="button"
-              className="text-blue-500 hover:text-blue-700"
-              onClick={() => setShowRegions(!showRegions)}
+
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="subject">
+              Subject:
+            </label>
+            <select
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="subject"
+              name="subject"
+              value={formData.subject}
+              onChange={handleInputChange}
+              required
             >
-              {showRegions ? 'Hide Regions' : 'Show Regions'}
-            </button>
-            {showRegions && (
-              <div className="mt-2">
-                {['AŞ', 'FA', 'HO', 'PZ'].map((region) => (
-                  <label key={region} className="block">
-                    <input
-                      type="checkbox"
-                      name="regions"
-                      value={region}
-                      checked={formData.regions.includes(region)}
-                      onChange={handleRegionChange}
-                      className="mr-2"
-                    />
-                    {region}
-                  </label>
-                ))}
-              </div>
-            )}
+              <option value="S1_Singular">I</option>
+              <option value="S2_Singular">You (singular)</option>
+              <option value="S3_Singular">He/She/It</option>
+              <option value="S1_Plural">We</option>
+              <option value="S2_Plural">You (plural)</option>
+              <option value="S3_Plural">They</option>
+              <option value="all">All</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="obj">
+              Object:
+            </label>
+            <select
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="obj"
+              name="obj"
+              value={formData.obj}
+              onChange={handleInputChange}
+            >
+              <option value="">None</option>
+              <option value="O1_Singular">Me</option>
+              <option value="O2_Singular">You (singular)</option>
+              <option value="O3_Singular">Him/Her/It</option>
+              <option value="O1_Plural">Us</option>
+              <option value="O2_Plural">You (plural)</option>
+              <option value="O3_Singular">Them</option>
+              <option value="all">All</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="tense">
+              Tense:
+            </label>
+            <select
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="tense"
+              name="tense"
+              value={formData.tense}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="present">Present</option>
+              <option value="past">Past</option>
+              <option value="future">Future</option>
+              <option value="pastpro">Past Progressive</option>
+              <option value="presentperf">Present Perfect</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="aspect">
+              Aspect:
+            </label>
+            <select
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="aspect"
+              name="aspect"
+              value={formData.aspect}
+              onChange={handleInputChange}
+            >
+              <option value="">None</option>
+              <option value="potential">Potential</option>
+              <option value="passive">Passive</option>
+            </select>
           </div>
         </div>
-        
-        {/* Add checkboxes for applicative, causative, optative */}
-        
-        <div className="flex items-center justify-between">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
+
+        <fieldset className="mb-4 border border-gray-300 rounded p-3">
+          <legend
+            className="font-bold cursor-pointer"
+            onClick={() => setShowRegions(!showRegions)}
           >
-            Conjugate
-          </button>
+            Regions
+          </legend>
+          {showRegions && (
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { code: 'AŞ', name: 'Ardeşen (AŞ)' },
+                { code: 'FA', name: 'Fındıklı-Arhavi (FA)' },
+                { code: 'HO', name: 'Hopa (HO)' },
+                { code: 'PZ', name: 'Pazar (PZ)' },
+              ].map((region) => (
+                <label key={region.code} className="block">
+                  <input
+                    type="checkbox"
+                    name="regions"
+                    value={region.code}
+                    checked={formData.regions.includes(region.code)}
+                    onChange={handleRegionChange}
+                    className="mr-2"
+                  />
+                  {region.name}
+                </label>
+              ))}
+            </div>
+          )}
+        </fieldset>
+
+        <div className="mb-4 flex items-center">
+          <input
+            type="checkbox"
+            id="applicative"
+            name="applicative"
+            checked={formData.applicative}
+            onChange={handleInputChange}
+            className="mr-2"
+          />
+          <label className="text-gray-700 text-sm font-bold" htmlFor="applicative">
+            Applicative
+          </label>
         </div>
+
+        <div className="mb-4 flex items-center">
+          <input
+            type="checkbox"
+            id="causative"
+            name="causative"
+            checked={formData.causative}
+            onChange={handleInputChange}
+            className="mr-2"
+          />
+          <label className="text-gray-700 text-sm font-bold" htmlFor="causative">
+            Causative
+          </label>
+        </div>
+
+        <div className="mb-4 flex items-center">
+          <input
+            type="checkbox"
+            id="optative"
+            name="optative"
+            checked={formData.optative}
+            onChange={handleInputChange}
+            className="mr-2"
+          />
+          <label className="text-gray-700 text-sm font-bold" htmlFor="optative">
+            Optative
+          </label>
+        </div>
+
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="submit"
+        >
+          Conjugate
+        </button>
       </form>
 
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8">
