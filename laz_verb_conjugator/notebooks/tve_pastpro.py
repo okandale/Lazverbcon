@@ -122,8 +122,12 @@ def handle_marker(infinitive, root, marker):
     if infinitive in ('oç̌k̆omu', 'oşk̆omu') and marker == 'o':
         root = 'çams'
         marker = ''
-    elif infinitive in ('oç̌k̆omu') and marker in ('i, u'):
+    elif infinitive in ('oç̌k̆omu') and marker in ('i', 'u'):
         root = 'ç̌k̆omums'
+    elif infinitive in ('oşk̆omu') and marker in ('i', 'u'):
+        root = 'şk̆omums'
+    elif infinitive in ('oç̌k̆omu', 'oşk̆omu'):
+        root = 'imxors'
     if infinitive == 'geç̌k̆u' and len(root) > 2: #special case for geç̌k̆u.
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
@@ -274,6 +278,8 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
 
             if infinitive == 'oxenu' and marker in ('u', 'i', 'o'):  # marker case for oxenu
                 root = 'xenums'
+
+            
             
             print(f"Marker: {marker}")
             # Handle special case for verbs starting with 'i' or 'o'
