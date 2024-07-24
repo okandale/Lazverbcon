@@ -309,6 +309,7 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
                     prefix = 'k'
 
             # Conjugate the verb
+            conjugated_verb = f"{prefix}{final_root}{suffix}"
             if preverb in ('go', 'gy', 'coz'):
                 if suffix == 'r' and root.endswith('n'):
                     final_root = root[:-1]
@@ -325,17 +326,16 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
                 elif root.endswith('s'):
                     final_root = root[:-1]
                     conjugated_verb = f"{prefix}{final_root}{suffix}"
-                else:
-                    conjugated_verb = f"{prefix}{root}{suffix}"
+            elif preverb and root.endswith('en'):
+                final_root = root[:-1]
+                conjugated_verb = f"{prefix}{root}{suffix}"
             else:
                 if suffix == 'r' and root.endswith('n'):
                     final_root = root[:-1]
                 elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and root.endswith('s'):
                     final_root = root[:-2]
                 elif root.endswith('en'):
-                    final_root = root[:-2
-                                      
-                                      ]
+                    final_root = root[:-2]
                 else:
                     final_root = root[:-1]
                 conjugated_verb = f"{prefix}{final_root}{suffix}"
