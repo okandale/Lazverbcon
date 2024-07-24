@@ -8,13 +8,28 @@ install the required dependencies using the following command:
 pip install -r requirements.txt
 ```
 
-start the application by running the command:
-
-To start the application, run the following command:
+start the flask server by running the command:
 
 ```bash
 python app.py
 ```
 
-After running the command, you can access the application using this link: http://127.0.0.1:5000/
+navigate into the frontend folder:
+
+```bash
+cd frontend
+```
+
+install required dependencies:
+
+```bash
+npm install
+```
+run the frontend client
+
+```bash
+npm run dev
+```
+
+After running the command, you can access the application using this link: http://localhost:5173/
 
