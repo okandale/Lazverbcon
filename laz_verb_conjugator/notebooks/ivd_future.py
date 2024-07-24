@@ -176,12 +176,12 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
             }
         
             suffixes = {
-                'S1_Singular': 'rt̆asen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'asen',
-                'S2_Singular': 'rt̆asen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'asen',
-                'S3_Singular': 'rt̆asen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'asen',
-                'S1_Plural': 'rt̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anen',
-                'S2_Plural': 'rt̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anen',
-                'S3_Plural': 'rt̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anen',
+                'S1_Singular': 'rt̆asen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'asere' if region == 'PZ' else 'asinon' if region == 'HO' else 'asen',
+                'S2_Singular': 'rt̆asen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'asere' if region == 'PZ' else 'asinon' if region == 'HO' else 'asen',
+                'S3_Singular': 'rt̆asen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'asere' if region == 'PZ' else 'asinon' if region == 'HO' else 'asen',
+                'S1_Plural': 'rt̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anere' if region == 'PZ' else 'asinonan' if region == 'HO' else 'anen',
+                'S2_Plural': 'rt̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anere' if region == 'PZ' else 'asinonan' if region == 'HO' else 'anen',
+                'S3_Plural': 'rt̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anere' if region == 'PZ' else 'asinonan' if region == 'HO' else 'anen',
             }
         
             object_prefixes = {
