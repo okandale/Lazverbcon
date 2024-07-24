@@ -54,6 +54,11 @@ def conjugate():
 
     conjugations = {}
     module_found = False  # Flag to indicate if we found any valid module
+    used_module = None  # Track the module used for collecting conjugations
+
+    # Define ordered subjects and objects
+    ordered_subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
+    ordered_objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']
 
     if aspect:
         if aspect not in simplified_aspect_mapping:
@@ -72,8 +77,8 @@ def conjugate():
                 if not hasattr(module, 'verbs') or infinitive not in module.verbs:
                     continue
 
-                subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural'] if subject == 'all' else [subject]
-                objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural'] if obj == 'all' else [obj] if obj else [None]
+                subjects = ordered_subjects if subject == 'all' else [subject]
+                objects = ordered_objects if obj == 'all' else [obj] if obj else [None]
 
                 print(f"Infinitive: {infinitive}, Subjects: {subjects}, Objects: {objects}, Aspect: {actual_aspect}, Embedded Tense: {embedded_tense}, Mood: {mood}, Region Filter: {region_filter}")
 
@@ -107,6 +112,7 @@ def conjugate():
                                     conjugations[region] = set()
                                 conjugations[region].update(forms)
 
+                used_module = module  # Track the module used
                 module_found = True
 
             except KeyError as e:
@@ -138,8 +144,8 @@ def conjugate():
                 if not hasattr(module, 'verbs') or infinitive not in module.verbs:
                     continue
 
-                subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural'] if subject == 'all' else [subject]
-                objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural'] if obj == 'all' else [obj] if obj else [None]
+                subjects = ordered_subjects if subject == 'all' else [subject]
+                objects = ordered_objects if obj == 'all' else [obj] if obj else [None]
 
                 print(f"Infinitive: {infinitive}, Subjects: {subjects}, Objects: {objects}, Tense: {actual_tense}, Embedded Tense: {embedded_tense}, Mood: {mood}, Region Filter: {region_filter}")
 
@@ -175,6 +181,7 @@ def conjugate():
                                     conjugations[region] = set()
                                 conjugations[region].update(forms)
 
+                used_module = module  # Track the module used
                 module_found = True
 
             except KeyError as e:
@@ -189,30 +196,48 @@ def conjugate():
     if not module_found:
         return jsonify({"error": f"Infinitive {infinitive} not found in any module."}), 404
 
-    # Convert sets to lists for JSON serialization and sort conjugations chronologically
-    ordered_subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
-    ordered_objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']
-    formatted_conjugations = {}
+    # Convert sets to lists for JSON serialization
+    for region in conjugations:
+        conjugations[region] = list(conjugations[region])
 
-    for region, forms in conjugations.items():
-        sorted_forms = sorted(forms, key=lambda x: (ordered_subjects.index(x[0]), ordered_objects.index(x[1]) if x[1] else -1))
-        formatted_forms = []
-        personal_pronouns = module.get_personal_pronouns(region)  # Get the personal pronouns from the module
-        for form in sorted_forms:
-            subject_pronoun = personal_pronouns.get(form[0], form[0])
-            object_pronoun = personal_pronouns.get(form[1], '') if form[1] else ''
-            formatted_forms.append(f"{subject_pronoun} {object_pronoun}: {form[2]}")
-        formatted_conjugations[region] = formatted_forms
+    # Format the conjugations using the module that was used for collecting conjugations
+    formatted_conjugations = format_conjugations(conjugations, used_module, ordered_subjects, ordered_objects)
 
     return jsonify(formatted_conjugations)
 
+
+def format_conjugations(conjugations, module, ordered_subjects, ordered_objects):
+    formatted_conjugations = {}
+    
+    for region, forms in conjugations.items():
+        sorted_forms = sorted(forms, key=lambda x: (ordered_subjects.index(x[0]), ordered_objects.index(x[1]) if x[1] else -1))
+        formatted_forms = []
+        personal_pronouns = module.get_personal_pronouns(region)
+
+        # Debugging: print personal pronouns for the region
+        print(f"Region: {region}, Personal Pronouns: {personal_pronouns}")
+
+        for form in sorted_forms:
+            if len(form) != 3:
+                continue
+
+            subject, obj, conjugated_verb = form
+
+            # Separate dictionaries for subject and object pronouns
+            subject_pronoun = personal_pronouns.get(subject, subject)
+            object_pronoun = personal_pronouns.get(obj, '') if obj else ''
+
+            # Debugging lines
+            print(f"Region: {region}, Form: {form}")
+            print(f"Subject: {subject}, Object: {obj}")
+            print(f"Subject Pronoun: {subject_pronoun}, Object Pronoun: {object_pronoun}")
+
+            formatted_forms.append(f"{subject_pronoun} {object_pronoun}: {conjugated_verb}")
+        
+        formatted_conjugations[region] = formatted_forms
+
+    return formatted_conjugations
+
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-
-
-
-
-
