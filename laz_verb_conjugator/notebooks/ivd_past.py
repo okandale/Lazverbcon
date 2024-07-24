@@ -1,27 +1,19 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[5]:
-
-
-# the version with correct simple present tense SxOx conjugations and "d" preverb, but the preverb function needs to be tidied up.
-# the version with correct simple present tense SxOx conjugations and "d" preverb..
-# added optional preverb 'ko' - won't reflect in conjugator
-# added compound words
 import pandas as pd
 import os
 
-# Load the spreadsheet
-file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.xlsx')
+# Load the CSV file
+file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
 
-# Read the Excel file
-df = pd.read_excel(file_path, engine='openpyxl')
+# Read the CSV file
+df = pd.read_csv(file_path)
 
 # Now continue with your original processing logic
 
 # Filter for 'IVD' verbs (if you have already added the 'Category' column)
 df_ivd = df[df['Category'] == 'IVD']
-
 
 # Convert the filtered dataframe to a dictionary
 verbs = {}

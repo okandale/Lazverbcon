@@ -12,11 +12,11 @@
 import pandas as pd
 import os
 
-# Load the spreadsheet
-file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.xlsx')
+# Load the CSV file
+file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
 
-# Read the Excel file
-df = pd.read_excel(file_path, engine='openpyxl')
+# Read the CSV file
+df = pd.read_csv(file_path)
 
 # Filter for 'TVE' verbs --- Transitive Verbs Ergative
 df_tve = df[df['Category'] == 'TVE']
