@@ -210,10 +210,10 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             suffixes = {
                 'S1_Singular': 'aminon' if region == "HO" else 'are',
                 'S2_Singular': 'aginon' if region == "HO" else 'are',
-                'S3_Singular': 'asunon' if region == "HO" else 'asen',
-                'S1_Plural': 'aminonan' if region == "HO" else 'aten',
-                'S2_Plural': 'aginonan' if region == "HO" else 'aten',
-                'S3_Plural': 'asunonan' if region == "HO" else 'anen'
+                'S3_Singular': 'asunon' if region == "HO" else 'asere' if region in ('PZ') else 'asen',
+                'S1_Plural': 'aminonan' if region == "HO" else 'atere' if region in ('PZ') else 'aten',
+                'S2_Plural': 'aginonan' if region == "HO" else 'atere' if region in ('PZ') else 'aten',
+                'S3_Plural': 'asunonan' if region == "HO" else 'anere' if region in ('PZ') else 'anen'
             }
 
 
@@ -504,21 +504,21 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                 
             # Determine the suffix
             if subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular', 'O3_Plural']:
-                suffix = 'asunon' if region == "HO" else 'asen'
+                suffix = 'asunon' if region == "HO" else 'asere' if region == "PZ" else 'asen'
             elif subject in ('S1_Singular') and obj in ('O1_Singular', 'O2_Singular', 'O3_Singular', 'O3_Plural'):
                 suffix = 'aminon' if region == "HO" else 'are'
             elif subject in ('S2_Singular') and obj in ('O1_Singular', 'O2_Singular', 'O3_Singular', 'O3_Plural'):
                 suffix = 'aginon' if region == "HO" else 'are'
             elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
-                suffix = 'sunonan' if region == "HO" else 'anen'
+                suffix = 'sunonan' if region == "HO" else 'anere' if region == "PZ" else 'anen'
             elif subject in ('S1_Singular', 'S1_Plural') and obj in ['O2_Plural']:
-                suffix = 'aminonan' if region == "HO" else 'aten'
+                suffix = 'aminonan' if region == "HO" else 'atere' if region == "PZ" else 'aten'
             elif subject in ('S2_Singular', 'S2_Plural') and obj in ['O1_Plural']:
-                suffix = 'aginonan' if region == "HO" else 'aten'
+                suffix = 'aginonan' if region == "HO" else 'atere' if region == "PZ" else 'aten'
             elif subject == 'S3_Plural' and infinitive == 'oxenu' and region == 'HO':         # exception for future tense "oxenu" in Xopa 
                 suffix = 'unonan'
             elif subject == 'S3_Plural':
-                suffix = 'asunonan' if region == "HO" else 'anen'
+                suffix = 'asunonan' if region == "HO" else 'atere' if region == "PZ" else 'anen'
             else:
                 suffix = suffixes[subject]
 

@@ -155,10 +155,10 @@ def get_suffixes(tense, region):
             suffixes = {
                 'S1_Singular': 'aminon' if region == "HO" else 'are',
                 'S2_Singular': 'aginon' if region == "HO" else 'are',
-                'S3_Singular': 'sunon' if region == "HO" else 'asen',
-                'S1_Plural': 'aminonan' if region == "HO" else 'aten',
-                'S2_Plural': 'aginonan' if region == "HO" else 'aten',
-                'S3_Plural': 'asunonan' if region == "HO" else 'anen'
+                'S3_Singular': 'sunon' if region == "HO" else 'asere' if region == "PZ" else 'asen',
+                'S1_Plural': 'aminonan' if region == "HO" else 'asere' if region == "PZ" else 'aten',
+                'S2_Plural': 'aginonan' if region == "HO" else 'atere' if region == "PZ" else 'aten',
+                'S3_Plural': 'asunonan' if region == "HO" else 'anere' if region == "PZ" else 'anen'
         }
     elif tense == 'past':
         suffixes = {
