@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -16,6 +16,9 @@ const VerbConjugator = () => {
   });
   const [results, setResults] = useState({});
   const [showRegions, setShowRegions] = useState(false);
+  const infinitiveInputRef = useRef(null);
+
+  const specialCharacters = ['ç̌', 't̆', 'ž', 'k̆', 'ʒ', 'ʒ̆'];
 
   useEffect(() => {
     updateFormState();
@@ -25,7 +28,6 @@ const VerbConjugator = () => {
     setFormData(prevData => {
       const newData = { ...prevData };
       
-      // Handle optative, applicative, and causative
       if (prevData.optative || prevData.applicative || prevData.causative) {
         newData.aspect = '';
         newData.tense = 'present';
@@ -34,7 +36,6 @@ const VerbConjugator = () => {
         }
       }
       
-      // Handle aspect
       if (prevData.aspect !== '') {
         newData.obj = '';
         if (newData.obj !== '') {
@@ -42,7 +43,6 @@ const VerbConjugator = () => {
         }
       }
       
-      // Handle present perfect
       if (prevData.tense === 'presentperf') {
         newData.obj = '';
         if (newData.obj !== '') {
@@ -74,6 +74,7 @@ const VerbConjugator = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setResults({}); // Clear previous results
     const params = new URLSearchParams();
     Object.entries(formData).forEach(([key, value]) => {
       if (key === 'regions') {
@@ -99,10 +100,39 @@ const VerbConjugator = () => {
   const isTenseDisabled = formData.optative || formData.applicative || formData.causative;
   const isObjectDisabled = formData.aspect !== '' || formData.tense === 'presentperf';
 
+  const insertSpecialCharacter = (char) => {
+    if (infinitiveInputRef.current) {
+      const input = infinitiveInputRef.current;
+      const start = input.selectionStart;
+      const end = input.selectionEnd;
+      const text = input.value;
+      const before = text.substring(0, start);
+      const after = text.substring(end, text.length);
+      input.value = (before + char + after);
+      input.selectionStart = input.selectionEnd = start + char.length;
+      input.focus();
+      setFormData(prevData => ({
+        ...prevData,
+        infinitive: input.value
+      }));
+    }
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-4">
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Verb Conjugator</h1>
+      <div className="mb-4 flex justify-center space-x-2">
+        {specialCharacters.map((char, index) => (
+          <button
+            key={index}
+            className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+            onClick={() => insertSpecialCharacter(char)}
+          >
+            {char}
+          </button>
+        ))}
+      </div>
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="infinitive">
@@ -115,6 +145,7 @@ const VerbConjugator = () => {
             name="infinitive"
             value={formData.infinitive}
             onChange={handleInputChange}
+            ref={infinitiveInputRef}
             required
           />
         </div>
@@ -288,14 +319,18 @@ const VerbConjugator = () => {
 
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8">
         <h2 className="text-2xl font-bold mb-4">Results:</h2>
-        {Object.entries(results).map(([region, forms]) => (
-          <div key={region} className="mb-4">
-            <h3 className="text-xl font-semibold text-blue-600">{region}</h3>
-            {forms.map((form, index) => (
-              <p key={index} className="ml-4">{form}</p>
-            ))}
-          </div>
-        ))}
+        {Object.entries(results).length > 0 ? (
+          Object.entries(results).map(([region, forms]) => (
+            <div key={region} className="mb-4">
+              <h3 className="text-xl font-semibold text-blue-600">{region}</h3>
+              {forms.map((form, index) => (
+                <p key={index} className="ml-4">{form}</p>
+              ))}
+            </div>
+          ))
+        ) : (
+          <p>No results to display.</p>
+        )}
       </div>
     </div>
   );
