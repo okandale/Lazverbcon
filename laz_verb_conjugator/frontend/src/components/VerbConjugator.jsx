@@ -88,11 +88,26 @@ const VerbConjugator = () => {
 
     try {
       const response = await fetch(`/conjugate?${params.toString()}`);
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          toast.error('This verb does not exist in our database.');
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return;
+      }
+
       const data = await response.json();
-      setResults(data);
+      
+      if (Object.keys(data).length === 0) {
+        toast.warn('No conjugations found for this verb.');
+      } else {
+        setResults(data);
+      }
     } catch (error) {
       console.error('Error:', error);
-      toast.error('An error occurred while conjugating the verb.');
+      toast.error('An error occurred while conjugating the verb. Please try again later.');
     }
   };
 
