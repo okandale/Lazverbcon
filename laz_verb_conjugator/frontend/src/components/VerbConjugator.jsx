@@ -28,7 +28,7 @@ const VerbConjugator = () => {
     setFormData(prevData => {
       const newData = { ...prevData };
       
-      if (prevData.optative || prevData.applicative || prevData.causative) {
+      if (prevData.optative || prevData.applicative) {
         newData.aspect = '';
         newData.tense = 'present';
         if (newData.aspect !== '' || newData.tense !== 'present') {
@@ -111,7 +111,7 @@ const VerbConjugator = () => {
     }
   };
 
-  const isAspectDisabled = formData.optative || formData.applicative || formData.causative;
+  const isAspectDisabled = formData.optative || formData.applicative;
   const isTenseDisabled = formData.optative || formData.applicative || formData.causative;
   const isObjectDisabled = formData.aspect !== '' || formData.tense === 'presentperf';
 
