@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const VerbConjugator = () => {
   const [formData, setFormData] = useState({
@@ -20,12 +22,36 @@ const VerbConjugator = () => {
   }, [formData.optative, formData.applicative, formData.causative, formData.tense, formData.aspect]);
 
   const updateFormState = () => {
-    setFormData(prevData => ({
-      ...prevData,
-      aspect: (prevData.optative || prevData.applicative || prevData.causative) ? '' : prevData.aspect,
-      tense: prevData.optative ? 'present' : prevData.tense,
-      obj: prevData.aspect !== '' ? '' : prevData.obj,
-    }));
+    setFormData(prevData => {
+      const newData = { ...prevData };
+      
+      // Handle optative, applicative, and causative
+      if (prevData.optative || prevData.applicative || prevData.causative) {
+        newData.aspect = '';
+        newData.tense = 'present';
+        if (newData.aspect !== '' || newData.tense !== 'present') {
+          toast.warn('Aspect and tense are not applicable when optative, applicative, or causative is selected.');
+        }
+      }
+      
+      // Handle aspect
+      if (prevData.aspect !== '') {
+        newData.obj = '';
+        if (newData.obj !== '') {
+          toast.warn('Object is not applicable when an aspect is selected.');
+        }
+      }
+      
+      // Handle present perfect
+      if (prevData.tense === 'presentperf') {
+        newData.obj = '';
+        if (newData.obj !== '') {
+          toast.warn('Object is not applicable in present perfect tense.');
+        }
+      }
+      
+      return newData;
+    });
   };
 
   const handleInputChange = (e) => {
@@ -65,11 +91,17 @@ const VerbConjugator = () => {
       setResults(data);
     } catch (error) {
       console.error('Error:', error);
+      toast.error('An error occurred while conjugating the verb.');
     }
   };
 
+  const isAspectDisabled = formData.optative || formData.applicative || formData.causative;
+  const isTenseDisabled = formData.optative || formData.applicative || formData.causative;
+  const isObjectDisabled = formData.aspect !== '' || formData.tense === 'presentperf';
+
   return (
     <div className="max-w-2xl mx-auto p-4">
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Verb Conjugator</h1>
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
@@ -115,11 +147,12 @@ const VerbConjugator = () => {
               Object:
             </label>
             <select
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isObjectDisabled ? 'bg-gray-200' : ''}`}
               id="obj"
               name="obj"
               value={formData.obj}
               onChange={handleInputChange}
+              disabled={isObjectDisabled}
             >
               <option value="">None</option>
               <option value="O1_Singular">Me</option>
@@ -137,11 +170,12 @@ const VerbConjugator = () => {
               Tense:
             </label>
             <select
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isTenseDisabled ? 'bg-gray-200' : ''}`}
               id="tense"
               name="tense"
               value={formData.tense}
               onChange={handleInputChange}
+              disabled={isTenseDisabled}
               required
             >
               <option value="present">Present</option>
@@ -157,11 +191,12 @@ const VerbConjugator = () => {
               Aspect:
             </label>
             <select
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isAspectDisabled ? 'bg-gray-200' : ''}`}
               id="aspect"
               name="aspect"
               value={formData.aspect}
               onChange={handleInputChange}
+              disabled={isAspectDisabled}
             >
               <option value="">None</option>
               <option value="potential">Potential</option>
