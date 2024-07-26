@@ -79,11 +79,49 @@ preverbs_rules = {
     }
 }
 
+# Phonetic rules for 'v' and 'g'
+def get_phonetic_rules(region):
+    if region == 'FA':
+        phonetic_rules_v = {
+            'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
+            'b': ['a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+            'p̌': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆'],
+            'm': ['n']
+        }
+    else:
+        phonetic_rules_v = {
+            'v': ['a', 'e', 'i', 'o', 'u'],
+            'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
+            'b': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+            'p̌': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆'],
+            'm': ['n']
+        }
+
+    phonetic_rules_g = {
+        'g': ['a', 'e', 'i', 'o', 'u'],
+        'k': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
+        'g': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+        'k̆': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆']
+    }
+
+    return phonetic_rules_v
+
+
+
+
 # Function to handle special letters
 def get_first_letter(root):
     if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'k̆', 'p̌']:
         return root[:2]
     return root[0]
+
+def adjust_prefix(prefix, first_letter, phonetic_rules):
+    for p, letters in phonetic_rules.items():
+        if first_letter in letters:
+            return p
+    return prefix
+
+
 
 # Function to handle special letters
 def get_first_vowel_index(word):
@@ -140,8 +178,8 @@ def get_personal_pronouns(region):
     }
 
 # Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
+# Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
 def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False):
-
     # Check for invalid SxOx combinations
     if (subject in ['S1_Singular', 'S1_Plural'] and obj in ['O1_Singular', 'O1_Plural']) or \
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
@@ -173,6 +211,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
         for region in regions_for_form:
             region = region.strip()
             personal_pronouns = get_personal_pronouns(region)
+            phonetic_rules_v = get_phonetic_rules(region)
             
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
@@ -220,7 +259,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 if preverb:
                     break
 
-
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
 
@@ -230,7 +268,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Handle special case for verbs starting with 'u' and 'i'
             root = handle_special_case_u(root, subject, preverb)
-
 
             # Handle special case for gy preverb
             if preverb == 'gy':
@@ -253,39 +290,54 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 root = remove_first_character(root)
 
 
-            # Determine the final root to use
-            final_root = root
-
             # Adjust the prefix based on the preverb and subject
+            first_letter = get_first_letter(root)
+            adjusted_prefix = ''
+            prefix = subject_markers[subject]
             if preverb:
                 preverb_form = preverbs_rules.get((preverb,), {}).get(subject, preverb)
                 prefix = preverb_form
             else:
-                prefix = subject_markers[subject]
+                if subject in ('S3_Singular', 'S3_Plural') and obj in ('O1_Singular', 'O1_Plural'):
+                    adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
+                    prefix = adjusted_prefix + 'a'
+                    print(f"Prefix set for S3 to O1: {prefix}")
+                elif subject in ('S1_Singular', 'S1_Plural') and obj in ('O3_Singular', 'O3_Plural'):
+                    adjusted_prefix = 'm'
+                    prefix = adjusted_prefix + 'a'
+                    print(f"Prefix set for S1 to O3: {prefix}")
 
-            # Determine the suffix
+            # Debugging: print initial values
+            print(f"Initial subject: {subject}, obj: {obj}, root: {root}")
+
             suffix = suffixes[subject]
+            print(f"Initial suffix from suffixes[subject]: {suffix}")
             if obj:
-                if subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular']:
+                if subject == 'S3_Singular' and obj == 'O3_Singular':
                     suffix = ''
                 elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
                     suffix = 'an'
-                elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O1_Singular', 'O2_Singular']:
+                elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular']:
                     suffix = 'r'
+                elif subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural'] and obj in ('O1_Plural', 'O2_Plural'):
+                    if root.endswith('en'):
+                        root = root[:-1]
+                    suffix = 'rt'
+                elif subject in ['S1_Plural', 'S2_Plural'] and obj in ('O1_Singular', 'O2_Singular'):
+                    if root.endswith('en'):
+                        root = root[:-1]
+                    suffix = 'rt'
                 elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
                     suffix = ''
-                elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural'] and obj == 'S3_Singular':
+                elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and obj in ('O3_Singular', 'O3_Plural'):
                     suffix = 'an'
-                elif subject in ['S3_Plural'] and obj == 'S3_Plural':
-                    suffix = 'an'
-                elif subject in ['S1_Singular', 'S1_Plural'] and obj == 'O2_Plural':
-                    suffix = 't'
-                elif subject in ['S2_Singular', 'S2_Plural'] and obj == 'S1_Plural':
-                    suffix = 't'
+                # Debugging: print suffix after all conditions
+                print(f"Suffix after conditions: {suffix}")
+                # Debugging: print root after suffix conditions
+                print(f"Root after suffix conditions: {root}")
 
-            # Specific rule for S1O2 and S2O1 conjugations: replace ending 'n' with 'r'
-            if suffix == 'r' and root.endswith('n'):
-                final_root = root[:-1]
+                final_root = root
+                print(f"Special rule applied: final_root = {final_root}")
 
 
             # Specific case: preverb minus last character and root minus first character for certain preverbs
@@ -321,6 +373,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 elif subject in ['S3_Singular', 'S3_Plural']:
                     prefix = 'c'
 
+
             if use_optional_preverb and not preverb:
                 prefix = 'ko' + prefix
                 if subject in ['O3_Singular', 'O3_Plural']:
@@ -346,15 +399,14 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 else:
                     conjugated_verb = f"{prefix}{root}{suffix}"
             else:
-                if suffix == 'r' and root.endswith('n'):
-                    final_root = root[:-1]
-                    conjugated_verb = f"{prefix}{final_root}{suffix}"
-                elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and root.endswith('s'):
+                if subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and root.endswith('s'):
                     final_root = root[:-1]
                     conjugated_verb = f"{prefix}{final_root}{suffix}"
                 else:
                     conjugated_verb = f"{prefix}{final_root}{suffix}"
 
+            # Debugging: print the final conjugated verb
+            print(f"Final conjugated verb: {conjugated_verb}")
 
             region_conjugations[region].append((subject, obj, f"{first_word} {conjugated_verb}".strip()))
 
