@@ -20,6 +20,14 @@ const VerbConjugator = () => {
 
   const specialCharacters = ['ç̌', 't̆', 'ž', 'k̆', 'ʒ', 'ʒ̆'];
 
+  const regionNames = {
+    'AŞ': 'Ardeşen (Art̆aşeni)',
+    'PZ': 'Pazar (Atina)',
+    'FA': 'Fındıklı/Arhavi (Viʒ̆e/Ark̆abi)',
+    'HO': 'Hopa (Xopa)'
+    // Add other region codes and names here
+  };
+
   useEffect(() => {
     updateFormState();
   }, [formData.optative, formData.applicative, formData.causative, formData.tense, formData.aspect]);
@@ -337,7 +345,7 @@ const VerbConjugator = () => {
         {Object.entries(results).length > 0 ? (
           Object.entries(results).map(([region, forms]) => (
             <div key={region} className="mb-4">
-              <h3 className="text-xl font-semibold text-blue-600">{region}</h3>
+              <h3 className="text-xl font-semibold text-blue-600">{regionNames[region] || region}</h3>
               {forms.map((form, index) => (
                 <p key={index} className="ml-4">{form}</p>
               ))}
