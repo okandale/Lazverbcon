@@ -591,12 +591,12 @@ def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicati
 
 # Define personal pronouns outside of regions
 personal_pronouns_general = {
-    'O3_Singular': 'heya',
-    'O3_Plural': 'hentepe',
     'O1_Singular': 'ma',
     'O2_Singular': 'si',
-    'O1_Plural': 'çku',
-    'O2_Plural': 'tkva'
+    'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'hiya',
+    'O1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
+    'O2_Plural': 'tkva' if region in ('FA', 'HO') else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkva',
+    'O3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe'
 }
 
 subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
