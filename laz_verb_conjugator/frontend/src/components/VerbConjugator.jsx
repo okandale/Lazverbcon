@@ -112,7 +112,7 @@ const VerbConjugator = () => {
   };
 
   const isAspectDisabled = formData.optative || formData.applicative;
-  const isTenseDisabled = formData.optative || formData.applicative || formData.causative;
+  const isTenseDisabled = formData.optative;
   const isObjectDisabled = formData.aspect !== '' || formData.tense === 'presentperf';
 
   const insertSpecialCharacter = (char) => {
