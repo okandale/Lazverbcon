@@ -224,122 +224,148 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
             if preverb == 'coz':
                 root = handle_special_case_coz(root, subject)
 
-            # Remove second character 'v' if it exists and the subject is not S3
-            if preverb in ('go', 'd') and len(root) > 1 and root[1] == 'v' and subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural']:
-                root = root[0] + root[2:]
-
-
-            # Remove first character of the root if the preverb is 'go'
-            if preverb == 'go' and len(root) > 0:
-                root = remove_first_character(root)
-
-            if preverb == 'd' and len(root) > 0 and root[0] == 'v' and subject in ['S1_Singular', 'S2_Plural', 'S1_Plural', 'S2_Singular']:
-                root = remove_first_character(root)
-
-            # Determine the final root to use
-            final_root = root[:-2]
 
             # Adjust the prefix based on the preverb and subject
+            first_letter = get_first_letter(root)
+            adjusted_prefix = ''
+            # Conjugate the verb
+            preverb_form = preverb # Default to preverb itself if no specific rule is found
             if preverb:
                 preverb_form = preverbs_rules.get((preverb,), {}).get(subject, preverb)
-                prefix = preverb_form
             else:
                 prefix = subject_markers[subject]
 
-            # Determine the suffix
-            suffix = suffixes[subject]
-            if obj:
-                if subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular']:
-                    suffix = 'u'
-                elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
-                    suffix = 'es'
-                elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O1_Singular', 'O2_Singular']:
-                    suffix = 'i'
-                elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
-                    suffix = 'u'
-                elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural'] and obj == 'S3_Singular':
-                    suffix = 'es'
-                elif subject in ['S3_Plural'] and obj == 'S3_Plural':
-                    suffix = 'es'
-                elif subject in ['S1_Singular', 'S1_Plural'] and obj == 'O2_Plural':
-                    suffix = 'it'
-                elif subject in ['S2_Singular', 'S2_Plural'] and obj == 'S1_Plural':
-                    suffix = 'itt'
-
-            # Specific rule for S1O2 and S2O1 conjugations: replace ending 'n' with 'r'
-            if suffix == 'r' and root.endswith('n'):
-                final_root = root[:-1]
-
-            # Specific case: preverb minus last character and root minus first character for certain preverbs
-            if preverb in ('ge', 'e', 'ce', 'd'):
+            # Specific case: preverb modifications based on subject
+            if preverb in ('ge', 'e', 'ce'):
                 if subject in ['S1_Singular', 'S1_Plural']:
                     prefix = preverb + 'om'
                 elif subject in ['S2_Singular', 'S2_Plural']:
                     prefix = preverb + 'og'
-                elif subject in ['S3_Singular', 'S3_Plural']:
+                else:
                     prefix = preverb
-
-            elif preverb in ('go'):
-                if subject in ['S1_Singular', 'S1_Plural']:
+            
+            elif preverb == 'd':
+                if subject in ('S3_Singular', 'S3_Plural') and not obj:
+                    preverb = ''
+                    root = root[1:] if region in ('PZ', 'AŞ') else root
+                else:
+                    preverb = 'do'
+                    if root.startswith('v'):
+                        if region in ('PZ', 'AŞ'):
+                            root = root[1:]
+                    else:
+                        root = root
+                
+                if subject in ('S3_Singular', 'S3_Plural'):
+                    if obj in ('O1_Singular', 'O1_Plural'):
+                        adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
+                        prefix = preverb + adjusted_prefix
+                    else:
+                        prefix = 'd' if region in ('FA') else 'dv'
+                elif subject in ['S1_Singular', 'S1_Plural']:
                     prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
                     prefix = preverb + 'g'
-                elif subject in ['S3_Singular', 'S3_Plural']:
+                else:
                     prefix = preverb[:-1]
 
-            elif preverb in ('gy'):
+            elif preverb == 'go':
+                if subject in ('S3_Singular', 'S3_Plural') and not obj:
+                    preverb = ''
+                else:
+                    root = root[2:] if region in ('PZ', 'AŞ') else root[1:]
+                
+                if subject in ('S3_Singular', 'S3_Plural'):
+                    if obj in ('O1_Singular', 'O1_Plural'):
+                        adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
+                        prefix = preverb + adjusted_prefix
+                    else:
+                        prefix = 'g' if region in ('FA') else 'gv'
+                elif subject in ['S1_Singular', 'S1_Plural']:
+                    prefix = preverb + 'm'
+                elif subject in ['S2_Singular', 'S2_Plural']:
+                    prefix = preverb + 'g'
+                else:
+                    prefix = preverb[:-1]
+
+            elif preverb == 'gy':
                 if subject in ['S1_Singular', 'S1_Plural']:
                     prefix = preverb[:1] + 'em'
                 elif subject in ['S2_Singular', 'S2_Plural']:
                     prefix = preverb[:1] + 'eg'
-                elif subject in ['S3_Singular', 'S3_Plural']:
+                else:
                     prefix = preverb[:1] + 'y'
-                    
-            elif preverb in ('coz'):
+
+            elif preverb == 'coz':
                 if subject in ['S1_Singular', 'S1_Plural']:
                     prefix = 'cem'
                 elif subject in ['S2_Singular', 'S2_Plural']:
                     prefix = 'ceg'
-                elif subject in ['S3_Singular', 'S3_Plural']:
+                else:
                     prefix = 'c'
+            else:
+                prefix = preverb_form
 
+            # Additional prefix adjustments based on subject and object
+            if not preverb:
+                if subject in ('S3_Singular', 'S3_Plural') and obj in ('O1_Singular', 'O1_Plural'):
+                    adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
+                    if infinitive in ('olimbu', 'oropumu'):
+                        prefix = '(go)' + adjusted_prefix
+                    else:
+                        prefix = adjusted_prefix
+                else:
+                    prefix = subject_markers[subject]
+
+            # Optional preverb handling
             if use_optional_preverb and not preverb:
                 prefix = 'ko' + prefix
                 if subject in ['O3_Singular', 'O3_Plural']:
-                    prefix = 'k'
+                    prefix = 'k' + prefix
+
+
+
+            suffix = suffixes[subject]
+            if root.endswith('en'):
+                root = root[:-2]            
+            if obj:
+                if root.endswith('en'):
+                    root = root[:-2]
+                if subject == 'S3_Singular' and obj == 'O3_Singular':
+                    suffix = suffixes[subject]
+                elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
+                    suffix = 'atere' if region in ('PZ') else 'aten'
+                elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular']:
+                    suffix = 'are'
+                elif subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural', 'S3_Plural'] and obj in ('O1_Plural', 'O2_Plural'):
+                    suffix = 'atere' if region == "PZ" else 'aten'
+                elif subject in ['S1_Plural', 'S2_Plural'] and obj in ('O1_Singular', 'O2_Singular'):
+                    suffix = 'atere' if region == "PZ" else 'aten'
+                elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
+                    suffix = 'asen'
+                elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural', 'S3_Singular'] and obj in ('O3_Singular', 'O3_Plural'):
+                    suffix = 'anen'
+                else:
+                    suffix = suffixes[subject]
+
+                final_root = root
 
             # Conjugate the verb
-            conjugated_verb = f"{prefix}{final_root}{suffix}"
-            if preverb in ('go', 'gy', 'coz'):
+            # Conjugate the verb
+            if preverb in ('go', 'gy', 'coz', 'd'):
                 if suffix == 'r' and root.endswith('n'):
                     final_root = root[:-1]
-                    conjugated_verb = f"{prefix}{final_root}{suffix}"
                 elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and root.endswith('s'):
                     final_root = root[:-1]
-                    conjugated_verb = f"{prefix}{final_root}{suffix}"
                 else:
-                    conjugated_verb = f"{prefix}{final_root}{suffix}"
-            elif preverb == 'd':
-                if suffix == 'r' and root.endswith('n'):
-                    final_root = root[:-1]
-                    conjugated_verb = f"{prefix}{final_root}{suffix}"
-                elif root.endswith('s'):
-                    final_root = root[:-1]
-                    conjugated_verb = f"{prefix}{final_root}{suffix}"
-            elif preverb and root.endswith('en'):
-                final_root = root[:-1]
-                conjugated_verb = f"{prefix}{root}{suffix}"
+                    final_root = root
             else:
-                if suffix == 'r' and root.endswith('n'):
+                if subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and root.endswith('s'):
                     final_root = root[:-1]
-                elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and root.endswith('s'):
-                    final_root = root[:-2]
-                elif root.endswith('en'):
-                    final_root = root[:-2]
                 else:
-                    final_root = root[:-1]
-                conjugated_verb = f"{prefix}{final_root}{suffix}"
+                    final_root = root
 
+            conjugated_verb = f"{prefix}{final_root}{suffix}"
             region_conjugations[region].append((subject, obj, f"{first_word} {conjugated_verb}".strip()))
 
     return region_conjugations
@@ -374,7 +400,7 @@ def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False,
     all_conjugations = {}
     for subject in subjects:
         for obj in objects:
-            result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, use_optional_preverb=use_optional_preverb)
+            result = conjugate_future(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, use_optional_preverb=use_optional_preverb)
             for region, conjugation_list in result.items():
                 if region not in all_conjugations:
                     all_conjugations[region] = set()

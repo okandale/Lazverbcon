@@ -277,18 +277,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             if preverb == 'coz':
                 root = handle_special_case_coz(root, subject)
 
-            # Remove second character 'v' if it exists and the subject is not S3
-            if preverb in ('go', 'd') and len(root) > 1 and root[1] == 'v' and subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural']:
-                root = root[0] + root[2:]
-
-
-            # Remove first character of the root if the preverb is 'go'
-            if preverb == 'go' and len(root) > 0:
-                root = remove_first_character(root)
-
-            if preverb == 'd' and len(root) > 0 and root[0] == 'v' and subject in ['S1_Singular', 'S2_Plural', 'S1_Plural', 'S2_Singular']:
-                root = remove_first_character(root)
-
 
             # Adjust the prefix based on the preverb and subject
             first_letter = get_first_letter(root)
@@ -296,21 +284,56 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             # Conjugate the verb
             if preverb:
                 preverb_form = preverbs_rules.get((preverb,), {}).get(subject, preverb)
-                prefix = preverb_form
             else:
                 prefix = subject_markers[subject]
 
             # Specific case: preverb modifications based on subject
-            if preverb in ('ge', 'e', 'ce', 'd'):
+            if preverb in ('ge', 'e', 'ce'):
                 if subject in ['S1_Singular', 'S1_Plural']:
                     prefix = preverb + 'om'
                 elif subject in ['S2_Singular', 'S2_Plural']:
                     prefix = preverb + 'og'
                 else:
                     prefix = preverb
+            
+            elif preverb == 'd':
+                if subject in ('S3_Singular', 'S3_Plural') and not obj:
+                    preverb = ''
+                    root = root[1:] if region in ('PZ', 'AŞ') else root
+                else:
+                    preverb = 'do'
+                    if root.startswith('v'):
+                        if region in ('PZ', 'AŞ'):
+                            root = root[1:]
+                    else:
+                        root = root
+                
+                if subject in ('S3_Singular', 'S3_Plural'):
+                    if obj in ('O1_Singular', 'O1_Plural'):
+                        adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
+                        prefix = preverb + adjusted_prefix
+                    else:
+                        prefix = 'd' if region in ('FA') else 'dv'
+                elif subject in ['S1_Singular', 'S1_Plural']:
+                    prefix = preverb + 'm'
+                elif subject in ['S2_Singular', 'S2_Plural']:
+                    prefix = preverb + 'g'
+                else:
+                    prefix = preverb[:-1]
 
             elif preverb == 'go':
-                if subject in ['S1_Singular', 'S1_Plural']:
+                if subject in ('S3_Singular', 'S3_Plural') and not obj:
+                    preverb = ''
+                else:
+                    root = root[2:] if region in ('PZ', 'AŞ') else root[1:]
+                
+                if subject in ('S3_Singular', 'S3_Plural'):
+                    if obj in ('O1_Singular', 'O1_Plural'):
+                        adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
+                        prefix = preverb + adjusted_prefix
+                    else:
+                        prefix = 'g' if region in ('FA') else 'gv'
+                elif subject in ['S1_Singular', 'S1_Plural']:
                     prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
                     prefix = preverb + 'g'
@@ -332,6 +355,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     prefix = 'ceg'
                 else:
                     prefix = 'c'
+            else:
+                prefix = preverb_form
 
             # Additional prefix adjustments based on subject and object
             if not preverb:
@@ -375,7 +400,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     suffix = 'rt'
                 elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
                     suffix = ''
-                elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and obj in ('O3_Singular', 'O3_Plural'):
+                elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural', 'S3_Singular'] and obj in ('O3_Singular', 'O3_Plural'):
                     suffix = 'an'
 
                 final_root = root
