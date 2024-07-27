@@ -149,7 +149,7 @@ const VerbConjugator = () => {
         {specialCharacters.map((char, index) => (
           <button
             key={index}
-            className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+            className="px-3 py-1 bg-gray-300 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
             onClick={() => insertSpecialCharacter(char)}
           >
             {char}
@@ -201,7 +201,7 @@ const VerbConjugator = () => {
               Object:
             </label>
             <select
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isObjectDisabled ? 'bg-gray-200' : ''}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isObjectDisabled ? 'text-gray-500 bg-gray-300' : ''}`}
               id="obj"
               name="obj"
               value={formData.obj}
@@ -224,7 +224,7 @@ const VerbConjugator = () => {
               Tense:
             </label>
             <select
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isTenseDisabled ? 'bg-gray-200' : ''}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isTenseDisabled ? 'text-gray-500 bg-gray-300' : ''}`}
               id="tense"
               name="tense"
               value={formData.tense}
@@ -245,7 +245,7 @@ const VerbConjugator = () => {
               Aspect:
             </label>
             <select
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isAspectDisabled ? 'bg-gray-200' : ''}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isAspectDisabled ? 'text-gray-500 bg-gray-300' : ''}`}
               id="aspect"
               name="aspect"
               value={formData.aspect}
