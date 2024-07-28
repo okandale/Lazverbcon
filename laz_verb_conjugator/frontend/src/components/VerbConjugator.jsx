@@ -36,7 +36,7 @@ const VerbConjugator = () => {
     setFormData(prevData => {
       const newData = { ...prevData };
       
-      if (prevData.optative || prevData.applicative) {
+      if (prevData.optative) {
         newData.aspect = '';
         newData.tense = 'present';
         if (newData.aspect !== '' || newData.tense !== 'present') {

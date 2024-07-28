@@ -134,10 +134,10 @@ def handle_marker(infinitive, root, marker):
                 root = root[:2] + marker + root[3:]  # Replace the third character 'i' or 'o' with 'i' or 'o'
             elif marker == 'u':
                 root = root[:2] + 'u' + root[3:]  # Replace the third character 'i' or 'o' with 'u'
-    elif root.startswith('i') or root.startswith('o'):
-        if marker in ['i', 'o']:
+    elif root.startswith(('i', 'u', 'o')):
+        if marker in ['i', 'o', 'u']:
             root = marker + root[1:]  # Replace the first 'i' or 'o' with 'i' or 'o'
-        elif marker == 'u':
+        elif marker == 'u': # may be redundant now
             root = 'u' + root[1:]  # Replace the first 'i' or 'o' with 'u'
     else:
         root = marker + root
@@ -456,21 +456,21 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/ok̆o preverbs, we could check here: if preverb ends with "o") root[:-1 
             if applicative and causative:
-                if root.endswith('umers') or root.endswith('amers'):
+                if root.endswith(('umers', 'omers')) or root.endswith('amers'):
                     root = root[:-5] + 'apam'
-                elif root.endswith('ums'): 
-                    root = root[:-3] + 'apam'
+                elif root.endswith(('ums', 'oms', 'ops', 'ups')): 
+                    root = root[:-3] + ('apap' if region == "HO" else 'apam')
                 elif root.endswith('ams'):
                     root = root[:-3] + 'apam'
                 elif root.endswith('rs'):
                     root = root[:-1] + 'apam'
-                elif root.endswith('um') or root.endswith('am'):
+                elif root.endswith(('um', 'om', 'op')) or root.endswith('am'):
                     root = root[:-2] + 'apam'
                 elif root.endswith('y'):
                     root = root[:-2] + 'apam'
             elif applicative:
-                if root.endswith(('ums', 'ups')):
-                    root = root[:-3] + 'ams'
+                if root.endswith(('ums', 'ups', 'oms', 'ops')):
+                    root = root[:-3] + ('aps' if region == "HO" else 'ams')
                 elif root.endswith('um'):
                     root = root[:-2] + 'ams'
                 elif root.endswith('y'):
@@ -480,8 +480,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     root = root
                 elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'apam'
-                elif root.endswith('ums'): 
-                    root = root[:-3] + 'apam'
+                elif root.endswith('ums', 'ups', 'oms', 'ops', 'ups'): 
+                    root = root[:-3] + ('apap' if region == "HO" else 'apam')
                 elif root.endswith('ams'):
                     root = root[:-3] + 'apam'
                 elif root.endswith('rs'):
@@ -491,7 +491,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 elif root.endswith('y'):
                     root = root[:-2] + 'apam'
             # Mood adjustment for root - add to the above markers if a combination of marker and mood is possible:
-            if mood == 'optative' and root.endswith('ums'):
+            if mood == 'optative' and root.endswith(('ums', 'oms', 'ops', 'ups', 'ams')):
                 root = root[:-3]
             elif mood == 'optative' and root.endswith(('umers', 'amers')):
                 root = root[:-5]

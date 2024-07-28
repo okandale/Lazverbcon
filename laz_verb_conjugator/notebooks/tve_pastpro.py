@@ -134,10 +134,10 @@ def handle_marker(infinitive, root, marker):
                 root = root[:2] + marker + root[3:]  # Replace the third character 'i' or 'o' with 'i' or 'o'
             elif marker == 'u':
                 root = root[:2] + 'u' + root[3:]  # Replace the third character 'i' or 'o' with 'u'
-    elif root.startswith('i') or root.startswith('o'):
-        if marker in ['i', 'o']:
+    elif root.startswith(('i', 'u', 'o')):
+        if marker in ['i', 'o', 'u']:
             root = marker + root[1:]  # Replace the first 'i' or 'o' with 'i' or 'o'
-        elif marker == 'u':
+        elif marker == 'u': # may be redundant now
             root = 'u' + root[1:]  # Replace the first 'i' or 'o' with 'u'
     else:
         root = marker + root
@@ -474,22 +474,22 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
             if applicative and causative:
                 if root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'apam'
-                elif root.endswith('ums') or root.endswith('ams'):
-                    root = root[:-3] + 'apam'
+                elif root.endswith(('oms', 'ums', 'ams', 'ups', 'ops')):
+                    root = root[:-3] + ('apap' if region == "HO" else 'apam')
                 elif root.endswith('rs'):
                     root = root[:-1] + 'apam'
                 elif root.endswith('uy'):
                     root = root[:-2] + 'apam'
             elif applicative:
-                if root.endswith('ums'):
-                    root = root[:-3] + 'ams'
+                if root.endswith(('ums', 'oms', 'ups', 'aps', 'ops')):
+                    root = root[:-3] + ('aps' if region == "HO" else 'ams')
             elif causative:
                 if root == 'çams':
                     root = root
                 elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'apam'
-                elif root.endswith('ums'):
-                    root = root[:-3] + 'apam'
+                elif root.endswith(('ums', 'oms', 'ams', 'ups', 'aps', 'ops')):
+                    root = root[:-3] + ('apap' if region == "HO" else 'apam')
                 elif root.endswith('ams'):
                     root = root[:-3] + 'apam'
                 elif root.endswith('rs'):

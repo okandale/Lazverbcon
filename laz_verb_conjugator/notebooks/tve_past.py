@@ -130,10 +130,10 @@ def handle_marker(infinitive, root, marker):
                 root = root[:2] + marker + root[3:]  # Replace the third character 'i' or 'o' with 'i' or 'o'
             elif marker == 'u':
                 root = root[:2] + 'u' + root[3:]  # Replace the third character 'i' or 'o' with 'u'
-    elif root.startswith('i') or root.startswith('o'):
-        if marker in ['i', 'o']:
+    elif root.startswith(('i', 'u', 'o')):
+        if marker in ['i', 'o', 'u']:
             root = marker + root[1:]  # Replace the first 'i' or 'o' with 'i' or 'o'
-        elif marker == 'u':
+        elif marker == 'u': # may be redundant now
             root = 'u' + root[1:]  # Replace the first 'i' or 'o' with 'u'
     else:
         root = marker + root
@@ -458,7 +458,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             if applicative and causative:
                 if root in ('oşums', 'oşups', 'odums'):
                     root = root[:-3] + 'vap'
-                elif root.endswith('ums') or root.endswith('ams'):
+                elif root.endswith(('ams', 'ups', 'oms', 'aps', 'ops', 'ums')):
                     root = root[:-3] + 'ap'
                 elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'ap'
@@ -467,14 +467,14 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             elif applicative:
                 if root in ('işums', 'işups', 'idums'):
                     root = root[:-3] + 'v'
-                elif root.endswith('ums') or root.endswith('ams'):
+                elif root.endswith(('ams', 'ups', 'oms', 'aps', 'ops', 'ums')):
                     root = root[:-3]
             elif causative:
                 if root == 'digurams':
                     root = root
                 elif root in ('oşums', 'oşups', 'odums'):
                     root = root[:-3] + 'vap'
-                elif root.endswith('ums') or root.endswith('ams'):
+                elif root.endswith(('ams', 'ups', 'oms', 'aps', 'ops', 'ums')):
                     root = root[:-3] + 'ap'
                 elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'ap'
@@ -486,7 +486,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                     root = root[:-3] + 'v'
                     if region in ('AŞ', 'PZ') and subject == 'S3_Singular':
                         root = root[:-1]
-                elif root.endswith(('ums', 'ams', 'ups', 'aps')):
+                elif root.endswith(('ums', 'ams', 'ups', 'aps', 'oms', 'ops')):
                     root = root[:-3]
                 elif root.endswith('y'):
                     root = root[:-2]
