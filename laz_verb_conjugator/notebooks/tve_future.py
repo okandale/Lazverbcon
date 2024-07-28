@@ -462,7 +462,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             if applicative and causative:
                 if root in ('oşums', 'oşups', 'odums'):
                     root = root[:-3] + 'vap'
-                elif root.endswith(('ams', 'ups', 'oms', 'aps', 'ops', 'ums')):
+                elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'
                 elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'ap'
@@ -473,7 +473,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             elif applicative:
                 if root in ('işums', 'işups', 'idums'):
                     root = root[:-3] + 'v'
-                elif root.endswith(('ams', 'ups', 'oms', 'aps', 'ops', 'ums')):
+                elif root.endswith(('ms', 'ps')):
                     root = root[:-3]
                 elif root.endswith('y'):
                     root = root[:-2]
@@ -482,7 +482,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                     root = root
                 elif root in ('oşums', 'oşups', 'odums'):
                     root = root[:-3] + 'vap'
-                elif root.endswith(('ams', 'ups', 'oms', 'aps', 'ops', 'ums')):
+                elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'
                 elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'ap'
@@ -493,7 +493,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             else:
                 if root in ('şums', 'şups', 'dums'):  # remove "am/um/ups" endings from root
                     root = root[:-3] + 'v'
-                elif root.endswith(('ams', 'ups', 'oms', 'aps', 'ops', 'ums')):
+                elif root.endswith(('ms', 'ps')):
                     root = root[:-3]
                 elif root.endswith('y'):
                     root = root[:-2]
