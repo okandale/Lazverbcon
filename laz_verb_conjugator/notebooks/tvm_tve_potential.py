@@ -6,16 +6,13 @@
 
 import requests
 import pandas as pd
+import os
 
-# Replace with your web app URL
-url = 'https://script.google.com/macros/s/AKfycbyll4BTU-nOQfceo7lyEYtMsCF9F50MOzw_cJcfwh8k4w_SQnSFwICnOudGgxiikAs/exec'
+# Load the excel file
+file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.xlsx')
 
-# Fetch the data
-response = requests.get(url)
-data = response.json()
-
-# Convert the data to a DataFrame
-df = pd.DataFrame(data[1:], columns=data[0])  # First row as header
+# Read the excel file.
+df = pd.read_excel(file_path)
 
 # Filter for 'TVE' and 'TVM' verbs
 df_tve = df[df['Category'].isin(['TVE', 'TVM'])]
