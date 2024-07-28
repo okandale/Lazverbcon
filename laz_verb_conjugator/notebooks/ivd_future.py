@@ -247,11 +247,11 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
             elif preverb == 'd':
                 if subject in ('S3_Singular', 'S3_Plural') and not obj:
                     preverb = ''
-                    root = root[1:] if region in ('PZ', 'AŞ') else root
+                    root = root[1:] if region in ('PZ', 'AŞ', 'HO') else root
                 else:
                     preverb = 'do'
                     if root.startswith('v'):
-                        if region in ('PZ', 'AŞ'):
+                        if region in ('PZ', 'AŞ', 'HO'):
                             root = root[1:]
                     else:
                         root = root
@@ -328,7 +328,11 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
             suffix = suffixes[subject]
             if root.endswith('en'):
                 root = root[:-2]            
+            if root.endswith('s'):
+                root = root[:-1] 
             if obj:
+                if root.endswith('s'):
+                    root = root[:-1] 
                 if root.endswith('en'):
                     root = root[:-2]
                 if subject == 'S3_Singular' and obj == 'O3_Singular':

@@ -299,11 +299,11 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif preverb == 'd':
                 if subject in ('S3_Singular', 'S3_Plural') and not obj:
                     preverb = ''
-                    root = root[1:] if region in ('PZ', 'AŞ') else root
+                    root = root[1:] if region in ('PZ', 'AŞ', 'HO') else root
                 else:
                     preverb = 'do'
                     if root.startswith('v'):
-                        if region in ('PZ', 'AŞ'):
+                        if region in ('PZ', 'AŞ', 'HO'):
                             root = root[1:]
                     else:
                         root = root
