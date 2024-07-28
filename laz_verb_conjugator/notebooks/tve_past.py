@@ -458,7 +458,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             if applicative and causative:
                 if root in ('oşums', 'oşups', 'odums'):
                     root = root[:-3] + 'vap'
-                elif root.endswith(('ams', 'ups', 'oms', 'aps', 'ops', 'ums')):
+                elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'
                 elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'ap'
@@ -467,14 +467,14 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             elif applicative:
                 if root in ('işums', 'işups', 'idums'):
                     root = root[:-3] + 'v'
-                elif root.endswith(('ams', 'ups', 'oms', 'aps', 'ops', 'ums')):
+                elif root.endswith(('ms', 'ps')):
                     root = root[:-3]
             elif causative:
                 if root == 'digurams':
                     root = root
                 elif root in ('oşums', 'oşups', 'odums'):
                     root = root[:-3] + 'vap'
-                elif root.endswith(('ams', 'ups', 'oms', 'aps', 'ops', 'ums')):
+                elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'
                 elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'ap'
@@ -486,7 +486,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                     root = root[:-3] + 'v'
                     if region in ('AŞ', 'PZ') and subject == 'S3_Singular':
                         root = root[:-1]
-                elif root.endswith(('ums', 'ams', 'ups', 'aps', 'oms', 'ops')):
+                elif root.endswith(('ms', 'ps')):
                     root = root[:-3]
                 elif root.endswith('y'):
                     root = root[:-2]

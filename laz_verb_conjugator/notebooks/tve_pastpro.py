@@ -474,22 +474,22 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
             if applicative and causative:
                 if root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'apam'
-                elif root.endswith(('oms', 'ums', 'ams', 'ups', 'ops')):
-                    root = root[:-3] + ('apap' if region == "HO" else 'apam')
+                elif root.endswith(('ms', 'ps')):
+                    root = root[:-3] + ('ap' if region == "HO" else 'apam')
                 elif root.endswith('rs'):
                     root = root[:-1] + 'apam'
                 elif root.endswith('uy'):
                     root = root[:-2] + 'apam'
             elif applicative:
-                if root.endswith(('ums', 'oms', 'ups', 'aps', 'ops')):
+                if root.endswith(('ms', 'ps')):
                     root = root[:-3] + ('aps' if region == "HO" else 'ams')
             elif causative:
                 if root == 'çams':
                     root = root
                 elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'apam'
-                elif root.endswith(('ums', 'oms', 'ams', 'ups', 'aps', 'ops')):
-                    root = root[:-3] + ('apap' if region == "HO" else 'apam')
+                elif root.endswith(('ms', 'ps')):
+                    root = root[:-3] + ('ap' if region == "HO" else 'apam')
                 elif root.endswith('ams'):
                     root = root[:-3] + 'apam'
                 elif root.endswith('rs'):
