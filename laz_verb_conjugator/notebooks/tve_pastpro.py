@@ -475,9 +475,9 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                 if root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'apam'
                 elif root.endswith(('ms', 'ps')):
-                    root = root[:-3] + ('ap' if region == "HO" else 'apam')
+                    root = root[:-3] + ('apap' if region == "HO" else 'apam')
                 elif root.endswith('rs'):
-                    root = root[:-1] + 'apam'
+                    root = root[:-1] + ('apap' if region == "HO" else 'apam')
                 elif root.endswith('uy'):
                     root = root[:-2] + 'apam'
             elif applicative:
@@ -489,11 +489,11 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                 elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'apam'
                 elif root.endswith(('ms', 'ps')):
-                    root = root[:-3] + ('ap' if region == "HO" else 'apam')
+                    root = root[:-3] + ('apap' if region == "HO" else 'apam')
                 elif root.endswith('ams'):
                     root = root[:-3] + 'apam'
                 elif root.endswith('rs'):
-                    root = root[:-1] + 'apam'
+                    root = root[:-1] + ('apap' if region == "HO" else 'apam')
                 elif root.endswith('uy'):
                     root = root[:-2] + 'apam'         
                 else:

@@ -517,21 +517,22 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             # Determine the final root to use
             final_root = root[:-1] if root.endswith('s') else root
             
-            if infinitive == 'oxenu' and subject in ('S1_Singular', 'S1_Plural') and not applicative and not causative: # oxenu past tense exception
+            if infinitive in ('oxenu', 'oxvenu') and subject in ('S1_Singular', 'S1_Plural') and not applicative and not causative: # oxenu past tense exception
                 prefix = 'p̌'
-                final_root = ''
-            elif infinitive == 'oxenu' and subject in ('S2_Singular', 'S2_Plural') and not applicative and not causative:
+                final_root = 'qv' if region in "HO" else ''
+            elif infinitive in ('oxenu', 'oxvenu') and subject in ('S2_Singular', 'S2_Plural') and not applicative and not causative:
                 prefix = ''
-                final_root = '' if region in ('AŞ', 'PZ') else 'v'
-            elif infinitive == 'oxenu' and subject in ('S2_Singular', 'S2_Plural') and not applicative and not causative:
-                prefix = ''
-                final_root = '' if region in ('AŞ', 'PZ') else 'v'
-            elif infinitive == 'oxenu' and subject in ('S3_Singular', 'S3_Plural') and not applicative and not causative:
-                prefix = ''
-                final_root = '' if region in ('AŞ', 'PZ') else 'v'
+                final_root = '' if region in ('AŞ', 'PZ') else 'v' if region in "FA" else 'qv'
+            elif infinitive in ('oxenu', 'oxvenu') and subject in ('S3_Singular', 'S3_Plural') and not applicative and not causative:
+                prefix = 'q'
+                final_root = '' if region in ('AŞ', 'PZ') else 'v' if region in "HO" else 'v'
 
             # Conjugate the verb
             conjugated_verb = f"{prefix}{final_root}{suffix}"
+            if conjugated_verb == 'p̌qvi':
+                conjugated_verb = 'p̌qvi (p̌i)'
+            if conjugated_verb == 'p̌qvit':
+                conjugated_verb = 'p̌qvit (p̌it)'
             region_conjugations[region].append((subject, obj, f"{first_word} {conjugated_verb}".strip()))
 
     return region_conjugations
