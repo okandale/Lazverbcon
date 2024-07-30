@@ -36,7 +36,7 @@ def process_compound_verb(verb):
 
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'd'): {
+    ('ge', 'e', 'ce', 'd', 'ye'): {
         'S1_Singular': 'om',
         'S2_Singular': 'og',
         'S3_Singular': '',
@@ -249,8 +249,8 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
             
             elif preverb == 'd':
                 if subject in ('S3_Singular', 'S3_Plural') and not obj:
-                    preverb = ''
-                    root = root[1:] if region in ('PZ', 'AŞ', 'HO') else root
+                    preverb = 'd'
+                    root = root[1:]
                 else:
                     preverb = 'do'
                     if root.startswith('v'):
@@ -276,7 +276,7 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
                 if subject in ('S3_Singular', 'S3_Plural') and not obj:
                     preverb = ''
                 else:
-                    root = root[2:] if region in ('PZ', 'AŞ') else root[1:]
+                    root = root[2:] if region in ('PZ', 'AŞ', 'HO') else root[1:]
                 
                 if subject in ('S3_Singular', 'S3_Plural'):
                     if obj in ('O1_Singular', 'O1_Plural'):

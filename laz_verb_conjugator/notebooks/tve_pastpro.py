@@ -43,7 +43,7 @@ def process_compound_verb(verb):
 
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'ok̆o', 'gama', 'mo'): {
+    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'ok̆o', 'gama', 'mo', 'ye'): {
         'S1_Singular': 'v',
         'S2_Singular': '',
         'S3_Singular': '',
@@ -58,7 +58,7 @@ def get_phonetic_rules(region):
     if region == 'FA':
         phonetic_rules_v = {
             'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-            'b': ['a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+            'b': ['l', 'a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
             'p̌': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆'],
             'm': ['n']
         }
@@ -66,7 +66,7 @@ def get_phonetic_rules(region):
         phonetic_rules_v = {
             'v': ['a', 'e', 'i', 'o', 'u'],
             'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-            'b': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+            'b': ['l','d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
             'p̌': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆'],
             'm': ['n']
         }

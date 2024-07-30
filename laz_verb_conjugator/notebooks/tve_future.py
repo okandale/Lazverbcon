@@ -44,7 +44,7 @@ def process_compound_verb(verb):
 
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'ok̆o', 'gama', 'mo'): {
+    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'ok̆o', 'gama', 'mo', 'ye'): {
         'S1_Singular': 'v',
         'S2_Singular': '',
         'S3_Singular': '',
@@ -59,7 +59,7 @@ def get_phonetic_rules(region):
     if region == 'FA':
         phonetic_rules_v = {
             'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-            'b': ['a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+            'b': ['l', 'a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
             'p̌': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆'],
             'm': ['n']
         }
@@ -67,7 +67,7 @@ def get_phonetic_rules(region):
         phonetic_rules_v = {
             'v': ['a', 'e', 'i', 'o', 'u'],
             'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-            'b': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+            'b': ['l','d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
             'p̌': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆'],
             'm': ['n']
         }
@@ -460,7 +460,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/ok̆o preverbs, we could check here: if preverb ends with "o") root[:-1
             if applicative and causative:
-                if root in ('oşums', 'oşups', 'odums'):
+                if root in (('oşums', 'oşups', 'odums', 'otkums', 'otkups')):
                     root = root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'
@@ -471,7 +471,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                 elif root.endswith('y'):
                     root = root[:-2] + 'ap'
             elif applicative:
-                if root in ('işums', 'işups', 'idums'):
+                if root in (('işums', 'işups', 'idums', 'itkums', 'itkups')):
                     root = root[:-3] + 'v'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3]
@@ -480,7 +480,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             elif causative:
                 if root == 'digurams':
                     root = root
-                elif root in ('oşums', 'oşups', 'odums'):
+                elif root in (('oşums', 'oşups', 'odums', 'otkums', 'otkups')):
                     root = root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'
@@ -491,7 +491,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                 elif root.endswith('y'):
                     root = root[:-2] + 'ap'
             else:
-                if root in ('şums', 'şups', 'dums'):  # remove "am/um/ups" endings from root
+                if root in ('şums', 'şups', 'dums', 'tkums', 'tkups'):  # remove "am/um/ups" endings from root
                     root = root[:-3] + 'v'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3]

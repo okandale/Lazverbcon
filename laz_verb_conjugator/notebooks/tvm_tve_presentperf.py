@@ -39,7 +39,7 @@ def process_compound_verb(verb):
 
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'ok̆o', 'gama', 'mo'): {
+    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'ok̆o', 'gama', 'mo', 'ye'): {
         'S1_Singular': 'v',
         'S2_Singular': '',
         'S3_Singular': '',
@@ -184,7 +184,7 @@ def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicati
             # Remove the preverb from the third-person form if it exists and add special rules for exceptions
             if preverb and root.startswith(preverb):
                 root = root[len(preverb):-1]  # Remove only the preverb
-            elif root == "oşu":
+            elif root in (('oşu', 'dodumu', 'otku')):
                 root = infinitive[1:-1] + "v"
             else:
                 root = root[1:-1]  # Remove the last character of the root
