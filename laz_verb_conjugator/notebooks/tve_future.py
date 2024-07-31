@@ -590,7 +590,7 @@ def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False,
     all_conjugations = {}
     for subject in subjects:
         for obj in objects:
-            result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, use_optional_preverb=use_optional_preverb)
+            result = conjugate_future(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, use_optional_preverb=use_optional_preverb)
             for region, conjugation_list in result.items():
                 if region not in all_conjugations:
                     all_conjugations[region] = set()

@@ -582,7 +582,7 @@ def format_conjugations(all_conjugations):
 
 def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False):
     subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
-    return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb)
+    return collect_conjugations_all_subjects_specific_object(infinitive, subjects, obj, applicative, causative, use_optional_preverb)
 
 # Define personal pronouns outside of regions
 personal_pronouns_general = {
