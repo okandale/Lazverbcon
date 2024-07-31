@@ -287,7 +287,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 else:
                     prefix = 'me'
                 
-                if is_vowel(prefix[-1]) or is_vowel(root[-1]) and subject not in ('S1_Singular', 'S1_Plural'):
+                if (is_vowel(prefix[-1]) and prefix.endswith(('a', 'i', 'u', 'o'))) or (is_vowel(root[1:]) and subject not in ('S1_Singular', 'S1_Plural')) or (is_vowel(root[0]) and subject in ('S2_Singular', 'S3_Singular', 'S2_Plural', 'S3_plural')):
                     preverb = 'n'
                 else:
                     preverb = 'me'
