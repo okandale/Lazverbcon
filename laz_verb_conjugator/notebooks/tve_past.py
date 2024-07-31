@@ -263,7 +263,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             
             # Handle special case for verbs starting with 'i' or 'o'
             root = handle_marker(main_infinitive, root, marker)
-
+            adjusted_prefix = ''
             # Get the first letter after the marker is attached
             first_letter = get_first_letter(root)
 
@@ -285,10 +285,13 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 else:
                     prefix = 'me'
                 
-                if (is_vowel(prefix[-1]) and prefix.endswith(('a', 'i', 'u', 'o'))) or (is_vowel(root[1:]) and subject not in ('S1_Singular', 'S1_Plural')) or (is_vowel(root[0]) and subject in ('S2_Singular', 'S3_Singular', 'S2_Plural', 'S3_plural')):
+                if (is_vowel(prefix[-1]) and prefix.endswith(('a', 'i', 'u', 'o'))) or (is_vowel(root[1:]) and subject not in ('S1_Singular', 'S1_Plural')) or (is_vowel(root[0]) and subject in ('S2_Singular', 'S3_Singular', 'S2_Plural', 'S3_plural')) and not adjusted_prefix and not "mom":
                     preverb = 'n'
                 else:
-                    preverb = 'me'
+                    if prefix == 'mom':
+                        preverb = 'mo'
+                    else:
+                        preverb = 'me'
 
             
 
