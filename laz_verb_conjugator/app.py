@@ -47,10 +47,12 @@ def conjugate():
     optative = request.args.get('optative', 'false').lower() == 'true'
     tense = request.args.get('tense')
     aspect = request.args.get('aspect')
-    region_filter = request.args.get('region', None)
+    region_filter = request.args.get('region', '').split(',')
+
 
     if not infinitive or not subject or (not tense and not aspect):
         return jsonify({"error": "Invalid input"}), 400
+
 
     conjugations = {}
     module_found = False  # Flag to indicate if we found any valid module
@@ -175,11 +177,12 @@ def conjugate():
                             print(f"Result for subj: {subj}, obj_item: {obj_item} -> {result}")
 
                             for region, forms in result.items():
-                                if region_filter and region != region_filter:
+                                if region_filter and region_filter != [''] and region not in region_filter:
                                     continue
                                 if region not in conjugations:
                                     conjugations[region] = set()
                                 conjugations[region].update(forms)
+
 
                 used_module = module  # Track the module used
                 module_found = True

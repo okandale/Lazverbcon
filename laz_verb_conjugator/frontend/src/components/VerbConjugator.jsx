@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const VerbConjugator = () => {
   const [formData, setFormData] = useState({
     infinitive: '',
-    subject: 'S1_Singular',
+    subject: 'all',
     obj: '',
     tense: 'present',
     aspect: '',
@@ -86,13 +86,17 @@ const VerbConjugator = () => {
     const params = new URLSearchParams();
     Object.entries(formData).forEach(([key, value]) => {
       if (key === 'regions') {
-        params.append('region', value.join(','));
+        if (value.length > 0) { // Ensure regions are only appended if they are not empty
+          params.append('region', value.join(','));
+        }
       } else if (typeof value === 'boolean') {
         params.append(key, value ? 'true' : 'false');
       } else {
         params.append(key, value);
       }
     });
+
+    console.log(`/conjugate?${params.toString()}`); // Log the request URL for debugging
 
     try {
       const response = await fetch(`/conjugate?${params.toString()}`);
@@ -116,8 +120,8 @@ const VerbConjugator = () => {
     } catch (error) {
       console.error('Error:', error);
       toast.error('An error occurred while conjugating the verb. Please try again later.');
-    }
-  };
+  }
+};
 
   const isAspectDisabled = formData.optative || formData.applicative;
   const isTenseDisabled = formData.optative;
