@@ -120,6 +120,8 @@ def determine_marker(subject, obj, marker_type):
 def handle_marker(infinitive, root, marker):
     if infinitive == 'doguru':
         root = root[1:]  # Remove the first character 'd' from the root
+    if infinitive == 'meşvelu' and marker:
+        root = root[1:]        
     if infinitive in ('oç̌k̆omu', 'oşk̆omu') and marker == 'o':
         root = 'çams'
         marker = ''
@@ -273,6 +275,8 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 preverb = preverb[:-1]
             # Special handling for "me"
             if preverb == 'me' or (use_optional_preverb and not preverb):
+                if main_infinitive == 'meşvelu' and not marker:
+                    root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
                 first_letter = get_first_letter(root)
                 if obj in ['O2_Singular', 'O2_Plural']:
                     adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
@@ -285,7 +289,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 else:
                     prefix = 'me'
                 
-                if (is_vowel(prefix[-1]) and prefix.endswith(('a', 'i', 'u', 'o'))) or (is_vowel(root[1:]) and subject not in ('S1_Singular', 'S1_Plural')) or (is_vowel(root[0]) and subject in ('S2_Singular', 'S3_Singular', 'S2_Plural', 'S3_plural')) and not adjusted_prefix and not "mom":
+                if is_vowel(root[0]) and prefix.endswith(('a', 'i', 'u', 'o', 'e')) and not adjusted_prefix:
                     preverb = 'n'
                 else:
                     if prefix == 'mom':
