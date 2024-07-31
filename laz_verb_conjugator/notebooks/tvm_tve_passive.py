@@ -53,7 +53,8 @@ preverbs_rules = {
         'S3_Plural': ''
     }
 }
-
+def is_vowel(char):
+    return char in 'aeiou'
 # Phonetic rules for 'v' and 'g'
 def get_phonetic_rules(region):
     if region == 'FA':
@@ -265,15 +266,31 @@ def conjugate_passive_form(infinitive, tense, subject=None, obj=None, applicativ
             # Adjust the prefix based on the first letter for phonetic rules
             if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
-            if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb != 'go':
+            if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb != 'go' and preverb != 'me':
                 preverb = preverb[:-1]
             
             
             prefix = subject_markers[subject]
             
-            if preverb == "me" and subject_markers[subject].startswith(('a', 'e', 'i', 'o', 'u')):
-                preverb = "n"
-                prefix = preverb + subject_markers[subject]
+            # Special handling for "me"
+            if preverb == 'me' or (use_optional_preverb and not preverb):
+                first_letter = get_first_letter(root)
+                if obj in ['O2_Singular', 'O2_Plural']:
+                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                    prefix = preverb + adjusted_prefix
+                elif subject in ['S1_Singular', 'S1_Plural']:
+                    adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
+                    prefix = preverb + adjusted_prefix
+                elif obj in ['O1_Singular', 'O1_Plural']:
+                    prefix = 'mom'
+                else:
+                    prefix = 'n'
+                
+                if is_vowel(prefix[-1]) or is_vowel(root[-1]) and subject not in ('S1_Singular', 'S1_Plural'):
+                    preverb = 'n'
+                else:
+                    preverb = 'me'
+                    
             elif preverb in ('gama', 'gam'):
                 root = 'iç'
                 preverb = 'gam' if subject in ('S3_Singular', 'S3_Plural') else 'gamo'

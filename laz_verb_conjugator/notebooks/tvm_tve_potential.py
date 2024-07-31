@@ -48,7 +48,8 @@ preverbs_rules = {
         'S3_Plural': ''
     }
 }
-
+def is_vowel(char):
+    return char in 'aeiou'
 # Phonetic rules for 'v' and 'g'
 def get_phonetic_rules(region):
     if region == 'FA':
