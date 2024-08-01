@@ -526,7 +526,10 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 suffix = 'ay' if region == "AŞ" else 'as'
             elif subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('ms'):
                 if region == "AŞ":
-                    root = root[:-1]
+                    if root.endswith('ms'):
+                        root = root[:-2]
+                    else:
+                        root = root[:-1]
                     suffix = 'y' 
                 else:
                     suffix = 's'
@@ -535,7 +538,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('y'):
                 suffix = ''
             elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
-                suffix = 'an'
+                suffix = 'n'
             elif subject in ('S1_Singular', 'S2_Singular') and mood == 'optative':
                 suffix = 'a'
             elif subject in ('S1_Plural', 'S2_Plural') and mood == 'optative':
