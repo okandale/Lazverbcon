@@ -539,7 +539,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif subject == 'S3_Singular' and mood == 'optative':
                 suffix = 'ay' if region == "AŞ" else 'as'
             elif subject == 'S3_Singular' and root.endswith(('um', 'am', 'ms', 'uy')):
-                suffix = 'y' if region == "AŞ" else 's'
+                suffix = '' if region == "AŞ" else 's'
             else:
                 suffix = suffixes[subject]
 
