@@ -47,12 +47,10 @@ def conjugate():
     optative = request.args.get('optative', 'false').lower() == 'true'
     tense = request.args.get('tense')
     aspect = request.args.get('aspect')
-    region_filter = request.args.get('region', '').split(',')
-
+    region_filter = request.args.get('region', None)
 
     if not infinitive or not subject or (not tense and not aspect):
         return jsonify({"error": "Invalid input"}), 400
-
 
     conjugations = {}
     module_found = False  # Flag to indicate if we found any valid module
@@ -82,8 +80,6 @@ def conjugate():
                 subjects = ordered_subjects if subject == 'all' else [subject]
                 objects = ordered_objects if obj == 'all' else [obj] if obj else [None]
 
-                print(f"Infinitive: {infinitive}, Subjects: {subjects}, Objects: {objects}, Aspect: {actual_aspect}, Embedded Tense: {embedded_tense}, Mood: {mood}, Region Filter: {region_filter}")
-
                 for subj in subjects:
                     if obj == [None]:
                         if hasattr(module.collect_conjugations_all, '__code__') and 'mood' in module.collect_conjugations_all.__code__.co_varnames:
@@ -104,8 +100,6 @@ def conjugate():
                                     result = module.collect_conjugations_all(infinitive, subjects=[subj], tense=embedded_tense, obj=obj_item, applicative=applicative, causative=causative)
                             else:
                                 return "Invalid module", 400
-
-                            print(f"Result for subj: {subj}, obj_item: {obj_item} -> {result}")
 
                             for region, forms in result.items():
                                 if region_filter and region != region_filter:
@@ -149,10 +143,6 @@ def conjugate():
                 subjects = ordered_subjects if subject == 'all' else [subject]
                 objects = ordered_objects if obj == 'all' else [obj] if obj else [None]
 
-                print(f"Infinitive: {infinitive}, Subjects: {subjects}, Objects: {objects}, Tense: {actual_tense}, Embedded Tense: {embedded_tense}, Mood: {mood}, Region Filter: {region_filter}")
-
-                print(f"Module verbs: {list(module.verbs.keys())}")  # Debugging: print available verbs in the module
-
                 for subj in subjects:
                     if obj == [None]:
                         if hasattr(module.collect_conjugations_all, '__code__') and 'mood' in module.collect_conjugations_all.__code__.co_varnames:
@@ -174,15 +164,12 @@ def conjugate():
                             else:
                                 return "Invalid module", 400
 
-                            print(f"Result for subj: {subj}, obj_item: {obj_item} -> {result}")
-
                             for region, forms in result.items():
-                                if region_filter and region_filter != [''] and region not in region_filter:
+                                if region_filter and region != region_filter:
                                     continue
                                 if region not in conjugations:
                                     conjugations[region] = set()
                                 conjugations[region].update(forms)
-
 
                 used_module = module  # Track the module used
                 module_found = True
@@ -211,14 +198,11 @@ def conjugate():
 
 def format_conjugations(conjugations, module, ordered_subjects, ordered_objects):
     formatted_conjugations = {}
-    
+
     for region, forms in conjugations.items():
         sorted_forms = sorted(forms, key=lambda x: (ordered_subjects.index(x[0]), ordered_objects.index(x[1]) if x[1] else -1))
         formatted_forms = []
         personal_pronouns = module.get_personal_pronouns(region)
-
-        # Debugging: print personal pronouns for the region
-        print(f"Region: {region}, Personal Pronouns: {personal_pronouns}")
 
         for form in sorted_forms:
             if len(form) != 3:
@@ -230,13 +214,8 @@ def format_conjugations(conjugations, module, ordered_subjects, ordered_objects)
             subject_pronoun = personal_pronouns.get(subject, subject)
             object_pronoun = personal_pronouns.get(obj, '') if obj else ''
 
-            # Debugging lines
-            print(f"Region: {region}, Form: {form}")
-            print(f"Subject: {subject}, Object: {obj}")
-            print(f"Subject Pronoun: {subject_pronoun}, Object Pronoun: {object_pronoun}")
-
             formatted_forms.append(f"{subject_pronoun} {object_pronoun}: {conjugated_verb}")
-        
+
         formatted_conjugations[region] = formatted_forms
 
     return formatted_conjugations
@@ -244,3 +223,4 @@ def format_conjugations(conjugations, module, ordered_subjects, ordered_objects)
 
 if __name__ == '__main__':
     app.run(debug=True)
+
