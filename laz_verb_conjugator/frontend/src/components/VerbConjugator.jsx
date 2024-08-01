@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const VerbConjugator = () => {
   const [formData, setFormData] = useState({
     infinitive: '',
-    subject: 'S1_Singular',
+    subject: 'all',
     obj: '',
     tense: 'present',
     aspect: '',
@@ -14,7 +14,7 @@ const VerbConjugator = () => {
     optative: false,
     regions: [],
   });
-  const [results, setResults] = useState({});
+  const [results, setResults] = useState({ data: {}, error: '' });
   const [showRegions, setShowRegions] = useState(false);
   const infinitiveInputRef = useRef(null);
 
@@ -36,25 +36,25 @@ const VerbConjugator = () => {
     setFormData(prevData => {
       const newData = { ...prevData };
 
-      if (prevData.optative || prevData.applicative) {
+      if (prevData.optative) {
         newData.aspect = '';
         newData.tense = 'present';
         if (newData.aspect !== '' || newData.tense !== 'present') {
-          toast.warn('Aspect and tense are not applicable when optative, applicative, or causative is selected.');
+          setResults({ data: {}, error: 'Aspect and tense are not applicable when optative is selected.' });
         }
       }
 
       if (prevData.aspect !== '') {
         newData.obj = '';
         if (newData.obj !== '') {
-          toast.warn('Object is not applicable when an aspect is selected.');
+          setResults({ data: {}, error: 'Object is not applicable when an aspect is selected.' });
         }
       }
 
       if (prevData.tense === 'presentperf') {
         newData.obj = '';
         if (newData.obj !== '') {
-          toast.warn('Object is not applicable in present perfect tense.');
+          setResults({ data: {}, error: 'Object is not applicable in present perfect tense.' });
         }
       }
 
@@ -82,11 +82,13 @@ const VerbConjugator = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setResults({}); // Clear previous results
+    setResults({ data: {}, error: '' }); // Clear previous results and error
     const params = new URLSearchParams();
     Object.entries(formData).forEach(([key, value]) => {
       if (key === 'regions') {
-        params.append('region', value.join(','));
+        if (value.length > 0) { // Ensure regions are only appended if they are not empty
+          params.append('region', value.join(','));
+        }
       } else if (typeof value === 'boolean') {
         params.append(key, value ? 'true' : 'false');
       } else {
@@ -94,12 +96,14 @@ const VerbConjugator = () => {
       }
     });
 
+    console.log(`/conjugate?${params.toString()}`); // Log the request URL for debugging
+
     try {
       const response = await fetch(`/conjugate?${params.toString()}`);
-
+      
       if (!response.ok) {
         if (response.status === 404) {
-          toast.error('This verb does not exist in our database.');
+          setResults({ data: {}, error: 'This verb does not exist in our database.' });
         } else {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -107,15 +111,15 @@ const VerbConjugator = () => {
       }
 
       const data = await response.json();
-
+      
       if (Object.keys(data).length === 0) {
-        toast.warn('No conjugations found for this verb.');
+        setResults({ data: {}, error: 'No conjugations found for this verb.' });
       } else {
-        setResults(data);
+        setResults({ data, error: '' });
       }
     } catch (error) {
       console.error('Error:', error);
-      toast.error('An error occurred while conjugating the verb. Please try again later.');
+      setResults({ data: {}, error: 'An error occurred while conjugating the verb. Please try again later.' });
     }
   };
 
@@ -149,7 +153,7 @@ const VerbConjugator = () => {
         {specialCharacters.map((char, index) => (
           <button
             key={index}
-            className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+            className="px-3 py-1 bg-gray-300 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
             onClick={() => insertSpecialCharacter(char)}
           >
             {char}
@@ -201,7 +205,7 @@ const VerbConjugator = () => {
               Object:
             </label>
             <select
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isObjectDisabled ? 'bg-gray-200' : ''}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isObjectDisabled ? 'text-gray-500 bg-gray-300' : ''}`}
               id="obj"
               name="obj"
               value={formData.obj}
@@ -214,7 +218,7 @@ const VerbConjugator = () => {
               <option value="O3_Singular">Him/Her/It</option>
               <option value="O1_Plural">Us</option>
               <option value="O2_Plural">You (plural)</option>
-              <option value="O3_Plural">Them</option>
+              <option value="O3_Singular">Them</option>
               <option value="all">All</option>
             </select>
           </div>
@@ -224,7 +228,7 @@ const VerbConjugator = () => {
               Tense:
             </label>
             <select
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isTenseDisabled ? 'bg-gray-200' : ''}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isTenseDisabled ? 'text-gray-500 bg-gray-300' : ''}`}
               id="tense"
               name="tense"
               value={formData.tense}
@@ -245,7 +249,7 @@ const VerbConjugator = () => {
               Aspect:
             </label>
             <select
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isAspectDisabled ? 'bg-gray-200' : ''}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isAspectDisabled ? 'text-gray-500 bg-gray-300' : ''}`}
               id="aspect"
               name="aspect"
               value={formData.aspect}
@@ -342,17 +346,21 @@ const VerbConjugator = () => {
 
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8">
         <h2 className="text-2xl font-bold mb-4">Results:</h2>
-        {Object.entries(results).length > 0 ? (
-          Object.entries(results).map(([region, forms]) => (
-            <div key={region} className="mb-4">
-              <h3 className="text-xl font-semibold text-blue-600">{regionNames[region] || region}</h3>
-              {forms.map((form, index) => (
-                <p key={index} className="ml-4">{form}</p>
-              ))}
-            </div>
-          ))
+        {results.error ? (
+          <p className="text-red-600">{results.error}</p>
         ) : (
-          <p>No results to display.</p>
+          Object.entries(results.data).length > 0 ? (
+            Object.entries(results.data).map(([region, forms]) => (
+              <div key={region} className="mb-4">
+                <h3 className="text-xl font-semibold text-blue-600">{regionNames[region] || region}</h3>
+                {forms.map((form, index) => (
+                  <p key={index} className="ml-4">{form}</p>
+                ))}
+              </div>
+            ))
+          ) : (
+            <p>No results to display.</p>
+          )
         )}
       </div>
     </div>
