@@ -387,20 +387,20 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 if subject == 'S3_Singular' and obj == 'O3_Singular':
                     suffix = ''
                 elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
-                    if root.endswith('en'):
-                        root = root[:-1]
+                    if root.endswith(('en', 'rs')):
+                        root = root[:-2] if infinitive.endswith('rs') else root[:-1]
                     suffix = 'rt'
                 elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular']:
-                    if root.endswith('en'):
+                    if root.endswith(('en', 'rs')):
                         root = root[:-1]
-                    suffix = 'r'
+                    suffix = '' if infinitive.endswith('rs') else 'r'
                 elif subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural'] and obj in ('O1_Plural', 'O2_Plural'):
-                    if root.endswith('en'):
-                        root = root[:-1]
+                    if root.endswith(('en', 'rs')):
+                        root = root[:-2] if infinitive.endswith('rs') else root[:-1]
                     suffix = 'rt'
                 elif subject in ['S1_Plural', 'S2_Plural'] and obj in ('O1_Singular', 'O2_Singular'):
-                    if root.endswith('en'):
-                        root = root[:-1]
+                    if root.endswith(('en', 'rs')):
+                        root = root[:-2] if infinitive.endswith('rs') else root[:-1]
                     suffix = 'rt'
                 elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
                     suffix = ''
@@ -413,14 +413,14 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             # Conjugate the verb
             if preverb in ('go', 'gy', 'coz', 'd'):
                 if suffix == 'r' and root.endswith('n'):
-                    final_root = root[:-1]
+                    final_root = root
                 elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and root.endswith('s'):
-                    final_root = root[:-1]
+                    final_root = root + 'r'
                 else:
                     final_root = root
             else:
                 if subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and root.endswith('s'):
-                    final_root = root[:-1]
+                    final_root = root
                 else:
                     final_root = root
 

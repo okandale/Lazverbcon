@@ -313,6 +313,8 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             
             # Special handling for "do"
             elif preverb == 'do':
+                if root in ('diguraps', 'digurams'):
+                    root = root[1:]
                 if obj in ['O2_Singular', 'O2_Plural']:
                     adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
                     prefix = 'do' + adjusted_prefix

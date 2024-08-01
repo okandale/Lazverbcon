@@ -307,6 +307,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             
             # Special handling for "do"
             elif preverb == 'do':
+                if root in ('diguraps', 'digurams'):
+                    root = root[1:]
                 if obj in ['O2_Singular', 'O2_Plural']:
                     adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
                     prefix = 'do' + adjusted_prefix
@@ -516,18 +518,24 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif mood == 'optative' and root.endswith('rs'):
                 root = root[:-1]
 
-            
+            # Debugging statement for the root
+            print(f"Debug: Infinitive: {infinitive}, Subject: {subject}, Object: {obj}, Mood: {mood}, Region: {region}, Root before suffix determination: {root}")
+
             # Determine the suffix
             if subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('ms') and mood == 'optative':
                 suffix = 'ay' if region == "AŞ" else 'as'
             elif subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('ms'):
-                suffix = 'y' if region == "AŞ" else 's'
+                if region == "AŞ":
+                    root = root[:-1]
+                    suffix = 'y' 
+                else:
+                    suffix = 's'
             elif subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('y') and mood == 'optative':
                 suffix = 'ay'
             elif subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('y'):
                 suffix = ''
             elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
-                suffix = 'man' if region == "AŞ" else 'an'
+                suffix = 'an'
             elif subject in ('S1_Singular', 'S2_Singular') and mood == 'optative':
                 suffix = 'a'
             elif subject in ('S1_Plural', 'S2_Plural') and mood == 'optative':
@@ -538,8 +546,15 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 suffix = 't'
             elif subject == 'S3_Singular' and mood == 'optative':
                 suffix = 'ay' if region == "AŞ" else 'as'
-            elif subject == 'S3_Singular' and root.endswith(('um', 'am', 'ms', 'uy')):
-                suffix = '' if region == "AŞ" else 's'
+            elif subject == 'S3_Singular' and root.endswith(('um', 'am', 'ms')):
+                if region == "AŞ":
+                    if root.endswith('ms'):
+                        root = root[:-2]
+                    else:
+                        root = root[:-1]
+                    suffix = 'y'
+                else:
+                    suffix = 's'
             else:
                 suffix = suffixes[subject]
 
