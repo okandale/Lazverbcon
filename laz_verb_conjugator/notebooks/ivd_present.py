@@ -370,7 +370,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         prefix = adjusted_prefix
                 elif subject in ('S1_Singular', 'S1_Plural') and obj in ('O3_Singular', 'O3_Plural'):
                     adjusted_prefix = 'm'
-                    prefix = adjusted_prefix + 'a'
+                    prefix = adjusted_prefix
                 else:
                     prefix = subject_markers[subject]
 
