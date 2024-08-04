@@ -14,10 +14,10 @@
 import pandas as pd
 import os
 
-# Load the excel file
+# Load the CSV file
 file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
 
-# Read the excel file.
+# Read the CSV file.
 df = pd.read_csv(file_path)
 
 # Filter for 'TVE' verbs --- Transitive Verbs Ergative

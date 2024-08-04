@@ -8,11 +8,11 @@ import requests
 import pandas as pd
 import os
 
-# Load the excel file
-file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.xlsx')
+# Load the CSV file
+file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
 
-# Read the excel file.
-df = pd.read_excel(file_path)
+# Read the CSV file.
+df = pd.read_csv(file_path)
 
 # Filter for 'TVE' and 'TVM' verbs
 df_tve = df[df['Category'].isin(['TVE', 'TVM'])]
