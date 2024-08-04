@@ -1,81 +1,110 @@
-Laz Infinitive,Category,Laz 3rd Person Singular Present,Region,Laz 3rd Person Singular Present Alternative 1,Region Alternative 1,Laz 3rd Person Singular Present Alternative 2,Region Alternative 2,English Translation,Turkish Verb
-ceç̌u,TVE,coç̌ams,AŞ,,,,,to begin,başlamak
+﻿Laz Infinitive,Category,Laz 3rd Person Singular Present,Region,Laz 3rd Person Singular Present Alternative 1,Region Alternative 1,Laz 3rd Person Singular Present Alternative 2,Region Alternative 2,English Translation,Turkish Verb
 ceçamu,TVE,ceçams,"PZ, AŞ",,,,,to hit something/someone,vurmak (bir şeye)
+ceç̌u,TVE,coç̌ams,AŞ,,,,,to begin,başlamak
 coxons,IVD,coxons,HO,,,,,to be called,adında olmak
 cozun,IVD,cozun,AŞ,,,,,to be called,adında olmak
-diç̌irs,IVD,diç̌irs,"FA, HO",,,,,to require,lazım gelmek
+diç̌irs,IVD,diç̌irs,FA,,,,,to require,lazım gelmek
 dodumu,TVE,dodums,"FA, PZ, AŞ",dodumers,,,,"to put, to place (something on the floor)",koymak (yere)
-doguru,TVE,digurams,"PZ, AŞ, FA",,,,,to learn,öğrenmek
-doloç̌aru,TVE,doloç̌arums,"PZ, FA, AŞ",doloç̌arup,HO,,,to record,kaydetmek
-doʒ̆onu,IVD,daʒ̆onen,FA,,,,,to like,beğenmek
-dvaç̌irs,IVD,dvaç̌irs,"PZ, AŞ",,,,,to require,lazım gelmek
+dodvumu,TVE,dodvups,HO,,,,,"to put, to place (something on the floor)",koymak (yere)
+doguru,TVE,digurams,"PZ, AŞ, FA",diguraps,HO,,,to learn,öğrenmek
+doloç̌aru,TVE,doloç̌arums,"PZ, FA, AŞ",doloç̌arups,HO,,,to record,kaydetmek
+doskidu,TVM,doskidur,"AŞ, PZ, FA, HO",,,,,to stay,kalmak
+doʒ̆onu,IVD,daʒ̆onen,"FA, HO",,,,,to think,sanmak
+dvaç̌irs,IVD,dvaç̌irs,"PZ, AŞ, HO",,,,,to require,lazım gelmek
 eç̌opu,TVE,eç̌opums,"FA, PZ, AŞ",,,,,to buy,almak
 exondvalu,TVE,exindums,ALL,,,,,to take responsibility,sormluluk almak
-gamaçamu,TVE,gamaçams,"PZ, AŞ, FA, HO",,,,,to sell,satmak
+gamaçamu,TVE,gamaçams,"PZ, AŞ, FA",gamaçaps,HO,,,to sell,satmak
 geçamu,TVE,geçams,FA,geçaps,HO,,,to hit something/someone,vurmak (bir şeye)
-geç̌k̆u,TVE,gyoç̌k̆ams,"FA, HO",,,,,to begin,başlamak
-gonç̌elu,IVD,ganç̌elen,"FA, HO",gvanç̌elen,"PZ, AŞ",,,to miss someone,özlemek
+geç̌k̆u,TVE,gyoç̌k̆ams,FA,gyoç̌k̆aps,HO,,,to begin,başlamak
+gonç̌elu,IVD,ganç̌elen,FA,gvanç̌elen,"PZ, AŞ, HO",,,to miss someone,özlemek
+gonʒ̆k̆u,TVE,gonʒ̆k̆ips,HO,,,,,to open,"açmak (kapı, kilit vb.)"
 gonʒ̆u,TVE,gonʒ̆ams,"FA, PZ, AŞ",,,,,to open,"açmak (kapı, kilit vb.)"
-gonʒ̆k̆imu,TVE,gonʒ̆k̆ips,HO,,,,,to open,"açmak (kapı, kilit vb.)"
-goşinu,IVD,gaşinen,"FA, HO",gvaşinen,"AŞ, PZ",,,to remember,hatırlamak
-goşinu,TVE,goişinams,"FA, AŞ, PZ, HO",,,,,to remind,hatırlatmak
-gyožin,IVD,gyožin,,,,,,to be called,adında olmak
-meçamu,TVE,meçams,"FA, PZ, AŞ",,,,,to give,vermek
-moşvaçu,TVE,moişvaçams,,,,,,to rest,dinlemek
-obgaru,TVE,ibgars,FA,,,,,to cry,ağlamak
-obiru,TVE,ibirs,AŞ,,,,,to sing,şarkı söylemek
+goşinu,IVD,gaşinen,FA,gvaşinen,"AŞ, PZ, HO",,,to remember,hatırlamak
+goşinu,TVE,goişinams,"FA, AŞ, PZ",goişinaps,HO,,,to remind,hatırlatmak
+gyožin,IVD,gyožin,"FA, HO",,,,,to be called,adında olmak
+k̆ai doʒ̆onu,IVD,daʒ̆onen,"FA, HO",,,,,to like,beğenmek
+mebazgu,TVE,nobazgams,AŞ,žgups,HO,,,to poop,sıçmak
+meçamu,TVE,meçams,"FA, PZ, AŞ",meçaps,HO,,,to give,vermek
+moşvacu,TVE,moişvacams,"PZ, AŞ, FA",moişvacaps,HO,,,to rest,dinlemek
+obgaru,TVE,ibgars,"AŞ, FA, HO",,,,,to cry,ağlamak
+obiru,TVE,ibirs,"PZ, AŞ, FA, HO",,,,,to sing/play,şarkı söylemek
+oçamu,TVE,çams,"AŞ, PZ, FA",çaps,HO,,,to feed,yedirmek
 oç̌aru,TVE,ç̌arums,"FA, PZ",ç̌arups,HO,nç̌aruy,AŞ,to write,yazmak
-oçinu,TVE,içinems,,,,,,to know someone,tanımak
+oçinu,TVE,içinems,"PZ, AŞ, FA",içinaps,HO,,,to know someone,tanımak
 oçkinu,IVD,uçkin,"FA, HO",,,,,to know,bilmek
-oç̌k̆omu,TVE,imxors,"FA, PZ",ipxors,HO,,,to eat,yemek
-oç̌opu,TVE,ç̌opums,"FA, PZ, AŞ",,,,,to catch,yakalamak
-oğarğalu,TVE,ğarğals,,ğarğalaps,,,,to speak,konuşmak
-oğaru,TVE,ğarums,"FA, AŞ, PZ",,,,,to draw,çizmek
-ognu,TVE,ognams,"PZ, AŞ, FA, HO",,,,,to hear,duymak
-ogoru,TVE,gorums,"FA, PZ, AŞ",,,,,"to look, to want","istemek, aramak"
-ogzu,TVE,ogzams,"FA, ALL",ogzaps,HO,,,to make something work,çalıştırmak
-ok̆ap̌u,TVE,uk̆ap̌ams,,,,,,to run,koşmak
-okosu,TVE,kosums,,kosups,,,,to sweep,süpürmek
-olafu,TVE,lafups,,,,,,to speak,konuşmak
-olak̆irdu,TVE,ilak̆irday,,,,,,to speak,konuşmak
+oç̌k̆omu,TVE,imxors,FA,ipxors,HO,ç̌k̆omups,HO,to eat,yemek
+oç̌opu,TVE,ç̌opums,"FA, PZ, AŞ",ç̌opups,HO,,,to catch,yakalamak
+ocoxu,TVE,ucoxams,FA,ucoxops,HO,,,to call someone,çağırmak
+oğarğalu,TVE,ğarğals,HO,ğarğalaps,,,,to speak,konuşmak
+oğaru,TVE,ğarums,"FA, AŞ, PZ",ğarups,HO,,,to draw,çizmek
+ognu,TVE,ognams,"PZ, AŞ, FA",ognaps,HO,,,to hear,duymak
+ogoru,TVE,gorums,"FA, PZ, AŞ",gorups,HO,,,"to look, to want","istemek, aramak"
+oğuru,TVM,ğurun,"PZ, AŞ, FA, HO",,,,,to die,ölmek
+ogzu,TVE,ogzams,"FA, PZ, AŞ",ogzaps,HO,,,to make something work,çalıştırmak
+oju,TVM,jun,FA,,,,,to fly,uçmak
+ok̆ap̌u,TVE,uk̆ap̌ams,"FA, PZ, AŞ",uk̆apaps,HO,,,to run,koşmak
+okosu,TVE,kosums,"FA, PZ, AŞ",kosups,HO,,,to sweep,süpürmek
+olafu,TVE,lafups,BA,,,,,to speak,konuşmak
+olak̆irdu,TVE,ilak̆irday,AŞ,,,,,to speak,konuşmak
+olalu,TVE,lalups,HO,lalums,"PZ, AŞ, FA",,,"to bark, to talk nonsene ","havlamak, boş konuşmak"
 olimbu,IVD,alimben,PZ,,,,,to love,sevmek
-omçviru,TVE,imçvirs,,,,,,to swim,yüzmek
-omgaru,TVE,imgars,,,,,,"to cry, to weep",ağlamak
-omşkorinu,IVD,amşkorinen,"PZ, AŞ, FA, HO",,,,,to be hungry,acıkmak
-onciru,TVE,incirs,"FA, PZ",,,,,to sleep,uyumak
-onçiru,TVE,inçirs,,,,,,to swim,yüzmek
-onk̆ap̌u,TVE,unk̆ap̌ams,,,,,,to run,koşmak
-op̌aramitu,TVE,ip̌aramitams,,,,,,to speak,konuşmak
-oropumu,IVD,aoropen,AŞ,,,,,to love,sevmek
+olva,TVM,ulun,"AŞ, PZ",,,,,to go,gitmek
+omçviru,TVE,imçvirs,FA,,,,,to swim,yüzmek
+omgaru,TVE,imgars,PZ,,,,,"to cry, to weep",ağlamak
+omku,TVE,mkums,"PZ, AŞ, FA",,,,,to grind,öğütmek
+omkvu,TVE,mkvups,HO,,,,,to grind,öğütmek
+omşkironu,IVD,amşkironen,HO,,,,,,
+omşkorinu,IVD,amşkorinen,"PZ, AŞ, FA",,,,,to be hungry,acıkmak
+onç̌aru,TVE,nç̌arum,AŞ,,,,,to write,yazmak
+onciru,TVE,incirs,"PZ, AŞ, FA, HO",,,,,to sleep,uyumak
+onçiru,TVE,inçirs,"PZ, AŞ",,,,,to swim,yüzmek
+onçviru,TVE,inçvirs,HO,,,,,,
+onk̆ap̌u,TVE,unk̆ap̌ams,PZ,,,,,to run,koşmak
+op̌aramitu,TVE,ip̌aramitams,"PZ, AŞ, FA, HO",ip̌aramitaps,,,,to speak,konuşmak
+oputxu,TVM,putxun,"AŞ, PZ, HO",,,,,to fly,uçmak
+oqvapu,IVD,aqven,HO,,,,,to be something/someone (to someone),biri için birşey olmak
+oqvapu,TVE,iqven,HO,,,,,,
+oropu,IVD,aoropen,AŞ,,,,,to love,sevmek
 osinapu,TVE,isinapams,"FA, PZ, AŞ",isinapay,,,,to speak,konuşmak
 oşinu,TVE,şinems,PZ,şinums,FA,şinaps,HO,to respect,saygı göstermek
-oşk̆omu,TVE,imxors,AŞ,,,,,to eat,yemek
-osteru,TVE,isters,,,,,,to play,oynamak
-oşu,TVE,şums,"PZ, AŞ, FA",şups,HO,,,to drink,içmek
-ot̆ağodu,TVE,t̆rağodums,,,,,,to sing,şarkı söylemek
-ot̆axu,TVE,t̆axums,"FA, AŞ, PZ",,,,,to break,kırmak
-otiru,TVE,tirups,,,,,,,taşımak
-otku,TVE,tkums,,tkumers,,,,to say,söylemek
-ot̆k̆u,TVE,it̆urs,,,,,,to say,söylemek
-otoru,TVE,torums,,,,,,to carry,taşımak
-ovapu,IVD,aven,"FA, HO",,,,,to be (to someone),biri için birşey olmak
-ovapu,TVM,iven,FA,,,,,to be,olmak
-oxap̌aru,TVE,ixap̌ars,,,,,,to speak,konuşmak
-oxenu,TVE,ikums,"AŞ, PZ",ikips,HO,ikoms,FA,to do,yapmak
-oxoʒ̆onu,TVE,oxoʒ̆onams,,,,,,to understand,anlamak
-uğun,IVD,uğun,"PZ, AŞ, FA, HO",,,,,to have,var (cansız)
-unon,IVD,unon,"FA, HO",,,,,to want,istemek
-uyonun,IVD,uyonun,"PZ, AŞ, FA",,,,,to have,var (canlı)
-xe ok̆oç̌apxu,TVE,xe ok̆oç̌apxams,"FA, AŞ, PZ, HO",,,,,to applause,alkışlamak
-oxtimu,TVM,ulun,"FA, HO",,,,,to go,gitmek
-olva,TVM,ulun,"AŞ, PZ",,,,,to go,gitmek
+oskedinu,TVE,osk̆edinams,"AŞ, PZ",oskedinaps,HO,oskedinams,FA,"to raise, to keep someone alive","besleyerek yaşatmak, yaşamda tutmak"
 oskidu,TVM,skidun,"AŞ, PZ, FA, HO",,,,,to live,yaşamak
-doskidu,TVM,doskidur,"AŞ, PZ, FA, HO",,,,,to stay,kalmak
-oputxu,TVM,putxun,"AŞ, PZ",,,,,to fly,uçmak
-oju,TVM,jun,"FA, HO",,,,,to fly,uçmak
-ren,TVM,ren,"PZ, AŞ, FA, HO",,,,,to be,olmak
+oşk̆omu,TVE,imxors,"AŞ, PZ",,,,,to eat,yemek
+oslebinu,TVE,islebinams,AŞ,,,,,,
+osteru,TVE,isters,"FA, HO",,,,,to play,oynamak
+ostibu,TVE,stibums,"AŞ, FA",stibups,HO,,,,
+oşu,TVE,şums,"PZ, AŞ, FA",şups,HO,,,to drink,içmek
+ot̆ağodu,TVE,t̆rağodums,"PZ, AŞ",,,,,to sing,şarkı söylemek
+otanu,TVE,,,,,,,,
+ot̆axu,TVE,t̆axums,"FA, AŞ, PZ",t̆axups,HO,,,to break,kırmak
+otiru,TVE,tirups,HO,,,,,,taşımak
+otku,TVE,tkums,"FA, AŞ, PZ",tkumers,ALL,tkups,HO,to say,söylemek
+ot̆k̆u,TVE,it̆urs,AŞ,,,,,to say,söylemek
+otoru,TVE,torums,"FA, AŞ, PZ",,,,,to carry,taşımak
+ovapu,IVD,aven,FA,,,,,to be something/someone (to someone),biri için birşey olmak
+ovapu,TVM,iven,FA,,,,,to be,olmak
+oxap̌aru,TVE,ixap̌ars,PZ,,,,,to speak,konuşmak
+oxenu,TVE,ikums,"AŞ, PZ",ikoms,FA,,,to do,yapmak
+oxop̌u,TVE,xop̌ups,HO,,,,,to shovel up,küremek
+oxoʒ̆onu,TVE,oxoʒ̆onams,FA,oxoʒ̆onaps,HO,,,to understand,anlamak
+oxtimu,TVM,ulun,"FA, HO",,,,,to go,gitmek
+oxu,TVE,xums,"PZ, AŞ, FA",,,,,to shovel up,küremek
+oxvenu,TVE,ikips,HO,,,,,to do,yapmak
 oyapu,IVD,ayen,PZ,aen,AŞ,,,to be,olmak
 oyapu,TVM,iyen,"AŞ, PZ",,,,,to become,olmak
-onç̌aru,TVE,nç̌arum,AŞ,,,,,to write,yazmak
-oskedinu,TVE,osk̆edinams,AŞ,,,,,to raise,beslemek
-oçamu,TVE,çamums,"AŞ, PZ, FA, HO",,,,,,
+oyoxu,TVE,uyoxums,"PZ, AŞ",,,,,to call someone,çağırmak
+oʒ̆ilu,TVE,ʒ̆ilums,"PZ, AŞ",ʒ̆iloms,FA,ʒ̆ilups,HO,to pluck,koparmak
+oʒ̆k̆idu,TVE,ʒ̆k̆idums,FA,ʒ̆k̆idups,HO,,,to build,örmek
+oʒ̆k̆unu,IVD,aʒ̆k̆unen,HO,,,,,to ache,ağrımak
+oʒ̆k̆unu,TVE,ʒ̆k̆ups,HO,,,,,to ache,ağrımak
+oʒ̆odu,TVE,ʒ̆odums,"PZ, AŞ",,,,,to build,örmek
+oʒ̆unu,IVD,aʒ̆unen,"PZ, AŞ, FA",,,,,to ache,ağrımak
+ren,TVM,ren," FA, HO",on,"AŞ, PZ",,,to be,olmak
+uğun,IVD,uğun,"PZ, AŞ, FA, HO",,,,,to have,var (cansız)
+unon,IVD,unon,"FA, HO",,,,,to want,istemek
+uqonun,IVD,uqonun,HO,,,,,to have,var (cansız)
+uyonun,IVD,uyonun,"PZ, AŞ, FA",,,,,to have,var (canlı)
+xe ok̆oç̌apxu,TVE,xe ok̆oç̌apxams,"FA, AŞ, PZ",xe ok̆oç̌apxaps,HO,,,to applause,alkışlamak
+yeç̌opu,TVE,yeç̌opups,HO,,,,,to buy,almak
+meşvelu,TVE,nuşvelams,"FA, AŞ, PZ",nuşvelaps,HO,,,to help,yardım etmek
+ok̆itxu,TVE,ik̆itxams,"FA, AŞ, PZ",ik̆itxaps,HO,,,to ask/read,sormak/okumak
