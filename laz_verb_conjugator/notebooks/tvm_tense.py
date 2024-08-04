@@ -196,8 +196,8 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
         return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
     
-    if applicative and causative:
-        raise ValueError("A verb can either have an applicative marker or a causative marker, but not both.")
+    if obj:
+        raise ValueError("This verb cannot have an object.")
     if applicative and obj is None:
         raise ValueError("Applicative requires an object to be specified.")
     if causative and obj is None:

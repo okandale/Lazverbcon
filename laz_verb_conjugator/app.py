@@ -182,6 +182,8 @@ def conjugate():
                     print(f"Available subjects in module for {infinitive}: {module.verbs[infinitive].keys()}")
                 # Continue to the next module if the current one does not contain the infinitive
                 continue
+            except ValueError as e:
+                return jsonify({"error": str(e)}), 400
 
     if not module_found:
         return jsonify({"error": f"Infinitive {infinitive} not found in any module."}), 404

@@ -24,7 +24,10 @@ const VerbConjugator = () => {
     'AŞ': 'Ardeşen (Art̆aşeni)',
     'PZ': 'Pazar (Atina)',
     'FA': 'Fındıklı/Arhavi (Viʒ̆e/Ark̆abi)',
-    'HO': 'Hopa (Xopa)'
+    'HO': 'Hopa (Xopa)',
+    'FI': 'Fındıklı (Viʒ̆e)',
+    'AR': 'Arhavi (Ark̆abi)',
+    'ÇX': 'Çhala (Çxala)'
     // Add other region codes and names here
   };
 
@@ -102,10 +105,11 @@ const VerbConjugator = () => {
       const response = await fetch(`/conjugate?${params.toString()}`);
       
       if (!response.ok) {
-        if (response.status === 404) {
-          setResults({ data: {}, error: 'This verb does not exist in our database.' });
+        const errorData = await response.json();
+        if (errorData.error === 'This verb cannot have an object.') {
+          setResults({ data: {}, error: 'This verb cannot have an object.' });
         } else {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          setResults({ data: {}, error: errorData.error || 'This verb does not exist in our database.' });
         }
         return;
       }
