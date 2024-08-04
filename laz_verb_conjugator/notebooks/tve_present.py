@@ -503,7 +503,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 elif root.endswith('y'):
                     root = root[:-2] + 'apam'
             # Mood adjustment for root - add to the above markers if a combination of marker and mood is possible:
-            if mood == 'optative' and root.endswith(('ums', 'oms', 'ops', 'ups', 'ams')):
+            if mood == 'optative' and root.endswith(('ms', 'ps')):
                 root = root[:-3]
             elif mood == 'optative' and root.endswith(('umers', 'amers')):
                 root = root[:-5]
@@ -517,6 +517,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 root = root[:-2]
             elif mood == 'optative' and root.endswith('rs'):
                 root = root[:-1]
+            elif mood == 'optative':
+                root = root[:-2]
 
             # Debugging statement for the root
             print(f"Debug: Infinitive: {infinitive}, Subject: {subject}, Object: {obj}, Mood: {mood}, Region: {region}, Root before suffix determination: {root}")
