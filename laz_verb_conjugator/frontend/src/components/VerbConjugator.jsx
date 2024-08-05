@@ -3,7 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const VerbConjugator = () => {
-  const [formData, setFormData] = useState({
+  const defaultFormData = {
     infinitive: '',
     subject: 'all',
     obj: '',
@@ -13,7 +13,9 @@ const VerbConjugator = () => {
     causative: false,
     optative: false,
     regions: [],
-  });
+  };
+
+  const [formData, setFormData] = useState(defaultFormData);
   const [results, setResults] = useState({ data: {}, error: '' });
   const [showRegions, setShowRegions] = useState(false);
   const infinitiveInputRef = useRef(null);
@@ -125,6 +127,11 @@ const VerbConjugator = () => {
       console.error('Error:', error);
       setResults({ data: {}, error: 'An error occurred while conjugating the verb. Please try again later.' });
     }
+  };
+
+  const handleReset = () => {
+    setFormData(defaultFormData);
+    setResults({ data: {}, error: '' });
   };
 
   const isAspectDisabled = formData.optative || formData.applicative;
@@ -340,12 +347,21 @@ const VerbConjugator = () => {
           </label>
         </div>
 
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="submit"
-        >
-          Conjugate
-        </button>
+        <div className="flex justify-between">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Conjugate
+          </button>
+          <button
+            type="button"
+            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            onClick={handleReset}
+          >
+            Reset
+          </button>
+        </div>
       </form>
 
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8">
