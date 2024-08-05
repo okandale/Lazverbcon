@@ -186,7 +186,7 @@ def conjugate():
                 return jsonify({"error": str(e)}), 400
 
     if not module_found:
-        return jsonify({"error": f"Infinitive {infinitive} not found in any module."}), 404
+        return jsonify({"error": f"Infinitive {infinitive} not found."}), 404
 
     # Convert sets to lists for JSON serialization
     for region in conjugations:
