@@ -60,9 +60,12 @@ def conjugate():
     ordered_subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
     ordered_objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']
 
+    # Convert the region_filter to a set of regions if specified
+    region_filter_set = set(region_filter.split(',')) if region_filter else None
+
     if aspect:
         if aspect not in simplified_aspect_mapping:
-            return "Invalid aspect", 400
+            return jsonify({"error": "Invalid aspect"}), 400
 
         for actual_aspect in simplified_aspect_mapping[aspect]:
             module = tense_modules.get(actual_aspect)
@@ -99,10 +102,10 @@ def conjugate():
                                 else:
                                     result = module.collect_conjugations_all(infinitive, subjects=[subj], tense=embedded_tense, obj=obj_item, applicative=applicative, causative=causative)
                             else:
-                                return "Invalid module", 400
+                                return jsonify({"error": "Invalid module"}), 400
 
                             for region, forms in result.items():
-                                if region_filter and region != region_filter:
+                                if region_filter_set and region not in region_filter_set:
                                     continue
                                 if region not in conjugations:
                                     conjugations[region] = set()
@@ -118,7 +121,7 @@ def conjugate():
 
     else:
         if tense not in simplified_tense_mapping:
-            return "Invalid tense", 400
+            return jsonify({"error": "Invalid tense"}), 400
 
         for mapping in simplified_tense_mapping[tense]:
             if isinstance(mapping, tuple):
@@ -139,7 +142,8 @@ def conjugate():
                 # Check if the infinitive exists in the current module
                 if not hasattr(module, 'verbs') or infinitive not in module.verbs:
                     continue
-
+                if actual_tense.startswith('tvm') and obj:
+                    return jsonify({"error": "TVM verbs cannot be conjugated with objects."}), 400
                 subjects = ordered_subjects if subject == 'all' else [subject]
                 objects = ordered_objects if obj == 'all' else [obj] if obj else [None]
 
@@ -162,10 +166,10 @@ def conjugate():
                                 else:
                                     result = module.collect_conjugations_all(infinitive, subjects=[subj], tense=embedded_tense, obj=obj_item, applicative=applicative, causative=causative)
                             else:
-                                return "Invalid module", 400
+                                return jsonify({"error": "Invalid module"}), 400
 
                             for region, forms in result.items():
-                                if region_filter and region != region_filter:
+                                if region_filter_set and region not in region_filter_set:
                                     continue
                                 if region not in conjugations:
                                     conjugations[region] = set()
@@ -184,9 +188,8 @@ def conjugate():
                 continue
             except ValueError as e:
                 return jsonify({"error": str(e)}), 400
-
     if not module_found:
-        return jsonify({"error": f"Infinitive {infinitive} not found."}), 404
+        return jsonify({"error": f"Infinitive {infinitive} not found in any module."}), 404
 
     # Convert sets to lists for JSON serialization
     for region in conjugations:
@@ -225,4 +228,3 @@ def format_conjugations(conjugations, module, ordered_subjects, ordered_objects)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
