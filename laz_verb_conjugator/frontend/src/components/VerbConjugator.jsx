@@ -39,33 +39,34 @@ const VerbConjugator = () => {
 
   const updateFormState = () => {
     setFormData(prevData => {
-      const newData = { ...prevData };
+        const newData = { ...prevData };
 
-      if (prevData.optative) {
-        newData.aspect = '';
-        newData.tense = 'present';
-        if (newData.aspect !== '' || newData.tense !== 'present') {
-          setResults({ data: {}, error: 'Aspect and tense are not applicable when optative is selected.' });
+        if (prevData.optative) {
+            newData.aspect = '';
+            newData.tense = 'present';
+            if (newData.aspect !== '' || newData.tense !== 'present') {
+                setResults({ data: {}, error: 'Aspect and tense are not applicable when optative is selected.' });
+            }
         }
-      }
 
-      if (prevData.aspect !== '') {
-        newData.obj = '';
-        if (newData.obj !== '') {
-          setResults({ data: {}, error: 'Object is not applicable when an aspect is selected.' });
+        if (prevData.aspect !== '') {
+            newData.obj = '';
+            if (newData.obj !== '') {
+                setResults({ data: {}, error: 'Object is not applicable when an aspect is selected.' });
+            }
+        } else if (prevData.tense === 'presentperf') {
+            newData.obj = '';
+            if (newData.obj !== '') {
+                setResults({ data: {}, error: 'Object is not applicable in present perfect tense.' });
+            }
+        } else {
+            newData.obj = prevData.obj;
         }
-      }
 
-      if (prevData.tense === 'presentperf') {
-        newData.obj = '';
-        if (newData.obj !== '') {
-          setResults({ data: {}, error: 'Object is not applicable in present perfect tense.' });
-        }
-      }
-
-      return newData;
+        return newData;
     });
-  };
+};
+
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
