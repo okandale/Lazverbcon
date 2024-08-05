@@ -135,7 +135,7 @@ const VerbConjugator = () => {
     setResults({ data: {}, error: '' });
   };
 
-  const isAspectDisabled = formData.optative || formData.applicative;
+  const isAspectDisabled = formData.optative || formData.applicative || formData.obj;
   const isTenseDisabled = formData.optative;
   const isObjectDisabled = formData.aspect !== '' || formData.tense === 'presentperf';
 

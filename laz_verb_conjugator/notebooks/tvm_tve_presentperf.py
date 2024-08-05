@@ -124,10 +124,10 @@ def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicati
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
         return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
     
-    if applicative and causative:
-        raise ValueError("A verb can either have an applicative marker or a causative marker, but not both.")
-    if applicative and obj is None:
-        raise ValueError("Applicative requires an object to be specified.")
+    if applicative or causative:
+        raise ValueError("This tense cannot have an applicative, causative or optative. ")
+    if obj:
+        raise ValueError("This tense cannot have an object.")
     if causative and obj is None:
         raise ValueError("Causative requires an object to be specified.")
     
