@@ -45,6 +45,8 @@ def conjugate():
     applicative = request.args.get('applicative', 'false').lower() == 'true'
     causative = request.args.get('causative', 'false').lower() == 'true'
     optative = request.args.get('optative', 'false').lower() == 'true'
+    imperative = request.args.get('imperative', 'false').lower() == 'true'
+    neg_imperative = request.args.get('neg_imperative', 'false').lower() == 'true'
     tense = request.args.get('tense')
     aspect = request.args.get('aspect')
     region_filter = request.args.get('region', None)
@@ -63,6 +65,14 @@ def conjugate():
     # Convert the region_filter to a set of regions if specified
     region_filter_set = set(region_filter.split(',')) if region_filter else None
 
+    mood = None
+    if imperative:
+        mood = 'imperative'
+        tense = 'present'
+    elif neg_imperative:
+        mood = 'neg_imperative'
+        tense = 'present'
+
     if aspect:
         if aspect not in simplified_aspect_mapping:
             return jsonify({"error": "Invalid aspect"}), 400
@@ -73,7 +83,6 @@ def conjugate():
                 continue
 
             embedded_tense = tense
-            mood = 'optative' if optative and 'tve' in actual_aspect else None  # Apply optative as mood for 'tve' aspects
 
             try:
                 # Check if the infinitive exists in the current module
@@ -120,10 +129,10 @@ def conjugate():
                 continue
 
     else:
-        if tense not in simplified_tense_mapping:
+        if tense not in simplified_tense_mapping and not mood:
             return jsonify({"error": "Invalid tense"}), 400
 
-        for mapping in simplified_tense_mapping[tense]:
+        for mapping in simplified_tense_mapping.get(tense, []):
             if isinstance(mapping, tuple):
                 actual_tense, embedded_tense = mapping
                 if optative and actual_tense == 'tvm_tense':
@@ -161,7 +170,7 @@ def conjugate():
                                 else:
                                     result = module.collect_conjugations(infinitive, [subj], obj=obj_item, applicative=applicative, causative=causative)
                             elif hasattr(module, 'collect_conjugations_all'):
-                                if hasattr(module.collect_conjugations_all, '__code__') and 'mood' in module.collect_conjugations_all.__code__.co_varnames:
+                                if hasattr(module.collect_conjugations_all.__code__, 'mood'):
                                     result = module.collect_conjugations_all(infinitive, subjects=[subj], tense=embedded_tense, obj=obj_item, applicative=applicative, causative=causative, mood=mood)
                                 else:
                                     result = module.collect_conjugations_all(infinitive, subjects=[subj], tense=embedded_tense, obj=obj_item, applicative=applicative, causative=causative)
@@ -188,6 +197,7 @@ def conjugate():
                 continue
             except ValueError as e:
                 return jsonify({"error": str(e)}), 400
+
     if not module_found:
         return jsonify({"error": f"Infinitive {infinitive} not found in any module."}), 404
 

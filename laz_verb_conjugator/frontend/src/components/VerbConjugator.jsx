@@ -12,6 +12,8 @@ const VerbConjugator = () => {
     applicative: false,
     causative: false,
     optative: false,
+    imperative: false,
+    neg_imperative: false,
     regions: [],
   };
 
@@ -35,7 +37,7 @@ const VerbConjugator = () => {
 
   useEffect(() => {
     updateFormState();
-  }, [formData.optative, formData.applicative, formData.causative, formData.tense, formData.aspect]);
+  }, [formData.optative, formData.applicative, formData.causative, formData.tense, formData.aspect, formData.imperative, formData.neg_imperative]);
 
   const updateFormState = () => {
     setFormData(prevData => {
@@ -63,10 +65,13 @@ const VerbConjugator = () => {
             newData.obj = prevData.obj;
         }
 
+        if (prevData.imperative || prevData.neg_imperative) {
+            newData.tense = 'present';
+        }
+
         return newData;
     });
-};
-
+  };
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -136,7 +141,7 @@ const VerbConjugator = () => {
   };
 
   const isAspectDisabled = formData.optative || formData.applicative || formData.obj;
-  const isTenseDisabled = formData.optative;
+  const isTenseDisabled = formData.optative || formData.imperative || formData.neg_imperative;
   const isObjectDisabled = formData.aspect !== '' || formData.tense === 'presentperf';
 
   const insertSpecialCharacter = (char) => {
@@ -306,47 +311,81 @@ const VerbConjugator = () => {
           )}
         </fieldset>
 
-        <div className="mb-4 flex items-center">
-          <input
-            type="checkbox"
-            id="applicative"
-            name="applicative"
-            checked={formData.applicative}
-            onChange={handleInputChange}
-            className="mr-2"
-          />
-          <label className="text-gray-700 text-sm font-bold" htmlFor="applicative">
-            Applicative
-          </label>
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="applicative"
+              name="applicative"
+              checked={formData.applicative}
+              onChange={handleInputChange}
+              className="mr-2"
+            />
+            <label className="text-gray-700 text-sm font-bold" htmlFor="applicative">
+              Applicative
+            </label>
+          </div>
+
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="imperative"
+              name="imperative"
+              checked={formData.imperative}
+              onChange={handleInputChange}
+              className="mr-2"
+              disabled={formData.neg_imperative}
+            />
+            <label className="text-gray-700 text-sm font-bold" htmlFor="imperative">
+              Imperative
+            </label>
+          </div>
+
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="causative"
+              name="causative"
+              checked={formData.causative}
+              onChange={handleInputChange}
+              className="mr-2"
+            />
+            <label className="text-gray-700 text-sm font-bold" htmlFor="causative">
+              Causative
+            </label>
+          </div>
+
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="neg_imperative"
+              name="neg_imperative"
+              checked={formData.neg_imperative}
+              onChange={handleInputChange}
+              className="mr-2"
+              disabled={formData.imperative}
+            />
+            <label className="text-gray-700 text-sm font-bold" htmlFor="neg_imperative">
+              Negative Imperative
+            </label>
+          </div>
+
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="optative"
+              name="optative"
+              checked={formData.optative}
+              onChange={handleInputChange}
+              className="mr-2"
+            />
+            <label className="text-gray-700 text-sm font-bold" htmlFor="optative">
+              Optative
+            </label>
+          </div>
         </div>
 
-        <div className="mb-4 flex items-center">
-          <input
-            type="checkbox"
-            id="causative"
-            name="causative"
-            checked={formData.causative}
-            onChange={handleInputChange}
-            className="mr-2"
-          />
-          <label className="text-gray-700 text-sm font-bold" htmlFor="causative">
-            Causative
-          </label>
-        </div>
 
-        <div className="mb-4 flex items-center">
-          <input
-            type="checkbox"
-            id="optative"
-            name="optative"
-            checked={formData.optative}
-            onChange={handleInputChange}
-            className="mr-2"
-          />
-          <label className="text-gray-700 text-sm font-bold" htmlFor="optative">
-            Optative
-          </label>
-        </div>
 
         <div className="flex justify-between">
           <button
