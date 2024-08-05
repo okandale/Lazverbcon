@@ -211,7 +211,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 'S3_Singular': 'u',
                 'S1_Plural': 'it',
                 'S2_Plural': 'it',
-                'S3_Plural': 'es' if region == "AŞ" else 'es' # Ardeşen rule
+                'S3_Plural': 'ey' if region == "AŞ" else 'es' # Ardeşen rule
             }
 
             object_prefixes = {
@@ -515,7 +515,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             elif subject in ('S1_Singular', 'S2_Singular') and obj in ('O1_Singular', 'O2_Singular', 'O3_Singular', 'O3_Plural'):
                 suffix = 'i'
             elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
-                suffix = 'es'
+                suffix = 'ey' if region == "AŞ" else 'es'
             elif subject in ['S1_Plural', 'S2_Plural']:
                 suffix = 'it'
             elif subject == 'S3_Plural':
