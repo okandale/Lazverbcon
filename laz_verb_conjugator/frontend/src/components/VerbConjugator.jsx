@@ -32,7 +32,6 @@ const VerbConjugator = () => {
     'FI': 'Fındıklı (Viʒ̆e)',
     'AR': 'Arhavi (Ark̆abi)',
     'ÇX': 'Çhala (Çxala)'
-    // Add other region codes and names here
   };
 
   useEffect(() => {
@@ -41,35 +40,35 @@ const VerbConjugator = () => {
 
   const updateFormState = () => {
     setFormData(prevData => {
-        const newData = { ...prevData };
+      const newData = { ...prevData };
 
-        if (prevData.optative) {
-            newData.aspect = '';
-            newData.tense = 'present';
-            if (newData.aspect !== '' || newData.tense !== 'present') {
-                setResults({ data: {}, error: 'Aspect and tense are not applicable when optative is selected.' });
-            }
+      if (prevData.optative) {
+        newData.aspect = '';
+        newData.tense = 'present';
+        if (newData.aspect !== '' || newData.tense !== 'present') {
+          setResults({ data: {}, error: 'Aspect and tense are not applicable when optative is selected.' });
         }
+      }
 
-        if (prevData.aspect !== '') {
-            newData.obj = '';
-            if (newData.obj !== '') {
-                setResults({ data: {}, error: 'Object is not applicable when an aspect is selected.' });
-            }
-        } else if (prevData.tense === 'presentperf') {
-            newData.obj = '';
-            if (newData.obj !== '') {
-                setResults({ data: {}, error: 'Object is not applicable in present perfect tense.' });
-            }
-        } else {
-            newData.obj = prevData.obj;
+      if (prevData.aspect !== '') {
+        newData.obj = '';
+        if (newData.obj !== '') {
+          setResults({ data: {}, error: 'Object is not applicable when an aspect is selected.' });
         }
-
-        if (prevData.imperative || prevData.neg_imperative) {
-            newData.tense = 'present';
+      } else if (prevData.tense === 'presentperf') {
+        newData.obj = '';
+        if (newData.obj !== '') {
+          setResults({ data: {}, error: 'Object is not applicable in present perfect tense.' });
         }
+      } else {
+        newData.obj = prevData.obj;
+      }
 
-        return newData;
+      if (prevData.imperative || prevData.neg_imperative) {
+        newData.tense = 'present';
+      }
+
+      return newData;
     });
   };
 
@@ -123,7 +122,8 @@ const VerbConjugator = () => {
       }
 
       const data = await response.json();
-      
+      console.log("Received data:", data); // Debugging: log the received data
+
       if (Object.keys(data).length === 0) {
         setResults({ data: {}, error: 'No conjugations found for this verb.' });
       } else {
@@ -385,8 +385,6 @@ const VerbConjugator = () => {
           </div>
         </div>
 
-
-
         <div className="flex justify-between">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -413,9 +411,13 @@ const VerbConjugator = () => {
             Object.entries(results.data).map(([region, forms]) => (
               <div key={region} className="mb-4">
                 <h3 className="text-xl font-semibold text-blue-600">{regionNames[region] || region}</h3>
-                {forms.map((form, index) => (
-                  <p key={index} className="ml-4">{form}</p>
-                ))}
+                {Array.isArray(forms) ? (
+                  forms.map((form, index) => (
+                    <p key={index} className="ml-4">{form}</p>
+                  ))
+                ) : (
+                  <p>{forms}</p>
+                )}
               </div>
             ))
           ) : (
@@ -428,3 +430,4 @@ const VerbConjugator = () => {
 };
 
 export default VerbConjugator;
+

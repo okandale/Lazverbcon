@@ -601,12 +601,12 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
 
 
 # Define the function to extract negative imperatives
-def extract_neg_imperatives(all_conjugations):
+def extract_neg_imperatives(all_conjugations, subjects):
     imperatives = {}
     for region, conjugations in all_conjugations.items():
         imperatives[region] = []
         for subject, obj, conjugation in conjugations:
-            if subject in ['S2_Singular', 'S2_Plural']:
+            if subject in subjects:
                 # Add "mot" to the conjugation
                 conjugation_with_mot = f"mot {conjugation}"
                 imperatives[region].append((subject, obj, conjugation_with_mot))
@@ -614,15 +614,16 @@ def extract_neg_imperatives(all_conjugations):
 
 # Function to format the negative imperative forms
 def format_neg_imperatives(imperatives):
-    result = []
+    result = {}
     for region, conjugations in imperatives.items():
         personal_pronouns = get_personal_pronouns(region)
-        result.append(f"{region}:")
+        formatted_conjugations = []
         for subject, obj, conjugation in conjugations:
             subject_pronoun = personal_pronouns[subject]
             obj_pronoun = personal_pronouns_general.get(obj, '')
-            result.append(f"{subject_pronoun} {obj_pronoun}: {conjugation}")
-    return '\n'.join(result)
+            formatted_conjugations.append(f"{subject_pronoun} {obj_pronoun}: {conjugation}")
+        result[region] = formatted_conjugations
+    return result
 
 
 # Function to format the output with region-specific pronouns
@@ -746,18 +747,27 @@ print(format_conjugations(all_conjugations))
 
 
 # Example usage negative IMPERATIVE with no specific object
-infinitive = 'eç̌opu'
-subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
+# Example usage for negative imperative conjugations
+# Example usage for negative imperative conjugations with parameter filtering
+infinitive = 'meçamu'
+subjects = ['S2_Singular']  # Filtering for specific subjects
+objects = None  # You can specify objects here if needed
 
 # Collect conjugations
-all_conjugations = collect_conjugations(infinitive, subjects)
+all_conjugations = collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, mood=None)
 
 # Extract and format imperatives
-neg_imperatives = extract_neg_imperatives(all_conjugations)
+neg_imperatives = extract_neg_imperatives(all_conjugations, subjects)
 formatted_neg_imperatives = format_neg_imperatives(neg_imperatives)
 
 # Print the formatted imperatives
 print(formatted_neg_imperatives)
+
+# Print the formatted imperatives
+for region, forms in formatted_neg_imperatives.items():
+    print(f"{region}:")
+    for form in forms:
+        print(form)
 
 
 # In[55]:
@@ -770,7 +780,7 @@ object_pronoun = personal_pronouns_general[obj]
 print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}':")
 all_conjugations = collect_conjugations(infinitive, subjects, obj=obj)
 # Extract and format imperatives
-neg_imperatives = extract_neg_imperatives(all_conjugations)
+neg_imperatives = extract_neg_imperatives(all_conjugations, ['S2_Singular', 'S2_Plural'])
 formatted_neg_imperatives = format_neg_imperatives(neg_imperatives)
 
 # Print the formatted imperatives

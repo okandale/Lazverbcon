@@ -72,27 +72,30 @@ def conjugate():
     # Convert the region_filter to a set of regions if specified
     region_filter_set = set(region_filter.split(',')) if region_filter else None
 
-    if imperative or neg_imperative:
+    if neg_imperative:
         module = tense_modules.get('tve_present')  # Assuming imperative forms are handled in present tense module
         if not module:
-            return jsonify({"error": "Imperative forms not supported for this verb."}), 400
+            return jsonify({"error": "Negative imperative forms not supported for this verb."}), 400
 
         try:
             if not hasattr(module, 'verbs') or infinitive not in module.verbs:
                 return jsonify({"error": f"Infinitive {infinitive} not found in the database."}), 404
 
-            all_conjugations = module.collect_conjugations_all_subjects_specific_object(infinitive, obj=obj)
-            if imperative:
-                imperatives = module.extract_imperatives(all_conjugations)
-                formatted_conjugations = module.format_conjugations(imperatives)
-            if neg_imperative:
-                neg_imperatives = module.extract_neg_imperatives(all_conjugations)
-                formatted_conjugations = module.format_neg_imperatives(neg_imperatives)
+            if subject == 'all':
+                subjects = ['S2_Singular', 'S2_Plural']
+            elif subject in ['S2_Singular', 'S2_Plural']:
+                subjects = [subject]
+            else:
+                return jsonify({"error": "Invalid subject for negative imperative. Only S2_Singular, S2_Plural, or All are allowed."}), 400
+
+            all_conjugations = module.collect_conjugations(infinitive, subjects, obj, applicative, causative, mood='optative' if optative else None)
+            neg_imperatives = module.extract_neg_imperatives(all_conjugations, subjects)
+            formatted_conjugations = module.format_neg_imperatives(neg_imperatives)
 
             return jsonify(formatted_conjugations)
 
         except Exception as e:
-            logger.error(f"Error while processing imperative/neg_imperative: {e}")
+            logger.error(f"Error while processing negative imperative: {e}")
             return jsonify({"error": str(e)}), 400
 
     if aspect:
@@ -124,18 +127,18 @@ def conjugate():
                         for obj_item in objects:
                             if hasattr(module, 'collect_conjugations'):
                                 if hasattr(module.collect_conjugations, '__code__') and 'mood' in module.collect_conjugations.__code__.co_varnames:
-                                    logger.debug(f"Calling collect_conjugations with: infinitive={infinitive}, subjects=[{subj}], obj={obj_item}, applicative={applicative}, causative={causative}, mood={mood}")
+                                    logger.debug(f"Calling collect_conjugations with: infinitive={infinitive}, subjects=[{subj}], obj={obj_item}, applicative=applicative, causative=causative, mood=mood")
                                     result = module.collect_conjugations(infinitive, [subj], obj=obj_item, applicative=applicative, causative=causative, mood=mood)
                                 else:
-                                    logger.debug(f"Calling collect_conjugations with: infinitive={infinitive}, subjects=[{subj}], obj={obj_item}, applicative={applicative}, causative={causative}")
+                                    logger.debug(f"Calling collect_conjugations with: infinitive={infinitive}, subjects=[{subj}], obj={obj_item}, applicative=applicative, causative=causative")
                                     result = module.collect_conjugations(infinitive, [subj], obj=obj_item, applicative=applicative, causative=causative)
                             elif hasattr(module, 'collect_conjugations_all'):
                                 if hasattr(module.collect_conjugations_all, '__code__') and 'mood' in module.collect_conjugations_all.__code__.co_varnames:
                                     logger.debug(f"Calling collect_conjugations_all with: infinitive={infinitive}, subjects=[{subj}], obj={obj_item}, applicative=applicative, causative=causative, mood={mood}")
-                                    result = module.collect_conjugations_all(infinitive, subjects=[subj], obj=obj_item, applicative=applicative, causative=causative, mood=mood)
+                                    result = module.collect_conjugations_all(infinitive, subjects=[subj], applicative=applicative, causative=causative, mood=mood)
                                 else:
                                     logger.debug(f"Calling collect_conjugations_all with: infinitive={infinitive}, subjects=[{subj}], obj={obj_item}, applicative=applicative, causative=causative")
-                                    result = module.collect_conjugations_all(infinitive, subjects=[subj], obj=obj_item, applicative=applicative, causative=causative)
+                                    result = module.collect_conjugations_all(infinitive, subjects=[subj], applicative=applicative, causative=causative)
                             else:
                                 return jsonify({"error": "Invalid module"}), 400
 
@@ -160,8 +163,6 @@ def conjugate():
         for mapping in simplified_tense_mapping[tense]:
             if isinstance(mapping, tuple):
                 actual_tense, embedded_tense = mapping
-                if optative and actual_tense == 'tvm_tense':
-                    embedded_tense = 'optative'
             else:
                 actual_tense = mapping
                 embedded_tense = tense
@@ -190,10 +191,10 @@ def conjugate():
                         for obj_item in objects:
                             if hasattr(module, 'collect_conjugations'):
                                 if hasattr(module.collect_conjugations, '__code__') and 'mood' in module.collect_conjugations.__code__.co_varnames:
-                                    logger.debug(f"Calling collect_conjugations with: infinitive={infinitive}, subjects=[{subj}], obj={obj_item}, applicative={applicative}, causative={causative}, mood={mood}")
+                                    logger.debug(f"Calling collect_conjugations with: infinitive={infinitive}, subjects=[{subj}], obj={obj_item}, applicative=applicative, causative=causative, mood={mood}")
                                     result = module.collect_conjugations(infinitive, [subj], obj=obj_item, applicative=applicative, causative=causative, mood=mood)
                                 else:
-                                    logger.debug(f"Calling collect_conjugations with: infinitive={infinitive}, subjects=[{subj}], obj={obj_item}, applicative={applicative}, causative={causative}")
+                                    logger.debug(f"Calling collect_conjugations with: infinitive={infinitive}, subjects=[{subj}], obj={obj_item}, applicative=applicative, causative=causative")
                                     result = module.collect_conjugations(infinitive, [subj], obj=obj_item, applicative=applicative, causative=causative)
                             elif hasattr(module, 'collect_conjugations_all'):
                                 if hasattr(module.collect_conjugations_all, '__code__') and 'mood' in module.collect_conjugations_all.__code__.co_varnames:
@@ -221,6 +222,7 @@ def conjugate():
             except ValueError as e:
                 logger.error(f"ValueError: {e}")
                 return jsonify({"error": str(e)}), 400
+
     if not module_found:
         return jsonify({"error": f"Infinitive {infinitive} not found in any module."}), 404
 
@@ -261,3 +263,4 @@ def format_conjugations(conjugations, module, ordered_subjects, ordered_objects)
 
 if __name__ == '__main__':
     app.run(debug=True)
+
