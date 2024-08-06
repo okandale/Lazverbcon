@@ -555,7 +555,6 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
 
     return region_conjugations
 
-# Define the function to handle conjugations and collection
 def collect_conjugations_all(infinitive, subjects, tense='present', obj=None, applicative=False, causative=False):
     all_conjugations = {}
     for subject in subjects:
@@ -566,6 +565,35 @@ def collect_conjugations_all(infinitive, subjects, tense='present', obj=None, ap
             for conjugation in conjugation_list:
                 all_conjugations[region].add((subject, obj, conjugation[2]))  # Ensure unique conjugation for each combination
     return all_conjugations
+
+# Define the function to extract negative imperatives
+def extract_neg_imperatives(all_conjugations, subjects):
+    imperatives = {}
+    for region, conjugations in all_conjugations.items():
+        imperatives[region] = []
+        for subject, obj, conjugation in conjugations:
+            if subject in subjects:
+                # Add "mot" to the conjugation
+                conjugation_with_mot = f"mot {conjugation}"
+                imperatives[region].append((subject, obj, conjugation_with_mot))
+    return imperatives
+
+# Function to format the negative imperative forms
+def format_neg_imperatives(imperatives):
+    result = {}
+    for region, conjugations in imperatives.items():
+        personal_pronouns = get_personal_pronouns(region)
+        formatted_conjugations = []
+        
+        # Sort conjugations to ensure S2_Singular appears before S2_Plural
+        conjugations.sort(key=lambda x: 0 if x[0] == 'S2_Singular' else 1)
+        
+        for subject, obj, conjugation in conjugations:
+            subject_pronoun = personal_pronouns[subject]
+            obj_pronoun = personal_pronouns_general.get(obj, '')
+            formatted_conjugations.append(f"{subject_pronoun} {obj_pronoun}: {conjugation}")
+        result[region] = formatted_conjugations
+    return result
 
 # Define the function to format the output with region-specific pronouns
 def format_conjugations(all_conjugations):
@@ -578,7 +606,6 @@ def format_conjugations(all_conjugations):
             object_pronoun = personal_pronouns.get(obj, '')
             result.append(f"{subject_pronoun} {object_pronoun} {conjugation}")
     return '\n'.join(result)
-
 
 def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False):
     subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
@@ -602,7 +629,7 @@ def get_first_word(verb):
 
 # Example usage
 infinitive = 'oputxu'
-tense = 'past progressive' # insert 'past', 'present','future','past progressive' or 'optative
+tense = 'optative' # insert 'past', 'present','future','past progressive' or 'optative
 all_conjugations = collect_conjugations_all(infinitive, subjects, tense=tense)
 
 # Print the formatted conjugations
