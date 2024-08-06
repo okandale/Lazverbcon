@@ -789,21 +789,25 @@ for region, forms in formatted_neg_imperatives.items():
 # In[55]:
 
 
-# neg Imperative Example usage for SxOx conjugations
+
+
+# Example usage for negative imperative conjugations
+# Collecting all conjugations for all subjects and all objects
 infinitive = 'meçamu'
-obj = 'O1_Singular'
-object_pronoun = personal_pronouns_general[obj]
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}':")
-all_conjugations = collect_conjugations(infinitive, subjects, obj=obj)
+subjects = ['S2_Singular', 'S2_Plural']  # Ensure S2_Plural is included
+
+# Collect conjugations
+all_conjugations = collect_conjugations_all_subjects_all_objects(infinitive)
+
 # Extract and format imperatives
-neg_imperatives = extract_neg_imperatives(all_conjugations, ['S2_Singular', 'S2_Plural'])
+neg_imperatives = extract_neg_imperatives(all_conjugations, subjects)
 formatted_neg_imperatives = format_neg_imperatives(neg_imperatives)
 
 # Print the formatted imperatives
-print(formatted_neg_imperatives)
-
-
-# In[ ]:
+for region, forms in formatted_neg_imperatives.items():
+    print(f"{region}:")
+    for form in forms:
+        print(form)
 
 
 
