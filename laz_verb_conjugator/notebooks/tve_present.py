@@ -600,19 +600,18 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
 
 
 
-# Define the function to extract negative imperatives
 def extract_neg_imperatives(all_conjugations, subjects):
     imperatives = {}
     for region, conjugations in all_conjugations.items():
         imperatives[region] = []
         for subject, obj, conjugation in conjugations:
             if subject in subjects:
-                # Add "mot" to the conjugation
                 conjugation_with_mot = f"mot {conjugation}"
                 imperatives[region].append((subject, obj, conjugation_with_mot))
     return imperatives
 
-# Function to format the negative imperative forms
+ordered_objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']
+
 def format_neg_imperatives(imperatives):
     result = {}
     for region, conjugations in imperatives.items():
@@ -622,8 +621,25 @@ def format_neg_imperatives(imperatives):
             subject_pronoun = personal_pronouns[subject]
             obj_pronoun = personal_pronouns_general.get(obj, '')
             formatted_conjugations.append(f"{subject_pronoun} {obj_pronoun}: {conjugation}")
+
+        # Reorder for negative imperatives, ensuring S2_Singular comes before S2_Plural
+        formatted_conjugations.sort(key=lambda x: (
+            x.split()[0] == personal_pronouns['S2_Plural'],  # Place S2_Plural last
+            x.split()[0] == personal_pronouns['S2_Singular'],  # Place S2_Singular first
+            ordered_objects.index(x.split()[1]) if len(x.split()) > 1 and x.split()[1] in ordered_objects else -1
+        ))
+        
         result[region] = formatted_conjugations
     return result
+
+
+
+
+
+
+
+# The rest of tve_present.py remains unchanged
+
 
 
 # Function to format the output with region-specific pronouns

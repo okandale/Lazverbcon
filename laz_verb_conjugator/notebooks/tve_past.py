@@ -559,27 +559,35 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
                 all_conjugations[region].add((subject, obj, conjugation[2]))  # Ensure unique conjugation for each combination
     return all_conjugations
 
-# Define the function to extract imperatives
-def extract_imperatives(all_conjugations):
+def extract_imperatives(all_conjugations, subjects):
     imperatives = {}
     for region, conjugations in all_conjugations.items():
         imperatives[region] = []
         for subject, obj, conjugation in conjugations:
-            if subject in ['S2_Singular', 'S2_Plural']:
+            if subject in subjects:
                 imperatives[region].append((subject, obj, conjugation))
     return imperatives
 
-# Function to format the imperative forms
 def format_imperatives(imperatives):
-    result = []
+    result = {}
     for region, conjugations in imperatives.items():
         personal_pronouns = get_personal_pronouns(region)
-        result.append(f"{region}:")
-        for subject, obj, conjugation in conjugations:
-            subject_pronoun = personal_pronouns[subject]
-            obj_pronoun = personal_pronouns_general.get(obj, '')
-            result.append(f"{subject_pronoun} {obj_pronoun}: {conjugation}")
-    return '\n'.join(result)
+        formatted_conjugations = []
+        # Filter only S2_Singular and S2_Plural for sorting
+        sorted_conjugations = sorted(conjugations, key=lambda x: (x[0] == 'S2_Singular', x[0] == 'S2_Plural'), reverse=True)
+        for subject, obj, conjugation in sorted_conjugations:
+            if subject in ['S2_Singular', 'S2_Plural']:  # Filter to include only S2_Singular and S2_Plural
+                subject_pronoun = personal_pronouns[subject]
+                obj_pronoun = personal_pronouns_general.get(obj, '')
+                formatted_conjugations.append(f"{subject_pronoun} {obj_pronoun}: {conjugation}")
+        result[region] = formatted_conjugations
+    return result
+
+
+
+
+
+
 
 # Function to format the output with region-specific pronouns
 def format_conjugations(all_conjugations):
@@ -635,11 +643,14 @@ obj = 'O3_Singular'
 all_conjugations = collect_conjugations(infinitive, subjects, obj=obj)
 
 # Extract and format imperatives
-imperatives = extract_imperatives(all_conjugations)
+imperatives = extract_imperatives(all_conjugations, subjects)
 formatted_imperatives = format_imperatives(imperatives)
 
 # Print the formatted imperatives
-print(formatted_imperatives)
+for region, forms in formatted_imperatives.items():
+    print(f"{region}:")
+    for form in forms:
+        print(form)
 
 # Example usage for Sx conjugations with a specific object and marker
 infinitive = 'geç̌k̆u'
