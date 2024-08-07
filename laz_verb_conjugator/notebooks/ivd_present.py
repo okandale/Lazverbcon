@@ -14,8 +14,6 @@ import os
 # Load the CSV file
 file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
 
-from notebooks.my_functions import get_personal_pronouns_ivd
-
 # Read the CSV file.
 df = pd.read_csv(file_path)
 
@@ -163,7 +161,7 @@ def handle_special_case_coz(root, subject):
 def remove_first_character(root):
     return root[1:]
 
-def get_personal_pronouns_ivd(region):
+def get_personal_pronouns(region):
     return {
         'S1_Singular': 'ma',
         'S2_Singular': 'si',
@@ -212,7 +210,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
         regions_for_form = region_str.split(',')
         for region in regions_for_form:
             region = region.strip()
-            personal_pronouns = get_personal_pronouns_ivd(region)
+            personal_pronouns = get_personal_pronouns(region)
             phonetic_rules_v = get_phonetic_rules(region)
             
             # Process the compound root to get the main part
@@ -451,7 +449,7 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
 def format_conjugations(all_conjugations):
     result = []
     for region, conjugations in all_conjugations.items():
-        personal_pronouns = get_personal_pronouns_ivd(region)
+        personal_pronouns = get_personal_pronouns(region)
         result.append(f"{region}:")
         for subject, obj, conjugation in sorted(conjugations, key=lambda x: subjects.index(x[0])):
             subject_pronoun = personal_pronouns[subject]

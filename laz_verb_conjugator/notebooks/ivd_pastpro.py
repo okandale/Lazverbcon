@@ -17,7 +17,6 @@ file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
 # Read the CSV file.
 df = pd.read_csv(file_path)
 
-from notebooks.my_functions import get_personal_pronouns_ivd
 # Now continue with your original processing logic
 
 # Filter for 'IVD' verbs (if you have already added the 'Category' column)
