@@ -38,7 +38,7 @@ const VerbConjugator = () => {
     'ÇX': 'Çhala (Çxala)'
   };
 
-  const subjectOrder = ['ma', 'si', 'himuk', 'himus', 'heyak', 'hiyak', 'şk̆u', 'çku', 'çkin', 't̆k̆va', 'tkva', 'hinik', 'hinis', 'hentepek', 'entepek'];
+  const subjectOrder = ['ma', 'si','him', 'himuk', 'himus', 'heyak', 'hiyak', 'şk̆u', 'çku', 'çkin', 't̆k̆va', 'hini', 'hinik', 'hinis', 'tkva', 'hinik', 'hinis', 'hentepek', 'entepek'];
   const objectOrder = ['ma', 'si', 'him', 'heya', 'hiya', 'şk̆u', 'çku', 'çkin', 't̆k̆va', 'tkva', 'hini', 'hentepe', 'entepe'];
 
   const translations = {
