@@ -4,6 +4,7 @@ import os
 # Load the CSV file
 file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
 
+from notebooks.my_functions import get_personal_pronouns_ivd
 # Read the CSV file.
 df = pd.read_csv(file_path)
 
@@ -111,22 +112,6 @@ def handle_special_case_coz(root, subject):
 def remove_first_character(root):
     return root[1:]
 
-def get_personal_pronouns(region):
-    return {
-        'S1_Singular': 'ma',
-        'S2_Singular': 'si',
-        'S3_Singular': 'heyas' if region == "FA" else 'himus' if region in ('AŞ', 'PZ') else 'hiyas',
-        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'hiya',
-        'S1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çki',
-        'S2_Plural': 'tkva' if region in ('FA', 'HO') else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkva',
-        'S3_Plural': 'hentepes' if region == "FA" else 'hinis' if region in ('AŞ', 'PZ') else 'entepes',
-        'O3_Plural': 'hentepe',
-        'O1_Singular': 'ma',
-        'O2_Singular': 'si',
-        'O1_Plural': 'çku',
-        'O2_Plural': 'tkva'
-    }
-
 # Function to conjugate future tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
 def conjugate_future(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False):
     # Check for invalid SxOx combinations
@@ -159,7 +144,7 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
         regions_for_form = region_str.split(',')
         for region in regions_for_form:
             region = region.strip()
-            personal_pronouns = get_personal_pronouns(region)
+            personal_pronouns = get_personal_pronouns_ivd(region)
             
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
@@ -390,7 +375,7 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
 def format_conjugations(all_conjugations):
     result = []
     for region, conjugations in all_conjugations.items():
-        personal_pronouns = get_personal_pronouns(region)
+        personal_pronouns = get_personal_pronouns_ivd(region)
         result.append(f"{region}:")
         for subject, obj, conjugation in sorted(conjugations, key=lambda x: subjects.index(x[0])):
             subject_pronoun = personal_pronouns[subject]

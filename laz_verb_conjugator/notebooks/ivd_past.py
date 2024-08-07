@@ -7,6 +7,7 @@ import os
 # Load the CSV file
 file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
 
+from notebooks.my_functions import get_personal_pronouns_ivd
 # Read the CSV file.
 df = pd.read_csv(file_path)
 
