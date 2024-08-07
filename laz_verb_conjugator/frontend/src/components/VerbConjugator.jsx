@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Flag, GlobeIcon } from 'lucide-react';
+import britishFlag from '../assets/united-kingdom-flag-icon.svg';
+import turkishFlag from '../assets/turkey-flag-icon.svg';
 
 const VerbConjugator = () => {
+  const [language, setLanguage] = useState('en');
   const defaultFormData = {
     infinitive: '',
     subject: 'all',
@@ -36,6 +40,47 @@ const VerbConjugator = () => {
 
   const subjectOrder = ['ma', 'si', 'himuk', 'himus', 'heyak', 'hiyak', 'şk̆u', 'çku', 'çkin', 't̆k̆va', 'tkva', 'hinik', 'hinis', 'hentepek', 'entepek'];
   const objectOrder = ['ma', 'si', 'him', 'heya', 'hiya', 'şk̆u', 'çku', 'çkin', 't̆k̆va', 'tkva', 'hini', 'hentepe', 'entepe'];
+
+  const translations = {
+    en: {
+      title: 'Verb Conjugator',
+      infinitive: 'Infinitive',
+      subject: 'Subject',
+      object: 'Object',
+      tense: 'Tense',
+      aspect: 'Aspect',
+      regions: 'Regions',
+      applicative: 'Applicative',
+      imperative: 'Imperative',
+      causative: 'Causative',
+      negImperative: 'Negative Imperative',
+      optative: 'Optative',
+      conjugate: 'Conjugate',
+      reset: 'Reset',
+      results: 'Results',
+    },
+    tr: {
+      title: 'Fiil Çekimi',
+      infinitive: 'Mastar',
+      subject: 'Özne',
+      object: 'Nesne',
+      tense: 'Zaman',
+      aspect: 'Görünüş',
+      regions: 'Bölgeler',
+      applicative: 'Uygulamalı',
+      imperative: 'Emir Kipi',
+      causative: 'Ettirgen',
+      negImperative: 'Olumsuz Emir',
+      optative: 'Dilek Kipi',
+      conjugate: 'Çek',
+      reset: 'Sıfırla',
+      results: 'Sonuçlar',
+    },
+  };
+
+  const toggleLanguage = () => {
+    setLanguage(prevLang => prevLang === 'en' ? 'tr' : 'en');
+  };
 
   useEffect(() => {
     updateFormState();
@@ -213,9 +258,25 @@ const VerbConjugator = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
+    <div className="max-w-2xl mx-auto p-4 relative">
+      <div className="absolute top-0 right-0 space-x-2">
+      <button 
+        onClick={toggleLanguage} 
+        className={`focus:outline-none p-1 rounded ${language === 'en' ? 'bg-blue-100' : ''}`}
+        aria-label="Switch to English"
+      >
+        <img src={britishFlag} alt="British flag" className="w-6 h-6" />
+      </button>
+      <button 
+          onClick={toggleLanguage} 
+          className={`focus:outline-none p-1 rounded ${language === 'tr' ? 'bg-red-100' : ''}`}
+          aria-label="Türkçe'ye geç"
+      >
+          <img src={turkishFlag} alt="Turkish flag" className="w-6 h-6" />
+      </button>
+      </div>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Verb Conjugator</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">{translations[language].title}</h1>
       <div className="mb-4 flex justify-center space-x-2">
         {specialCharacters.map((char, index) => (
           <button
@@ -230,7 +291,7 @@ const VerbConjugator = () => {
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="infinitive">
-            Infinitive:
+            {translations[language].infinitive}:
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -247,7 +308,7 @@ const VerbConjugator = () => {
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="subject">
-              Subject:
+              {translations[language].subject}:
             </label>
             <select
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -257,19 +318,19 @@ const VerbConjugator = () => {
               onChange={handleInputChange}
               required
             >
-              <option value="S1_Singular">I</option>
-              <option value="S2_Singular">You (singular)</option>
-              <option value="S3_Singular">He/She/It</option>
-              <option value="S1_Plural">We</option>
-              <option value="S2_Plural">You (plural)</option>
-              <option value="S3_Plural">They</option>
-              <option value="all">All</option>
+              <option value="S1_Singular">{language === 'en' ? 'I' : 'Ben'}</option>
+              <option value="S2_Singular">{language === 'en' ? 'You (singular)' : 'Sen'}</option>
+              <option value="S3_Singular">{language === 'en' ? 'He/She/It' : 'O'}</option>
+              <option value="S1_Plural">{language === 'en' ? 'We' : 'Biz'}</option>
+              <option value="S2_Plural">{language === 'en' ? 'You (plural)' : 'Siz'}</option>
+              <option value="S3_Plural">{language === 'en' ? 'They' : 'Onlar'}</option>
+              <option value="all">{language === 'en' ? 'All' : 'Hepsi'}</option>
             </select>
           </div>
 
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="obj">
-              Object:
+              {translations[language].object}:
             </label>
             <select
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isObjectDisabled ? 'text-gray-500 bg-gray-300' : ''}`}
@@ -279,20 +340,20 @@ const VerbConjugator = () => {
               onChange={handleInputChange}
               disabled={isObjectDisabled}
             >
-              <option value="">None</option>
-              <option value="O1_Singular">Me</option>
-              <option value="O2_Singular">You (singular)</option>
-              <option value="O3_Singular">Him/Her/It</option>
-              <option value="O1_Plural">Us</option>
-              <option value="O2_Plural">You (plural)</option>
-              <option value="O3_Singular">Them</option>
-              <option value="all">All</option>
+              <option value="">{language === 'en' ? 'None' : 'Yok'}</option>
+              <option value="O1_Singular">{language === 'en' ? 'Me' : 'Beni'}</option>
+              <option value="O2_Singular">{language === 'en' ? 'You (singular)' : 'Seni'}</option>
+              <option value="O3_Singular">{language === 'en' ? 'Him/Her/It' : 'Onu'}</option>
+              <option value="O1_Plural">{language === 'en' ? 'Us' : 'Bizi'}</option>
+              <option value="O2_Plural">{language === 'en' ? 'You (plural)' : 'Sizi'}</option>
+              <option value="O3_Singular">{language === 'en' ? 'Them' : 'Onları'}</option>
+              <option value="all">{language === 'en' ? 'All' : 'Hepsi'}</option>
             </select>
           </div>
 
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="tense">
-              Tense:
+              {translations[language].tense}:
             </label>
             <select
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isTenseDisabled ? 'text-gray-500 bg-gray-300' : ''}`}
@@ -303,17 +364,17 @@ const VerbConjugator = () => {
               disabled={isTenseDisabled}
               required
             >
-              <option value="present">Present</option>
-              <option value="past">Past</option>
-              <option value="future">Future</option>
-              <option value="pastpro">Past Progressive</option>
-              <option value="presentperf">Present Perfect</option>
+              <option value="present">{language === 'en' ? 'Present' : 'Şimdiki Zaman'}</option>
+              <option value="past">{language === 'en' ? 'Past' : 'Geçmiş Zaman'}</option>
+              <option value="future">{language === 'en' ? 'Future' : 'Gelecek Zaman'}</option>
+              <option value="pastpro">{language === 'en' ? 'Past Progressive' : 'Geçmişte Devam Eden'}</option>
+              <option value="presentperf">{language === 'en' ? 'Present Perfect' : 'Yakın Geçmiş'}</option>
             </select>
           </div>
 
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="aspect">
-              Aspect:
+              {translations[language].aspect}:
             </label>
             <select
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${isAspectDisabled ? 'text-gray-500 bg-gray-300' : ''}`}
@@ -323,9 +384,9 @@ const VerbConjugator = () => {
               onChange={handleInputChange}
               disabled={isAspectDisabled}
             >
-              <option value="">None</option>
-              <option value="potential">Potential</option>
-              <option value="passive">Passive</option>
+              <option value="">{language === 'en' ? 'None' : 'Yok'}</option>
+              <option value="potential">{language === 'en' ? 'Potential' : 'Potansiyel'}</option>
+              <option value="passive">{language === 'en' ? 'Passive' : 'Edilgen'}</option>
             </select>
           </div>
         </div>
@@ -335,7 +396,7 @@ const VerbConjugator = () => {
             className="font-bold cursor-pointer"
             onClick={() => setShowRegions(!showRegions)}
           >
-            Regions
+            {translations[language].regions}
           </legend>
           {showRegions && (
             <div className="grid grid-cols-2 gap-4">
@@ -372,7 +433,7 @@ const VerbConjugator = () => {
               className="mr-2"
             />
             <label className="text-gray-700 text-sm font-bold" htmlFor="applicative">
-              Applicative
+              {translations[language].applicative}
             </label>
           </div>
 
@@ -387,7 +448,7 @@ const VerbConjugator = () => {
               disabled={formData.neg_imperative}
             />
             <label className="text-gray-700 text-sm font-bold" htmlFor="imperative">
-              Imperative
+              {translations[language].imperative}
             </label>
           </div>
 
@@ -401,7 +462,7 @@ const VerbConjugator = () => {
               className="mr-2"
             />
             <label className="text-gray-700 text-sm font-bold" htmlFor="causative">
-              Causative
+              {translations[language].causative}
             </label>
           </div>
 
@@ -416,7 +477,7 @@ const VerbConjugator = () => {
               disabled={formData.imperative}
             />
             <label className="text-gray-700 text-sm font-bold" htmlFor="neg_imperative">
-              Negative Imperative
+              {translations[language].negImperative}
             </label>
           </div>
 
@@ -430,7 +491,7 @@ const VerbConjugator = () => {
               className="mr-2"
             />
             <label className="text-gray-700 text-sm font-bold" htmlFor="optative">
-              Optative
+              {translations[language].optative}
             </label>
           </div>
         </div>
@@ -440,20 +501,20 @@ const VerbConjugator = () => {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
-            Conjugate
+            {translations[language].conjugate}
           </button>
           <button
             type="button"
             className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             onClick={handleReset}
           >
-            Reset
+            {translations[language].reset}
           </button>
         </div>
       </form>
 
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8">
-        <h2 className="text-2xl font-bold mb-4">Results:</h2>
+        <h2 className="text-2xl font-bold mb-4">{translations[language].results}:</h2>
         {renderResults()}
       </div>
     </div>
