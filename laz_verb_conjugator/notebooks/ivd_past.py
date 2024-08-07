@@ -115,7 +115,7 @@ def handle_special_case_coz(root, subject):
 def remove_first_character(root):
     return root[1:]
 
-def get_personal_pronouns(region):
+def get_personal_pronouns_ivd(region):
     return {
         'S1_Singular': 'ma',
         'S2_Singular': 'si',
@@ -163,7 +163,7 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
         regions_for_form = region_str.split(',')
         for region in regions_for_form:
             region = region.strip()
-            personal_pronouns = get_personal_pronouns(region)
+            personal_pronouns = get_personal_pronouns_ivd(region)
             
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
@@ -394,7 +394,7 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
 def format_conjugations(all_conjugations):
     result = []
     for region, conjugations in all_conjugations.items():
-        personal_pronouns = get_personal_pronouns(region)
+        personal_pronouns = get_personal_pronouns_ivd(region)
         result.append(f"{region}:")
         for subject, obj, conjugation in sorted(conjugations, key=lambda x: subjects.index(x[0])):
             subject_pronoun = personal_pronouns[subject]
