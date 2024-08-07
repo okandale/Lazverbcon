@@ -34,6 +34,9 @@ const VerbConjugator = () => {
     'ÇX': 'Çhala (Çxala)'
   };
 
+  const subjectOrder = ['ma', 'si', 'himuk', 'heyak', 'hiyak', 'şk̆u', 'çku', 'çkin', 't̆k̆va', 'tkva', 'hinik', 'hentepek', 'entepek'];
+  const objectOrder = ['ma', 'si', 'him', 'heya', 'hiya', 'şk̆u', 'çku', 'çkin', 't̆k̆va', 'tkva', 'hini', 'hentepe', 'entepe'];
+
   useEffect(() => {
     updateFormState();
   }, [formData.optative, formData.applicative, formData.causative, formData.tense, formData.aspect, formData.imperative, formData.neg_imperative]);
@@ -92,11 +95,11 @@ const VerbConjugator = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setResults({ data: {}, error: '' }); // Clear previous results and error
+    setResults({ data: {}, error: '' });
     const params = new URLSearchParams();
     Object.entries(formData).forEach(([key, value]) => {
       if (key === 'regions') {
-        if (value.length > 0) { // Ensure regions are only appended if they are not empty
+        if (value.length > 0) {
           params.append('region', value.join(','));
         }
       } else if (typeof value === 'boolean') {
@@ -106,7 +109,7 @@ const VerbConjugator = () => {
       }
     });
 
-    console.log(`/conjugate?${params.toString()}`); // Log the request URL for debugging
+    console.log(`/conjugate?${params.toString()}`);
 
     try {
       const response = await fetch(`/conjugate?${params.toString()}`);
@@ -122,7 +125,7 @@ const VerbConjugator = () => {
       }
 
       const data = await response.json();
-      console.log("Received data:", data); // Debugging: log the received data
+      console.log("Received data:", data);
 
       if (Object.keys(data).length === 0) {
         setResults({ data: {}, error: 'No conjugations found for this verb.' });
@@ -160,6 +163,53 @@ const VerbConjugator = () => {
         infinitive: input.value
       }));
     }
+  };
+
+  const sortForms = (forms) => {
+    return forms.sort((a, b) => {
+      const [prefixA, suffixA] = a.split(':');
+      const [prefixB, suffixB] = b.split(':');
+      const [subjectA, objectA] = prefixA.trim().split(' ');
+      const [subjectB, objectB] = prefixB.trim().split(' ');
+
+      // First, sort by subject
+      const subjectCompare = subjectOrder.indexOf(subjectA) - subjectOrder.indexOf(subjectB);
+      if (subjectCompare !== 0) return subjectCompare;
+
+      // If subjects are the same, sort by object
+      return objectOrder.indexOf(objectA) - objectOrder.indexOf(objectB);
+    });
+  };
+
+  const renderResults = () => {
+    if (results.error) {
+      return <p className="text-red-600">{results.error}</p>;
+    }
+
+    if (Object.entries(results.data).length === 0) {
+      return <p>No results to display.</p>;
+    }
+
+    const regionOrder = ['AŞ', 'PZ', 'FA', 'HO'];
+
+    return regionOrder.map(regionCode => {
+      const region = Object.entries(results.data).find(([key, _]) => key === regionCode);
+      if (!region) return null;
+
+      const [regionName, forms] = region;
+      return (
+        <div key={regionName} className="mb-4">
+          <h3 className="text-xl font-semibold text-blue-600">{regionNames[regionName] || regionName}</h3>
+          {Array.isArray(forms) ? (
+            sortForms(forms).map((form, index) => (
+              <p key={index} className="ml-4">{form}</p>
+            ))
+          ) : (
+            <p>{forms}</p>
+          )}
+        </div>
+      );
+    }).filter(Boolean);
   };
 
   return (
@@ -404,30 +454,10 @@ const VerbConjugator = () => {
 
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8">
         <h2 className="text-2xl font-bold mb-4">Results:</h2>
-        {results.error ? (
-          <p className="text-red-600">{results.error}</p>
-        ) : (
-          Object.entries(results.data).length > 0 ? (
-            Object.entries(results.data).map(([region, forms]) => (
-              <div key={region} className="mb-4">
-                <h3 className="text-xl font-semibold text-blue-600">{regionNames[region] || region}</h3>
-                {Array.isArray(forms) ? (
-                  forms.map((form, index) => (
-                    <p key={index} className="ml-4">{form}</p>
-                  ))
-                ) : (
-                  <p>{forms}</p>
-                )}
-              </div>
-            ))
-          ) : (
-            <p>No results to display.</p>
-          )
-        )}
+        {renderResults()}
       </div>
     </div>
   );
 };
 
 export default VerbConjugator;
-
