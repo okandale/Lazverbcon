@@ -61,9 +61,8 @@ def conjugate():
     if not infinitive or not subject or (not tense and not aspect and not imperative and not neg_imperative):
         return jsonify({"error": "Invalid input"}), 400
 
-    conjugations = {}
+    conjugations_by_group = {}  # Initialize the dictionary to store conjugations by group
     module_found = False  # Flag to indicate if we found any valid module
-    used_module = None  # Track the module used for collecting conjugations
 
     # Define ordered subjects and objects
     ordered_subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
@@ -72,22 +71,36 @@ def conjugate():
     # Convert the region_filter to a set of regions if specified
     region_filter_set = set(region_filter.split(',')) if region_filter else None
 
-    if neg_imperative:
+    # Helper function to determine if the module is TVE, TVM, or IVD
+    def get_verb_group(module_name):
+        if module_name.startswith('tve'):
+            return 'TVE'
+        elif module_name.startswith('tvm'):
+            return 'TVM'
+        elif module_name.startswith('ivd'):
+            return 'IVD'
+        return None
+
+    # Handle mood-specific forms
+    if neg_imperative or imperative or optative or applicative or causative:
+        if get_verb_group(tense) != 'TVE':
+            return jsonify({"error": "This mood is not supported for TVM or IVD verbs."}), 400
+
         module = tense_modules.get('tve_present')
         if not module:
-            return jsonify({"error": "Negative imperative forms not supported for this verb."}), 400
+            return jsonify({"error": "Mood forms not supported for this verb."}), 400
 
         try:
             if not hasattr(module, 'verbs') or infinitive not in module.verbs:
                 return jsonify({"error": f"Infinitive {infinitive} not found in the database."}), 404
 
-            subjects = ['S2_Singular', 'S2_Plural'] if subject == 'all' else [subject]
+            subjects = ordered_subjects if subject == 'all' else [subject]
             objects = ordered_objects if obj == 'all' else [obj] if obj else [None]
             all_conjugations = {}
 
             for subj in subjects:
                 for obj_item in objects:
-                    result = module.collect_conjugations(infinitive, [subj], obj=obj_item, applicative=applicative, causative=causative)
+                    result = module.collect_conjugations(infinitive, [subj], obj=obj_item, applicative=applicative, causative=causative, mood=optative)
                     for region, forms in result.items():
                         if region_filter_set and region not in region_filter_set:
                             continue
@@ -95,50 +108,20 @@ def conjugate():
                             all_conjugations[region] = set()
                         all_conjugations[region].update(forms)
 
-            neg_imperatives = module.extract_neg_imperatives(all_conjugations, subjects)
-            formatted_conjugations = module.format_neg_imperatives(neg_imperatives)
+            if neg_imperative:
+                formatted_conjugations = module.format_neg_imperatives(all_conjugations, subjects)
+            elif imperative:
+                formatted_conjugations = module.format_imperatives(all_conjugations, subjects)
+            else:
+                formatted_conjugations = format_conjugations(all_conjugations, module, ordered_subjects, ordered_objects)
 
             return jsonify(formatted_conjugations)
 
         except Exception as e:
-            logger.error(f"Error while processing negative imperative: {e}")
+            logger.error(f"Error while processing mood forms: {e}")
             return jsonify({"error": str(e)}), 400
 
-
-    if imperative:
-        if subject not in ['S2_Singular', 'S2_Plural', 'all']:
-            return jsonify({"error": "Imperatives are only available for S2_Singular, S2_Plural, or all"}), 400
-
-        module = tense_modules.get('tve_past')  # Assuming imperative forms are handled in past tense module
-        if not module:
-            return jsonify({"error": "Imperative forms not supported for this verb."}), 400
-
-        try:
-            if not hasattr(module, 'verbs') or infinitive not in module.verbs:
-                return jsonify({"error": f"Infinitive {infinitive} not found in the database."}), 404
-
-            subjects = ['S2_Singular', 'S2_Plural'] if subject == 'all' else [subject]
-            objects = ordered_objects if obj == 'all' else [obj] if obj else [None]
-            all_conjugations = {}
-
-            for subj in subjects:
-                for obj_item in objects:
-                    result = module.collect_conjugations(infinitive, [subj], obj=obj_item, applicative=applicative, causative=causative)
-                    for region, forms in result.items():
-                        if region_filter_set and region not in region_filter_set:
-                            continue
-                        if region not in all_conjugations:
-                            all_conjugations[region] = set()
-                        all_conjugations[region].update(forms)
-
-            neg_imperatives = module.extract_imperatives(all_conjugations, subjects)
-            formatted_conjugations = module.format_imperatives(neg_imperatives)
-
-            return jsonify(formatted_conjugations)
-        except Exception as e:
-            logger.error(f"Error while processing imperative: {e}")
-            return jsonify({"error": str(e)}), 400
-
+    # Handle aspect-based conjugations
     if aspect:
         if aspect not in simplified_aspect_mapping:
             return "Invalid aspect", 400
@@ -152,12 +135,13 @@ def conjugate():
             mood = 'optative' if optative and 'tve' in actual_aspect else None  # Apply optative as mood for 'tve' aspects
 
             try:
-                # Check if the infinitive exists in the current module
                 if not hasattr(module, 'verbs') or infinitive not in module.verbs:
                     continue
 
                 subjects = ordered_subjects if subject == 'all' else [subject]
                 objects = ordered_objects if obj == 'all' else [obj] if obj else [None]
+
+                current_group = actual_aspect  # Set the current group as the aspect
 
                 for subj in subjects:
                     if obj == [None]:
@@ -183,11 +167,12 @@ def conjugate():
                             for region, forms in result.items():
                                 if region_filter_set and region not in region_filter_set:
                                     continue
-                                if region not in conjugations:
-                                    conjugations[region] = set()
-                                conjugations[region].update(forms)
+                                if current_group not in conjugations_by_group:
+                                    conjugations_by_group[current_group] = {}
+                                if region not in conjugations_by_group[current_group]:
+                                    conjugations_by_group[current_group][region] = set()
+                                conjugations_by_group[current_group][region].update(forms)
 
-                used_module = module  # Track the module used
                 module_found = True
 
             except KeyError as e:
@@ -216,18 +201,19 @@ def conjugate():
 
             mood = 'optative' if optative and 'tve' in actual_tense else None  # Apply optative as mood for 'tve' tenses
 
+            current_group = actual_tense  # Set the current group as the tense
+
             try:
-                # Check if the infinitive exists in the current module
                 # Check if the infinitive exists in the current module
                 if not hasattr(module, 'verbs') or infinitive not in module.verbs:
                     continue
 
-                if actual_tense.startswith('tvm'):
-                    if obj:
-                        # Handle TVM verbs without objects
-                        objects = [None]  # Set objects to None because TVM verbs cannot have objects
+                if actual_tense.startswith('tvm') or actual_tense.startswith('ivd'):
+                    if obj or applicative or causative or optative or imperative or neg_imperative:
+                        return jsonify({"error": "TVM and IVD verbs cannot have objects or moods like applicative, causative, optative, imperative, or neg_imperative."}), 400
+                    objects = [None]  # Set objects to None because TVM and IVD verbs cannot have objects
                 else:
-                    # Handle non-TVM verbs, allowing objects
+                    # Handle non-TVM and non-IVD verbs, allowing objects and moods
                     subjects = ordered_subjects if subject == 'all' else [subject]
                     objects = ordered_objects if obj == 'all' else [obj] if obj else [None]
 
@@ -250,12 +236,12 @@ def conjugate():
                         for region, forms in result.items():
                             if region_filter_set and region not in region_filter_set:
                                 continue
-                            if region not in conjugations:
-                                conjugations[region] = set()
-                            conjugations[region].update(forms)
+                            if current_group not in conjugations_by_group:
+                                conjugations_by_group[current_group] = {}
+                            if region not in conjugations_by_group[current_group]:
+                                conjugations_by_group[current_group][region] = set()
+                            conjugations_by_group[current_group][region].update(forms)
 
-
-                used_module = module  # Track the module used
                 module_found = True
 
             except KeyError as e:
@@ -269,15 +255,13 @@ def conjugate():
         return jsonify({"error": f"Infinitive {infinitive} not found in any module."}), 404
 
     # Convert sets to lists for JSON serialization
-    for region in conjugations:
-        conjugations[region] = list(conjugations[region])
-
-    # Format the conjugations using the module that was used for collecting conjugations
-    formatted_conjugations = format_conjugations(conjugations, used_module, ordered_subjects, ordered_objects)
+    formatted_conjugations = {}
+    for group, conjugations in conjugations_by_group.items():
+        for region in conjugations:
+            conjugations[region] = list(conjugations[region])
+        formatted_conjugations[group] = format_conjugations(conjugations, tense_modules[group], ordered_subjects, ordered_objects)
 
     return jsonify(formatted_conjugations)
-
-
 
 def format_conjugations(conjugations, module, ordered_subjects, ordered_objects):
     formatted_conjugations = {}
@@ -303,7 +287,5 @@ def format_conjugations(conjugations, module, ordered_subjects, ordered_objects)
 
     return formatted_conjugations
 
-
 if __name__ == '__main__':
     app.run(debug=True)
-
