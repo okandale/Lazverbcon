@@ -4,7 +4,7 @@ ceç̌u,TVE,coç̌ams,AŞ,,,,,to begin,başlamak
 coxons,IVD,coxons,HO,,,,,to be called,adında olmak
 cozun,IVD,cozun,AŞ,,,,,to be called,adında olmak
 diç̌irs,IVD,diç̌irs,FA,,,,,to require,lazım gelmek
-dodumu,TVE,dodums,"FA, PZ, AŞ",dodumers,,,,"to put, to place (something on the floor)",koymak (yere)
+dodumu,TVE,dodums,"FA, PZ, AŞ",,,,,"to put, to place (something on the floor)",koymak (yere)
 dodvumu,TVE,dodvups,HO,,,,,"to put, to place (something on the floor)",koymak (yere)
 doguru,TVE,digurams,"PZ, AŞ, FA",diguraps,HO,,,to learn,öğrenmek
 doloç̌aru,TVE,doloç̌arums,"PZ, FA, AŞ",doloç̌arups,HO,,,to record,kaydetmek
@@ -29,7 +29,7 @@ moşvacu,TVE,moişvacams,"PZ, AŞ, FA",moişvacaps,HO,,,to rest,dinlemek
 obgaru,TVE,ibgars,"AŞ, FA, HO",,,,,to cry,ağlamak
 obiru,TVE,ibirs,"PZ, AŞ, FA, HO",,,,,to sing/play,şarkı söylemek
 oçamu,TVE,çams,"AŞ, PZ, FA",çaps,HO,,,to feed,yedirmek
-oç̌aru,TVE,ç̌arums,"FA, PZ",ç̌arups,HO,nç̌aruy,AŞ,to write,yazmak
+oç̌aru,TVE,ç̌arums,"FA, PZ",ç̌arups,HO,,,to write,yazmak
 oçinu,TVE,içinems,"PZ, AŞ, FA",içinaps,HO,,,to know someone,tanımak
 oçkinu,IVD,uçkin,"FA, HO",,,,,to know,bilmek
 oç̌k̆omu,TVE,imxors,FA,ipxors,HO,ç̌k̆omups,HO,to eat,yemek
@@ -55,7 +55,7 @@ omku,TVE,mkums,"PZ, AŞ, FA",,,,,to grind,öğütmek
 omkvu,TVE,mkvups,HO,,,,,to grind,öğütmek
 omşkironu,IVD,amşkironen,HO,,,,,,
 omşkorinu,IVD,amşkorinen,"PZ, AŞ, FA",,,,,to be hungry,acıkmak
-onç̌aru,TVE,nç̌arum,AŞ,,,,,to write,yazmak
+onç̌aru,TVE,nç̌aruy,AŞ,,,,,to write,yazmak
 onciru,TVE,incirs,"PZ, AŞ, FA, HO",,,,,to sleep,uyumak
 onçiru,TVE,inçirs,"PZ, AŞ",,,,,to swim,yüzmek
 onçviru,TVE,inçvirs,HO,,,,,,
@@ -75,7 +75,7 @@ osteru,TVE,isters,"FA, HO",,,,,to play,oynamak
 ostibu,TVE,stibums,"AŞ, FA",stibups,HO,,,,
 oşu,TVE,şums,"PZ, AŞ, FA",şups,HO,,,to drink,içmek
 ot̆ağodu,TVE,t̆rağodums,"PZ, AŞ",,,,,to sing,şarkı söylemek
-otanu,TVE,tanums,"FA, AŞ, PZ",tanups,HO,,,"to glitter, sparkle",ışıldamak
+otanu,TVE,,,,,,,,
 ot̆axu,TVE,t̆axums,"FA, AŞ, PZ",t̆axups,HO,,,to break,kırmak
 otiru,TVE,tirups,HO,,,,,,taşımak
 otku,TVE,tkums,"FA, AŞ, PZ",tkumers,ALL,tkups,HO,to say,söylemek
@@ -109,5 +109,46 @@ yeç̌opu,TVE,yeç̌opups,HO,,,,,to buy,almak
 meşvelu,TVE,nuşvelams,"FA, AŞ, PZ",nuşvelaps,HO,,,to help,yardım etmek
 ok̆itxu,TVE,ik̆itxams,"FA, AŞ, PZ",ik̆itxaps,HO,,,to ask/read,sormak/okumak
 gondunu,TVM,gondunun,"PZ, AŞ, FA, HO",,,,,to get lost,kaybolmak
-ordu,TVM,irden,"PZ, AŞ, FA, HO",,,,,to grow up,büyümek
-ordu,TVE,ordams,"PZ, AŞ, FA",ordaps,HO,,,to raise,büyütmek
+ordu,TVM ,irden,"PZ, AŞ, FA, HO",,,,,to grow up,büyümek 
+ordu,TVM,ordams,"FA, AŞ, PZ",ordaps,HO,,,to raise,büyütmek 
+onk̆ilu,TVE,k̆ilups,HO,,,,,to lock,kilitlemek
+oçk̆iru,TVE,çk̆irups,HO,,,,,to cut,kesmek
+ok̆iru,TVE,k̆irups,HO,,,,,to tie,bağlamak
+obaxu,TVE,baxups,HO,,,,,to beat up,dovmek
+oǯamu,TVE,ǯamups,HO,,,,,to kill,oldurmek
+obonu,TVE,bonups,HO,,,,,to burn oneself,vucudun bir bolumunu veya tamamını yıkamak
+oceru,TVM,icers,HO,,,,,to believe,inanmak
+oçaminu,TVM,içaminen,HO,,,,,to itch,kaşınmak
+oçaminu,TVE,içaminaps,HO,içaminams,FA,,,to scratch,kaşımak
+oçilu,TVM,içilers,HO,,,,,to marry (male),erkeğin evlenmesi
+oç̌abu,TVE,ç̌abups,HO,,,,,to glue,yapıştırmak
+oç̌k̆adu,TVE,ç̌k̆adups,HO,,,,,to flint,çakmak
+oç̌uç̌u,TVE,ç̌uç̌ups,HO,,,,,,goz kırpmak
+ožiʒu,TVM,ižiʒaps,HO,,,,,to laugh,gulmek
+ogibu,TVE,gibups,HO,,,,,,"haşlamak, pişmek"
+ogibu,TVM,igiben,HO,,,,,,haşlanmak
+ogzalu,TVM,igzals,HO,,,,,,yurumek
+oxçinu,TVM ,ixçinen,HO,,,,,,kadının yaşlanması
+omç̌vu,IVD,amç̌ven,HO,,,,,,acele etmek
+onaxu,TVE,naxups,HO,,,,,,çamaşır yıkamak
+opatxu,TVE,patxups,HO,,,,,,1.silkelemek 2. hafifçe dovmek
+opsimu,TVE,psips,HO,,,,,,işemek
+op̌içvu,TVM,ip̌içvaps,HO,,,,,,oruç tutmak
+oqvilu,TVE,qvilups,HO,,,,,,vurarak oldurmek
+oqominu,IVD,aqominen,HO,,,,,,susamak
+ost̆u,TVE,st̆un,HO,,,,,,kaymak
+osvaru,TVE,svarups,HO,,,,,,sıraya dizmek
+oşk̆idu,TVM,işk̆viden,HO,,,,,,boğulmak
+oşolu,TVM,işolen,HO,,,,,,ıslanmak
+oşvacu,TVM,işvacen,HO,,,,,,dinlenmek
+ot̆at̆u,TVE,t̆at̆ups,HO,,,,,,bulaştırmak
+ovalu,TVE,valups,HO,,,,,,el sallamak
+oxaçk̆u,TVE,xaçk̆ups,HO,,,,,,tohum ekmek
+oxelu,TVM,ixelen,HO,,,,,,sevinmek
+oxomu,TVE,xomups,HO,,,,,,kurumak
+ožiru,TVE,žirups,HO,,,,,,gormek
+ožiru,IVD,ažiren,HO,,,,,,gormek
+oʒxunu,TVE,ʒxunups,HO,,,,,,ayıklamak
+oʒ̆amu,TVE,ʒamups,HO,,,,,,oldurmek
+oʒ̆k̆aru,TVE,ʒ̆k̆arups,HO,,,,,,sulamak
+oʒ̆k̆u,TVE,ʒ̆k̆ips,HO,,,,,,sokmek
