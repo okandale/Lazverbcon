@@ -226,58 +226,36 @@ const VerbConjugator = () => {
     });
   };
 
-  const getGroupLabel = (groupName) => {
-    if (groupName.startsWith('tvm')) {
-      return 'TVM';
-    } else if (groupName.startsWith('ivd')) {
-      return 'IVD';
-    } else if (groupName.startsWith('tve')) {
-      return 'TVE';
-    } else {
-      return 'Other';
-    }
-  };
-
   const renderResults = () => {
     if (results.error) {
       return <p className="text-red-600">{results.error}</p>;
     }
-  
+
     if (Object.entries(results.data).length === 0) {
       return <p>No results to display.</p>;
     }
-  
+
     const regionOrder = ['AŞ', 'PZ', 'FA', 'HO'];
-  
-    return Object.entries(results.data).map(([groupName, groupData]) => (
-      <div key={groupName} className="mb-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-2">
-          {getGroupLabel(groupName)}:
-        </h2>
-        {regionOrder.map(regionCode => {
-          const forms = groupData[regionCode];
-          if (!forms) return null;
-  
-          return (
-            <div key={regionCode} className="mb-4">
-              <h3 className="text-lg font-semibold text-blue-600">
-                {regionNames[regionCode] || regionCode}
-              </h3>
-              {Array.isArray(forms) ? (
-                sortForms(forms).map((form, index) => (
-                  <p key={index} className="ml-4">{form}</p>
-                ))
-              ) : (
-                <p>{forms}</p>
-              )}
-            </div>
-          );
-        }).filter(Boolean)}
-      </div>
-    ));
+
+    return regionOrder.map(regionCode => {
+      const region = Object.entries(results.data).find(([key, _]) => key === regionCode);
+      if (!region) return null;
+
+      const [regionName, forms] = region;
+      return (
+        <div key={regionName} className="mb-4">
+          <h3 className="text-xl font-semibold text-blue-600">{regionNames[regionName] || regionName}</h3>
+          {Array.isArray(forms) ? (
+            sortForms(forms).map((form, index) => (
+              <p key={index} className="ml-4">{form}</p>
+            ))
+          ) : (
+            <p>{forms}</p>
+          )}
+        </div>
+      );
+    }).filter(Boolean);
   };
-  
-  
 
   return (
     <div className="max-w-2xl mx-auto p-4 relative">
