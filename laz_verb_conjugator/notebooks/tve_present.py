@@ -46,7 +46,7 @@ def is_vowel(char):
     return char in 'aeiou'
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'ok̆o', 'gama', 'mo', 'ye'): {
+    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'ok̆o', 'gama', 'mo', 'ye', 'gela', 'ela', 'cek̆o', 'ek̆o', 'ama'): {
         'S1_Singular': 'v',
         'S2_Singular': '',
         'S3_Singular': '',
