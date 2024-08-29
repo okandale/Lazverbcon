@@ -46,7 +46,7 @@ def is_vowel(char):
     return char in 'aeiou'
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'ok̆o', 'gama', 'mo', 'ye', 'gela', 'ela', 'cek̆o', 'ek̆o', 'ama'): {
+    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'ok̆o', 'gama', 'mo', 'ye', 'gela', 'ela', 'cek̆o', 'ek̆o', 'ama', 'mo', 'k̆ok̆o'): {
         'S1_Singular': 'v',
         'S2_Singular': '',
         'S3_Singular': '',
@@ -277,7 +277,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 preverb = preverb[:-1]
             # Special handling for "me"
             if preverb == 'me' or (use_optional_preverb and not preverb):
-                if infinitive == 'meşvelu' and not marker:
+                if infinitive in ('meşvelu') and not marker:
                     root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
                 first_letter = get_first_letter(root)
                 if obj in ['O2_Singular', 'O2_Plural']:
@@ -343,11 +343,14 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     prefix = 'gy'
 
             # Special handling for "ceç̌alu"
-            elif preverb == 'ce' and main_infinitive == 'ceç̌u':
+            elif preverb == 'ce':
                 if marker:
                     root = root[2:]
                 else:
                     root = root[1:]
+                first_letter = get_first_letter(root)
+                if infinitive in ('ceyonu') and not marker: # add for other tenses
+                    root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
                 first_letter = get_first_letter(root)
                 if obj in ['O2_Singular', 'O2_Plural']:
                     adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)

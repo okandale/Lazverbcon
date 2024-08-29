@@ -71,7 +71,7 @@ const VerbConjugator = () => {
       imperative: 'Emir Kipi',
       causative: 'Ettirgen',
       negImperative: 'Olumsuz Emir',
-      optative: 'Dilek Kipi',
+      optative: 'İstek Kipi',
       conjugate: 'Çek',
       reset: 'Sıfırla',
       results: 'Sonuçlar',
@@ -385,7 +385,7 @@ const VerbConjugator = () => {
               disabled={isAspectDisabled}
             >
               <option value="">{language === 'en' ? 'None' : 'Yok'}</option>
-              <option value="potential">{language === 'en' ? 'Potential' : 'Potansiyel'}</option>
+              <option value="potential">{language === 'en' ? 'Potential' : 'Yeterlilik'}</option>
               <option value="passive">{language === 'en' ? 'Passive' : 'Edilgen'}</option>
             </select>
           </div>

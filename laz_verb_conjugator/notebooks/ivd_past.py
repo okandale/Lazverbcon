@@ -114,7 +114,7 @@ def handle_special_case_coz(root, subject):
 def remove_first_character(root):
     return root[1:]
 
-def get_personal_pronouns_ivd(region):
+def get_personal_pronouns(region):
     return {
         'S1_Singular': 'ma',
         'S2_Singular': 'si',
@@ -162,7 +162,7 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
         regions_for_form = region_str.split(',')
         for region in regions_for_form:
             region = region.strip()
-            personal_pronouns = get_personal_pronouns_ivd(region)
+            personal_pronouns = get_personal_pronouns(region)
             
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
@@ -250,7 +250,7 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
             elif preverb == 'd':
                 if subject in ('S3_Singular', 'S3_Plural') and not obj:
                     preverb = 'd'
-                    root = root[1:]
+                    root = root # monitor situation for non FA, had to readjust for doʒ̆onu
                 else:
                     preverb = 'do'
                     if root.startswith('v'):
@@ -264,7 +264,7 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
                         adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
                         prefix = preverb + adjusted_prefix
                     else:
-                        prefix = 'd' if region in ('FA') else 'dv'
+                        prefix = 'd'
                 elif subject in ['S1_Singular', 'S1_Plural']:
                     prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
@@ -393,7 +393,7 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
 def format_conjugations(all_conjugations):
     result = []
     for region, conjugations in all_conjugations.items():
-        personal_pronouns = get_personal_pronouns_ivd(region)
+        personal_pronouns = get_personal_pronouns(region)
         result.append(f"{region}:")
         for subject, obj, conjugation in sorted(conjugations, key=lambda x: subjects.index(x[0])):
             subject_pronoun = personal_pronouns[subject]

@@ -121,7 +121,7 @@ def handle_special_case_coz(root, subject):
 def remove_first_character(root):
     return root[1:]
 
-def get_personal_pronouns_ivd(region):
+def get_personal_pronouns(region):
     return {
         'S1_Singular': 'ma',
         'S2_Singular': 'si',
@@ -169,7 +169,7 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
         regions_for_form = region_str.split(',')
         for region in regions_for_form:
             region = region.strip()
-            personal_pronouns = get_personal_pronouns_ivd(region)
+            personal_pronouns = get_personal_pronouns(region)
             
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
@@ -186,12 +186,12 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
             }
         
             suffixes = {
-                'S1_Singular': 'rt̆u',
-                'S2_Singular': 'rt̆u',
-                'S3_Singular': 'rt̆u',
-                'S1_Plural': 'rt̆es',
-                'S2_Plural': 'rt̆es',
-                'S3_Plural': 'rt̆es'
+                'S1_Singular': 't̆u' if root.endswith('rs') else 'rt̆u',
+                'S2_Singular': 't̆u' if root.endswith('rs') else 'rt̆u',
+                'S3_Singular': 't̆u' if root.endswith('rs') else 'rt̆u',
+                'S1_Plural': 't̆es' if root.endswith('rs') else 'rt̆es',
+                'S2_Plural': 't̆es' if root.endswith('rs') else 'rt̆es',
+                'S3_Plural': 't̆es' if root.endswith('rs') else 'rt̆es'
             }
         
             object_prefixes = {
@@ -258,7 +258,7 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
             elif preverb == 'd':
                 if subject in ('S3_Singular', 'S3_Plural') and not obj:
                     preverb = 'd'
-                    root = root[1:]
+                    root = root # monitor situation for non FA, had to readjust for doʒ̆onu
                 else:
                     preverb = 'do'
                     if root.startswith('v'):
@@ -272,7 +272,7 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
                         adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
                         prefix = preverb + adjusted_prefix
                     else:
-                        prefix = 'd' if region in ('FA') else 'dv'
+                        prefix = 'd'
                 elif subject in ['S1_Singular', 'S1_Plural']:
                     prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
@@ -315,7 +315,7 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
                 else:
                     prefix = 'c'
             else:
-                prefix = preverb_form
+                prefix = ''
 
             # Additional prefix adjustments based on subject and object
             if not preverb:
@@ -350,20 +350,20 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
                 if root.endswith('en'):
                     root = root[:-1]
                 if subject == 'S3_Singular' and obj == 'O3_Singular':
-                    suffix = 'rt̆u'
+                    suffix = 't̆u' if root.endswith('r') else 'rt̆u'
                 elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
-                    suffix = 'rt̆it'
+                    suffix = 't̆it' if root.endswith('r') else 'rt̆it'
                 elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular']:
-                    suffix = 'rt̆i'
+                    suffix = 't̆i' if root.endswith('r') else 'rt̆i'
                 elif subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural', 'S3_Plural'] and obj in ('O1_Plural', 'O2_Plural'):
-                    suffix = 'rt̆it'
+                    suffix = 't̆it' if root.endswith('rs') else 'rt̆it'
                 elif subject in ['S1_Plural', 'S2_Plural'] and obj in ('O1_Singular', 'O2_Singular'):
 
-                    suffix = 'rt̆it'
+                    suffix = 't̆it' if root.endswith('r') else 'rt̆it'
                 elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
-                    suffix = 'rt̆u'
+                    suffix = 't̆u' if root.endswith('r') else 'rt̆u'
                 elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and obj in ('O3_Singular', 'O3_Plural'):
-                    suffix = 'rt̆es'
+                    suffix = 't̆es' if root.endswith('r') else 'rt̆es'
 
                 final_root = root
 
@@ -381,6 +381,7 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
                     final_root = root[:-1]
                 else:
                     final_root = root
+                final_root = root
 
             conjugated_verb = f"{prefix}{final_root}{suffix}"
 
@@ -407,7 +408,7 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
 def format_conjugations(all_conjugations):
     result = []
     for region, conjugations in all_conjugations.items():
-        personal_pronouns = get_personal_pronouns_ivd(region)
+        personal_pronouns = get_personal_pronouns(region)
         result.append(f"{region}:")
         for subject, obj, conjugation in sorted(conjugations, key=lambda x: subjects.index(x[0])):
             subject_pronoun = personal_pronouns[subject]

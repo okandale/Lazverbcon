@@ -292,16 +292,16 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             
             if preverb in ('ge', 'e', 'ce'):
                 if subject in ['S1_Singular', 'S1_Plural']:
-                    prefix = preverb + 'om'
+                    prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
-                    prefix = preverb + 'og'
+                    prefix = preverb + 'g'
                 else:
                     prefix = preverb
             
             elif preverb == 'd':
                 if subject in ('S3_Singular', 'S3_Plural') and not obj:
                     preverb = 'd'
-                    root = root[1:]
+                    root = root # monitor situation for non FA, had to readjust for doʒ̆onu
                 else:
                     preverb = 'do'
                     if root.startswith('v'):
@@ -315,7 +315,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
                         prefix = preverb + adjusted_prefix
                     else:
-                        prefix = 'd' if region in ('FA') else 'dv'
+                        prefix = 'd'
                 elif subject in ['S1_Singular', 'S1_Plural']:
                     prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:

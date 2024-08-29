@@ -344,15 +344,15 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                     prefix = 'do'
 
             # Special handling for "geç̌k̆u"
-            elif preverb == 'ge' and main_infinitive == 'geç̌k̆u':
+            elif preverb == 'ge':
                 if marker:
                     root = root[2:]
                 else:
                     root = root[2:]
                 first_letter = get_first_letter(root)
-                if obj in ['O2_Singular', 'O2_Plural']:
+                if subject in ['O2_Singular', 'O2_Plural']:
                     adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                    prefix = 'ge' + adjusted_prefix
+                    prefix = adjusted_prefix
                 elif subject in ['S1_Singular', 'S1_Plural']:
                     adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
                     prefix = 'ge' + adjusted_prefix
