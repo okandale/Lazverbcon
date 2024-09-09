@@ -58,6 +58,7 @@ const VerbConjugator = () => {
       conjugate: 'Conjugate',
       reset: 'Reset',
       results: 'Results',
+      betaMessage: 'Please note, this is still a beta version and there may be mistakes. Please contact okan@lazenstitu.org if you spot a mistake. If in doubt, please ask your elders for the correct conjugation, as we are not able to cover all varieties.',
     },
     tr: {
       title: 'Fiil Çekimi',
@@ -75,6 +76,7 @@ const VerbConjugator = () => {
       conjugate: 'Çek',
       reset: 'Sıfırla',
       results: 'Sonuçlar',
+      betaMessage: 'Lütfen dikkat edin, bu hâlâ bir beta sürümüdür ve hatalar olabilir. Bir hata fark ederseniz, lütfen okan@lazenstitu.org adresine bildirin. Şüphe duyarsanız, lütfen doğru çekim için büyüklerinize danışın, çünkü tüm çeşitleri kapsama imkânımız yok.',
     },
   };
 
@@ -516,6 +518,16 @@ const VerbConjugator = () => {
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8">
         <h2 className="text-2xl font-bold mb-4">{translations[language].results}:</h2>
         {renderResults()}
+      </div>
+      <div className="text-center mt-6">
+        <p className="text-gray-700 text-sm">
+          {translations[language].betaMessage.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}
+        </p>
       </div>
     </div>
   );
