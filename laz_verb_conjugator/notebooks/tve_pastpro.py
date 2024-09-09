@@ -463,6 +463,18 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                         prefix = preverb_form
                 else:
                     prefix = subject_markers[subject]
+                    
+                    if root == 'oroms':
+                        if obj in ('O2_Singular', 'O2_Plural'):
+                            prefix = 'k̆'
+                        elif subject in ('S1_Singular', 'S1_Plural') and obj in ('O3_Singular', 'O3_Plural'):
+                            prefix = 'p̌'
+                        elif subject in ('S1_Singular', 'S1_Plural'):
+                            prefix = 'p̌'
+                        elif obj in ('O1_Singular', 'O1_Plural'):
+                            prefix = 'p̌'
+                        else:
+                            prefix = subject_markers[subject]
                     if obj in ['O2_Singular', 'O2_Plural']:
                         prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
                     elif obj in ['O1_Singular', 'O1_Plural']:

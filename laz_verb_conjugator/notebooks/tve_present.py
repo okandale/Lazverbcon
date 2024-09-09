@@ -446,20 +446,39 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 else:
                     prefix = subject_markers[subject]
                     
-                    if obj in ['O2_Singular', 'O2_Plural']:
-                        if root.startswith('n'):
-                            root = root[1:]
-                            first_letter = get_first_letter(root)
-                        prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                    elif obj in ['O1_Singular', 'O1_Plural']:
-                        if root.startswith('n'):
-                            root = root[1:]
-                        prefix = 'm' + prefix
-                    elif subject in ['S1_Singular', 'S1_Plural']:
-                        adjusted_prefix = adjust_prefix(prefix, first_letter, phonetic_rules_v)
-                        if root.startswith('n'):
-                            root = root[1:]
-                        prefix = adjusted_prefix
+                    if root == 'oroms':
+                        if obj in ('O2_Singular', 'O2_Plural'):
+                            prefix = 'k̆'
+                        elif subject in ('S1_Singular', 'S1_Plural') and obj in ('O3_Singular', 'O3_Plural'):
+                            prefix = 'p̌'
+                        elif subject in ('S1_Singular', 'S1_Plural'):
+                            prefix = 'p̌'
+                        elif obj in ('O1_Singular', 'O1_Plural'):
+                            prefix = 'p̌'
+                        else:
+                            prefix = subject_markers[subject]
+
+                    else: 
+                        if obj in ['O2_Singular', 'O2_Plural']:
+                            if root.startswith('n'):
+                                root = root[1:]
+                                first_letter = get_first_letter(root)
+                            prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                        elif obj in ['O1_Singular', 'O1_Plural']:
+                            if root.startswith('n'):
+                                root = root[1:]
+                            prefix = 'm' + prefix
+                        elif subject in ['S1_Singular', 'S1_Plural']:
+                            adjusted_prefix = adjust_prefix(prefix, first_letter, phonetic_rules_v)
+                            if root.startswith('n'):
+                                root = root[1:]
+                            prefix = adjusted_prefix
+                        else:
+                            prefix = subject_markers[subject]
+
+
+
+
 
 
             # Handle the Ardeşen rule
@@ -543,7 +562,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('y'):
                 suffix = ''
             elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
-                suffix = 'n'
+                suffix = 'an'
             elif subject in ('S1_Singular', 'S2_Singular') and mood == 'optative':
                 suffix = 'a'
             elif subject in ('S1_Plural', 'S2_Plural') and mood == 'optative':
