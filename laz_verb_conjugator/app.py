@@ -6,7 +6,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend/dist')
 
 # Loading tense modules
 tense_modules = {
@@ -38,11 +38,15 @@ simplified_aspect_mapping = {
     'passive': ['tvm_tve_passive'],
 }
 
-@app.route('/')
-def index():
-    return send_from_directory('static', 'index.html')
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_react_app(path):
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
-@app.route('/conjugate', methods=['GET'])
+@app.route('/api/conjugate', methods=['GET'])
 def conjugate():
     infinitive = request.args.get('infinitive')
     subject = request.args.get('subject')
