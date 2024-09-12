@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, session
 from flask_cors import CORS  # Import Flask-CORS
 import importlib
 import logging
+import os
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
@@ -9,8 +10,34 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__, static_folder='../frontend/dist')
 
+# Load environment variables
+SECRET_KEY = os.getenv('SECRET_KEY')
+LOGIN_PASSWORD = os.getenv('LOGIN_PASSWORD')
+
+# Ensure the environment variables are set
+if not SECRET_KEY or not LOGIN_PASSWORD:
+    raise ValueError("SECRET_KEY and LOGIN_PASSWORD must be set in the environment.")
+
+# Configure Flask app
+app.config['SECRET_KEY'] = SECRET_KEY
+
 # Enable CORS for your app
 CORS(app, origins=['https://laz-verb-conjugator.onrender.com'])
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    password = data.get('password')
+    if password == os.environ.get('LOGIN_PASSWORD'):
+        session['authenticated'] = True
+        return jsonify({'message': 'Login successful'}), 200
+    else:
+        return jsonify({'error': 'Incorrect password'}), 401
+
+@app.route('/api/logout', methods=['POST'])
+def logout():
+    session.pop('authenticated', None)
+    return jsonify({'message': 'Logged out'}), 200
 
 # Loading tense modules
 tense_modules = {
