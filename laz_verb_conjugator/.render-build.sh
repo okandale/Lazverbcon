@@ -18,10 +18,15 @@ npm run build
 # Navigate back to the root
 cd ..
 
-# Install Python dependencies
-echo "Installing Python dependencies..."
+# Remove Poetry (to avoid interference)
+echo "Removing Poetry..."
+pip uninstall poetry -y
+
+# Install Python dependencies using pip
+echo "Installing Python dependencies with pip..."
 pip install -r requirements.txt
 
 # Start the Flask app using gunicorn
 echo "Starting gunicorn..."
 gunicorn app:app
+
