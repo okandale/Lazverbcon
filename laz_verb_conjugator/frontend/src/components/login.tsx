@@ -7,7 +7,7 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === 'your_password') { // Replace with your actual password check
+    if (password === 'ntsasa exti') { // Replace with your actual password check
       navigate('/conjugator');
     } else {
       alert('Incorrect password');
