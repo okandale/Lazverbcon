@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS  # Import Flask-CORS
 import importlib
 import logging
 
@@ -7,6 +8,9 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__, static_folder='../frontend/dist')
+
+# Enable CORS for your app
+CORS(app, origins=['https://laz-verb-conjugator.onrender.com'])
 
 # Loading tense modules
 tense_modules = {
