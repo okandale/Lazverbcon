@@ -13,7 +13,7 @@ npm install
 
 # Build the React frontend
 echo "Building the frontend..."
-npm run build
+npm run-script build
 
 # Navigate back to the root
 cd ..
