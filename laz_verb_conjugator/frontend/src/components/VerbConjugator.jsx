@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const API_URL = "https://laz-verb-conjugator.onrender.com/api/conjugate";
+const API_URL = "https://laz-verb-conjugator-backend.onrender.com/api/conjugate";
 
 const VerbConjugator = () => {
   const [language, setLanguage] = useState('en');
