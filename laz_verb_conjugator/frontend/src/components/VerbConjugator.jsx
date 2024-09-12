@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import britishFlag from '../assets/united-kingdom-flag-icon.svg';
-import turkishFlag from '../assets/turkey-flag-icon.svg';
+import britishFlag from '../public/united-kingdom-flag-icon.svg';
+import turkishFlag from '../public/turkey-flag-icon.svg';
 
 const API_URL = "https://laz-verb-conjugator.onrender.com/api/conjugate";
 
