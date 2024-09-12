@@ -157,10 +157,10 @@ const VerbConjugator = () => {
     }));
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setResults({ data: {}, error: '' });
-
+  
     const params = new URLSearchParams();
     Object.entries(formData).forEach(([key, value]) => {
       if (key === 'regions') {
@@ -169,20 +169,20 @@ const VerbConjugator = () => {
         }
       } else if (typeof value === 'boolean') {
         params.append(key, value ? 'true' : 'false');
-      } else {
+      } else if (value !== '') { // Exclude empty strings
         params.append(key, value);
       }
     });
-
+  
     try {
       const response = await fetch(`${API_URL}?${params.toString()}`);
       const data = await response.json();
-
+  
       if (!response.ok) {
         setResults({ data: {}, error: data.error || 'Error fetching conjugations.' });
         return;
       }
-
+  
       if (Object.keys(data).length === 0) {
         setResults({ data: {}, error: 'No conjugations found for this verb.' });
       } else {
@@ -195,6 +195,7 @@ const VerbConjugator = () => {
       });
     }
   };
+  
 
   const handleReset = () => {
     setFormData(defaultFormData);
