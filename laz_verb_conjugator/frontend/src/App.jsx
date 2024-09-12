@@ -1,12 +1,16 @@
-import React from 'react'
-import VerbConjugator from './components/VerbConjugator'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from './components/login';
+import VerbConjugator from './components/VerbConjugator';
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      <VerbConjugator />
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/conjugator" element={<VerbConjugator />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
