@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Flag, GlobeIcon } from 'lucide-react';
-import britishFlag from '../assets/united-kingdom-flag-icon.svg';
-import turkishFlag from '../assets/turkey-flag-icon.svg';
 
 const VerbConjugator = () => {
   const [language, setLanguage] = useState('en');
@@ -267,14 +265,14 @@ const VerbConjugator = () => {
         className={`focus:outline-none p-1 rounded ${language === 'en' ? 'bg-blue-100' : ''}`}
         aria-label="Switch to English"
       >
-        <img src={britishFlag} alt="British flag" className="w-6 h-6" />
+        <img src="/united-kingdom-flag-icon.svg" alt="British flag" className="w-6 h-6" />
       </button>
       <button 
           onClick={toggleLanguage} 
           className={`focus:outline-none p-1 rounded ${language === 'tr' ? 'bg-red-100' : ''}`}
           aria-label="Türkçe'ye geç"
       >
-          <img src={turkishFlag} alt="Turkish flag" className="w-6 h-6" />
+          <img src="/turkey-flag-icon.svg" alt="Turkish flag" className="w-6 h-6" />
       </button>
       </div>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
