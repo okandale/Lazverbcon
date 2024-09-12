@@ -1,31 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = "https://laz-verb-conjugator-backend.onrender.com/api";
-
 const LoginPage = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(`${API_URL}/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // Important to include cookies
-        body: JSON.stringify({ password }),
-      });
-
-      if (response.ok) {
-        navigate('/conjugator');
-      } else {
-        const data = await response.json();
-        alert(data.error || 'Incorrect password');
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      alert('An error occurred during login. Please try again.');
+    if (password === 'ntsasa exti') { // Replace with your actual password check
+      navigate('/conjugator');
+    } else {
+      alert('Incorrect password');
     }
   };
 
