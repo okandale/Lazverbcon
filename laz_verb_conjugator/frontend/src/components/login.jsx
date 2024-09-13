@@ -7,9 +7,7 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const envPassword = process.env.REACT_APP_PASSWORD;
-
-    if (password === envPassword) {
+    if (password === 'ntsasa exti') { // Replace with your actual password check
       navigate('/conjugator');
     } else {
       alert('Incorrect password');
@@ -57,4 +55,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
