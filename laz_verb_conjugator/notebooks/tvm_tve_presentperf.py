@@ -160,10 +160,10 @@ def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicati
             subject_markers = {
                 'S1_Singular': 'mi',
                 'S2_Singular': 'gi',
-                'S3_Singular': 'i',
+                'S3_Singular': 'u',
                 'S1_Plural': 'mi',
                 'S2_Plural': 'gi',
-                'S3_Plural': 'i'
+                'S3_Plural': 'u'
             }
 
             suffixes = get_suffixes(region)
