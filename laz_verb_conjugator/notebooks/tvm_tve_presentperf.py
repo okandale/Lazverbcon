@@ -95,11 +95,11 @@ def get_personal_pronouns(region):
     return {
         'S1_Singular': 'ma',
         'S2_Singular': 'si',
-        'S3_Singular': 'heyak' if region == "FA" else 'himuk' if region in ('AŞ', 'PZ') else 'hiyak',
+        'S3_Singular': 'heyas' if region == "FA" else 'himus' if region in ('AŞ', 'PZ') else 'hiyas',
         'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'hiya',
         'S1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çki',
         'S2_Plural': 'tkva' if region in ('FA', 'HO') else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkva',
-        'S3_Plural': 'hentepek' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe',
+        'S3_Plural': 'hentepes' if region == "FA" else 'hini' if region in ('AŞ') else 'hinis' if region == 'PZ' else 'entepes',
         'O3_Plural': 'hentepe',
         'O1_Singular': 'ma',
         'O2_Singular': 'si',
@@ -195,8 +195,11 @@ def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicati
             # Adjust the prefix based on the first letter for phonetic rules
             if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
-            if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive != 'geç̌k̆u':
-                preverb = preverb[:-1]
+            if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular'):
+                if root in ('geç̌k̆u'):
+                    preverb = preverb[:-1] + 'y' # for verbs that change to 'gy' in 2nd/3rd person
+                else:
+                    preverb = preverb[:-1]
             if preverb == "me" and subject_markers[subject].startswith(('a', 'e', 'i', 'o', 'u')):
                 preverb = "n"
                 prefix = preverb + subject_markers[subject]
@@ -267,7 +270,7 @@ def get_first_word(verb):
 
 
 # Example usage
-infinitive = 'gamaçamu'
+infinitive = 'geç̌k̆u'
 all_conjugations = collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, mood=None)
 
 # Print the formatted conjugations

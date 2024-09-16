@@ -231,8 +231,11 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
             # Get the first letter after the marker is attached
             if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
-            if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive != 'geç̌k̆u':
-                preverb = preverb[:-1]
+            if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular'):
+                if root in ('geç̌k̆u'):
+                    preverb = preverb[:-1] + 'y' # for verbs that change to 'gy' in 2nd/3rd person
+                else:
+                    preverb = preverb[:-1]
               
 
             first_letter = get_first_letter(root)
@@ -330,7 +333,7 @@ def get_first_word(verb):
 subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
 
 # Example usage
-infinitive = 'gamaçamu'
+infinitive = 'geç̌k̆u'
 tense = 'pastpro' # insert 'past', 'present','future','pastpro' or 'optative
 all_conjugations = collect_conjugations_all(infinitive, subjects, tense=tense)
 
