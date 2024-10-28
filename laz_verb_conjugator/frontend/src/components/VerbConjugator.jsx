@@ -40,12 +40,12 @@ const VerbConjugator = () => {
 
   const subjectOrder = [
     'ma', 'si', 'him', 'himuk', 'himus', 'heya', 'heyas', 'heyak',
-    'hiya', 'hiyas', 'hiyak', 'şk̆u', 'çki', 'çku', 'çkin', 't̆k̆va',
+    'em/hem', 'emus/hemus', 'emuk/hemuk', 'şk̆u', 'çki', 'çku', 'çkin', 't̆k̆va',
     'hini', 'hinik', 'hinis', 'tkva', 'hentepe', 'hentepes', 'hentepek',
     'entepe', 'entepes', 'entepek',
   ];
   const objectOrder = [
-    'ma', 'si', 'him', 'heya', 'hiya', 'şk̆u', 'çki', 'çku', 'çkin',
+    'ma', 'si', 'him', 'heya', 'em/hem', 'şk̆u', 'çki', 'çku', 'çkin',
     't̆k̆va', 'tkva', 'hini', 'hentepe', 'entepe',
   ];
 

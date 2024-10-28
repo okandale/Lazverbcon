@@ -96,10 +96,10 @@ def get_personal_pronouns(region):
     return {
         'S1_Singular': 'ma',
         'S2_Singular': 'si',
-        'S3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'hiya',
-        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'hiya',
+        'S3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'em/hem',
+        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'em/hem',
         'S1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
-        'S2_Plural': 'tkva' if region in ('FA', 'HO') else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkva',
+        'S2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
         'S3_Plural': 'hentepek' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe',
         'O3_Plural': 'hentepe',
         'O1_Singular': 'ma',
@@ -320,9 +320,9 @@ def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicati
 personal_pronouns_general = {
     'O1_Singular': 'ma',
     'O2_Singular': 'si',
-    'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'hiya',
+    'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'em/hem',
     'O1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
-    'O2_Plural': 'tkva' if region in ('FA', 'HO') else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkva',
+    'O2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
     'O3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe'
 }
 
