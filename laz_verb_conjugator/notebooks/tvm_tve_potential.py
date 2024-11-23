@@ -224,10 +224,14 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
             # Remove the preverb from the third-person form if it exists and add special rules for exceptions
             if preverb and root.startswith(preverb):
                 root = root[len(preverb):-1]  # Remove only the preverb
+                if root in (('geçamu', 'ceçamu')):
+                    root = root[:-3] # remove 'amu' from geçamu/ceçamu
             elif root in (('oşu', 'dodumu', 'otku')):
                 root = infinitive[1:-1] + "v"
             else:
                 root = root[1:-1]  # Remove the last character of the root
+
+            
 
             # Get the first letter after the marker is attached
             if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
