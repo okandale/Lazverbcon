@@ -233,7 +233,7 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
             if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
             if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular'):
-                if root in ('geç̌k̆u'):
+                if preverb == 'ge':
                     preverb = preverb[:-1] + 'y' # for verbs that change to 'gy' in 2nd/3rd person
                 else:
                     preverb = preverb[:-1]
