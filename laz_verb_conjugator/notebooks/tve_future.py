@@ -233,16 +233,17 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            for pv_group in preverbs_rules.keys():
-                if isinstance(pv_group, tuple):
-                    for pv in pv_group:
-                        if main_infinitive.startswith(pv):
-                            preverb = pv
-                            break
-                elif main_infinitive.startswith(pv_group):
-                    preverb = pv_group
-                if preverb:
-                    break
+            if main_infinitive != 'ok̆oreʒxu':
+                for pv_group in preverbs_rules.keys():
+                    if isinstance(pv_group, tuple):
+                        for pv in pv_group:
+                            if main_infinitive.startswith(pv):
+                                preverb = pv
+                                break
+                    elif main_infinitive.startswith(pv_group):
+                        preverb = pv_group
+                    if preverb:
+                        break
                 
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)

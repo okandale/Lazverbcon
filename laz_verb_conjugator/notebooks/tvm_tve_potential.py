@@ -209,16 +209,17 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            for pv_group in preverbs_rules.keys():
-                if isinstance(pv_group, tuple):
-                    for pv in pv_group:
-                        if main_infinitive.startswith(pv):
-                            preverb = pv
-                            break
-                elif main_infinitive.startswith(pv_group):
-                    preverb = pv_group
-                if preverb:
-                    break
+            if main_infinitive != 'ok̆oreʒxu':
+                for pv_group in preverbs_rules.keys():
+                    if isinstance(pv_group, tuple):
+                        for pv in pv_group:
+                            if main_infinitive.startswith(pv):
+                                preverb = pv
+                                break
+                    elif main_infinitive.startswith(pv_group):
+                        preverb = pv_group
+                    if preverb:
+                        break
                 
             # Remove the preverb from the third-person form if it exists and add special rules for exceptions
             if preverb and root.startswith(preverb):
