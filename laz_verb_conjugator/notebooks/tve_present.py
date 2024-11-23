@@ -388,7 +388,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     prefix = 'oxo'
                     
             # special handling for "ok̆o" 
-            elif preverb == 'ok̆o':
+            elif preverb == 'ok̆o'and infinitive not in ['ok̆oreʒxu']:
                 if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')):
                         preverb = preverb[:-1]
                 if marker:
