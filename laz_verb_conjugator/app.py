@@ -210,6 +210,8 @@ def conjugate():
                 actual_tense = mapping
                 embedded_tense = tense
             
+            logger.debug(f"Processing module: {actual_tense}, obj: {obj}")
+
             # Skip 'tvm' modules if an object is specified
             if actual_tense.startswith('tvm') and obj is not None:
                 continue
