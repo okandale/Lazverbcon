@@ -204,6 +204,10 @@ def conjugate():
             else:
                 actual_tense = mapping
                 embedded_tense = tense
+            
+            # Skip 'tvm' modules if an object is specified
+            if actual_tense.startswith('tvm') and obj:
+                continue
             module = tense_modules.get(actual_tense)
             if not module:
                 continue
