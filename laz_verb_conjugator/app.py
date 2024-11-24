@@ -213,7 +213,7 @@ def conjugate():
             logger.debug(f"Processing module: {actual_tense}, obj: {obj}")
 
             # Skip 'tvm' modules if an object is specified
-            if actual_tense.startswith('tvm') and obj is not None:
+            if actual_tense.startswith('tvm') and obj in ordered_objects:
                 continue
             module = tense_modules.get(actual_tense)
             if not module:
