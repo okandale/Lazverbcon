@@ -342,7 +342,7 @@ def get_first_word(verb):
 subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
 
 # Example usage
-infinitive = 'met̆omalu'
+infinitive = 'ordu'
 tense = 'past' # insert 'past', 'present','future','pastpro' or 'optative
 all_conjugations = collect_conjugations_all(infinitive, subjects, tense=tense)
 
