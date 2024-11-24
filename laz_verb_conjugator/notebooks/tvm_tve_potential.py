@@ -207,6 +207,12 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
 
             suffixes = get_suffixes(tense, region)
 
+            if root == 'geçamu':
+                root = 'geçu'
+
+            if root == 'ceçamu':
+                root == 'ceçu'
+
             # Extract the preverb from the infinitive if it exists
             preverb = ''
             if main_infinitive != 'ok̆oreʒxu':
@@ -224,8 +230,6 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
             # Remove the preverb from the third-person form if it exists and add special rules for exceptions
             if preverb and root.startswith(preverb):
                 root = root[len(preverb):-1]  # Remove only the preverb
-                if root in (('geçamu', 'ceçamu')):
-                    root = root[:-3] # remove 'amu' from geçamu/ceçamu
             elif root in (('oşu', 'dodumu', 'otku')):
                 root = infinitive[1:-1] + "v"
             else:
@@ -338,8 +342,8 @@ def get_first_word(verb):
 subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
 
 # Example usage
-infinitive = 'geç̌k̆u'
-tense = 'pastpro' # insert 'past', 'present','future','pastpro' or 'optative
+infinitive = 'met̆omalu'
+tense = 'past' # insert 'past', 'present','future','pastpro' or 'optative
 all_conjugations = collect_conjugations_all(infinitive, subjects, tense=tense)
 
 # Print the formatted conjugations
