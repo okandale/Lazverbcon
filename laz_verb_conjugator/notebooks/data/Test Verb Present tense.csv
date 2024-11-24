@@ -109,7 +109,6 @@ yeç̌opu,TVE,yeç̌opups,HO,,,,,to buy,almak
 meşvelu,TVE,nuşvelams,"FA, AŞ, PZ",nuşvelaps,HO,,,to help,yardım etmek
 ok̆itxu,TVE,ik̆itxams,"FA, AŞ, PZ",ik̆itxaps,HO,,,to ask/read,sormak/okumak
 gondunu,TVM,gondunun,"PZ, AŞ, FA, HO",,,,,to get lost,kaybolmak
-ordu,TVM ,irden,"PZ, AŞ, FA, HO",,,,,to grow up,büyümek 
 ordu,TVE,ordams,"FA, AŞ, PZ",ordaps,HO,,,to raise,büyütmek 
 onk̆ilu,TVE,k̆ilups,HO,,,,,to lock,kilitlemek
 oçk̆iru,TVE,çk̆irups,HO,,,,,to cut,kesmek
@@ -118,7 +117,7 @@ obaxu,TVE,baxups,HO,,,,,to beat up,dovmek
 oǯamu,TVE,ǯamups,HO,,,,,to kill,oldurmek
 obonu,TVE,bonups,HO,,,,,to burn oneself,vucudun bir bolumunu veya tamamını yıkamak
 oceru,TVM,icers,HO,,,,,to believe,inanmak
-oçaminu,TVM,içaminen,HO,,,,,to itch,kaşınmak
+oçaminu,TVM,içaminen,"PZ, AŞ, FA, HO",,,,,to itch,kaşınmak
 oçaminu,TVE,içaminaps,HO,içaminams,FA,,,to scratch,kaşımak
 oçilu,TVM,içilers,HO,,,,,to marry (male),erkeğin evlenmesi
 oç̌abu,TVE,ç̌abups,HO,,,,,to glue,yapıştırmak
@@ -299,3 +298,4 @@ oçodinu,TVE,oçodinams,"PZ, AŞ, FA",oçodinaps,HO,,,to finish/complete,bitirme
 oçodu,TVM,çodun,"PZ, AŞ, FA, HO",,,,,to end,bitmek
 meşk̆idu,TVE,noşk̆idams,"PZ, AŞ, FA",noşk̆idaps,HO,,,to strangle,boğmak
 oçalişu,TVE,içalişams,"PZ, AŞ, FA",içalişaps,HO,,,to work,çalışmak
+ordu,TVM,irden,"PZ, AŞ, FA, HO",,,,,to grow up,büyümek 
