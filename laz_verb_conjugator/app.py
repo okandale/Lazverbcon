@@ -53,6 +53,10 @@ def serve_react_app(path):
 @app.route('/api/conjugate', methods=['GET'])
 def conjugate():
     infinitive = request.args.get('infinitive')
+    if infinitive:
+        infinitive = infinitive.lower()
+    else:
+        return jsonify({"error": "Infinitive is required"}), 400
     subject = request.args.get('subject')
     obj = request.args.get('obj', None)
     
