@@ -323,7 +323,14 @@ const VerbConjugator = () => {
         pauseOnHover
       />
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-        {translations[language].title}
+        <a 
+          href="https://laz-verb-conjugator.onrender.com/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="hover:underline"
+        >
+          {translations[language].title}
+        </a>
       </h1>
       <div className="mb-4 flex justify-center space-x-2">
         {specialCharacters.map((char, index) => (
