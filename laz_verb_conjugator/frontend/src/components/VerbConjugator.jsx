@@ -22,9 +22,10 @@ const VerbConjugator = () => {
 
   const [formData, setFormData] = useState(defaultFormData);
   const [results, setResults] = useState({ data: {}, error: '' });
+  const [isLoading, setIsLoading] = useState(false); // Loading state
   const infinitiveInputRef = useRef(null);
 
-  const specialCharacters = ['ç̌', 't̆', 'ž', 'k̆', 'ʒ', 'ʒ̆'];
+  const specialCharacters = ['ç̌', 't̆', 'ž', 'k̆', 'ʒ', 'ʒ̆', 'p̌'];
 
   const regionNames = {
     'AŞ': 'Ardeşen (Art̆aşeni)',
@@ -65,6 +66,7 @@ const VerbConjugator = () => {
       reset: 'Reset',
       results: 'Results',
       betaMessage: 'Please note, this is still a beta version and there may be mistakes. Please contact okan@lazenstitu.org if you spot a mistake. If in doubt, please ask your elders for the correct conjugation, as we are not able to cover all varieties.',
+      loadingMessage: 'Loading, please wait... (this may take up to 3 minutes)',
     },
     tr: {
       title: 'Fiil Çekimi',
@@ -83,6 +85,7 @@ const VerbConjugator = () => {
       reset: 'Sıfırla',
       results: 'Sonuçlar',
       betaMessage: 'Lütfen dikkat edin, bu hâlâ bir beta sürümüdür ve hatalar olabilir. Bir hata fark ederseniz, lütfen okan@lazenstitu.org adresine bildirin. Şüphe duyarsanız, lütfen doğru çekim için büyüklerinize danışın, çünkü tüm çeşitleri kapsama imkânımız yok.',
+      loadingMessage: 'Yükleniyor, lütfen bekleyin... (bu işlem 3 dakika kadar sürebilir)',
     },
   };
 
@@ -158,6 +161,7 @@ const VerbConjugator = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setResults({ data: {}, error: '' });
+    setIsLoading(true); // Start loading
 
     const params = new URLSearchParams();
     Object.entries(formData).forEach(([key, value]) => {
@@ -191,8 +195,19 @@ const VerbConjugator = () => {
         data: {},
         error: 'An error occurred while fetching conjugation. Please try again.',
       });
+    } finally {
+      setIsLoading(false); // End loading
     }
   };
+  const LoadingScreen = ({ message }) => (
+    <div className="fixed inset-0 bg-white bg-opacity-80 flex flex-col items-center justify-center z-50">
+      <svg className="animate-spin h-10 w-10 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+      </svg>
+      <p className="text-center text-lg">{message}</p>
+    </div>
+  );
 
   const handleReset = () => {
     setFormData(defaultFormData);
@@ -274,6 +289,11 @@ const VerbConjugator = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-4 relative">
+    {isLoading && (
+      <LoadingScreen message={translations[language].loadingMessage} />
+    )}
+
+      {/* Language Toggle Buttons */}      
       <div className="absolute top-0 right-0 space-x-2">
         <button
           onClick={toggleLanguage}
