@@ -211,8 +211,6 @@ def conjugate():
             try:
                 if not hasattr(module, 'verbs') or infinitive not in module.verbs:
                     continue
-                if actual_tense.startswith('tvm') and obj:
-                    return jsonify({"error": "TVM verbs cannot be conjugated with objects."}), 400
                 subjects = ordered_subjects if subject == 'all' else [subject]
                 objects = ordered_objects if obj == 'all' else [obj] if obj else [None]
                 for subj in subjects:
