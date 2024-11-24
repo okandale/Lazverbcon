@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const API_URL = "https://laz-verb-conjugator-backend.onrender.com/api/conjugate";
 
 const VerbConjugator = () => {
@@ -23,7 +22,6 @@ const VerbConjugator = () => {
 
   const [formData, setFormData] = useState(defaultFormData);
   const [results, setResults] = useState({ data: {}, error: '' });
-  const [showRegions, setShowRegions] = useState(false);
   const infinitiveInputRef = useRef(null);
 
   const specialCharacters = ['ç̌', 't̆', 'ž', 'k̆', 'ʒ', 'ʒ̆'];
@@ -160,7 +158,7 @@ const VerbConjugator = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setResults({ data: {}, error: '' });
-  
+
     const params = new URLSearchParams();
     Object.entries(formData).forEach(([key, value]) => {
       if (key === 'regions') {
@@ -173,16 +171,16 @@ const VerbConjugator = () => {
         params.append(key, value);
       }
     });
-  
+
     try {
       const response = await fetch(`${API_URL}?${params.toString()}`);
       const data = await response.json();
-  
+
       if (!response.ok) {
         setResults({ data: {}, error: data.error || 'Error fetching conjugations.' });
         return;
       }
-  
+
       if (Object.keys(data).length === 0) {
         setResults({ data: {}, error: 'No conjugations found for this verb.' });
       } else {
@@ -195,7 +193,6 @@ const VerbConjugator = () => {
       });
     }
   };
-  
 
   const handleReset = () => {
     setFormData(defaultFormData);
@@ -451,34 +448,29 @@ const VerbConjugator = () => {
 
         {/* Regions Fieldset */}
         <fieldset className="mb-4 border border-gray-300 rounded p-3">
-          <legend
-            className="font-bold cursor-pointer"
-            onClick={() => setShowRegions(!showRegions)}
-          >
+          <legend className="font-bold">
             {translations[language].regions}
           </legend>
-          {showRegions && (
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { code: 'AŞ', name: 'Ardeşen (AŞ)' },
-                { code: 'FA', name: 'Fındıklı-Arhavi (FA)' },
-                { code: 'HO', name: 'Hopa (HO)' },
-                { code: 'PZ', name: 'Pazar (PZ)' },
-              ].map(region => (
-                <label key={region.code} className="block">
-                  <input
-                    type="checkbox"
-                    name="regions"
-                    value={region.code}
-                    checked={formData.regions.includes(region.code)}
-                    onChange={handleRegionChange}
-                    className="mr-2"
-                  />
-                  {region.name}
-                </label>
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { code: 'AŞ', name: 'Ardeşen (AŞ)' },
+              { code: 'FA', name: 'Fındıklı-Arhavi (FA)' },
+              { code: 'HO', name: 'Hopa (HO)' },
+              { code: 'PZ', name: 'Pazar (PZ)' },
+            ].map(region => (
+              <label key={region.code} className="block">
+                <input
+                  type="checkbox"
+                  name="regions"
+                  value={region.code}
+                  checked={formData.regions.includes(region.code)}
+                  onChange={handleRegionChange}
+                  className="mr-2"
+                />
+                {region.name}
+              </label>
+            ))}
+          </div>
         </fieldset>
 
         {/* Checkbox Options */}
