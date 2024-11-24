@@ -55,6 +55,11 @@ def conjugate():
     infinitive = request.args.get('infinitive')
     subject = request.args.get('subject')
     obj = request.args.get('obj', None)
+    
+    # Normalize obj
+    if obj in ['', 'None']:
+        obj = None
+    
     applicative = request.args.get('applicative', 'false').lower() == 'true'
     causative = request.args.get('causative', 'false').lower() == 'true'
     optative = request.args.get('optative', 'false').lower() == 'true'
@@ -206,7 +211,7 @@ def conjugate():
                 embedded_tense = tense
             
             # Skip 'tvm' modules if an object is specified
-            if actual_tense.startswith('tvm') and obj:
+            if actual_tense.startswith('tvm') and obj is not None:
                 continue
             module = tense_modules.get(actual_tense)
             if not module:
