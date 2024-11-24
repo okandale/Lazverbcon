@@ -278,7 +278,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 preverb = preverb[:-1]
             # Special handling for "me"
             if preverb == 'me' or (use_optional_preverb and not preverb):
-                if infinitive in ('meşvelu') and not marker:
+                if infinitive in ('meşvelu') and not marker or root.startswith('n') and not marker:
                     root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
                 first_letter = get_first_letter(root)
                 if obj in ['O2_Singular', 'O2_Plural']:
@@ -742,7 +742,7 @@ print(format_conjugations(all_conjugations))
 
 
 # Example usage for Sx conjugations with optative:
-infinitive = 'ot̆axu'
+infinitive = 'met̆omalu'
 optative = False  # Set to True if you want to include optative, otherwise set to False
 
 print(f"All subject conjugations of infinitive '{infinitive}':")
