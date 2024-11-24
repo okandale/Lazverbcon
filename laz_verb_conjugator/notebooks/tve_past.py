@@ -276,7 +276,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 preverb = preverb[:-1]
             # Special handling for "me"
             if preverb == 'me' or (use_optional_preverb and not preverb):
-                if main_infinitive == 'meşvelu' and not marker:
+                if main_infinitive in ('meşvelu') and not marker or root.startswith('n') and not marker:
                     root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
                 first_letter = get_first_letter(root)
                 if obj in ['O2_Singular', 'O2_Plural']:

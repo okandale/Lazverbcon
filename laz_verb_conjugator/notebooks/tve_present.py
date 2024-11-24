@@ -742,7 +742,7 @@ print(format_conjugations(all_conjugations))
 
 
 # Example usage for Sx conjugations with optative:
-infinitive = 'met̆omalu'
+infinitive = 'meşk̆vu'
 optative = False  # Set to True if you want to include optative, otherwise set to False
 
 print(f"All subject conjugations of infinitive '{infinitive}':")
