@@ -191,8 +191,6 @@ def get_suffixes(tense, region):
     return suffixes
 
 def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False, causative=False, use_optional_preverb=False):
-    if obj:
-        return {}  # TVM verbs cannot be conjugated with objects
     # Check for invalid SxOx combinations
     if (subject in ['S1_Singular', 'S1_Plural'] and obj in ['O1_Singular', 'O1_Plural']) or \
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
@@ -561,12 +559,11 @@ def collect_conjugations_all(infinitive, subjects, tense='present', obj=None, ap
     all_conjugations = {}
     for subject in subjects:
         result = conjugate_verb(infinitive, tense, subject=subject, obj=obj, applicative=applicative, causative=causative)
-        if result:  # Only process if result is not empty
-            for region, conjugation_list in result.items():
-                if region not in all_conjugations:
-                    all_conjugations[region] = set()
-                for conjugation in conjugation_list:
-                    all_conjugations[region].add((subject, obj, conjugation[2]))
+        for region, conjugation_list in result.items():
+            if region not in all_conjugations:
+                all_conjugations[region] = set()
+            for conjugation in conjugation_list:
+                all_conjugations[region].add((subject, obj, conjugation[2]))  # Ensure unique conjugation for each combination
     return all_conjugations
 
 # Define the function to extract negative imperatives
