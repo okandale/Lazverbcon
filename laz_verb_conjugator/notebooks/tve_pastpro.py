@@ -238,32 +238,31 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            if main_infinitive != 'ok̆oreʒxu':
+            preverb_exceptions = {'gonʒ̆k̆u'}  # Ensure this set is defined appropriately, add additionally to 256
+
+            # Check if the infinitive is NOT in the exception list before extracting preverbs
+            if infinitive not in preverb_exceptions:
                 for pv_group in preverbs_rules.keys():
                     if isinstance(pv_group, tuple):
                         for pv in pv_group:
                             if main_infinitive.startswith(pv):
                                 preverb = pv
+                                print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                                 break
                     elif main_infinitive.startswith(pv_group):
                         preverb = pv_group
+                        print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                     if preverb:
                         break
-            
-            print(f"Preverb: {preverb}")
-            
+
+                
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
-            print(f"Root after processing: {root}")
 
-            # keeping it in here in case applicative takes this form 
-            # if root in ('imxors', 'ipxors') and infinitive == 'oç̌k̆omu':
-            #    root = 'ç̌k̆omums'
-            #elif root in ('imxors') and infinitive == 'oşk̆omu':
-            #    root = 'şk̆omums'
+            print(f"Processing Infinitive: '{infinitive}', Preverb: '{preverb}', Main Infinitive: '{main_infinitive}', Subject: '{subject}', Object: '{obj}', Region: '{region}'")
                 
             # Remove the preverb from the third-person form if it exists
-            if preverb and root.startswith(preverb):
+            if preverb and root.startswith(preverb) and infinitive != 'gonʒ̆k̆u':
                 root = root[len(preverb):]
 
             print(f"Root after preverb removal: {root}")

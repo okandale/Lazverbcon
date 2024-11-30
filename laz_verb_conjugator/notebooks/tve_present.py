@@ -229,7 +229,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            preverb_exceptions = {'gonʒ̆k̆u'}  # Ensure this set is defined appropriately
+            preverb_exceptions = {'gonʒ̆k̆u'}  # Ensure this set is defined appropriately, add additionally to 256
 
             # Check if the infinitive is NOT in the exception list before extracting preverbs
             if infinitive not in preverb_exceptions:
