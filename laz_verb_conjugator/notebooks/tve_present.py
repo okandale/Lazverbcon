@@ -229,15 +229,20 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            if main_infinitive != 'ok̆oreʒxu':
+            preverb_exceptions = {'gonʒ̆k̆u'}  # Ensure this set is defined appropriately
+
+            # Check if the infinitive is NOT in the exception list before extracting preverbs
+            if infinitive not in preverb_exceptions:
                 for pv_group in preverbs_rules.keys():
                     if isinstance(pv_group, tuple):
                         for pv in pv_group:
                             if main_infinitive.startswith(pv):
                                 preverb = pv
+                                print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                                 break
                     elif main_infinitive.startswith(pv_group):
                         preverb = pv_group
+                        print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                     if preverb:
                         break
 
@@ -245,9 +250,10 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
 
+            print(f"Processing Infinitive: '{infinitive}', Preverb: '{preverb}', Main Infinitive: '{main_infinitive}', Subject: '{subject}', Object: '{obj}', Region: '{region}'")
                 
             # Remove the preverb from the third-person form if it exists
-            if preverb and root.startswith(preverb):
+            if preverb and root.startswith(preverb) and infinitive != 'gonʒ̆k̆u':
                 root = root[len(preverb):]
 
             # Determine the marker (applicative or causative)
@@ -387,7 +393,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     prefix = 'oxo'
                 else:
                     prefix = 'oxo'
-                    
+
+
             # special handling for "ok̆o" 
             elif preverb == 'ok̆o'and infinitive not in ['ok̆oreʒxu']:
                 if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')):
@@ -720,7 +727,7 @@ def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
 
 # Example usage for Sx conjugations with a specific object and marker
-infinitive = 'obiru'
+infinitive = 'gonʒ̆k̆u'
 print(f"All subject conjugations of infinitive '{infinitive}':")
 all_conjugations = collect_conjugations(infinitive, subjects)
 print(format_conjugations(all_conjugations))
@@ -831,7 +838,3 @@ for region, forms in formatted_neg_imperatives.items():
     print(f"{region}:")
     for form in forms:
         print(form)
-
-
-
-
