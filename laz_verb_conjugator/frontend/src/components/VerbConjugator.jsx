@@ -200,52 +200,43 @@ const VerbConjugator = () => {
   };
 
   // Handle feedback form submission
-  const handleFeedbackSubmit = (e) => {
+  const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwMoxTnwlccunb20qeYxt--0-GqHiGiLpTcKx0KVHMJwEi2uFCsNPv5mtQyw_QKbcwZ/exec';
   
-    const callbackName = 'jsonpCallback_' + Math.floor(Math.random() * 1000000);
+    try {
+      // Show loading state
+      setIsLoading(true);
   
-    // Define the callback function
-    window[callbackName] = function (response) {
-      if (response.result === 'success') {
-        setFeedbackData({
-          incorrectWord: '',
-          correction: '',
-          explanation: '',
-        });
-        setFeedbackVisible(false);
-        alert('Thank you for your feedback!');
-      } else {
-        alert('An error occurred: ' + response.message);
-      }
-      // Clean up the script tag and callback
-      delete window[callbackName];
-      document.body.removeChild(script);
-    };
+      // Create form data
+      const formData = new FormData();
+      formData.append('incorrectWord', feedbackData.incorrectWord);
+      formData.append('correction', feedbackData.correction);
+      formData.append('explanation', feedbackData.explanation);
   
-    // Prepare the data
-    const params = new URLSearchParams({
-      callback: callbackName,
-      incorrectWord: feedbackData.incorrectWord,
-      correction: feedbackData.correction,
-      explanation: feedbackData.explanation,
-    });
+      // Make the request using fetch with no-cors mode
+      const response = await fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData,
+      });
   
-    // Create a script element
-    const script = document.createElement('script');
-    script.src = `${scriptURL}?${params.toString()}`;
-    script.async = true;
+      // Since no-cors mode doesn't return readable response
+      // We assume success if no error was thrown
+      setFeedbackData({
+        incorrectWord: '',
+        correction: '',
+        explanation: '',
+      });
+      setFeedbackVisible(false);
+      alert('Thank you for your feedback!');
   
-    // Handle errors
-    script.onerror = function () {
-      alert('There was an error submitting your feedback. Please try again later.');
-      delete window[callbackName];
-      document.body.removeChild(script);
-    };
-  
-    // Add the script to the document
-    document.body.appendChild(script);
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while submitting feedback. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
 
