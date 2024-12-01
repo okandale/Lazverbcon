@@ -200,35 +200,55 @@ const VerbConjugator = () => {
   };
 
   // Handle feedback form submission
-  const handleFeedbackSubmit = async (e) => {
+  const handleFeedbackSubmit = (e) => {
     e.preventDefault();
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwMoxTnwlccunb20qeYxt--0-GqHiGiLpTcKx0KVHMJwEi2uFCsNPv5mtQyw_QKbcwZ/exec'; // Your script URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwMoxTnwlccunb20qeYxt--0-GqHiGiLpTcKx0KVHMJwEi2uFCsNPv5mtQyw_QKbcwZ/exec';
   
-    try {
-      const formData = new URLSearchParams();
-      formData.append('incorrectWord', feedbackData.incorrectWord);
-      formData.append('correction', feedbackData.correction);
-      formData.append('explanation', feedbackData.explanation);
+    const callbackName = 'jsonpCallback_' + Math.floor(Math.random() * 1000000);
   
-      await fetch(scriptURL, {
-        method: 'POST',
-        body: formData,
-      });
+    // Define the callback function
+    window[callbackName] = function (response) {
+      if (response.result === 'success') {
+        setFeedbackData({
+          incorrectWord: '',
+          correction: '',
+          explanation: '',
+        });
+        setFeedbackVisible(false);
+        alert('Thank you for your feedback!');
+      } else {
+        alert('An error occurred: ' + response.message);
+      }
+      // Clean up the script tag and callback
+      delete window[callbackName];
+      document.body.removeChild(script);
+    };
   
-      // Reset the form and close it
-      setFeedbackData({
-        incorrectWord: '',
-        correction: '',
-        explanation: '',
-      });
-      setFeedbackVisible(false);
+    // Prepare the data
+    const params = new URLSearchParams({
+      callback: callbackName,
+      incorrectWord: feedbackData.incorrectWord,
+      correction: feedbackData.correction,
+      explanation: feedbackData.explanation,
+    });
   
-      alert('Thank you for your feedback!');
-    } catch (error) {
-      console.error('Error submitting feedback:', error);
+    // Create a script element
+    const script = document.createElement('script');
+    script.src = `${scriptURL}?${params.toString()}`;
+    script.async = true;
+  
+    // Handle errors
+    script.onerror = function () {
       alert('There was an error submitting your feedback. Please try again later.');
-    }
+      delete window[callbackName];
+      document.body.removeChild(script);
+    };
+  
+    // Add the script to the document
+    document.body.appendChild(script);
   };
+
+
   const handleInputChange = e => {
     const { name, value, type, checked } = e.target;
     setFormData(prevData => ({
