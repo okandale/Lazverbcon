@@ -537,13 +537,15 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
             else:
                 suffix = suffixes[subject]
 
+
+
+            # Determine the final root to use
+            final_root = root[:-1] if root.endswith('s') else root
+
             # Remove the first letter of final_root if it is the same as the last letter of prefix
             if prefix and final_root and prefix[-1] == final_root[0]:
                 final_root = final_root[1:]
 
-            # Determine the final root to use
-            final_root = root[:-1] if root.endswith('s') else root
-            
             print(f"Final root: {final_root}, Suffix: {suffix}")
             # Conjugate the verb
             conjugated_verb = f"{prefix}{final_root}{suffix}"
