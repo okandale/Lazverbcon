@@ -97,6 +97,14 @@ const VerbConjugator = () => {
     },
   };
 
+  const firstInputRef = useRef(null);
+
+  useEffect(() => {
+    if (isFeedbackVisible && firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
+  }, [isFeedbackVisible]);
+
   const toggleLanguage = () => {
     setLanguage(prevLang => (prevLang === 'en' ? 'tr' : 'en'));
   };
@@ -113,6 +121,24 @@ const VerbConjugator = () => {
     formData.imperative,
     formData.neg_imperative,
   ]);
+
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setFeedbackVisible(false);
+      }
+    };
+  
+    if (isFeedbackVisible) {
+      document.addEventListener('keydown', handleEscape);
+    } else {
+      document.removeEventListener('keydown', handleEscape);
+    }
+  
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isFeedbackVisible]);
 
   const updateFormState = () => {
     setFormData(prevData => {
@@ -663,62 +689,89 @@ const VerbConjugator = () => {
         </p>
       </div>
       
-      {/* Feedback Form */}
+      {/* Updated Bottom Message with Feedback Link */}
+      <div className="text-center mt-6">
+        <p className="text-gray-700 text-sm">
+          {translations[language].betaMessage}{' '}
+          <button
+            onClick={() => setFeedbackVisible(true)}
+            className="text-blue-500 hover:underline"
+          >
+            {translations[language].feedbackLinkText}
+          </button>
+          .
+        </p>
+      </div>
+
+      {/* Feedback Modal */}
       {isFeedbackVisible && (
-        <div className="feedback-form bg-gray-100 p-4 rounded shadow-md">
-          <h3 className="text-xl font-bold mb-4">Submit Feedback</h3>
-          <form onSubmit={handleFeedbackSubmit}>
-            <div className="mb-3">
-              <label className="block text-gray-700 font-bold mb-1" htmlFor="incorrectWord">
-                Incorrect Word(s)
-              </label>
-              <input
-                type="text"
-                name="incorrectWord"
-                value={feedbackData.incorrectWord}
-                onChange={handleFeedbackChange}
-                className="w-full border rounded px-2 py-1"
-                required
-              />
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+          onClick={() => setFeedbackVisible(false)}
+        >
+          <div
+            className="bg-white rounded-lg overflow-hidden shadow-xl max-w-md w-full mx-2"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="px-6 py-4">
+              <h3 className="text-xl font-bold mb-4">
+                {translations[language].feedbackTitle}
+              </h3>
+              <form onSubmit={handleFeedbackSubmit}>
+                <div className="mb-3">
+                  <label className="block text-gray-700 font-bold mb-1" htmlFor="incorrectWord">
+                    {translations[language].feedbackLabels.incorrectWord}
+                  </label>
+                  <input
+                    type="text"
+                    name="incorrectWord"
+                    value={feedbackData.incorrectWord}
+                    onChange={handleFeedbackChange}
+                    className="w-full border rounded px-2 py-1"
+                    required
+                    ref={firstInputRef}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="block text-gray-700 font-bold mb-1" htmlFor="correction">
+                    {translations[language].feedbackLabels.correction}
+                  </label>
+                  <input
+                    type="text"
+                    name="correction"
+                    value={feedbackData.correction}
+                    onChange={handleFeedbackChange}
+                    className="w-full border rounded px-2 py-1"
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="block text-gray-700 font-bold mb-1" htmlFor="explanation">
+                    {translations[language].feedbackLabels.explanation}
+                  </label>
+                  <textarea
+                    name="explanation"
+                    value={feedbackData.explanation}
+                    onChange={handleFeedbackChange}
+                    className="w-full border rounded px-2 py-1"
+                    rows="4"
+                  ></textarea>
+                </div>
+                <div className="flex justify-end space-x-2">
+                  <button
+                    type="button"
+                    onClick={() => setFeedbackVisible(false)}
+                    className="px-4 py-2 bg-gray-300 rounded"
+                  >
+                    {translations[language].feedbackLabels.cancel}
+                  </button>
+                  <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+                    {translations[language].feedbackLabels.submit}
+                  </button>
+                </div>
+              </form>
             </div>
-            <div className="mb-3">
-              <label className="block text-gray-700 font-bold mb-1" htmlFor="correction">
-                Correction
-              </label>
-              <input
-                type="text"
-                name="correction"
-                value={feedbackData.correction}
-                onChange={handleFeedbackChange}
-                className="w-full border rounded px-2 py-1"
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label className="block text-gray-700 font-bold mb-1" htmlFor="explanation">
-                Explanation
-              </label>
-              <textarea
-                name="explanation"
-                value={feedbackData.explanation}
-                onChange={handleFeedbackChange}
-                className="w-full border rounded px-2 py-1"
-                rows="4"
-              ></textarea>
-            </div>
-            <div className="flex justify-end space-x-2">
-              <button
-                type="button"
-                onClick={() => setFeedbackVisible(false)}
-                className="px-4 py-2 bg-gray-300 rounded"
-              >
-                Cancel
-              </button>
-              <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
-                Submit
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
       )}
     </div>
