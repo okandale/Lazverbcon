@@ -71,7 +71,8 @@ const VerbConjugator = () => {
       conjugate: 'Conjugate',
       reset: 'Reset',
       results: 'Results',
-      betaMessage: 'Please note, this is still a beta version and there may be mistakes. Please contact okan@lazenstitu.org if you spot a mistake. If in doubt, please ask your elders for the correct conjugation, as we are not able to cover all varieties.',
+      betaMessage: 'Please submit your feedback using the',
+      feedbackLinkText: 'feedback form',
       loadingMessage: 'Loading, please wait... (this may take up to 3 minutes)',
     },
     tr: {
@@ -90,7 +91,8 @@ const VerbConjugator = () => {
       conjugate: 'Çek',
       reset: 'Sıfırla',
       results: 'Sonuçlar',
-      betaMessage: 'Lütfen dikkat edin, bu hâlâ bir beta sürümüdür ve hatalar olabilir. Bir hata fark ederseniz, lütfen okan@lazenstitu.org adresine bildirin. Şüphe duyarsanız, lütfen doğru çekim için büyüklerinize danışın, çünkü tüm çeşitleri kapsama imkânımız yok.',
+      betaMessage: 'Lütfen geri bildirim formunu kullanarak görüşlerinizi iletin',
+      feedbackLinkText: 'geri bildirim formu',
       loadingMessage: 'Yükleniyor, lütfen bekleyin... (bu işlem 3 dakika kadar sürebilir)',
     },
   };
@@ -650,12 +652,14 @@ const VerbConjugator = () => {
       </div>
       <div className="text-center mt-6">
         <p className="text-gray-700 text-sm">
-          {translations[language].betaMessage.split('\n').map((line, index) => (
-            <React.Fragment key={index}>
-              {line}
-              <br />
-            </React.Fragment>
-          ))}
+          {translations[language].betaMessage}{' '}
+          <button
+            onClick={() => setFeedbackVisible(true)}
+            className="text-blue-500 hover:underline"
+          >
+            {translations[language].feedbackLinkText}
+          </button>
+          .
         </p>
       </div>
       
