@@ -542,7 +542,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             elif subject in ('S2_Singular') and obj in ('O1_Singular', 'O2_Singular', 'O3_Singular', 'O3_Plural'):
                 suffix = 'aginon' if region == "HO" else 'are'
             elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
-                suffix = 'sunonan' if region == "HO" else 'anere' if region == "PZ" else 'anen'
+                suffix = 'asunonan' if region == "HO" else 'anere' if region == "PZ" else 'anen'
             elif subject in ('S1_Singular', 'S1_Plural') and obj in ['O2_Plural']:
                 suffix = 'aminonan' if region == "HO" else 'atere' if region == "PZ" else 'aten'
             elif subject in ('S2_Singular', 'S2_Plural') and obj in ['O1_Plural']:
