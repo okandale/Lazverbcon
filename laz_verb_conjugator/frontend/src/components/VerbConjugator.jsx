@@ -73,6 +73,14 @@ const VerbConjugator = () => {
       results: 'Results',
       betaMessage: 'Please submit your feedback using the',
       feedbackLinkText: 'feedback form',
+      feedbackTitle: 'Submit Feedback',
+      feedbackLabels: {
+        incorrectWord: 'Incorrect Word(s)',
+        correction: 'Correction',
+        explanation: 'Explanation',
+        cancel: 'Cancel',
+        submit: 'Submit',
+      },
       loadingMessage: 'Loading, please wait... (this may take up to 3 minutes)',
     },
     tr: {
@@ -93,6 +101,14 @@ const VerbConjugator = () => {
       results: 'Sonuçlar',
       betaMessage: 'Lütfen geri bildirim formunu kullanarak görüşlerinizi iletin',
       feedbackLinkText: 'geri bildirim formu',
+      feedbackTitle: 'Geri Bildirim Gönder',
+      feedbackLabels: {
+        incorrectWord: 'Yanlış Kelime(ler)',
+        correction: 'Doğrusu',
+        explanation: 'Açıklama',
+        cancel: 'İptal',
+        submit: 'Gönder',
+      },
       loadingMessage: 'Yükleniyor, lütfen bekleyin... (bu işlem 3 dakika kadar sürebilir)',
     },
   };
@@ -675,18 +691,6 @@ const VerbConjugator = () => {
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8">
         <h2 className="text-2xl font-bold mb-4">{translations[language].results}:</h2>
         {renderResults()}
-      </div>
-      <div className="text-center mt-6">
-        <p className="text-gray-700 text-sm">
-          {translations[language].betaMessage}{' '}
-          <button
-            onClick={() => setFeedbackVisible(true)}
-            className="text-blue-500 hover:underline"
-          >
-            {translations[language].feedbackLinkText}
-          </button>
-          .
-        </p>
       </div>
       
       {/* Updated Bottom Message with Feedback Link */}
