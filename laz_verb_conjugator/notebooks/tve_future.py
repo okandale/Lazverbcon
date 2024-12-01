@@ -463,7 +463,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                         elif subject in ('S1_Singular', 'S1_Plural'):
                             prefix = 'p̌'
                         elif obj in ('O1_Singular', 'O1_Plural'):
-                            prefix = 'p̌'
+                            prefix = 'mp̌'
                         else:
                             prefix = subject_markers[subject]
                     if obj in ['O2_Singular', 'O2_Plural']:

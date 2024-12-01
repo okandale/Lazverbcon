@@ -456,7 +456,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                         elif subject in ('S1_Singular', 'S1_Plural'):
                             prefix = 'p̌'
                         elif obj in ('O1_Singular', 'O1_Plural'):
-                            prefix = 'p̌'
+                            prefix = 'mp̌'
                         else:
                             prefix = subject_markers[subject]
                             
