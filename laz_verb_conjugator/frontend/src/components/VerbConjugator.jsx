@@ -24,6 +24,12 @@ const VerbConjugator = () => {
   const [results, setResults] = useState({ data: {}, error: '' });
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const infinitiveInputRef = useRef(null);
+  const [isFeedbackVisible, setFeedbackVisible] = useState(false);
+  const [feedbackData, setFeedbackData] = useState({
+    incorrectWord: '',
+    correction: '',
+    explanation: '',
+  });
 
   const specialCharacters = ['ç̌', 't̆', 'ž', 'k̆', 'ʒ', 'ʒ̆', 'p̌'];
 
@@ -138,6 +144,45 @@ const VerbConjugator = () => {
 
       return newData;
     });
+  };
+
+
+  const handleFeedbackChange = (e) => {
+    const { name, value } = e.target;
+    setFeedbackData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Handle feedback form submission
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault();
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwMoxTnwlccunb20qeYxt--0-GqHiGiLpTcKx0KVHMJwEi2uFCsNPv5mtQyw_QKbcwZ/exec';
+
+    try {
+      await fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(feedbackData),
+      });
+
+      // Reset the form and close it
+      setFeedbackData({
+        incorrectWord: '',
+        correction: '',
+        explanation: '',
+      });
+      setFeedbackVisible(false);
+
+      alert('Thank you for your feedback!');
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+      alert('There was an error submitting your feedback. Please try again later.');
+    }
   };
 
   const handleInputChange = e => {
@@ -613,6 +658,65 @@ const VerbConjugator = () => {
           ))}
         </p>
       </div>
+      
+      {/* Feedback Form */}
+      {isFeedbackVisible && (
+        <div className="feedback-form bg-gray-100 p-4 rounded shadow-md">
+          <h3 className="text-xl font-bold mb-4">Submit Feedback</h3>
+          <form onSubmit={handleFeedbackSubmit}>
+            <div className="mb-3">
+              <label className="block text-gray-700 font-bold mb-1" htmlFor="incorrectWord">
+                Incorrect Word(s)
+              </label>
+              <input
+                type="text"
+                name="incorrectWord"
+                value={feedbackData.incorrectWord}
+                onChange={handleFeedbackChange}
+                className="w-full border rounded px-2 py-1"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="block text-gray-700 font-bold mb-1" htmlFor="correction">
+                Correction
+              </label>
+              <input
+                type="text"
+                name="correction"
+                value={feedbackData.correction}
+                onChange={handleFeedbackChange}
+                className="w-full border rounded px-2 py-1"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="block text-gray-700 font-bold mb-1" htmlFor="explanation">
+                Explanation
+              </label>
+              <textarea
+                name="explanation"
+                value={feedbackData.explanation}
+                onChange={handleFeedbackChange}
+                className="w-full border rounded px-2 py-1"
+                rows="4"
+              ></textarea>
+            </div>
+            <div className="flex justify-end space-x-2">
+              <button
+                type="button"
+                onClick={() => setFeedbackVisible(false)}
+                className="px-4 py-2 bg-gray-300 rounded"
+              >
+                Cancel
+              </button>
+              <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
