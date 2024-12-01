@@ -603,6 +603,9 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             else:
                 final_root = root
 
+            # Remove the first letter of final_root if it is the same as the last letter of prefix
+            if prefix and final_root and prefix[-1] == final_root[0]:
+                final_root = final_root[1:]
 
 
             # Conjugate the verb
@@ -749,7 +752,7 @@ print(format_conjugations(all_conjugations))
 
 
 # Example usage for Sx conjugations with optative:
-infinitive = 'meşk̆vu'
+infinitive = 'ogoru'
 optative = False  # Set to True if you want to include optative, otherwise set to False
 
 print(f"All subject conjugations of infinitive '{infinitive}':")
@@ -761,7 +764,7 @@ print(format_conjugations(all_conjugations))
 
 
 # Example usage for SxOx conjugations
-infinitive = 'oç̌aru'
+infinitive = 'meşk̆vu'
 obj = 'O2_Singular'
 optative = False
 object_pronoun = personal_pronouns_general[obj]
@@ -795,7 +798,7 @@ print(format_conjugations(all_conjugations))
 # Example usage negative IMPERATIVE with no specific object
 # Example usage for negative imperative conjugations
 # Example usage for negative imperative conjugations with parameter filtering
-infinitive = 'meçamu'
+infinitive = 'obiru'
 subjects = ['S2_Singular']  # Filtering for specific subjects
 objects = None  # You can specify objects here if needed
 

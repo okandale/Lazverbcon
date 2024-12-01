@@ -572,6 +572,10 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                 prefix = 'q' if region == "HO" else ''
                 final_root = '' if region in ('AŞ', 'PZ') else 'va' if region == "HO" else 'v'
 
+            # Remove the first letter of final_root if it is the same as the last letter of prefix
+            if prefix and final_root and prefix[-1] == final_root[0]:
+                final_root = final_root[1:]
+
             # Conjugate the verb
             conjugated_verb = f"{prefix}{final_root}{suffix}"
             region_conjugations[region].append((subject, obj, f"{first_word} {conjugated_verb}".strip()))

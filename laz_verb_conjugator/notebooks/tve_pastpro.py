@@ -491,7 +491,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
             if third_person.endswith('y'):
                     root = root[:-1] + 'ms'  # Ardeşen Exception root for non-S3 cases - added an s to this in past tense to simplify code
 
-            print(f"Prefix: {prefix}, Root before final adjustment: {root}")
+
             
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/ok̆o preverbs, we could check here: if preverb ends with "o") root[:-1
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/ok̆o preverbs, we could check here: if preverb ends with "o") root[:-1 
@@ -536,6 +536,10 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                 suffix = 't̆ey' if region == "AŞ" else 't̆es'
             else:
                 suffix = suffixes[subject]
+
+            # Remove the first letter of final_root if it is the same as the last letter of prefix
+            if prefix and final_root and prefix[-1] == final_root[0]:
+                final_root = final_root[1:]
 
             # Determine the final root to use
             final_root = root[:-1] if root.endswith('s') else root
