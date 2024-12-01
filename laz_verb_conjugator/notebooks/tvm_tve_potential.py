@@ -215,7 +215,7 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            preverb_exceptions = {'gonʒ̆k̆u'}  # Ensure this set is defined appropriately, add additionally to 256
+            preverb_exceptions = {}  # Ensure this set is defined appropriately, add additionally to 256
 
             # Check if the infinitive is NOT in the exception list before extracting preverbs
             if infinitive not in preverb_exceptions:
@@ -233,7 +233,7 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
                         break
                 
             # Remove the preverb from the third-person form if it exists and add special rules for exceptions
-            if preverb and root.startswith(preverb) and infinitive != 'gonʒ̆k̆u':
+            if preverb and root.startswith(preverb):
                 root = root[len(preverb):-1]  # Remove only the preverb
             elif root in (('oşu', 'dodumu', 'otku')):
                 root = infinitive[1:-1] + "v"
