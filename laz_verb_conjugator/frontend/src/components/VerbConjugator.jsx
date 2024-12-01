@@ -202,18 +202,19 @@ const VerbConjugator = () => {
   // Handle feedback form submission
   const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwMoxTnwlccunb20qeYxt--0-GqHiGiLpTcKx0KVHMJwEi2uFCsNPv5mtQyw_QKbcwZ/exec';
-
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwMoxTnwlccunb20qeYxt--0-GqHiGiLpTcKx0KVHMJwEi2uFCsNPv5mtQyw_QKbcwZ/exec'; // Your script URL
+  
     try {
+      const formData = new URLSearchParams();
+      formData.append('incorrectWord', feedbackData.incorrectWord);
+      formData.append('correction', feedbackData.correction);
+      formData.append('explanation', feedbackData.explanation);
+  
       await fetch(scriptURL, {
         method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(feedbackData),
+        body: formData,
       });
-
+  
       // Reset the form and close it
       setFeedbackData({
         incorrectWord: '',
@@ -221,14 +222,13 @@ const VerbConjugator = () => {
         explanation: '',
       });
       setFeedbackVisible(false);
-
+  
       alert('Thank you for your feedback!');
     } catch (error) {
       console.error('Error submitting feedback:', error);
       alert('There was an error submitting your feedback. Please try again later.');
     }
   };
-
   const handleInputChange = e => {
     const { name, value, type, checked } = e.target;
     setFormData(prevData => ({
