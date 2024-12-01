@@ -383,7 +383,7 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 
 
 # Example usage
-infinitive = 'ot̆axu'
+infinitive = 'gonʒ̆k̆u'
 tense = 'pastpro' # insert 'past', 'present', 'future' or 'past progressive'
 causative = False # set to "True" or "False" - currently only implemented for present tense!
 all_conjugations = collect_conjugations_all(infinitive, subjects, tense=tense, causative=causative)

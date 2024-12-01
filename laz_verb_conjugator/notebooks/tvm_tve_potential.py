@@ -231,7 +231,8 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
                         print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                     if preverb:
                         break
-                
+
+
             # Remove the preverb from the third-person form if it exists and add special rules for exceptions
             if preverb and root.startswith(preverb):
                 root = root[len(preverb):-1]  # Remove only the preverb
@@ -240,6 +241,7 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
             else:
                 root = root[1:-1]  # Remove the last character of the root
 
+            print(f"Subject: {subject}, Preverb: {preverb}, Region: {region}, Subject marker: {subject_markers[subject]}")
             
 
             # Get the first letter after the marker is attached
@@ -249,7 +251,7 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
                 if preverb == 'ge':
                     preverb = preverb[:-1] + 'y' # for verbs that change to 'gy' in 2nd/3rd person
                 else:
-                    preverb = preverb[:-1]
+                    preverb = preverb # changed this for gonʒ̆k̆u 
               
 
             first_letter = get_first_letter(root)
@@ -347,8 +349,8 @@ def get_first_word(verb):
 subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
 
 # Example usage
-infinitive = 'ordu'
-tense = 'past' # insert 'past', 'present','future','pastpro' or 'optative
+infinitive = 'geç̌k̆u'
+tense = 'present' # insert 'past', 'present','future','pastpro' or 'optative
 all_conjugations = collect_conjugations_all(infinitive, subjects, tense=tense)
 
 # Print the formatted conjugations

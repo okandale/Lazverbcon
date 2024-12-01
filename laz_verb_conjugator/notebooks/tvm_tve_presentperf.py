@@ -205,7 +205,8 @@ def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicati
                 if root in ('geç̌k̆u'):
                     preverb = preverb[:-1] + 'y' # for verbs that change to 'gy' in 2nd/3rd person
                 else:
-                    preverb = preverb[:-1]
+                    preverb = preverb # changed for gonʒ̆k̆u
+                    
             if preverb == "me" and subject_markers[subject].startswith(('a', 'e', 'i', 'o', 'u')):
                 preverb = "n"
                 prefix = preverb + subject_markers[subject]
