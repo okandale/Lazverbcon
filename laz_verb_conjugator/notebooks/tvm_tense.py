@@ -251,15 +251,20 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            if main_infinitive != 'ok̆oreʒxu':
+            preverb_exceptions = {'gonʒ̆k̆u'}  # Ensure this set is defined appropriately, add additionally to 256
+
+            # Check if the infinitive is NOT in the exception list before extracting preverbs
+            if infinitive not in preverb_exceptions:
                 for pv_group in preverbs_rules.keys():
                     if isinstance(pv_group, tuple):
                         for pv in pv_group:
                             if main_infinitive.startswith(pv):
                                 preverb = pv
+                                print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                                 break
                     elif main_infinitive.startswith(pv_group):
                         preverb = pv_group
+                        print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                     if preverb:
                         break
                 
@@ -272,7 +277,7 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                 root = 'şk̆omums'
                 
             # Remove the preverb from the third-person form if it exists
-            if preverb and root.startswith(preverb):
+            if preverb and root.startswith(preverb) and infinitive != 'gonʒ̆k̆u':
                 root = root[len(preverb):]
 
             # Determine the marker (applicative or causative)
