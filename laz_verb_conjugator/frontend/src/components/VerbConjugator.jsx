@@ -207,55 +207,38 @@ const VerbConjugator = () => {
     try {
       setIsLoading(true);
   
-      // Generate a unique callback name
-      const callbackName = 'jsonpCallback' + Date.now();
+      // Generate callback name
+      const callbackName = 'jsonpCallback' + new Date().getTime();
   
-      // Create a promise to handle the JSONP response
-      const jsonpPromise = new Promise((resolve, reject) => {
-        // Add the callback function to window
-        window[callbackName] = (response) => {
-          resolve(response);
-          delete window[callbackName];
-          document.body.removeChild(script);
-        };
+      // Create the callback function
+      window[callbackName] = function(response) {
+        if (response.result === 'success') {
+          // Reset form data
+          setFeedbackData({
+            incorrectWord: '',
+            correction: '',
+            explanation: '',
+          });
+          setFeedbackVisible(false);
+          alert('Thank you for your feedback!');
+        } else {
+          alert('Error submitting feedback. Please try again.');
+        }
+        // Clean up
+        delete window[callbackName];
+      };
   
-        // Create script element
-        const script = document.createElement('script');
-        
-        // Prepare the URL with callback and data
-        const params = new URLSearchParams({
-          callback: callbackName,
-          data: JSON.stringify(feedbackData)
-        });
-        
-        script.src = `${scriptURL}?${params.toString()}`;
-        script.onerror = () => {
-          reject(new Error('Script load error'));
-          delete window[callbackName];
-          document.body.removeChild(script);
-        };
-        
-        document.body.appendChild(script);
+      // Create and append script exactly like the Laz form
+      const script = document.createElement('script');
+      script.src = scriptURL + '?callback=' + callbackName + '&data=' + encodeURIComponent(JSON.stringify(feedbackData));
+      document.body.appendChild(script);
   
-        // Handle timeout
-        setTimeout(() => {
-          reject(new Error('Request timeout'));
-          delete window[callbackName];
-          if (script.parentNode) script.parentNode.removeChild(script);
-        }, 5000);
-      });
-  
-      // Wait for the response
-      const response = await jsonpPromise;
-  
-      // Reset form and show success
-      setFeedbackData({
-        incorrectWord: '',
-        correction: '',
-        explanation: '',
-      });
-      setFeedbackVisible(false);
-      alert('Thank you for your feedback!');
+      // Add cleanup on error
+      script.onerror = () => {
+        delete window[callbackName];
+        document.body.removeChild(script);
+        alert('Error submitting feedback. Please try again.');
+      };
   
     } catch (error) {
       console.error('Error:', error);
