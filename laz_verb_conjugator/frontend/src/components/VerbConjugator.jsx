@@ -207,27 +207,55 @@ const VerbConjugator = () => {
     try {
       setIsLoading(true);
   
-      // Create the data query string
-      const params = new URLSearchParams({
-        data: JSON.stringify(feedbackData),
-        source: 'verb-conjugator'
+      // Generate a unique callback name
+      const callbackName = 'jsonpCallback' + Date.now();
+  
+      // Create a promise to handle the JSONP response
+      const jsonpPromise = new Promise((resolve, reject) => {
+        // Add the callback function to window
+        window[callbackName] = (response) => {
+          resolve(response);
+          delete window[callbackName];
+          document.body.removeChild(script);
+        };
+  
+        // Create script element
+        const script = document.createElement('script');
+        
+        // Prepare the URL with callback and data
+        const params = new URLSearchParams({
+          callback: callbackName,
+          data: JSON.stringify(feedbackData)
+        });
+        
+        script.src = `${scriptURL}?${params.toString()}`;
+        script.onerror = () => {
+          reject(new Error('Script load error'));
+          delete window[callbackName];
+          document.body.removeChild(script);
+        };
+        
+        document.body.appendChild(script);
+  
+        // Handle timeout
+        setTimeout(() => {
+          reject(new Error('Request timeout'));
+          delete window[callbackName];
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }, 5000);
       });
   
-      // Open in a new window
-      const win = window.open(`${scriptURL}?${params.toString()}`, '_blank');
+      // Wait for the response
+      const response = await jsonpPromise;
   
-      // Wait a bit to ensure the window had time to open
-      await new Promise(resolve => setTimeout(resolve, 1000));
-  
-      // Reset form
+      // Reset form and show success
       setFeedbackData({
         incorrectWord: '',
         correction: '',
         explanation: '',
       });
       setFeedbackVisible(false);
-      
-      alert('Thank you for your feedback! You can close the opened tab.');
+      alert('Thank you for your feedback!');
   
     } catch (error) {
       console.error('Error:', error);
