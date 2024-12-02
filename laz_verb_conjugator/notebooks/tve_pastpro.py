@@ -293,199 +293,215 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
             first_letter = get_first_letter(root)
             adjusted_prefix = ''
 
-            if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
-                preverb = 'ey' if region == 'PZ' else 'y'
-            if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive != 'geç̌k̆u' and preverb != 'me':
-                preverb = preverb[:-1]
-            # Special handling for "me"
-            # Special handling for "me"
-            if preverb == 'me' or (use_optional_preverb and not preverb):
-                if infinitive in ('meşvelu') and not marker or root.startswith('n') and not marker:
-                    root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
-                first_letter = get_first_letter(root)
-                if obj in ['O2_Singular', 'O2_Plural']:
-                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                    prefix = preverb + adjusted_prefix
-                elif subject in ['S1_Singular', 'S1_Plural']:
-                    adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                    prefix = preverb + adjusted_prefix
-                elif obj in ['O1_Singular', 'O1_Plural']:
-                    prefix = 'mom'
-                else:
-                    prefix = 'me'
-                
-                if is_vowel(root[0]) and prefix.endswith(('a', 'i', 'u', 'o', 'e')) and not adjusted_prefix:
-                    preverb = 'n'
-                else:
-                    if prefix == 'mom':
-                        preverb = 'mo'
-                    else:
-                        preverb = 'me'
+            handled_gontzku = False
 
-            if use_optional_preverb and not preverb:
-                prefix = 'ko' + prefix
-                if subject in ['O3_Singular', 'O3_Plural']:
-                    prefix = 'k'
-            
-            # Special handling for "do"
-            elif preverb == 'do':
-                if root in ('diguraps', 'digurams'):
-                    root = root[1:]
-                if obj in ['O2_Singular', 'O2_Plural']:
-                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                    prefix = 'do' + adjusted_prefix
-                elif subject in ['S1_Singular', 'S1_Plural']:
-                    adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                    prefix = 'do' + adjusted_prefix
-                elif obj in ['O1_Singular', 'O1_Plural']:
-                    prefix = 'dom'
-                elif marker_type == 'causative' or main_infinitive == 'doguru':  # to prevent double 'o's in causative form and S1O3 conjugations for doguru
-                    prefix = 'd'
+            if infinitive == 'gonʒ̆k̆u' and (obj in ('O3_Singular', 'O3_Plural') or obj is None) and not marker:
+                preverb = ''  # Clear the preverb for special case
+                if subject in ('S1_Singular', 'S1_Plural'):
+                    prefix = 'bgo'
                 else:
-                    prefix = 'do'
+                    prefix = 'go'
+                handled_gontzku = True  # Set the flag
 
-            # Special handling for "geç̌k̆u"
-            elif preverb == 'ge' and main_infinitive == 'geç̌k̆u':
-                if marker:
-                    root = root[2:]
-                else:
-                    root = root[2:]
-                first_letter = get_first_letter(root)
-                if marker_type in ('applicative', 'causative') and root.startswith(('a','i','e','o','u')):
-                    prefix = 'gy'
-                if obj in ['O2_Singular', 'O2_Plural']:
-                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                    prefix = 'ge' + adjusted_prefix
-                elif subject in ['S1_Singular', 'S1_Plural']:
-                    adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                    prefix = 'ge' + adjusted_prefix
-                elif obj in ['O1_Singular', 'O1_Plural']:
-                    prefix = 'gem'
-                else:
-                    prefix = 'gy'
+            if not handled_gontzku:
 
-            # Special handling for "ceç̌alu"
-            elif preverb == 'ce' and main_infinitive == 'ceç̌u':
-                if marker:
-                    root = root[2:]
-                else:
-                    root = root[1:]
-                first_letter = get_first_letter(root)
-                if obj in ['O2_Singular', 'O2_Plural']:
-                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                    prefix = 'ce' + adjusted_prefix
-                elif subject in ['S1_Singular', 'S1_Plural']:
-                    adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                    prefix = 'ce' + adjusted_prefix
-                elif obj in ['O1_Singular', 'O1_Plural']:
-                    prefix = 'cem'
-                elif marker_type == 'causative':
-                    prefix = 'ce'
-                else:
-                    prefix = 'c'
-
-            # Special handling for "oxo"
-            elif preverb == 'oxo':
-                if marker:
-                    root = root
-                else:
-                    root = root
-                first_letter = get_first_letter(root)
-                if obj in ['O2_Singular', 'O2_Plural']:
-                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                    prefix = 'oxo' + adjusted_prefix
-                elif subject in ['S1_Singular', 'S1_Plural']:
-                    adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                    prefix = 'oxo' + adjusted_prefix
-                elif obj in ['O1_Singular', 'O1_Plural']:
-                    if marker_type != 'causative':
-                        root = 'o' + root
-                    prefix = 'oxom'
-                elif marker_type == 'causative':
-                    prefix = 'oxo'
-                else:
-                    prefix = 'oxo'
-                    
-            # special handling for "ok̆o" 
-            elif preverb == 'ok̆o':
-                if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')):
-                        preverb = preverb[:-1]
-                if marker:
-                    root = root
-                else:
-                    root = root
-                first_letter = get_first_letter(root)
-                if obj in ['O2_Singular', 'O2_Plural']:
-                    if marker_type != 'causative' and marker_type != 'applicative':
-                        root = marker + root
+                if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
+                    preverb = 'ey' if region == 'PZ' else 'y'
+                if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive != 'geç̌k̆u' and preverb != 'me':
+                    preverb = preverb[:-1]
+                # Special handling for "me"
+                # Special handling for "me"
+                if preverb == 'me' or (use_optional_preverb and not preverb):
+                    if infinitive in ('meşvelu') and not marker or root.startswith('n') and not marker:
+                        root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
                     first_letter = get_first_letter(root)
-                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                    prefix = 'ok̆o' + adjusted_prefix
-                elif subject in ['S1_Singular', 'S1_Plural']:
-                    if marker_type != 'causative' and marker_type != 'applicative':
-                        root = marker + root
-                    first_letter = get_first_letter(root)
-                    adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                    prefix = 'ok̆o' + adjusted_prefix
-                elif obj in ['O1_Singular', 'O1_Plural']:
-                    if marker_type != 'causative':
-                        root = 'o' + root
-                    prefix = 'ok̆om'
-                elif marker_type in ('causative', 'applicative'):
-                    prefix = preverb
-                    print(f"Adjusted preverb: {preverb}, Subject marker: {subject_markers[subject]}, Root before adjustment: {root}")
-                else:
-                    prefix = preverb
-
-            # Special handling for "go"
-            else:
-                # Adjust the prefix based on the first letter for phonetic rules
-                if preverb:
-                    preverb_form = preverbs_rules.get(preverb, preverb)
-                    if isinstance(preverb_form, dict):
-                        preverb_form = preverb_form.get(subject, preverb)
                     if obj in ['O2_Singular', 'O2_Plural']:
-                        if root.startswith('n'):
-                            root = root[1:]
-                            first_letter = get_first_letter(root)
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
                         prefix = preverb + adjusted_prefix
-                    elif obj in ['O1_Singular', 'O1_Plural']:
-                        if root.startswith('n'):
-                            root = root[1:]
-                        prefix = preverb + 'm'
                     elif subject in ['S1_Singular', 'S1_Plural']:
-                        adjusted_prefix = adjust_prefix(preverb_form, first_letter, phonetic_rules_v)
-                        if root.startswith('n'):
-                            root = root[1:]
+                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
                         prefix = preverb + adjusted_prefix
-                    else:
-                        prefix = preverb_form
-                else:
-                    prefix = subject_markers[subject]
-                    
-                    if root == 'oroms':
-                        if obj in ('O2_Singular', 'O2_Plural'):
-                            prefix = 'k̆'
-                        elif subject in ('S1_Singular', 'S1_Plural') and obj in ('O3_Singular', 'O3_Plural'):
-                            prefix = 'p̌'
-                        elif subject in ('S1_Singular', 'S1_Plural'):
-                            prefix = 'p̌'
-                        elif obj in ('O1_Singular', 'O1_Plural'):
-                            prefix = 'p̌'
-                        else:
-                            prefix = subject_markers[subject]
-                    if obj in ['O2_Singular', 'O2_Plural']:
-                        prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
                     elif obj in ['O1_Singular', 'O1_Plural']:
-                        if root.startswith('n'):
-                            root = root[1:]
-                        prefix = 'm' + prefix
+                        prefix = 'mom'
+                    else:
+                        prefix = 'me'
+                    
+                    if is_vowel(root[0]) and prefix.endswith(('a', 'i', 'u', 'o', 'e')) and not adjusted_prefix:
+                        preverb = 'n'
+                    else:
+                        if prefix == 'mom':
+                            preverb = 'mo'
+                        else:
+                            preverb = 'me'
+
+                if use_optional_preverb and not preverb:
+                    prefix = 'ko' + prefix
+                    if subject in ['O3_Singular', 'O3_Plural']:
+                        prefix = 'k'
+                
+                # Special handling for "do"
+                elif preverb == 'do':
+                    if root in ('diguraps', 'digurams'):
+                        root = root[1:]
+                    if obj in ['O2_Singular', 'O2_Plural']:
+                        adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                        prefix = 'do' + adjusted_prefix
                     elif subject in ['S1_Singular', 'S1_Plural']:
-                        adjusted_prefix = adjust_prefix(prefix, first_letter, phonetic_rules_v)
-                        if root.startswith('n'):
-                            root = root[1:]
-                        prefix = adjusted_prefix
+                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
+                        prefix = 'do' + adjusted_prefix
+                    elif obj in ['O1_Singular', 'O1_Plural']:
+                        prefix = 'dom'
+                    elif marker_type == 'causative' or main_infinitive == 'doguru':  # to prevent double 'o's in causative form and S1O3 conjugations for doguru
+                        prefix = 'd'
+                    else:
+                        prefix = 'do'
+
+                # Special handling for "geç̌k̆u"
+                elif preverb == 'ge' and main_infinitive == 'geç̌k̆u':
+                    if marker:
+                        root = root[2:]
+                    else:
+                        root = root[2:]
+                    first_letter = get_first_letter(root)
+                    if marker_type in ('applicative', 'causative') and root.startswith(('a','i','e','o','u')):
+                        prefix = 'gy'
+                    if obj in ['O2_Singular', 'O2_Plural']:
+                        adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                        prefix = 'ge' + adjusted_prefix
+                    elif subject in ['S1_Singular', 'S1_Plural']:
+                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
+                        prefix = 'ge' + adjusted_prefix
+                    elif obj in ['O1_Singular', 'O1_Plural']:
+                        prefix = 'gem'
+                    else:
+                        prefix = 'gy'
+
+                # Special handling for "ceç̌alu"
+                elif preverb == 'ce' and main_infinitive == 'ceç̌u':
+                    if marker:
+                        root = root[2:]
+                    else:
+                        root = root[1:]
+                    first_letter = get_first_letter(root)
+                    if obj in ['O2_Singular', 'O2_Plural']:
+                        adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                        prefix = 'ce' + adjusted_prefix
+                    elif subject in ['S1_Singular', 'S1_Plural']:
+                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
+                        prefix = 'ce' + adjusted_prefix
+                    elif obj in ['O1_Singular', 'O1_Plural']:
+                        prefix = 'cem'
+                    elif marker_type == 'causative':
+                        prefix = 'ce'
+                    else:
+                        prefix = 'c'
+
+                # Special handling for "oxo"
+                elif preverb == 'oxo':
+                    if marker:
+                        root = root
+                    else:
+                        root = root
+                    first_letter = get_first_letter(root)
+                    if obj in ['O2_Singular', 'O2_Plural']:
+                        adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                        prefix = 'oxo' + adjusted_prefix
+                    elif subject in ['S1_Singular', 'S1_Plural']:
+                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
+                        prefix = 'oxo' + adjusted_prefix
+                    elif obj in ['O1_Singular', 'O1_Plural']:
+                        if marker_type != 'causative':
+                            root = 'o' + root
+                        prefix = 'oxom'
+                    elif marker_type == 'causative':
+                        prefix = 'oxo'
+                    else:
+                        prefix = 'oxo'
+                        
+                # special handling for "ok̆o" 
+                elif preverb == 'ok̆o':
+                    if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')):
+                            preverb = preverb[:-1]
+                    if marker:
+                        root = root
+                    else:
+                        root = root
+                    first_letter = get_first_letter(root)
+                    if obj in ['O2_Singular', 'O2_Plural']:
+                        if marker_type != 'causative' and marker_type != 'applicative':
+                            root = marker + root
+                        first_letter = get_first_letter(root)
+                        adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                        prefix = 'ok̆o' + adjusted_prefix
+                    elif subject in ['S1_Singular', 'S1_Plural']:
+                        if marker_type != 'causative' and marker_type != 'applicative':
+                            root = marker + root
+                        first_letter = get_first_letter(root)
+                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
+                        prefix = 'ok̆o' + adjusted_prefix
+                    elif obj in ['O1_Singular', 'O1_Plural']:
+                        if marker_type != 'causative':
+                            root = 'o' + root
+                        prefix = 'ok̆om'
+                    elif marker_type in ('causative', 'applicative'):
+                        prefix = preverb
+                        print(f"Adjusted preverb: {preverb}, Subject marker: {subject_markers[subject]}, Root before adjustment: {root}")
+                    else:
+                        prefix = preverb
+
+                # Special handling for "go"
+                else:
+                    # Adjust the prefix based on the first letter for phonetic rules
+                    if preverb:
+                        preverb_form = preverbs_rules.get(preverb, preverb)
+                        if isinstance(preverb_form, dict):
+                            preverb_form = preverb_form.get(subject, preverb)
+                            if obj in ['O2_Singular', 'O2_Plural']:
+                                if root.startswith('n'):
+                                    root = root[1:]  # Remove the initial 'n'
+                                    first_letter = get_first_letter(root)
+                                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                                    prefix = preverb + 'n' + adjusted_prefix  # Add 'n' back before the adjusted prefix
+                                else:
+                                    first_letter = get_first_letter(root)
+                                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                                    prefix = preverb + adjusted_prefix
+                        elif obj in ['O1_Singular', 'O1_Plural']:
+                            if root.startswith('n'):
+                                root = root[1:]
+                            prefix = preverb + 'm'
+                        elif subject in ['S1_Singular', 'S1_Plural']:
+                            adjusted_prefix = adjust_prefix(preverb_form, first_letter, phonetic_rules_v)
+                            if root.startswith('n'):
+                                root = root[1:]
+                            prefix = preverb + adjusted_prefix
+                        else:
+                            prefix = preverb_form
+                    else:
+                        prefix = subject_markers[subject]
+                        
+                        if root == 'oroms':
+                            if obj in ('O2_Singular', 'O2_Plural'):
+                                prefix = 'k̆'
+                            elif subject in ('S1_Singular', 'S1_Plural') and obj in ('O3_Singular', 'O3_Plural'):
+                                prefix = 'p̌'
+                            elif subject in ('S1_Singular', 'S1_Plural'):
+                                prefix = 'p̌'
+                            elif obj in ('O1_Singular', 'O1_Plural'):
+                                prefix = 'p̌'
+                            else:
+                                prefix = subject_markers[subject]
+                        if obj in ['O2_Singular', 'O2_Plural']:
+                            prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                        elif obj in ['O1_Singular', 'O1_Plural']:
+                            if root.startswith('n'):
+                                root = root[1:]
+                            prefix = 'm' + prefix
+                        elif subject in ['S1_Singular', 'S1_Plural']:
+                            adjusted_prefix = adjust_prefix(prefix, first_letter, phonetic_rules_v)
+                            if root.startswith('n'):
+                                root = root[1:]
+                            prefix = adjusted_prefix
 
             # Handle the Ardeşen rule
             if third_person.endswith('y'):
