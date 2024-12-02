@@ -225,7 +225,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            preverb_exceptions = {'gonʒ̆k̆u'}  # Ensure this set is defined appropriately, add additionally to 256
+            preverb_exceptions = {}  # Ensure this set is defined appropriately, add additionally to 256
 
             # Check if the infinitive is NOT in the exception list before extracting preverbs
             if infinitive not in preverb_exceptions:
@@ -251,7 +251,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 root = 'şk̆omums'
                 
             # Remove the preverb from the third-person form if it exists
-            if preverb and root.startswith(preverb) and infinitive != 'gonʒ̆k̆u':
+            if preverb and root.startswith(preverb):
                 root = root[len(preverb):]
 
             # Determine the marker (applicative or causative)
@@ -286,6 +286,9 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 handled_gontzku = True  # Set the flag
 
             if not handled_gontzku:
+
+                print(f"Debug - root before n-processing: {root}")
+                print(f"Debug - preverb before n-processing: {preverb}")
 
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                     preverb = 'ey' if region == 'PZ' else 'y'
@@ -725,8 +728,8 @@ print(format_conjugations(all_conjugations))
 
 
 # Example usage for SxOx conjugations
-infinitive = 'oç̌aru'
-obj = 'O1_Plural'
+infinitive = 'gonʒ̆k̆u'
+obj = 'O2_Singular'
 object_pronoun = personal_pronouns_general[obj]
 print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}':")
 all_conjugations = collect_conjugations(infinitive, subjects, obj=obj)
