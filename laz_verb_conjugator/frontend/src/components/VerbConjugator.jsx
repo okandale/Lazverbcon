@@ -207,34 +207,47 @@ const VerbConjugator = () => {
     try {
       setIsLoading(true);
   
-      // Create a simple form with individual fields
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = scriptURL;
-      form.target = '_blank';
+      // Create a unique callback name
+      const callbackName = 'jsonpCallback' + Date.now();
   
-      // Add each field separately
-      ['incorrectWord', 'correction', 'explanation'].forEach(key => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = feedbackData[key] || '';
-        form.appendChild(input);
+      // Create a promise to handle the JSONP response
+      const jsonpPromise = new Promise((resolve, reject) => {
+        // Add the callback function to window
+        window[callbackName] = (response) => {
+          resolve(response);
+          delete window[callbackName]; // Clean up
+          document.body.removeChild(script);
+        };
+  
+        // Create script element
+        const script = document.createElement('script');
+        
+        // Prepare the URL with callback and data
+        const params = new URLSearchParams({
+          callback: callbackName,
+          data: JSON.stringify(feedbackData)
+        });
+        
+        script.src = `${scriptURL}?${params.toString()}`;
+        document.body.appendChild(script);
+  
+        // Handle timeout
+        setTimeout(() => {
+          reject(new Error('Request timeout'));
+          delete window[callbackName];
+          document.body.removeChild(script);
+        }, 5000);
       });
   
-      // Submit form
-      document.body.appendChild(form);
-      form.submit();
-      document.body.removeChild(form);
+      await jsonpPromise;
   
-      // Reset the form
+      // Reset form and show success
       setFeedbackData({
         incorrectWord: '',
         correction: '',
         explanation: '',
       });
       setFeedbackVisible(false);
-      
       alert('Thank you for your feedback!');
   
     } catch (error) {
