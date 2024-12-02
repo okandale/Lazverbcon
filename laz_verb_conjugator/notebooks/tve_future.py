@@ -448,16 +448,16 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                         preverb_form = preverbs_rules.get(preverb, preverb)
                         if isinstance(preverb_form, dict):
                             preverb_form = preverb_form.get(subject, preverb)
-                            if obj in ['O2_Singular', 'O2_Plural']:
-                                if root.startswith('n'):
-                                    root = root[1:]  # Remove the initial 'n'
-                                    first_letter = get_first_letter(root)
-                                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                                    prefix = preverb + 'n' + adjusted_prefix  # Add 'n' back before the adjusted prefix
-                                else:
-                                    first_letter = get_first_letter(root)
-                                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                                    prefix = preverb + adjusted_prefix
+                        if obj in ['O2_Singular', 'O2_Plural']:
+                            if root.startswith('n'):
+                                root = root[1:]  # Remove the initial 'n'
+                                first_letter = get_first_letter(root)
+                                adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                                prefix = preverb + 'n' + adjusted_prefix  # Add 'n' back before the adjusted prefix
+                            else:
+                                first_letter = get_first_letter(root)
+                                adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                                prefix = preverb + adjusted_prefix
                         elif obj in ['O1_Singular', 'O1_Plural']:
                             if root.startswith('n'):
                                 root = root[1:]
