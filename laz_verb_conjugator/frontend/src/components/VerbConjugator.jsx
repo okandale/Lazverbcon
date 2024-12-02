@@ -206,9 +206,13 @@ const VerbConjugator = () => {
   
     try {
       setIsLoading(true);
+  
+      // Create callback name exactly like in Laz form
       const callbackName = 'jsonpCallback' + new Date().getTime();
   
+      // Set up callback function first
       window[callbackName] = function(response) {
+        delete window[callbackName]; // Clean up callback
         if (response.result === 'success') {
           setFeedbackData({
             incorrectWord: '',
@@ -217,17 +221,12 @@ const VerbConjugator = () => {
           });
           setFeedbackVisible(false);
           alert('Thank you for your feedback!');
-        } else {
-          alert('An error occurred: ' + response.error);
         }
-        // Cleanup
-        delete window[callbackName];
-        document.body.removeChild(script);
       };
   
-      const queryString = `callback=${callbackName}&data=${encodeURIComponent(JSON.stringify(feedbackData))}`;
+      // Create and append script - exactly like Laz form
       const script = document.createElement('script');
-      script.src = `${scriptURL}?${queryString}`;
+      script.src = scriptURL + '?callback=' + callbackName + '&data=' + encodeURIComponent(JSON.stringify(feedbackData));
       document.body.appendChild(script);
   
     } catch (error) {
