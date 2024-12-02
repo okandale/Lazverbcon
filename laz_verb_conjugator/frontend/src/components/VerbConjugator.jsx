@@ -207,26 +207,22 @@ const VerbConjugator = () => {
     try {
       setIsLoading(true);
   
-      // Using URLSearchParams for form data
-      const formData = new URLSearchParams();
-      Object.entries(feedbackData).forEach(([key, value]) => {
-        formData.append(key, value || '');
-      });
-  
-      // Create a form element
+      // Create a simple form with individual fields
       const form = document.createElement('form');
       form.method = 'POST';
       form.action = scriptURL;
       form.target = '_blank';
   
-      // Create a hidden input field with the stringified data
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = 'data';
-      input.value = JSON.stringify(feedbackData);
-      form.appendChild(input);
+      // Add each field separately
+      ['incorrectWord', 'correction', 'explanation'].forEach(key => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = feedbackData[key] || '';
+        form.appendChild(input);
+      });
   
-      // Add form to body and submit
+      // Submit form
       document.body.appendChild(form);
       form.submit();
       document.body.removeChild(form);
