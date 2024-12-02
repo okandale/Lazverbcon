@@ -207,12 +207,11 @@ const VerbConjugator = () => {
     try {
       setIsLoading(true);
   
-      // Create callback name exactly like in Laz form
-      const callbackName = 'jsonpCallback' + new Date().getTime();
+      // Generate a unique callback name
+      const callbackName = 'callback' + Date.now();
   
-      // Set up callback function first
+      // Define the callback function to handle the response
       window[callbackName] = function(response) {
-        delete window[callbackName]; // Clean up callback
         if (response.result === 'success') {
           setFeedbackData({
             incorrectWord: '',
@@ -221,19 +220,27 @@ const VerbConjugator = () => {
           });
           setFeedbackVisible(false);
           alert('Thank you for your feedback!');
+        } else {
+          alert('An error occurred: ' + response.error);
         }
+  
+        // Cleanup
+        delete window[callbackName];
+        document.body.removeChild(script);
+        setIsLoading(false);
       };
   
-      // Create and append script - exactly like Laz form
+      // Serialize form data and create the script URL
+      const queryString = `callback=${callbackName}&data=${encodeURIComponent(JSON.stringify(feedbackData))}`;
       const script = document.createElement('script');
-      script.src = scriptURL + '?callback=' + callbackName + '&data=' + encodeURIComponent(JSON.stringify(feedbackData));
+      script.src = `${scriptURL}?${queryString}`;
+  
+      // Append the script to the document to initiate the request
       document.body.appendChild(script);
   
     } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred while submitting feedback. Please try again later.');
-    } finally {
       setIsLoading(false);
+      alert('An error occurred while submitting feedback. Please try again later.');
     }
   };
 
