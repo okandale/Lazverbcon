@@ -302,7 +302,7 @@ def conjugate_passive_form(infinitive, tense, subject=None, obj=None, applicativ
                 preverb = 'gam' if subject in ('S3_Singular', 'S3_Plural') else 'gamo'
                 prefix = preverb + subject_markers[subject]
             elif preverb == 'go' and root.startswith(('a','e','i','o','u')) and subject not in ('S1_Singular', 'S1_Plural'):
-                prefix = "gv" + subject_markers[subject] if region in ('HO', 'PZ', 'AŞ') else "g" + subject_markers[subject]
+                prefix = "gv" + subject_markers[subject] if region in ('PZ', 'AŞ') else "gu" + subject_markers[subject] if region in 'HO' else "g" + subject_markers[subject]
             elif preverb:
                 # Adjust the prefix based on the first letter of the root
                 if obj in ['O2_Singular', 'O2_Plural']:
