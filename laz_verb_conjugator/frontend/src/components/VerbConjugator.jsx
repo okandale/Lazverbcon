@@ -200,29 +200,52 @@ const VerbConjugator = () => {
   };
 
   // Handle feedback form submission
+  // Update the handleFeedbackSubmit function:
   const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwMoxTnwlccunb20qeYxt--0-GqHiGiLpTcKx0KVHMJwEi2uFCsNPv5mtQyw_QKbcwZ/exec';
-  
+
     try {
-      // Show loading state
       setIsLoading(true);
-  
-      // Create form data
-      const formData = new FormData();
-      formData.append('incorrectWord', feedbackData.incorrectWord);
-      formData.append('correction', feedbackData.correction);
-      formData.append('explanation', feedbackData.explanation);
-  
-      // Make the request using fetch with no-cors mode
-      const response = await fetch(scriptURL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData,
+
+      // Generate a unique callback name
+      const callbackName = 'jsonpCallback' + Date.now();
+
+      // Create a promise to handle the JSONP response
+      const jsonpPromise = new Promise((resolve, reject) => {
+        window[callbackName] = (response) => {
+          resolve(response);
+          // Clean up
+          delete window[callbackName];
+          document.body.removeChild(script);
+        };
+
+        // Handle timeout
+        setTimeout(() => {
+          reject(new Error('Request timeout'));
+          delete window[callbackName];
+          document.body.removeChild(script);
+        }, 10000); // 10 second timeout
       });
-  
-      // Since no-cors mode doesn't return readable response
-      // We assume success if no error was thrown
+
+      // Prepare the URL with parameters
+      const params = new URLSearchParams({
+        callback: callbackName,
+        incorrectWord: feedbackData.incorrectWord,
+        correction: feedbackData.correction,
+        explanation: feedbackData.explanation,
+      });
+
+      // Create and append the script element
+      const script = document.createElement('script');
+      script.src = `${scriptURL}?${params.toString()}`;
+      script.async = true;
+      document.body.appendChild(script);
+
+      // Wait for the response
+      await jsonpPromise;
+
+      // Reset form and show success message
       setFeedbackData({
         incorrectWord: '',
         correction: '',
@@ -230,7 +253,7 @@ const VerbConjugator = () => {
       });
       setFeedbackVisible(false);
       alert('Thank you for your feedback!');
-  
+
     } catch (error) {
       console.error('Error:', error);
       alert('An error occurred while submitting feedback. Please try again later.');
