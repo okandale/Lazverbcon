@@ -207,17 +207,33 @@ const VerbConjugator = () => {
     try {
       setIsLoading(true);
   
-      const response = await fetch(scriptURL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(feedbackData),
+      // Create a hidden iframe
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+  
+      // Create a form inside the iframe
+      const form = iframe.contentDocument.createElement('form');
+      form.method = 'POST';
+      form.action = scriptURL;
+  
+      // Add form fields
+      Object.entries(feedbackData).forEach(([key, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = value;
+        form.appendChild(input);
       });
   
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      // Add form to iframe and submit
+      iframe.contentDocument.body.appendChild(form);
+      form.submit();
+  
+      // Clean up after submission
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+      }, 1000);
   
       // Reset form data and close modal
       setFeedbackData({
@@ -236,7 +252,6 @@ const VerbConjugator = () => {
       setIsLoading(false);
     }
   };
-
 
   const handleInputChange = e => {
     const { name, value, type, checked } = e.target;
