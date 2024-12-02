@@ -207,42 +207,40 @@ const VerbConjugator = () => {
     try {
       setIsLoading(true);
   
-      // Create a hidden iframe
-      const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-  
-      // Create a form inside the iframe
-      const form = iframe.contentDocument.createElement('form');
+      // Create a regular form (not in iframe)
+      const form = document.createElement('form');
       form.method = 'POST';
       form.action = scriptURL;
+      form.target = '_blank'; // Opens response in new tab
   
-      // Add form fields
+      // Add timestamp
+      const timestampInput = document.createElement('input');
+      timestampInput.type = 'hidden';
+      timestampInput.name = 'timestamp';
+      timestampInput.value = new Date().toISOString();
+      form.appendChild(timestampInput);
+  
+      // Add form fields with specific names matching the backend
       Object.entries(feedbackData).forEach(([key, value]) => {
         const input = document.createElement('input');
         input.type = 'hidden';
         input.name = key;
-        input.value = value;
+        input.value = value || ''; // Ensure empty string if value is null/undefined
         form.appendChild(input);
       });
   
-      // Add form to iframe and submit
-      iframe.contentDocument.body.appendChild(form);
+      // Add form to document and submit
+      document.body.appendChild(form);
       form.submit();
+      document.body.removeChild(form);
   
-      // Clean up after submission
-      setTimeout(() => {
-        document.body.removeChild(iframe);
-      }, 1000);
-  
-      // Reset form data and close modal
+      // Reset form and show success
       setFeedbackData({
         incorrectWord: '',
         correction: '',
         explanation: '',
       });
       setFeedbackVisible(false);
-      
       alert('Thank you for your feedback!');
   
     } catch (error) {
