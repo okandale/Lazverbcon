@@ -209,26 +209,25 @@ const VerbConjugator = () => {
       const callbackName = 'jsonpCallback' + new Date().getTime();
   
       window[callbackName] = function(response) {
-        delete window[callbackName];
-        setFeedbackData({
-          incorrectWord: '',
-          correction: '',
-          explanation: '',
-        });
-        setFeedbackVisible(false);
-        alert('Thank you for your feedback!');
-      };
-  
-      const script = document.createElement('script');
-      // Add authuser=0 to force the first Google account
-      script.src = `${scriptURL}?authuser=0&callback=${callbackName}&data=${encodeURIComponent(JSON.stringify(feedbackData))}`;
-      
-      script.onerror = () => {
+        if (response.result === 'success') {
+          setFeedbackData({
+            incorrectWord: '',
+            correction: '',
+            explanation: '',
+          });
+          setFeedbackVisible(false);
+          alert('Thank you for your feedback!');
+        } else {
+          alert('An error occurred: ' + response.error);
+        }
+        // Cleanup
         delete window[callbackName];
         document.body.removeChild(script);
-        alert('Error submitting feedback. Please try again.');
       };
   
+      const queryString = `callback=${callbackName}&data=${encodeURIComponent(JSON.stringify(feedbackData))}`;
+      const script = document.createElement('script');
+      script.src = `${scriptURL}?${queryString}`;
       document.body.appendChild(script);
   
     } catch (error) {
