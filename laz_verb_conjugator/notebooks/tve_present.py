@@ -151,16 +151,16 @@ def get_personal_pronouns(region):
     return {
         'S1_Singular': 'ma',
         'S2_Singular': 'si',
-        'S3_Singular': 'heyak' if region == "FA" else 'himuk' if region in ('AŞ', 'PZ') else 'emuk/hemuk',
+        'S3_Singular': 'heyak' if region == "FA" else 'himuk' if region == "PZ" else 'him' if region == "AŞ" else 'emuk/hemuk',
         'S1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
         'S2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
-        'S3_Plural': 'hentepek' if region == "FA" else 'hinik' if region in ('AŞ', 'PZ') else 'entepek',
+        'S3_Plural': 'hentepek' if region == "FA" else 'hinik' if region == "PZ" else 'hini' if region == "AŞ" else 'entepek',
         'O1_Singular': 'ma',
         'O2_Singular': 'si',
-        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'em/hem',
+        'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else 'emus/hemus',
         'O1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
         'O2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
-        'O3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe'
+        'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == "PZ" else 'hini' if region == "AŞ" else 'entepes'
     }
 
 # Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
@@ -597,7 +597,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 suffix = 'atu' if region == "AŞ" else 'at'
             elif subject in ['S1_Singular', 'S1_Plural'] and obj == 'O2_Plural':
                 suffix = 't'
-            elif subject in ['S2_Singular', 'S2_Plural'] and obj == 'S1_Plural':
+            elif subject in ['S2_Singular', 'S2_Plural'] and obj == 'O1_Plural':
                 suffix = 't'
             elif subject == 'S3_Singular' and mood == 'optative':
                 suffix = 'ay' if region == "AŞ" else 'as'
@@ -739,10 +739,10 @@ def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicati
 personal_pronouns_general = {
     'O1_Singular': 'ma',
     'O2_Singular': 'si',
-    'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'em/hem',
+    'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else 'emus/hemus',
     'O1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
     'O2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
-    'O3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe'
+    'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == "PZ" else 'hini' if region == "AŞ" else 'entepes'
 }
 
 subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
@@ -774,7 +774,7 @@ print(format_conjugations(all_conjugations))
 
 
 # Example usage for Sx conjugations with optative:
-infinitive = 'gonʒ̆k̆u'
+infinitive = 'ot̆axu'
 optative = False  # Set to True if you want to include optative, otherwise set to False
 
 print(f"All subject conjugations of infinitive '{infinitive}':")
