@@ -202,7 +202,7 @@ const VerbConjugator = () => {
   // Handle feedback form submission
   const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyt1XM8kabR-I-Cj-3k6-SOGRMrQySsha-8z8uy5Eb7F6TsidlgQEHl_7xtF4mdIVXS/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxocjHtMbmcehees6xRUs43RLaqTwFiLjp9IXbsswXZj52QcL-owsk4xDG4kkOQksbP/exec';
   
     try {
       setIsLoading(true);
