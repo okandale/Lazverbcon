@@ -206,39 +206,30 @@ const VerbConjugator = () => {
   
     try {
       setIsLoading(true);
-  
-      // Generate callback name
       const callbackName = 'jsonpCallback' + new Date().getTime();
   
-      // Create the callback function
       window[callbackName] = function(response) {
-        if (response.result === 'success') {
-          // Reset form data
-          setFeedbackData({
-            incorrectWord: '',
-            correction: '',
-            explanation: '',
-          });
-          setFeedbackVisible(false);
-          alert('Thank you for your feedback!');
-        } else {
-          alert('Error submitting feedback. Please try again.');
-        }
-        // Clean up
         delete window[callbackName];
+        setFeedbackData({
+          incorrectWord: '',
+          correction: '',
+          explanation: '',
+        });
+        setFeedbackVisible(false);
+        alert('Thank you for your feedback!');
       };
   
-      // Create and append script exactly like the Laz form
       const script = document.createElement('script');
-      script.src = scriptURL + '?callback=' + callbackName + '&data=' + encodeURIComponent(JSON.stringify(feedbackData));
-      document.body.appendChild(script);
-  
-      // Add cleanup on error
+      // Add authuser=0 to force the first Google account
+      script.src = `${scriptURL}?authuser=0&callback=${callbackName}&data=${encodeURIComponent(JSON.stringify(feedbackData))}`;
+      
       script.onerror = () => {
         delete window[callbackName];
         document.body.removeChild(script);
         alert('Error submitting feedback. Please try again.');
       };
+  
+      document.body.appendChild(script);
   
     } catch (error) {
       console.error('Error:', error);
