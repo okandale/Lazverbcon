@@ -190,7 +190,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             region = region.strip()
             personal_pronouns = get_personal_pronouns(region)
             phonetic_rules_v, phonetic_rules_g = get_phonetic_rules(region)
-            
+            adjusted_prefix = ''    
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
             first_word = get_first_word(third_person)  # Get the first word for compound verbs
@@ -674,9 +674,9 @@ def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
 
 # Example usage
-infinitive = 'eç̌opu'
+infinitive = 'gonʒ̆k̆u'
 subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
-obj = 'O3_Singular'
+obj = 'O2_Singular'
 
 # Collect conjugations
 all_conjugations = collect_conjugations(infinitive, subjects, obj=obj)

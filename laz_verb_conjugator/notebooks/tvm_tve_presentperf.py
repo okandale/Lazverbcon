@@ -109,12 +109,12 @@ def get_personal_pronouns(region):
 
 def get_suffixes(region):
     suffixes = {
-        'S1_Singular': 'un' if region in ('FA', 'HO') else 'apun',
-        'S2_Singular': 'un' if region in ('FA', 'HO') else 'apun', 
-        'S3_Singular': 'un' if region in ('FA', 'HO') else 'apun',
-        'S1_Plural': 'unan' if region in ('FA', 'HO') else 'apunan' if region == 'AŞ' else 'apuran',
-        'S2_Plural': 'unan' if region in ('FA', 'HO') else 'apunan' if region == 'AŞ' else 'apuran',
-        'S3_Plural': 'unan' if region in ('FA', 'HO') else 'apunan' if region == 'AŞ' else 'apuran'
+        'S1_Singular': 'un' if region in ('FA') else 'apun',
+        'S2_Singular': 'un' if region in ('FA') else 'apun', 
+        'S3_Singular': 'un' if region in ('FA') else 'apun',
+        'S1_Plural': 'unan' if region in ('FA') else 'apunan' if region in ('AŞ', 'HO') else 'apuran',
+        'S2_Plural': 'unan' if region in ('FA') else 'apunan' if region in ('AŞ', 'HO') else 'apuran',
+        'S3_Plural': 'unan' if region in ('FA') else 'apunan' if region in ('AŞ', 'HO') else 'apuran'
     }
     return suffixes
 
