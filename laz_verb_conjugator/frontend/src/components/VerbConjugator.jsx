@@ -207,40 +207,34 @@ const VerbConjugator = () => {
     try {
       setIsLoading(true);
   
-      // Create a regular form (not in iframe)
+      // Create a regular form
       const form = document.createElement('form');
       form.method = 'POST';
       form.action = scriptURL;
-      form.target = '_blank'; // Opens response in new tab
+      form.target = '_blank'; // Opens in new tab to avoid CORS issues
   
-      // Add timestamp
-      const timestampInput = document.createElement('input');
-      timestampInput.type = 'hidden';
-      timestampInput.name = 'timestamp';
-      timestampInput.value = new Date().toISOString();
-      form.appendChild(timestampInput);
-  
-      // Add form fields with specific names matching the backend
-      Object.entries(feedbackData).forEach(([key, value]) => {
+      // Add the form fields as regular form inputs
+      for (const [key, value] of Object.entries(feedbackData)) {
         const input = document.createElement('input');
         input.type = 'hidden';
         input.name = key;
-        input.value = value || ''; // Ensure empty string if value is null/undefined
+        input.value = value || '';
         form.appendChild(input);
-      });
+      }
   
-      // Add form to document and submit
+      // Add the form to the document and submit it
       document.body.appendChild(form);
       form.submit();
       document.body.removeChild(form);
   
-      // Reset form and show success
+      // Reset form state
       setFeedbackData({
         incorrectWord: '',
         correction: '',
         explanation: '',
       });
       setFeedbackVisible(false);
+      
       alert('Thank you for your feedback!');
   
     } catch (error) {
