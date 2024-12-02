@@ -207,31 +207,17 @@ const VerbConjugator = () => {
     try {
       setIsLoading(true);
   
-      // Create form data
-      const formData = new FormData();
-      formData.append('incorrectWord', feedbackData.incorrectWord);
-      formData.append('correction', feedbackData.correction);
-      formData.append('explanation', feedbackData.explanation);
-      
-      // Create a hidden form and submit it
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = scriptURL;
-      form.target = '_blank'; // This will open response in new tab, preventing navigation
-  
-      // Add form fields
-      Object.entries(feedbackData).forEach(([key, value]) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = value;
-        form.appendChild(input);
+      const response = await fetch(scriptURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(feedbackData),
       });
   
-      // Add form to document, submit it, and remove it
-      document.body.appendChild(form);
-      form.submit();
-      document.body.removeChild(form);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
   
       // Reset form data and close modal
       setFeedbackData({
@@ -241,7 +227,6 @@ const VerbConjugator = () => {
       });
       setFeedbackVisible(false);
       
-      // Show success message
       alert('Thank you for your feedback!');
   
     } catch (error) {
