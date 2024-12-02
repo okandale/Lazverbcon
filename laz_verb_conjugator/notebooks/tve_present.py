@@ -531,9 +531,9 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 elif root.endswith('y'):
                     root = root[:-2] + 'apam'
             elif applicative:
-                if root.endswith(('ms', 'ps')):
+                if root.endswith(('ms', 'ups')):
                     root = root[:-3] + ('aps' if region == "HO" else 'ams')
-                elif root.endswith(('um', 'ps')):
+                elif root.endswith(('um')):
                     root = root[:-2] + 'ams'
                 elif root.endswith('y'):
                     root = root[:-2] + 'ams'

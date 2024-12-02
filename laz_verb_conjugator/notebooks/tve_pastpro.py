@@ -521,7 +521,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                 elif root.endswith('uy'):
                     root = root[:-2] + 'apam'
             elif applicative:
-                if root.endswith(('ms', 'ps')):
+                if root.endswith(('ms', 'ups')):
                     root = root[:-3] + ('aps' if region == "HO" else 'ams')
             elif causative:
                 if root == 'çams':
