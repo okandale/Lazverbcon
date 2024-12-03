@@ -82,7 +82,8 @@ const VerbConjugator = () => {
         submit: 'Submit',
       },
       loadingMessage: 'Loading, please wait... (this may take up to 3 minutes)',
-      feedbackLoadingMessage: 'Submitting feedback, please wait...',      
+      feedbackLoadingMessage: 'Submitting feedback, please wait...',
+      feedbackDisclaimer: 'Phone users using Google Chrome may experience difficulties submitting the form; please use a different browser or use Incognito Mode.',            
     },
     tr: {
       title: 'Fiil Çekimi',
@@ -112,6 +113,7 @@ const VerbConjugator = () => {
       },
       loadingMessage: 'Yükleniyor, lütfen bekleyin... (bu işlem 3 dakika kadar sürebilir)',
       feedbackLoadingMessage: 'Geri bildirim gönderiliyor, lütfen bekleyin...',
+      feedbackDisclaimer: 'Google Chrome kullanan telefon kullanıcıları formu göndermekte zorluk yaşayabilir; lütfen başka bir tarayıcı kullanın veya Gizli Modu kullanın.',
     },
   };
 
@@ -310,7 +312,7 @@ const VerbConjugator = () => {
     }
   };
   const LoadingScreen = ({ message }) => (
-    <div className="fixed inset-0 bg-white bg-opacity-80 flex flex-col items-center justify-center z-60">
+    <div className="fixed inset-0 bg-white bg-opacity-80 flex flex-col items-center justify-center z-80">
       <svg className="animate-spin h-10 w-10 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
@@ -784,6 +786,9 @@ const VerbConjugator = () => {
                     rows="4"
                   ></textarea>
                 </div>
+                <p className="text-sm text-gray-600 mb-3">
+                  {translations[language].feedbackDisclaimer}
+                </p>                
                 <div className="flex justify-end space-x-2">
                   <button
                     type="button"
