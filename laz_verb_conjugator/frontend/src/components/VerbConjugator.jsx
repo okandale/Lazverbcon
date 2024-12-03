@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import ReactDOM from 'react-dom';
 const API_URL = "https://laz-verb-conjugator-backend.onrender.com/api/conjugate";
 
 const VerbConjugator = () => {
@@ -311,15 +311,25 @@ const VerbConjugator = () => {
       setIsLoading(false); // End loading
     }
   };
-  const LoadingScreen = ({ message }) => (
-    <div className="fixed inset-0 bg-white bg-opacity-80 flex flex-col items-center justify-center z-80">
-      <svg className="animate-spin h-10 w-10 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-      </svg>
-      <p className="text-center text-lg">{message}</p>
-    </div>
-  );
+  const LoadingScreen = ({ message }) => {
+    return ReactDOM.createPortal(
+      <div
+        style={{ zIndex: 9999 }} // Set a high z-index using inline style
+        className="fixed inset-0 bg-white flex flex-col items-center justify-center"
+      >
+        <svg
+          className="animate-spin h-10 w-10 text-blue-600 mb-4"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          {/* ... SVG paths ... */}
+        </svg>
+        <p className="text-center text-lg">{message}</p>
+      </div>,
+      document.body
+    );
+  };
   
   const [loadingMessage, setLoadingMessage] = useState(translations[language].loadingMessage);
 
