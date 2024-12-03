@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom'; // Import Link
+
+
 const API_URL = "https://laz-verb-conjugator-backend.onrender.com/api/conjugate";
+
 
 const VerbConjugator = () => {
   const [language, setLanguage] = useState('en');
@@ -82,6 +86,8 @@ const VerbConjugator = () => {
         submit: 'Submit',
       },
       loadingMessage: 'Loading, please wait... (this may take up to 3 minutes)',
+      verbListMessage: 'See here',
+      verbListLinkText: 'for a list of available verbs',
       feedbackLoadingMessage: 'Submitting feedback, please wait...',
       feedbackDisclaimer: 'Phone users using Google Chrome may experience difficulties submitting the form; please use a different browser or use Incognito Mode.',            
     },
@@ -112,6 +118,8 @@ const VerbConjugator = () => {
         submit: 'Gönder',
       },
       loadingMessage: 'Yükleniyor, lütfen bekleyin... (bu işlem 3 dakika kadar sürebilir)',
+      verbListMessage: 'Mevcut fiillerin listesi için',
+      verbListLinkText: 'buraya tıklayın',
       feedbackLoadingMessage: 'Geri bildirim gönderiliyor, lütfen bekleyin...',
       feedbackDisclaimer: 'Google Chrome kullanan telefon kullanıcıları formu göndermekte zorluk yaşayabilir; lütfen başka bir tarayıcı kullanın veya Gizli Modu kullanın.',
     },
@@ -488,6 +496,16 @@ const VerbConjugator = () => {
             {char}
           </button>
         ))}
+      </div>
+
+      <div className="text-center mb-4">
+        <p className="text-gray-700 text-sm">
+          {translations[language].verbListMessage}{' '}
+          <Link to="/verbs" className="text-blue-500 hover:underline">
+            {translations[language].verbListLinkText}
+          </Link>
+          .
+        </p>
       </div>
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         {/* Infinitive Input */}
