@@ -242,11 +242,11 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                         for pv in pv_group:
                             if main_infinitive.startswith(pv):
                                 preverb = pv
-                                print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
+                                # print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                                 break
                     elif main_infinitive.startswith(pv_group):
                         preverb = pv_group
-                        print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
+                        # print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                     if preverb:
                         break
                 
@@ -436,7 +436,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                         prefix = 'ok̆om'
                     elif marker_type in ('causative', 'applicative'):
                         prefix = preverb
-                        print(f"Adjusted preverb: {preverb}, Subject marker: {subject_markers[subject]}, Root before adjustment: {root}")
+                        # print(f"Adjusted preverb: {preverb}, Subject marker: {subject_markers[subject]}, Root before adjustment: {root}")
                     else:
                         prefix = preverb
 
@@ -665,9 +665,9 @@ obj = 'O3_Singular'
 marker = 'applicative'  # Change to 'causative' or 'applicative' if needed
 object_pronoun = personal_pronouns_general[obj]
 
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}' and {marker} marker:")
+# print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}' and {marker} marker:")
 all_conjugations = collect_conjugations(infinitive, subjects, obj=obj, causative=(marker == 'causative'), applicative=(marker == 'applicative'))
-print(format_conjugations(all_conjugations))
+# print(format_conjugations(all_conjugations))
 
 
 
@@ -680,9 +680,9 @@ print(format_conjugations(all_conjugations))
 
 # Example usage for Sx
 infinitive = 'oç̌aru'
-print(f"All subject conjugations of infinitive '{infinitive}':")
+# print(f"All subject conjugations of infinitive '{infinitive}':")
 all_conjugations = collect_conjugations(infinitive, subjects)
-print(format_conjugations(all_conjugations))
+# print(format_conjugations(all_conjugations))
 
 
 # In[25]:
@@ -692,9 +692,9 @@ print(format_conjugations(all_conjugations))
 infinitive = 'oç̌aru'
 obj = 'O2_Plural'
 object_pronoun = personal_pronouns_general[obj]
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}':")
+# print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}':")
 all_conjugations = collect_conjugations(infinitive, subjects, obj=obj)
-print(format_conjugations(all_conjugations))
+# print(format_conjugations(all_conjugations))
 
 
 # In[14]:
@@ -708,9 +708,9 @@ obj = 'O2_Singular'
 # Conjugate the verb in future tense
 conjugation_result = conjugate_future(infinitive, subject=subject, obj=obj)
 
-# Format and print the results
+# Format and # print the results
 formatted_result = format_conjugations(conjugation_result)
-print(formatted_result)
+# print(formatted_result)
 
 
 # Example usage for Sx conjugations with a specific object and marker
@@ -723,9 +723,9 @@ object_pronoun = personal_pronouns_general[obj]
 is_causative = marker in ['causative', 'both']
 is_applicative = marker in ['applicative', 'both']
 
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}' and {marker} marker:")
+# print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}' and {marker} marker:")
 all_conjugations = collect_conjugations(infinitive, subjects, obj=obj, causative=is_causative, applicative=is_applicative)
-print(format_conjugations(all_conjugations))
+# print(format_conjugations(all_conjugations))
 
 
 
@@ -738,9 +738,9 @@ obj = 'O3_Plural'
 marker = 'causative'  # Change to 'causative' or 'applicative' if needed
 object_pronoun = personal_pronouns_general[obj]
 
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}' and {marker} marker:")
+# print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}' and {marker} marker:")
 all_conjugations = collect_conjugations(infinitive, subjects, obj=obj, causative=(marker == 'causative'), applicative=(marker == 'applicative'))
-print(format_conjugations(all_conjugations))
+# print(format_conjugations(all_conjugations))
 
 
 

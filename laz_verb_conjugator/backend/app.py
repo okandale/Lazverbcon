@@ -1,13 +1,14 @@
 from flask import Flask, request, jsonify, send_from_directory
-from flask_cors import CORS  # Import Flask-CORS
+from flask_cors import CORS
 import importlib
 import logging
+import os
 
-# Set up logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__, static_folder='../frontend/dist')
+CORS(app)
 
 # Enable CORS for your app
 CORS(app, origins=['https://laz-verb-conjugator.onrender.com'])
@@ -44,11 +45,41 @@ simplified_aspect_mapping = {
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
-def serve_react_app(path):
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
         return send_from_directory(app.static_folder, path)
     else:
         return send_from_directory(app.static_folder, 'index.html')
+    
+@app.route('/api/verbs', methods=['GET'])
+def get_verbs():
+    try:
+        module = tense_modules['ivd_present']
+        if not hasattr(module, 'verbs'):
+            return jsonify({"error": "No verbs found"}), 404
+            
+        verb_list = []
+        for verb, data in module.verbs.items():
+            # Safely access nested data
+            turkish = ""
+            english = ""
+            if isinstance(data, list) and len(data) > 0:
+                first_item = data[0]
+                if isinstance(first_item, tuple) and len(first_item) > 2:
+                    turkish = str(first_item[1])
+                    english = str(first_item[2])
+            
+            verb_info = {
+                "Laz Infinitive": verb,
+                "Turkish Verb": turkish,
+                "English Translation": english
+            }
+            verb_list.append(verb_info)
+        
+        return jsonify(verb_list)
+    except Exception as e:
+        logger.error(f"Error in get_verbs: {str(e)}")
+        return jsonify({"error": "Internal server error"}), 500
 
 @app.route('/api/conjugate', methods=['GET'])
 def conjugate():

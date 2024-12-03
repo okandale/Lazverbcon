@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom'; // Import Link
 
 
-const API_URL = "https://laz-verb-conjugator-backend.onrender.com/api/conjugate";
+const API_URL = "/api/conjugate";  // Remove the full URL
 
 
 const VerbConjugator = () => {
