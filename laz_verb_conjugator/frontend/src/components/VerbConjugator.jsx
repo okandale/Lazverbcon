@@ -75,7 +75,7 @@ const VerbConjugator = () => {
       conjugate: 'Conjugate',
       reset: 'Reset',
       results: 'Results',
-      betaMessage: 'Please submit your feedback using the',
+      betaMessage: 'If you spot a mistake, please submit your feedback using the',
       feedbackLinkText: 'feedback form',
       feedbackTitle: 'Submit Feedback',
       feedbackLabels: {
@@ -107,7 +107,7 @@ const VerbConjugator = () => {
       conjugate: 'Çek',
       reset: 'Sıfırla',
       results: 'Sonuçlar',
-      betaMessage: 'Lütfen geri bildirim formunu kullanarak görüşlerinizi iletin',
+      betaMessage: 'Hata görürseniz lütfen buradan görüşlerinizi iletin:',
       feedbackLinkText: 'geri bildirim formu',
       feedbackTitle: 'Geri Bildirim Gönder',
       feedbackLabels: {
