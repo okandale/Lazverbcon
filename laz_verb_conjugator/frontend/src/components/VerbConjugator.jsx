@@ -403,9 +403,7 @@ const VerbConjugator = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-4 relative">
-    {isLoading && (
-      <LoadingScreen message={loadingMessage} />
-    )}
+
 
       {/* Language Toggle Buttons */}      
       <div className="absolute top-0 right-0 space-x-2">
@@ -805,6 +803,10 @@ const VerbConjugator = () => {
             </div>
           </div>
         </div>
+        
+      )}
+      {isLoading && (
+        <LoadingScreen message={loadingMessage} />
       )}
     </div>
   );
