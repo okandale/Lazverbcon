@@ -50,8 +50,8 @@ const VerbConjugator = () => {
     'entepe', 'entepes', 'entepek',
   ];
   const objectOrder = [
-    'ma', 'si', 'him', 'heya', 'em/hem', 'şk̆u', 'çki', 'çku', 'çkin',
-    't̆k̆va', 'tkva', 'tkvan', 'hini', 'hentepe', 'entepe',
+    'ma', 'si', 'him', 'himus', 'heya', 'heyas', 'em/hem', 'emus/hemus', 'şk̆u', 'çki', 'çku', 'çkin',
+    't̆k̆va', 'tkva', 'tkvan', 'hini', 'hinis', 'hentepe', 'hentepes', 'entepe', 'entepes'
   ];
 
   const translations = {
