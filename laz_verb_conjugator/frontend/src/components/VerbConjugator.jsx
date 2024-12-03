@@ -82,6 +82,7 @@ const VerbConjugator = () => {
         submit: 'Submit',
       },
       loadingMessage: 'Loading, please wait... (this may take up to 3 minutes)',
+      feedbackLoadingMessage: 'Submitting feedback, please wait...',      
     },
     tr: {
       title: 'Fiil Çekimi',
@@ -110,6 +111,7 @@ const VerbConjugator = () => {
         submit: 'Gönder',
       },
       loadingMessage: 'Yükleniyor, lütfen bekleyin... (bu işlem 3 dakika kadar sürebilir)',
+      feedbackLoadingMessage: 'Geri bildirim gönderiliyor, lütfen bekleyin...',
     },
   };
 
@@ -202,10 +204,13 @@ const VerbConjugator = () => {
   // Handle feedback form submission
   const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxocjHtMbmcehees6xRUs43RLaqTwFiLjp9IXbsswXZj52QcL-owsk4xDG4kkOQksbP/exec';
+    setLoadingMessage(translations[language].feedbackLoadingMessage);
+    setIsLoading(true);
   
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxocjHtMbmcehees6xRUs43RLaqTwFiLjp9IXbsswXZj52QcL-owsk4xDG4kkOQksbP/exec';
+    
     try {
-      setIsLoading(true);
+      // No need for setIsLoading(true); here, since it's already set
   
       // Generate a unique callback name
       const callbackName = 'callback' + Date.now();
@@ -265,6 +270,7 @@ const VerbConjugator = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setResults({ data: {}, error: '' });
+    setLoadingMessage(translations[language].loadingMessage);
     setIsLoading(true); // Start loading
 
     const params = new URLSearchParams();
@@ -304,7 +310,7 @@ const VerbConjugator = () => {
     }
   };
   const LoadingScreen = ({ message }) => (
-    <div className="fixed inset-0 bg-white bg-opacity-80 flex flex-col items-center justify-center z-50">
+    <div className="fixed inset-0 bg-white bg-opacity-80 flex flex-col items-center justify-center z-60">
       <svg className="animate-spin h-10 w-10 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
@@ -312,6 +318,8 @@ const VerbConjugator = () => {
       <p className="text-center text-lg">{message}</p>
     </div>
   );
+  
+  const [loadingMessage, setLoadingMessage] = useState(translations[language].loadingMessage);
 
   const handleReset = () => {
     setFormData(defaultFormData);
@@ -394,7 +402,7 @@ const VerbConjugator = () => {
   return (
     <div className="max-w-2xl mx-auto p-4 relative">
     {isLoading && (
-      <LoadingScreen message={translations[language].loadingMessage} />
+      <LoadingScreen message={loadingMessage} />
     )}
 
       {/* Language Toggle Buttons */}      
