@@ -128,12 +128,18 @@ def handle_marker(infinitive, root, marker):
         marker = ''
     elif infinitive in ('oç̌k̆omu') and marker in ('i, u'):
         root = 'ç̌k̆omums'
-    if infinitive == 'geç̌k̆u' and len(root) > 2: #special case for geç̌k̆u.
+    elif infinitive == 'geç̌k̆u' and len(root) > 2: #special case for geç̌k̆u
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
                 root = root[:2] + marker + root[3:]  # Replace the third character 'i' or 'o' with 'i' or 'o'
             elif marker == 'u':
                 root = root[:2] + 'u' + root[3:]  # Replace the third character 'i' or 'o' with 'u'
+    elif infinitive == 'ceç̌u' and len(root) > 1: #special case for ceç̌u
+        if root[1] in ['i', 'o']:
+            if marker in ['i', 'o']:
+                root = root[:1] + marker + root[2:]  # Replace the second character 'i' or 'o' with 'i' or 'o'
+            elif marker == 'u':
+                root = root[:1] + 'u' + root[2:]  # Replace the second character 'i' or 'o' with 'u'
     elif root.startswith(('i', 'u', 'o')):
         if marker in ['i', 'o', 'u']:
             root = marker + root[1:]  # Replace the first 'i' or 'o' with 'i' or 'o'
@@ -367,12 +373,16 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                     else:
                         prefix = 'gy'
 
-            # Special handling for "ceç̌alu"
-                elif preverb == 'ce' and main_infinitive == 'ceç̌alu':
-                    if marker:
-                        root = root[2:]
+                # Special handling for "ceç̌alu"
+                elif preverb == 'ce':
+                    if infinitive == 'ceç̌u':
+                        if marker:
+                            root = root[1:]  # Remove only one character if there's a marker
                     else:
-                        root = root[1:]
+                        if marker:
+                            root = root[2:]
+                        else:
+                            root = root[1:]
                     first_letter = get_first_letter(root)
                     if obj in ['O2_Singular', 'O2_Plural']:
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
@@ -714,7 +724,7 @@ formatted_result = format_conjugations(conjugation_result)
 
 
 # Example usage for Sx conjugations with a specific object and marker
-infinitive = 'geç̌k̆u'
+infinitive = 'ceç̌u'
 obj = 'O3_Singular'
 marker = 'both'  # Change to 'causative' or 'applicative' or 'both' if needed
 object_pronoun = personal_pronouns_general[obj]
