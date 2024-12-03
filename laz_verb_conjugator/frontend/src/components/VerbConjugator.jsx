@@ -314,16 +314,40 @@ const VerbConjugator = () => {
   const LoadingScreen = ({ message }) => {
     return ReactDOM.createPortal(
       <div
-        style={{ zIndex: 9999 }} // Set a high z-index using inline style
+        style={{ zIndex: 9999 }} // High z-index to appear above all content
         className="fixed inset-0 bg-white flex flex-col items-center justify-center"
       >
+        {/* Define styles within the component */}
+        <style>
+          {`
+            @keyframes spin {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
+            }
+            .spin {
+              animation: spin 1s linear infinite;
+            }
+          `}
+        </style>
         <svg
-          className="animate-spin h-10 w-10 text-blue-600 mb-4"
+          className="spin h-10 w-10 text-blue-600 mb-4" // Use 'spin' class
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
         >
-          {/* ... SVG paths ... */}
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v8H4z"
+          ></path>
         </svg>
         <p className="text-center text-lg">{message}</p>
       </div>,
