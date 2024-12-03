@@ -3,6 +3,7 @@ from flask_cors import CORS
 import importlib
 import logging
 import os
+import pandas as pd
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -54,27 +55,12 @@ def serve(path):
 @app.route('/api/verbs', methods=['GET'])
 def get_verbs():
     try:
-        module = tense_modules['ivd_present']
-        if not hasattr(module, 'verbs'):
-            return jsonify({"error": "No verbs found"}), 404
+        csv_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
+        if not os.path.exists(csv_path):
+            return jsonify({"error": "Verb data file not found"}), 404
             
-        verb_list = []
-        for verb, data in module.verbs.items():
-            # Safely access nested data
-            turkish = ""
-            english = ""
-            if isinstance(data, list) and len(data) > 0:
-                first_item = data[0]
-                if isinstance(first_item, tuple) and len(first_item) > 2:
-                    turkish = str(first_item[1])
-                    english = str(first_item[2])
-            
-            verb_info = {
-                "Laz Infinitive": verb,
-                "Turkish Verb": turkish,
-                "English Translation": english
-            }
-            verb_list.append(verb_info)
+        df = pd.read_csv(csv_path)
+        verb_list = df[['Laz Infinitive', 'Turkish Verb', 'English Translation']].dropna().to_dict('records')
         
         return jsonify(verb_list)
     except Exception as e:
