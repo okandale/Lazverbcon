@@ -368,7 +368,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 # Special handling for "ceç̌alu"
                 elif preverb == 'ce':
                     if infinitive == 'ceç̌u':
-                        if marker:
+                        if subject in ['S1_Singular', 'S1_Plural']:
                             root = root[1:]  # Remove only one character if there's a marker
                     else:
                         if marker:
@@ -680,4 +680,7 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 # Function to get the first word of a compound verb
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
+
+
+
 
