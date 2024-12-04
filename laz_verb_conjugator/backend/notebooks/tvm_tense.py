@@ -260,11 +260,9 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                         for pv in pv_group:
                             if main_infinitive.startswith(pv):
                                 preverb = pv
-                                print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                                 break
                     elif main_infinitive.startswith(pv_group):
                         preverb = pv_group
-                        print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                     if preverb:
                         break
                 
@@ -632,13 +630,6 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
 
-# Example usage
-infinitive = 'oputxu'
-tense = 'optative' # insert 'past', 'present','future','past progressive' or 'optative
-all_conjugations = collect_conjugations_all(infinitive, subjects, tense=tense)
 
-# Print the formatted conjugations
-print(f"All subject conjugations of infinitive '{infinitive}' ({tense} tense):")
-print(format_conjugations(all_conjugations))
 
 

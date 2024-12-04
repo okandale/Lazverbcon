@@ -224,11 +224,9 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
                         for pv in pv_group:
                             if main_infinitive.startswith(pv):
                                 preverb = pv
-                                print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                                 break
                     elif main_infinitive.startswith(pv_group):
                         preverb = pv_group
-                        print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                     if preverb:
                         break
 
@@ -241,7 +239,6 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
             else:
                 root = root[1:-1]  # Remove the last character of the root
 
-            print(f"Subject: {subject}, Preverb: {preverb}, Region: {region}, Subject marker: {subject_markers[subject]}")
             
 
             # Get the first letter after the marker is attached
@@ -348,13 +345,6 @@ def get_first_word(verb):
 
 subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
 
-# Example usage
-infinitive = 'geç̌k̆u'
-tense = 'present' # insert 'past', 'present','future','pastpro' or 'optative
-all_conjugations = collect_conjugations_all(infinitive, subjects, tense=tense)
 
-# Print the formatted conjugations
-print(f"All subject conjugations of infinitive '{infinitive}' ({tense} tense):")
-print(format_conjugations(all_conjugations))
 
 

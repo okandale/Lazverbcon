@@ -240,11 +240,9 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                         for pv in pv_group:
                             if main_infinitive.startswith(pv):
                                 preverb = pv
-                                print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                                 break
                     elif main_infinitive.startswith(pv_group):
                         preverb = pv_group
-                        print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                     if preverb:
                         break
                 
@@ -293,8 +291,6 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
 
             if not handled_gontzku:
 
-                print(f"Debug - root before n-processing: {root}")
-                print(f"Debug - preverb before n-processing: {preverb}")
 
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                     preverb = 'ey' if region == 'PZ' else 'y'
@@ -442,7 +438,6 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                         prefix = 'ok̆om'
                     elif marker_type in ('causative', 'applicative'):
                         prefix = preverb
-                        print(f"Adjusted preverb: {preverb}, Subject marker: {subject_markers[subject]}, Root before adjustment: {root}")
                     else:
                         prefix = preverb
 
@@ -685,67 +680,4 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 # Function to get the first word of a compound verb
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
-
-# Example usage
-infinitive = 'gonʒ̆k̆u'
-subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
-obj = 'O2_Singular'
-
-# Collect conjugations
-all_conjugations = collect_conjugations(infinitive, subjects, obj=obj)
-
-# Extract and format imperatives
-imperatives = extract_imperatives(all_conjugations, subjects)
-formatted_imperatives = format_imperatives(imperatives)
-
-# Print the formatted imperatives
-for region, forms in formatted_imperatives.items():
-    print(f"{region}:")
-    for form in forms:
-        print(form)
-
-# Example usage for Sx conjugations with a specific object and marker
-infinitive = 'ceç̌u'
-obj = 'O3_Singular'
-marker = 'applicative'  # Change to 'causative' or 'applicative' or 'both' if needed
-object_pronoun = personal_pronouns_general[obj]
-
-# Determine the flags for causative and applicative based on the marker value
-is_causative = marker in ['causative', 'both']
-is_applicative = marker in ['applicative', 'both']
-
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}' and {marker} marker:")
-all_conjugations = collect_conjugations(infinitive, subjects, obj=obj, causative=is_causative, applicative=is_applicative)
-print(format_conjugations(all_conjugations))
-
-
-
-
-
-
-
-# In[11]:
-
-
-# Example usage for Sx
-infinitive = 'doguru'
-print(f"All subject conjugations of infinitive '{infinitive}':")
-all_conjugations = collect_conjugations(infinitive, subjects)
-print(format_conjugations(all_conjugations))
-
-
-# In[69]:
-
-
-# Example usage for SxOx conjugations
-infinitive = 'gonʒ̆k̆u'
-obj = 'O2_Singular'
-object_pronoun = personal_pronouns_general[obj]
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}':")
-all_conjugations = collect_conjugations(infinitive, subjects, obj=obj)
-print(format_conjugations(all_conjugations))
-
-
-# In[20]:
-
 

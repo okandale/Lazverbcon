@@ -179,11 +179,9 @@ def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicati
                         for pv in pv_group:
                             if main_infinitive.startswith(pv):
                                 preverb = pv
-                                print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                                 break
                     elif main_infinitive.startswith(pv_group):
                         preverb = pv_group
-                        print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                     if preverb:
                         break
                 
@@ -276,13 +274,7 @@ def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
 
 
-# Example usage
-infinitive = 'geç̌k̆u'
-all_conjugations = collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, mood=None)
 
-# Print the formatted conjugations
-print(f"All subject conjugations of infinitive '{infinitive}' (present perfect tense):")
-print(format_conjugations(all_conjugations))
 
 
 

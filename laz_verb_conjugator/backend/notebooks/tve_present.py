@@ -246,19 +246,15 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         for pv in pv_group:
                             if main_infinitive.startswith(pv):
                                 preverb = pv
-                                print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                                 break
                     elif main_infinitive.startswith(pv_group):
                         preverb = pv_group
-                        print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                     if preverb:
                         break
 
                 
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
-
-            print(f"Processing Infinitive: '{infinitive}', Preverb: '{preverb}', Main Infinitive: '{main_infinitive}', Subject: '{subject}', Object: '{obj}', Region: '{region}'")
                 
             # Remove the preverb from the third-person form if it exists
             if preverb and root.startswith(preverb):
@@ -449,7 +445,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         prefix = 'ok̆om'
                     elif marker_type in ('causative', 'applicative'):
                         prefix = preverb
-                        print(f"Adjusted preverb: {preverb}, Subject marker: {subject_markers[subject]}, Root before adjustment: {root}")
                     else:
                         prefix = preverb
 
@@ -583,8 +578,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif mood == 'optative':
                 root = root[:-2]
 
-            # Debugging statement for the root
-            print(f"Debug: Infinitive: {infinitive}, Subject: {subject}, Object: {obj}, Mood: {mood}, Region: {region}, Root before suffix determination: {root}")
 
             # Determine the suffix
             if subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('ms') and mood == 'optative':
@@ -764,115 +757,3 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
 
-# Example usage for Sx conjugations with a specific object and marker
-infinitive = 'gonʒ̆k̆u'
-print(f"All subject conjugations of infinitive '{infinitive}':")
-all_conjugations = collect_conjugations(infinitive, subjects)
-print(format_conjugations(all_conjugations))
-
-
-
-# In[5]:
-
-
-# Example usage for Sx conjugations with a specific object and marker
-infinitive = 'oç̌k̆omu'
-print(f"All subject conjugations of infinitive '{infinitive}':")
-all_conjugations = collect_conjugations(infinitive, subjects)
-print(format_conjugations(all_conjugations))
-
-
-
-# In[6]:
-
-
-# Example usage for Sx conjugations with optative:
-infinitive = 'ot̆axu'
-optative = False  # Set to True if you want to include optative, otherwise set to False
-
-print(f"All subject conjugations of infinitive '{infinitive}':")
-all_conjugations = collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, mood='optative' if optative else None)
-print(format_conjugations(all_conjugations))
-
-
-# In[69]:
-
-
-# Example usage for SxOx conjugations
-infinitive = 'ot̆axu'
-obj = 'O3_Singular'
-optative = False
-object_pronoun = personal_pronouns_general[obj]
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}':")
-all_conjugations = collect_conjugations(infinitive, subjects, mood='optative' if optative else None)
-print(format_conjugations(all_conjugations))
-
-
-# In[118]:
-
-
-# Example usage for Sx conjugations with a specific object and marker
-infinitive = 'ceç̌u'
-obj = 'O3_Singular'
-marker = 'applicative'  # Change to 'causative' or 'applicative' or 'both' if needed
-object_pronoun = personal_pronouns_general[obj]
-
-# Determine the flags for causative and applicative based on the marker value
-is_causative = marker in ['causative', 'both']
-is_applicative = marker in ['applicative', 'both']
-
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}' and {marker} marker:")
-all_conjugations = collect_conjugations(infinitive, subjects, obj=obj, causative=is_causative, applicative=is_applicative)
-print(format_conjugations(all_conjugations))
-
-
-
-# In[52]:
-
-
-# Example usage negative IMPERATIVE with no specific object
-# Example usage for negative imperative conjugations
-# Example usage for negative imperative conjugations with parameter filtering
-infinitive = 'obiru'
-subjects = ['S2_Singular']  # Filtering for specific subjects
-objects = None  # You can specify objects here if needed
-
-# Collect conjugations
-all_conjugations = collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, mood=None)
-
-# Extract and format imperatives
-neg_imperatives = extract_neg_imperatives(all_conjugations, subjects)
-formatted_neg_imperatives = format_neg_imperatives(neg_imperatives)
-
-# Print the formatted imperatives
-print(formatted_neg_imperatives)
-
-# Print the formatted imperatives
-for region, forms in formatted_neg_imperatives.items():
-    print(f"{region}:")
-    for form in forms:
-        print(form)
-
-
-# In[55]:
-
-
-
-
-# Example usage for negative imperative conjugations
-# Collecting all conjugations for all subjects and all objects
-infinitive = 'meçamu'
-subjects = ['S2_Singular', 'S2_Plural']  # Ensure S2_Plural is included
-
-# Collect conjugations
-all_conjugations = collect_conjugations_all_subjects_all_objects(infinitive)
-
-# Extract and format imperatives
-neg_imperatives = extract_neg_imperatives(all_conjugations, subjects)
-formatted_neg_imperatives = format_neg_imperatives(neg_imperatives)
-
-# Print the formatted imperatives
-for region, forms in formatted_neg_imperatives.items():
-    print(f"{region}:")
-    for form in forms:
-        print(form)

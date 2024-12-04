@@ -250,11 +250,9 @@ def conjugate_passive_form(infinitive, tense, subject=None, obj=None, applicativ
                         for pv in pv_group:
                             if main_infinitive.startswith(pv):
                                 preverb = pv
-                                print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                                 break
                     elif main_infinitive.startswith(pv_group):
                         preverb = pv_group
-                        print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                     if preverb:
                         break
                 
@@ -382,15 +380,7 @@ personal_pronouns_general = {
 subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
 
 
-# Example usage
-infinitive = 'gonʒ̆k̆u'
-tense = 'pastpro' # insert 'past', 'present', 'future' or 'past progressive'
-causative = False # set to "True" or "False" - currently only implemented for present tense!
-all_conjugations = collect_conjugations_all(infinitive, subjects, tense=tense, causative=causative)
 
-# Print the formatted conjugations
-print(f"All subject conjugations of infinitive '{infinitive}' ({tense} tense):")
-print(format_conjugations(all_conjugations))
 
 
 

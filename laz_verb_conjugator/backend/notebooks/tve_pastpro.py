@@ -170,12 +170,12 @@ def get_personal_pronouns(region):
 
 # Update the conjugate_past_progressive function to return a dictionary
 def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=False, causative=False, use_optional_preverb=False):
-    print(f"Conjugating {infinitive} with subject {subject} and object {obj}. Applicative: {applicative}, Causative: {causative}, Use Optional Preverb: {use_optional_preverb}")
+
     
     # Check for invalid SxOx combinations
     if (subject in ['S1_Singular', 'S1_Plural'] and obj in ['O1_Singular', 'O1_Plural']) or \
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
-        print(f"Invalid subject-object combination: {subject}-{obj}")
+
         return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
     
     if applicative and obj is None:
@@ -184,18 +184,14 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
         raise ValueError("Causative requires an object to be specified.")
     
     if infinitive not in verbs:
-        print(f"Infinitive {infinitive} not found.")
         return {region: [(subject, obj, f"Infinitive {infinitive} not found.")] for region in regions[infinitive]}
     
     # Get the regions for the current infinitive
     regions_list = regions[infinitive]
-    print(f"Regions for {infinitive}: {regions_list}")
 
     main_infinitive = process_compound_verb(infinitive)
-    print(f"Main infinitive: {main_infinitive}")
     # Get the third-person forms and their associated regions
     third_person_forms = verbs[infinitive]
-    print(f"Third-person forms: {third_person_forms}")
     
     # Initialize region_conjugations
     region_conjugations = {region: [] for region in regions_list}
@@ -205,7 +201,6 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
         regions_for_form = region_str.split(',')
         for region in regions_for_form:
             region = region.strip()
-            print(f"Processing region: {region}")
             personal_pronouns = get_personal_pronouns(region)
             phonetic_rules_v, phonetic_rules_g = get_phonetic_rules(region)
             
@@ -213,7 +208,6 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
             root = process_compound_verb(third_person)
             first_word = get_first_word(third_person)
             root = process_compound_verb(root)
-            print(f"Initial root: {root}")
 
             subject_markers = {
                 'S1_Singular': 'v',
@@ -253,11 +247,9 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                         for pv in pv_group:
                             if main_infinitive.startswith(pv):
                                 preverb = pv
-                                print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                                 break
                     elif main_infinitive.startswith(pv_group):
                         preverb = pv_group
-                        print(f"Identified preverb '{preverb}' for infinitive '{infinitive}'")
                     if preverb:
                         break
 
@@ -265,13 +257,11 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
 
-            print(f"Processing Infinitive: '{infinitive}', Preverb: '{preverb}', Main Infinitive: '{main_infinitive}', Subject: '{subject}', Object: '{obj}', Region: '{region}'")
                 
             # Remove the preverb from the third-person form if it exists
             if preverb and root.startswith(preverb) and infinitive != 'gonʒ̆k̆u':
                 root = root[len(preverb):]
 
-            print(f"Root after preverb removal: {root}")
 
             # Determine the marker (applicative or causative)
             marker = ''
@@ -290,10 +280,9 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
 
             
             
-            print(f"Marker: {marker}")
             # Handle special case for verbs starting with 'i' or 'o'
             root = handle_marker(main_infinitive, root, marker)
-            print(f"Root after marker handling: {root}")
+
 
             # Get the first letter after the marker is attached
             first_letter = get_first_letter(root)
@@ -455,7 +444,6 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                         prefix = 'ok̆om'
                     elif marker_type in ('causative', 'applicative'):
                         prefix = preverb
-                        print(f"Adjusted preverb: {preverb}, Subject marker: {subject_markers[subject]}, Root before adjustment: {root}")
                     else:
                         prefix = preverb
 
@@ -572,10 +560,8 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
             if prefix and final_root and prefix[-1] == final_root[0]:
                 final_root = final_root[1:]
 
-            print(f"Final root: {final_root}, Suffix: {suffix}")
             # Conjugate the verb
             conjugated_verb = f"{prefix}{final_root}{suffix}"
-            print(f"Conjugated verb: {conjugated_verb}")
             region_conjugations[region].append((subject, obj, f"{first_word} {conjugated_verb}".strip()))
 
     return region_conjugations
@@ -637,42 +623,4 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
 
-
-# Example usage for Sx conjugations with a specific object and marker
-infinitive = 'geç̌k̆u'
-obj = 'O3_Singular'
-marker = 'applicative'  # Change to 'causative' or 'applicative' if needed
-object_pronoun = personal_pronouns_general[obj]
-
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}' and {marker} marker:")
-all_conjugations = collect_conjugations(infinitive, subjects, obj=obj, causative=(marker == 'causative'), applicative=(marker == 'applicative'))
-print(format_conjugations(all_conjugations))
-
-# Example usage for Sx
-infinitive = 'doguru'
-print(f"All subject conjugations of infinitive '{infinitive}':")
-all_conjugations = collect_conjugations(infinitive, subjects)
-print(format_conjugations(all_conjugations))
-
-# Example usage for SxOx conjugations
-infinitive = 'oç̌aru'
-obj = 'O1_Singular'
-object_pronoun = personal_pronouns_general[obj]
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}':")
-all_conjugations = collect_conjugations(infinitive, subjects, obj=obj)
-print(format_conjugations(all_conjugations))
-
-# Example usage for Sx conjugations with a specific object and marker
-infinitive = 'ceç̌u'
-obj = 'O3_Singular'
-marker = 'applicative'  # Change to 'causative' or 'applicative' or 'both' if needed
-object_pronoun = personal_pronouns_general[obj]
-
-# Determine the flags for causative and applicative based on the marker value
-is_causative = marker in ['causative', 'both']
-is_applicative = marker in ['applicative', 'both']
-
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}' and {marker} marker:")
-all_conjugations = collect_conjugations(infinitive, subjects, obj=obj, causative=is_causative, applicative=is_applicative)
-print(format_conjugations(all_conjugations))
 
