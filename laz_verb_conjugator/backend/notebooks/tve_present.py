@@ -128,7 +128,7 @@ def handle_marker(infinitive, root, marker):
     if infinitive in ('oç̌k̆omu', 'oşk̆omu') and marker == 'o':
         root = 'çams'
         marker = ''
-    if infinitive == 'oxenu' and marker:
+    if infinitive in ('oxenu', 'oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
         root = 'xenams'
     elif infinitive in ('oç̌k̆omu') and marker in ('i', 'u'):
         root = 'ç̌k̆omums'

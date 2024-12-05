@@ -275,7 +275,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
             elif infinitive == 'oxoʒ̆onu' and (subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural']):
                 marker = 'o'  # Default to 'o' for oxoʒ̆onu if neither applicative nor causative
 
-            if infinitive == 'oxenu' and marker in ('u', 'i', 'o'):  # marker case for oxenu
+            if infinitive in ('oxenu', 'oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
                 root = 'xenums'
 
             
