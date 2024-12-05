@@ -374,7 +374,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                 # Special handling for "ceç̌alu"
                 elif preverb == 'ce':
                     if infinitive == 'ceç̌u':
-                        if marker:
+                       if subject in ['S1_Singular', 'S1_Plural']:
                             root = root[1:]  # Remove only one character if there's a marker
                     else:
                         if marker:
