@@ -279,12 +279,3 @@ def get_first_word(verb):
 
 
 
-# Example usage
-infinitive = 'ceç̌u'
-all_conjugations = collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, mood=None)
-
-# Print the formatted conjugations
-print(f"All subject conjugations of infinitive '{infinitive}' (present perfect tense):")
-print(format_conjugations(all_conjugations))
-
-
