@@ -43,7 +43,7 @@ def process_compound_verb(verb):
 
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'd', 'ye'): {
+    ('ge', 'e', 'ce', 'do', 'ye'): {
         'S1_Singular': 'om',
         'S2_Singular': 'og',
         'S3_Singular': '',
@@ -256,24 +256,18 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
                 else:
                     prefix = preverb
             
-            elif preverb == 'd':
+            elif preverb == 'do':
                 if subject in ('S3_Singular', 'S3_Plural') and not obj:
-                    preverb = 'd'
-                    root = root # monitor situation for non FA, had to readjust for doʒ̆onu
+                    preverb = ''
                 else:
-                    preverb = 'do'
-                    if root.startswith('v'):
-                        if region in ('PZ', 'AŞ', 'HO'):
-                            root = root[1:]
-                    else:
-                        root = root
+                    root = root[2:] if region in ('PZ', 'AŞ', 'HO') else root[1:]
                 
                 if subject in ('S3_Singular', 'S3_Plural'):
                     if obj in ('O1_Singular', 'O1_Plural'):
                         adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
                         prefix = preverb + adjusted_prefix
                     else:
-                        prefix = 'd'
+                        prefix = 'd' if region in ('FA') else 'dv'
                 elif subject in ['S1_Singular', 'S1_Plural']:
                     prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
@@ -450,8 +444,6 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 # Function to get the first word of a compound verb
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
-
-
 
 
 
