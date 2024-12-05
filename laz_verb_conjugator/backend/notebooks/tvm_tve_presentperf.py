@@ -199,15 +199,17 @@ def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicati
             # Adjust the prefix based on the first letter for phonetic rules
             if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
-            if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular'):
-                if root in ('geç̌k̆u'):
-                    preverb = preverb[:-1] + 'y' # for verbs that change to 'gy' in 2nd/3rd person
+            if preverb.endswith(('a', 'e', 'i', 'o', 'u')) and subject_markers[subject].startswith(('a', 'e', 'i', 'o', 'u')):
+                if infinitive == 'geç̌k̆u':  # Add 'y' only for 'geç̌k̆u'
+                    preverb = preverb[:-1] + 'y'
                 else:
                     preverb = preverb # changed for gonʒ̆k̆u
 
             if preverb == "me" and subject_markers[subject].startswith(('a', 'e', 'i', 'o', 'u')):
                 preverb = "n"
                 prefix = preverb + subject_markers[subject]
+            elif preverb == "ce" and subject in ['S3_Singular', 'S3_Plural']:
+                prefix = "c" + subject_markers[subject]
             elif preverb in ('gama', 'gam'):
                 root = 'ç'
                 preverb = 'gam' if subject in ('S3_Singular', 'S3_Plural') else 'gamo'
@@ -277,6 +279,12 @@ def get_first_word(verb):
 
 
 
+# Example usage
+infinitive = 'ceç̌u'
+all_conjugations = collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, mood=None)
 
+# Print the formatted conjugations
+print(f"All subject conjugations of infinitive '{infinitive}' (present perfect tense):")
+print(format_conjugations(all_conjugations))
 
 
