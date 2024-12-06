@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const VerbTable = ({ verbs, language }) => {
+  const navigate = useNavigate();
+
   const columnTitles = {
     en: {
       laz: 'Laz Infinitive',
@@ -12,6 +15,14 @@ const VerbTable = ({ verbs, language }) => {
       turkish: 'Türkçe',
       english: 'İngilizce',
     }
+  };
+
+  const handleVerbClick = (verb) => {
+    navigate('/', { 
+      state: { 
+        infinitive: verb['Laz Infinitive']
+      }
+    });
   };
 
   return (
@@ -26,7 +37,11 @@ const VerbTable = ({ verbs, language }) => {
         </thead>
         <tbody>
           {verbs.map((verb, index) => (
-            <tr key={index} className="hover:bg-gray-100">
+            <tr 
+              key={index} 
+              onClick={() => handleVerbClick(verb)}
+              className="hover:bg-blue-50 cursor-pointer transition-colors duration-150"
+            >
               <td className="border px-4 py-2">{verb['Laz Infinitive']}</td>
               <td className="border px-4 py-2">{verb['Turkish Verb']}</td>
               <td className="border px-4 py-2">{verb['English Translation']}</td>

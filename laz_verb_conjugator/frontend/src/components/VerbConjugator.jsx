@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Results from './Results';
@@ -11,15 +11,28 @@ import {
   translations,
   defaultFormData,
   getStoredLanguage,
-  setStoredLanguage
+  setStoredLanguage,
 } from './constants';
 
 const VerbConjugator = () => {
+  const location = useLocation();
   const [language, setLanguage] = useState(getStoredLanguage());
   const [formData, setFormData] = useState(defaultFormData);
   const [results, setResults] = useState({ data: {}, error: '' });
   const [isFeedbackVisible, setFeedbackVisible] = useState(false);
   const infinitiveInputRef = useRef(null);
+
+  // Handle incoming verb from navigation
+  useEffect(() => {
+    if (location.state?.infinitive) {
+      setFormData(prev => ({
+        ...prev,
+        infinitive: location.state.infinitive
+      }));
+      // Clear the navigation state to prevent persisting on refresh
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     updateFormState();
@@ -262,7 +275,7 @@ const VerbConjugator = () => {
             </label>
             <select
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                isObjectDisabled ? 'text-gray-500 bg-gray-300' : ''
+                isObjectDisabled ? 'bg-gray-200' : ''
               }`}
               id="obj"
               name="obj"
@@ -288,7 +301,7 @@ const VerbConjugator = () => {
             </label>
             <select
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                isTenseDisabled ? 'text-gray-500 bg-gray-300' : ''
+                isTenseDisabled ? 'bg-gray-200' : ''
               }`}
               id="tense"
               name="tense"
