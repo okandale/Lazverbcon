@@ -131,7 +131,7 @@ def handle_marker(infinitive, root, marker):
     if infinitive in ('oxenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
         root = 'xenams'
     if infinitive in ('oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
-        root = 'xenams'
+        root = 'xvenams'
     elif infinitive in ('oç̌k̆omu') and marker in ('i', 'u'):
         root = 'ç̌k̆omums'
     if infinitive == 'geç̌k̆u' and len(root) > 2: #special case for geç̌k̆u
