@@ -371,13 +371,13 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 # Special handling for "ceç̌alu"
                 elif preverb == 'ce':
                     if infinitive == 'ceç̌u':
-                        if subject in ['S1_Singular', 'S1_Plural']:
+                        if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
                             root = root[1:]  # Remove only one character if there's a marker
                     else:
-                        if marker:
-                            root = root[2:]
+                        if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
+                            root = root
                         else:
-                            root = root[1:]
+                            root = root
                     first_letter = get_first_letter(root)
                     if obj in ['O2_Singular', 'O2_Plural']:
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
@@ -390,7 +390,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                     elif marker_type == 'causative':
                         prefix = 'ce'
                     else:
-                        prefix = 'c'
+                        prefix = preverb
 
                 # Special handling for "oxo"
                 elif preverb == 'oxo':
@@ -683,6 +683,7 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 # Function to get the first word of a compound verb
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
+
 
 
 

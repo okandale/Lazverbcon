@@ -373,13 +373,13 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 # Special handling for "ceç̌alu"
                 elif preverb == 'ce':
                     if infinitive == 'ceç̌u':
-                        if subject in ['S1_Singular', 'S1_Plural']:
+                        if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
                             root = root[1:]  # Remove only one character if there's a marker
                     else:
-                        if marker:
-                            root = root[2:]
+                        if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
+                            root = root
                         else:
-                            root = root[1:]
+                            root = root
                     first_letter = get_first_letter(root)
                     if infinitive in ('ceyonu') and not marker: # add for other tenses
                         root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
@@ -395,7 +395,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     elif marker_type == 'causative':
                         prefix = 'ce'
                     else:
-                        prefix = 'c'
+                        prefix = preverb
 
                 # Special handling for "oxo"
                 elif preverb == 'oxo':
@@ -593,6 +593,9 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     suffix = 'y' 
                 else:
                     suffix = 's'
+            elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O3_Plural', 'O2_Plural'] and root.endswith('ms'):
+                    root = root[:-1]
+                    suffix = 'an'
             elif subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('y') and mood == 'optative':
                 suffix = 'ay'
             elif subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('y'):
@@ -758,4 +761,5 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 # Function to get the first word of a compound verb
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
+
 
