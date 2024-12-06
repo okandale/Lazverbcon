@@ -1,142 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom'; // Import Link
 
-
-const API_URL = "/api/conjugate";  // Remove the full URL
-
+import Results from './Results';
+import FeedbackForm from './FeedbackForm';
+import {
+  API_URL,
+  specialCharacters,
+  translations,
+  defaultFormData
+} from './constants';
 
 const VerbConjugator = () => {
   const [language, setLanguage] = useState('en');
-  const defaultFormData = {
-    infinitive: '',
-    subject: 'all',
-    obj: '',
-    tense: 'present',
-    aspect: '',
-    applicative: false,
-    causative: false,
-    optative: false,
-    imperative: false,
-    neg_imperative: false,
-    regions: [],
-  };
-
   const [formData, setFormData] = useState(defaultFormData);
   const [results, setResults] = useState({ data: {}, error: '' });
-  const infinitiveInputRef = useRef(null);
   const [isFeedbackVisible, setFeedbackVisible] = useState(false);
-  const [feedbackData, setFeedbackData] = useState({
-    incorrectWord: '',
-    correction: '',
-    explanation: '',
-  });
-
-  const specialCharacters = ['ç̌', 't̆', 'ž', 'k̆', 'ʒ', 'ʒ̆', 'p̌'];
-
-  const regionNames = {
-    'AŞ': 'Ardeşen (Art̆aşeni)',
-    'PZ': 'Pazar (Atina)',
-    'FA': 'Fındıklı/Arhavi (Viʒ̆e/Ark̆abi)',
-    'HO': 'Hopa (Xopa)',
-    'FI': 'Fındıklı (Viʒ̆e)',
-    'AR': 'Arhavi (Ark̆abi)',
-    'ÇX': 'Çhala (Çxala)',
-  };
-
-  const subjectOrder = [
-    'ma', 'si', 'him', 'himuk', 'himus', 'heya', 'heyas', 'heyak',
-    'em/hem', 'emus/hemus', 'emuk/hemuk', 'şk̆u', 'çki', 'çku', 'çkin', 't̆k̆va','tkvan',
-    'hini', 'hinik', 'hinis', 'tkva', 'hentepe', 'hentepes', 'hentepek',
-    'entepe', 'entepes', 'entepek',
-  ];
-  const objectOrder = [
-    'ma', 'si', 'him', 'himus', 'heya', 'heyas', 'em/hem', 'emus/hemus', 'şk̆u', 'çki', 'çku', 'çkin',
-    't̆k̆va', 'tkva', 'tkvan', 'hini', 'hinis', 'hentepe', 'hentepes', 'entepe', 'entepes'
-  ];
-
-  const translations = {
-    en: {
-      title: 'Verb Conjugator',
-      infinitive: 'Infinitive',
-      subject: 'Subject',
-      object: 'Object',
-      tense: 'Tense',
-      aspect: 'Aspect',
-      regions: 'Regions',
-      applicative: 'Applicative',
-      imperative: 'Imperative',
-      causative: 'Causative',
-      negImperative: 'Negative Imperative',
-      optative: 'Optative',
-      conjugate: 'Conjugate',
-      reset: 'Reset',
-      results: 'Results',
-      betaMessage: 'If you spot a mistake, please submit your feedback using the',
-      feedbackLinkText: 'feedback form',
-      feedbackTitle: 'Submit Feedback',
-      feedbackLabels: {
-        incorrectWord: 'Incorrect Word(s)',
-        correction: 'Correction',
-        explanation: 'Explanation',
-        cancel: 'Cancel',
-        submit: 'Submit',
-      },
-      verbListMessage: 'See here',
-      verbListLinkText: 'for a list of available verbs',
-      feedbackLoadingMessage: 'Submitting feedback, please wait...',
-      feedbackDisclaimer: 'Phone users using Google Chrome may experience difficulties submitting the form; please use a different browser or use Incognito Mode.',            
-    },
-    tr: {
-      title: 'Fiil Çekimi',
-      infinitive: 'Mastar',
-      subject: 'Özne',
-      object: 'Nesne',
-      tense: 'Zaman',
-      aspect: 'Görünüş',
-      regions: 'Bölgeler',
-      applicative: 'Uygulamalı',
-      imperative: 'Emir Kipi',
-      causative: 'Ettirgen',
-      negImperative: 'Olumsuz Emir',
-      optative: 'İstek Kipi',
-      conjugate: 'Çek',
-      reset: 'Sıfırla',
-      results: 'Sonuçlar',
-      betaMessage: 'Hata görürseniz lütfen buradan görüşlerinizi iletin:',
-      feedbackLinkText: 'geri bildirim formu',
-      feedbackTitle: 'Geri Bildirim Gönder',
-      feedbackLabels: {
-        incorrectWord: 'Yanlış Kelime(ler)',
-        correction: 'Doğrusu',
-        explanation: 'Açıklama',
-        cancel: 'İptal',
-        submit: 'Gönder',
-      },
-      verbListMessage: 'Mevcut fiillerin listesi için',
-      verbListLinkText: 'buraya tıklayın',
-      feedbackLoadingMessage: 'Geri bildirim gönderiliyor, lütfen bekleyin...',
-      feedbackDisclaimer: 'Google Chrome kullanan telefon kullanıcıları formu göndermekte zorluk yaşayabilir; lütfen başka bir tarayıcı kullanın veya Gizli Modu kullanın.',
-    },
-  };
-
-  const firstInputRef = useRef(null);
-
-  useEffect(() => {
-    if (isFeedbackVisible && firstInputRef.current) {
-      firstInputRef.current.focus();
-    }
-  }, [isFeedbackVisible]);
-
-  const toggleLanguage = () => {
-    setLanguage(prevLang => (prevLang === 'en' ? 'tr' : 'en'));
-  };
+  const infinitiveInputRef = useRef(null);
 
   useEffect(() => {
     updateFormState();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     formData.optative,
     formData.applicative,
@@ -147,23 +31,9 @@ const VerbConjugator = () => {
     formData.neg_imperative,
   ]);
 
-  useEffect(() => {
-    const handleEscape = (event) => {
-      if (event.key === 'Escape') {
-        setFeedbackVisible(false);
-      }
-    };
-  
-    if (isFeedbackVisible) {
-      document.addEventListener('keydown', handleEscape);
-    } else {
-      document.removeEventListener('keydown', handleEscape);
-    }
-  
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-    };
-  }, [isFeedbackVisible]);
+  const toggleLanguage = () => {
+    setLanguage(prevLang => (prevLang === 'en' ? 'tr' : 'en'));
+  };
 
   const updateFormState = () => {
     setFormData(prevData => {
@@ -199,58 +69,6 @@ const VerbConjugator = () => {
     });
   };
 
-
-  const handleFeedbackChange = (e) => {
-    const { name, value } = e.target;
-    setFeedbackData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  // Handle feedback form submission
-  const handleFeedbackSubmit = async (e) => {
-    e.preventDefault();
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxocjHtMbmcehees6xRUs43RLaqTwFiLjp9IXbsswXZj52QcL-owsk4xDG4kkOQksbP/exec';
-    
-    try {
-      // No need for setIsLoading(true); here, since it's already set
-  
-      // Generate a unique callback name
-      const callbackName = 'callback' + Date.now();
-  
-      // Define the callback function to handle the response
-      window[callbackName] = function(response) {
-        if (response.result === 'success') {
-          setFeedbackData({
-            incorrectWord: '',
-            correction: '',
-            explanation: '',
-          });
-          setFeedbackVisible(false);
-          alert('Thank you for your feedback!');
-        } else {
-          alert('An error occurred: ' + response.error);
-        }
-  
-        // Cleanup
-        delete window[callbackName];
-        document.body.removeChild(script);
-      };
-  
-      // Serialize form data and create the script URL
-      const queryString = `callback=${callbackName}&data=${encodeURIComponent(JSON.stringify(feedbackData))}`;
-      const script = document.createElement('script');
-      script.src = `${scriptURL}?${queryString}`;
-  
-      // Append the script to the document to initiate the request
-      document.body.appendChild(script);
-  
-    } catch (error) {
-      alert('An error occurred while submitting feedback. Please try again later.');
-    }
-  };
-
   const handleInputChange = e => {
     const { name, value, type, checked } = e.target;
     setFormData(prevData => ({
@@ -281,7 +99,7 @@ const VerbConjugator = () => {
         }
       } else if (typeof value === 'boolean') {
         params.append(key, value ? 'true' : 'false');
-      } else if (value !== '') { // Exclude empty strings
+      } else if (value !== '') {
         params.append(key, value);
       }
     });
@@ -335,61 +153,8 @@ const VerbConjugator = () => {
     }
   };
 
-  const sortForms = forms => {
-    return forms.sort((a, b) => {
-      const [prefixA] = a.split(':');
-      const [prefixB] = b.split(':');
-      const [subjectA, objectA] = prefixA.trim().split(' ');
-      const [subjectB, objectB] = prefixB.trim().split(' ');
-
-      const subjectCompare = subjectOrder.indexOf(subjectA) - subjectOrder.indexOf(subjectB);
-      if (subjectCompare !== 0) return subjectCompare;
-
-      return objectOrder.indexOf(objectA) - objectOrder.indexOf(objectB);
-    });
-  };
-
-  const renderResults = () => {
-    if (results.error) {
-      return <p className="text-red-600">{results.error}</p>;
-    }
-  
-    if (Object.entries(results.data).length === 0) {
-      return <p>No results to display.</p>;
-    }
-  
-    const regionOrder = ['AŞ', 'PZ', 'FA', 'HO'];
-  
-    return regionOrder
-      .map(regionCode => {
-        const region = Object.entries(results.data).find(([key]) => key === regionCode);
-        if (!region) return null;
-  
-        const [regionName, forms] = region;
-        return (
-          <div key={regionName} className="mb-4">
-            <h3 className="text-xl font-semibold text-blue-600">
-              {regionNames[regionName] || regionName}
-            </h3>
-            {Array.isArray(forms) ? (
-              sortForms(forms).map((form, index) => (
-                <p key={index} className="ml-4">
-                  {form}
-                </p>
-              ))
-            ) : (
-              <p>{forms}</p>
-            )}
-          </div>
-        );
-      })
-      .filter(Boolean);
-  };
-
   return (
     <div className="max-w-2xl mx-auto p-4 relative">
-
-
       {/* Language Toggle Buttons */}      
       <div className="absolute top-0 right-0 space-x-2">
         <button
@@ -408,17 +173,8 @@ const VerbConjugator = () => {
         </button>
       </div>
 
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <ToastContainer />
+      
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
         <a 
           href="https://laz-verb-conjugator.onrender.com/" 
@@ -429,6 +185,7 @@ const VerbConjugator = () => {
           {translations[language].title}
         </a>
       </h1>
+
       <div className="mb-4 flex justify-center space-x-2">
         {specialCharacters.map((char, index) => (
           <button
@@ -450,13 +207,11 @@ const VerbConjugator = () => {
           .
         </p>
       </div>
+
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         {/* Infinitive Input */}
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="infinitive"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="infinitive">
             {translations[language].infinitive}:
           </label>
           <input
@@ -475,10 +230,7 @@ const VerbConjugator = () => {
         <div className="grid grid-cols-2 gap-4 mb-4">
           {/* Subject Selector */}
           <div>
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="subject"
-            >
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="subject">
               {translations[language].subject}:
             </label>
             <select
@@ -501,10 +253,7 @@ const VerbConjugator = () => {
 
           {/* Object Selector */}
           <div>
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="obj"
-            >
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="obj">
               {translations[language].object}:
             </label>
             <select
@@ -530,10 +279,7 @@ const VerbConjugator = () => {
 
           {/* Tense Selector */}
           <div>
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="tense"
-            >
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="tense">
               {translations[language].tense}:
             </label>
             <select
@@ -557,10 +303,7 @@ const VerbConjugator = () => {
 
           {/* Aspect Selector */}
           <div>
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="aspect"
-            >
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="aspect">
               {translations[language].aspect}:
             </label>
             <select
@@ -582,9 +325,7 @@ const VerbConjugator = () => {
 
         {/* Regions Fieldset */}
         <fieldset className="mb-4 border border-gray-300 rounded p-3">
-          <legend className="font-bold">
-            {translations[language].regions}
-          </legend>
+          <legend className="font-bold">{translations[language].regions}</legend>
           <div className="grid grid-cols-2 gap-4">
             {[
               { code: 'AŞ', name: 'Ardeşen (AŞ)' },
@@ -706,12 +447,13 @@ const VerbConjugator = () => {
       </form>
 
       {/* Results Section */}
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8">
-        <h2 className="text-2xl font-bold mb-4">{translations[language].results}:</h2>
-        {renderResults()}
-      </div>
+      <Results 
+        results={results}
+        language={language}
+        translations={translations}
+      />
       
-      {/* Updated Bottom Message with Feedback Link */}
+      {/* Bottom Message with Feedback Link */}
       <div className="text-center mt-6">
         <p className="text-gray-700 text-sm">
           {translations[language].betaMessage}{' '}
@@ -725,81 +467,13 @@ const VerbConjugator = () => {
         </p>
       </div>
 
-      {/* Feedback Modal */}
-      {isFeedbackVisible && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-          onClick={() => setFeedbackVisible(false)}
-        >
-          <div
-            className="bg-white rounded-lg overflow-hidden shadow-xl max-w-md w-full mx-2"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="px-6 py-4">
-              <h3 className="text-xl font-bold mb-4">
-                {translations[language].feedbackTitle}
-              </h3>
-              <form onSubmit={handleFeedbackSubmit}>
-                <div className="mb-3">
-                  <label className="block text-gray-700 font-bold mb-1" htmlFor="incorrectWord">
-                    {translations[language].feedbackLabels.incorrectWord}
-                  </label>
-                  <input
-                    type="text"
-                    name="incorrectWord"
-                    value={feedbackData.incorrectWord}
-                    onChange={handleFeedbackChange}
-                    className="w-full border rounded px-2 py-1"
-                    required
-                    ref={firstInputRef}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="block text-gray-700 font-bold mb-1" htmlFor="correction">
-                    {translations[language].feedbackLabels.correction}
-                  </label>
-                  <input
-                    type="text"
-                    name="correction"
-                    value={feedbackData.correction}
-                    onChange={handleFeedbackChange}
-                    className="w-full border rounded px-2 py-1"
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="block text-gray-700 font-bold mb-1" htmlFor="explanation">
-                    {translations[language].feedbackLabels.explanation}
-                  </label>
-                  <textarea
-                    name="explanation"
-                    value={feedbackData.explanation}
-                    onChange={handleFeedbackChange}
-                    className="w-full border rounded px-2 py-1"
-                    rows="4"
-                  ></textarea>
-                </div>
-                <p className="text-sm text-gray-600 mb-3">
-                  {translations[language].feedbackDisclaimer}
-                </p>                
-                <div className="flex justify-end space-x-2">
-                  <button
-                    type="button"
-                    onClick={() => setFeedbackVisible(false)}
-                    className="px-4 py-2 bg-gray-300 rounded"
-                  >
-                    {translations[language].feedbackLabels.cancel}
-                  </button>
-                  <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
-                    {translations[language].feedbackLabels.submit}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        
-      )}
+      {/* Feedback Form */}
+      <FeedbackForm
+        isVisible={isFeedbackVisible}
+        onClose={() => setFeedbackVisible(false)}
+        language={language}
+        translations={translations}
+      />
     </div>
   );
 };
