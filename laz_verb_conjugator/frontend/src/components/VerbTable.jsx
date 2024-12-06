@@ -1,14 +1,27 @@
 import React from 'react';
 
-const VerbTable = ({ verbs }) => {
+const VerbTable = ({ verbs, language }) => {
+  const columnTitles = {
+    en: {
+      laz: 'Laz Infinitive',
+      turkish: 'Turkish Verb',
+      english: 'English',
+    },
+    tr: {
+      laz: 'Lazuri',
+      turkish: 'Türkçe',
+      english: 'İngilizce',
+    }
+  };
+
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border">
         <thead>
           <tr>
-            <th className="py-2 px-4 border-b">Lazuri / Laz Infinitive</th>
-            <th className="py-2 px-4 border-b">Türkçe / Turkish Verb</th>
-            <th className="py-2 px-4 border-b">English / İngilizce</th>
+            <th className="py-2 px-4 border-b">{columnTitles[language].laz}</th>
+            <th className="py-2 px-4 border-b">{columnTitles[language].turkish}</th>
+            <th className="py-2 px-4 border-b">{columnTitles[language].english}</th>
           </tr>
         </thead>
         <tbody>
