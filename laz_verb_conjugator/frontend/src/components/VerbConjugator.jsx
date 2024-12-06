@@ -26,7 +26,6 @@ const VerbConjugator = () => {
 
   const [formData, setFormData] = useState(defaultFormData);
   const [results, setResults] = useState({ data: {}, error: '' });
-  const [isLoading, setIsLoading] = useState(false); // Loading state
   const infinitiveInputRef = useRef(null);
   const [isFeedbackVisible, setFeedbackVisible] = useState(false);
   const [feedbackData, setFeedbackData] = useState({
@@ -85,7 +84,6 @@ const VerbConjugator = () => {
         cancel: 'Cancel',
         submit: 'Submit',
       },
-      loadingMessage: 'Loading, please wait... (this may take up to 3 minutes)',
       verbListMessage: 'See here',
       verbListLinkText: 'for a list of available verbs',
       feedbackLoadingMessage: 'Submitting feedback, please wait...',
@@ -117,7 +115,6 @@ const VerbConjugator = () => {
         cancel: 'İptal',
         submit: 'Gönder',
       },
-      loadingMessage: 'Yükleniyor, lütfen bekleyin... (bu işlem 3 dakika kadar sürebilir)',
       verbListMessage: 'Mevcut fiillerin listesi için',
       verbListLinkText: 'buraya tıklayın',
       feedbackLoadingMessage: 'Geri bildirim gönderiliyor, lütfen bekleyin...',
@@ -214,9 +211,6 @@ const VerbConjugator = () => {
   // Handle feedback form submission
   const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
-    setLoadingMessage(translations[language].feedbackLoadingMessage);
-    setIsLoading(true);
-  
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxocjHtMbmcehees6xRUs43RLaqTwFiLjp9IXbsswXZj52QcL-owsk4xDG4kkOQksbP/exec';
     
     try {
@@ -242,7 +236,6 @@ const VerbConjugator = () => {
         // Cleanup
         delete window[callbackName];
         document.body.removeChild(script);
-        setIsLoading(false);
       };
   
       // Serialize form data and create the script URL
@@ -254,7 +247,6 @@ const VerbConjugator = () => {
       document.body.appendChild(script);
   
     } catch (error) {
-      setIsLoading(false);
       alert('An error occurred while submitting feedback. Please try again later.');
     }
   };
@@ -280,8 +272,6 @@ const VerbConjugator = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setResults({ data: {}, error: '' });
-    setLoadingMessage(translations[language].loadingMessage);
-    setIsLoading(true); // Start loading
 
     const params = new URLSearchParams();
     Object.entries(formData).forEach(([key, value]) => {
@@ -315,56 +305,9 @@ const VerbConjugator = () => {
         data: {},
         error: 'An error occurred while fetching conjugation. Please try again.',
       });
-    } finally {
-      setIsLoading(false); // End loading
     }
   };
-  const LoadingScreen = ({ message }) => {
-    return ReactDOM.createPortal(
-      <div
-        style={{ zIndex: 9999 }} // High z-index to appear above all content
-        className="fixed inset-0 bg-white flex flex-col items-center justify-center"
-      >
-        {/* Define styles within the component */}
-        <style>
-          {`
-            @keyframes spin {
-              from { transform: rotate(0deg); }
-              to { transform: rotate(360deg); }
-            }
-            .spin {
-              animation: spin 1s linear infinite;
-            }
-          `}
-        </style>
-        <svg
-          className="spin h-10 w-10 text-blue-600 mb-4" // Use 'spin' class
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          ></circle>
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8v8H4z"
-          ></path>
-        </svg>
-        <p className="text-center text-lg">{message}</p>
-      </div>,
-      document.body
-    );
-  };
   
-  const [loadingMessage, setLoadingMessage] = useState(translations[language].loadingMessage);
-
   const handleReset = () => {
     setFormData(defaultFormData);
     setResults({ data: {}, error: '' });
@@ -410,18 +353,18 @@ const VerbConjugator = () => {
     if (results.error) {
       return <p className="text-red-600">{results.error}</p>;
     }
-
+  
     if (Object.entries(results.data).length === 0) {
       return <p>No results to display.</p>;
     }
-
+  
     const regionOrder = ['AŞ', 'PZ', 'FA', 'HO'];
-
+  
     return regionOrder
       .map(regionCode => {
         const region = Object.entries(results.data).find(([key]) => key === regionCode);
         if (!region) return null;
-
+  
         const [regionName, forms] = region;
         return (
           <div key={regionName} className="mb-4">
@@ -856,9 +799,6 @@ const VerbConjugator = () => {
           </div>
         </div>
         
-      )}
-      {isLoading && (
-        <LoadingScreen message={loadingMessage} />
       )}
     </div>
   );
