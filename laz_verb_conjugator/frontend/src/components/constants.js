@@ -29,6 +29,15 @@ export const API_URLS = {
   verbs: "/api/verbs"
 };
 
+// Language persistence helper functions
+export const getStoredLanguage = () => {
+  return localStorage.getItem('preferredLanguage') || 'en';
+};
+
+export const setStoredLanguage = (language) => {
+  localStorage.setItem('preferredLanguage', language);
+};
+
 export const translations = {
   en: {
     title: 'Verb Conjugator',
@@ -91,6 +100,8 @@ export const translations = {
     verbListLinkText: 'buraya tıklayın',
     feedbackLoadingMessage: 'Geri bildirim gönderiliyor, lütfen bekleyin...',
     feedbackDisclaimer: 'Google Chrome kullanan telefon kullanıcıları formu göndermekte zorluk yaşayabilir; lütfen başka bir tarayıcı kullanın veya Gizli Modu kullanın.',
+    // Search placeholder
+    searchPlaceholder: 'Fiil ara...',
     // Verb List translations
     backToConjugator: 'Fiil Çekicisine Geri Dön',
     verbsListTitle: 'Mevcut Fiiller',
@@ -126,7 +137,7 @@ export const translations = {
     verbListLinkText: 'for a list of available verbs',
     feedbackLoadingMessage: 'Submitting feedback, please wait...',
     feedbackDisclaimer: 'Phone users using Google Chrome may experience difficulties submitting the form; please use a different browser or use Incognito Mode.',
-    // Verb List translations
+    searchPlaceholder: 'Search verbs...',
     backToConjugator: 'Back to Conjugator',
     verbsListTitle: 'Available Verbs',
   },

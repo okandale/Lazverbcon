@@ -7,7 +7,7 @@ const Results = ({ results, language, translations }) => {
   }
 
   if (Object.entries(results.data).length === 0) {
-    return <p>No results to display.</p>;
+    return null;
   }
 
   const sortForms = forms => {

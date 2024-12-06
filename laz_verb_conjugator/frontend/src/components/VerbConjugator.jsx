@@ -6,14 +6,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import Results from './Results';
 import FeedbackForm from './FeedbackForm';
 import {
-  API_URL,
+  API_URLS,
   specialCharacters,
   translations,
-  defaultFormData
+  defaultFormData,
+  getStoredLanguage,
+  setStoredLanguage
 } from './constants';
 
 const VerbConjugator = () => {
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState(getStoredLanguage());
   const [formData, setFormData] = useState(defaultFormData);
   const [results, setResults] = useState({ data: {}, error: '' });
   const [isFeedbackVisible, setFeedbackVisible] = useState(false);
@@ -32,7 +34,9 @@ const VerbConjugator = () => {
   ]);
 
   const toggleLanguage = () => {
-    setLanguage(prevLang => (prevLang === 'en' ? 'tr' : 'en'));
+    const newLanguage = language === 'en' ? 'tr' : 'en';
+    setLanguage(newLanguage);
+    setStoredLanguage(newLanguage);
   };
 
   const updateFormState = () => {
@@ -105,7 +109,7 @@ const VerbConjugator = () => {
     });
 
     try {
-      const response = await fetch(`${API_URL}?${params.toString()}`);
+      const response = await fetch(`${API_URLS.conjugate}?${params.toString()}`);
       const data = await response.json();
 
       if (!response.ok) {
