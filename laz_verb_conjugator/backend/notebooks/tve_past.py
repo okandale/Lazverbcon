@@ -270,8 +270,11 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             elif infinitive == 'oxoʒ̆onu' and (subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural']):
                 marker = 'o'  # Default to 'o' for oxoʒ̆onu if neither applicative nor causative
 
-            if infinitive in ('oxenu', 'oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
+            if infinitive in ('oxenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
                 root = 'xenums'
+
+            if infinitive in ('oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
+                root = 'xvenums'
             
             # Handle special case for verbs starting with 'i' or 'o'
             root = handle_marker(main_infinitive, root, marker)
@@ -680,6 +683,8 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 # Function to get the first word of a compound verb
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
+
+
 
 
 
