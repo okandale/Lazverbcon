@@ -260,7 +260,7 @@ def conjugate_passive_form(infinitive, tense, subject=None, obj=None, applicativ
             if preverb and root.startswith(preverb):
                 root = 'i' + root[len(preverb):-1]  # Remove only the preverb
             elif root in (('oşu', 'dodumu', 'otku')):
-                root = infinitive[1:-1] + "v"
+                root = 'i' + infinitive[1:-1] + "v"
             else:
                 root = 'i' + root[1:-1]  # Remove the last character of the root
 
@@ -378,8 +378,6 @@ personal_pronouns_general = {
 }
 
 subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
-
-
 
 
 
