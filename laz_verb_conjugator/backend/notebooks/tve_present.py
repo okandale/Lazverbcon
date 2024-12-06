@@ -375,6 +375,9 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     if infinitive == 'ceç̌u':
                         if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
                             root = root[1:]  # Remove only one character if there's a marker
+                        else:
+                            root = root[1:]
+                            preverb = preverb[:-1]
                     else:
                         if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
                             root = root
@@ -593,6 +596,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     suffix = 'y' 
                 else:
                     suffix = 's'
+            elif subject == 'S3_Singular' and obj in ['O2_Plural', 'O1_Plural'] and root.endswith('ms') and region == "AŞ":
+                suffix = 'man'
             elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O3_Plural', 'O2_Plural'] and root.endswith('ms'):
                     root = root[:-1]
                     suffix = 'an'
