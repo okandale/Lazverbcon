@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { translations, specialCharacters } from './constants';
+import { useFormValidation } from './useFormValidation';
 
 const FormSection = ({
   language,
@@ -10,53 +11,13 @@ const FormSection = ({
 }) => {
   const infinitiveInputRef = useRef(null);
 
+  // Use the form validation hook
+  useFormValidation(formData, setFormData, setResults);
+
   // Calculate disabled states
   const isAspectDisabled = formData.optative || formData.applicative || formData.obj;
   const isTenseDisabled = formData.optative || formData.imperative || formData.neg_imperative;
   const isObjectDisabled = formData.aspect !== '' || formData.tense === 'presentperf';
-
-  // Form validation effect
-  useEffect(() => {
-    const newData = { ...formData };
-    let error = '';
-
-    if (formData.optative) {
-      newData.aspect = '';
-      newData.tense = 'present';
-      if (newData.aspect !== '' || newData.tense !== 'present') {
-        error = 'Aspect and tense are not applicable when optative is selected.';
-      }
-    }
-
-    if (formData.aspect !== '') {
-      newData.obj = '';
-      if (newData.obj !== '') {
-        error = 'Object is not applicable when an aspect is selected.';
-      }
-    } else if (formData.tense === 'presentperf') {
-      newData.obj = '';
-      if (newData.obj !== '') {
-        error = 'Object is not applicable in present perfect tense.';
-      }
-    }
-
-    if (formData.imperative || formData.neg_imperative) {
-      newData.tense = 'present';
-    }
-
-    setFormData(newData);
-    if (error) setResults({ data: {}, error });
-  }, [
-    formData.optative,
-    formData.applicative,
-    formData.causative,
-    formData.tense,
-    formData.aspect,
-    formData.imperative,
-    formData.neg_imperative,
-    setFormData,
-    setResults
-  ]);
 
   const handleInputChange = e => {
     const { name, value, type, checked } = e.target;
