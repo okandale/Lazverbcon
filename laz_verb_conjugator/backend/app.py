@@ -106,6 +106,16 @@ def conjugate():
     # Convert the region_filter to a set of regions if specified
     region_filter_set = set(region_filter.split(',')) if region_filter else None
 
+    ### New Section: Check for TVM-only error ###
+    is_tvm_only = True
+    for module_key, module in tense_modules.items():
+        if hasattr(module, 'verbs') and infinitive in module.verbs:
+            if not module_key.startswith('tvm'):
+                is_tvm_only = False  # Found in a non-TVM module
+
+    if is_tvm_only and obj:
+        return jsonify({"error": f"This verb cannot have an object/bu fiil nesne alamaz."}), 400
+
     if neg_imperative:
         module = tense_modules.get('tve_present')
         if not module:
