@@ -11,10 +11,43 @@ import {
   specialCharacters
 } from './constants';
 
+// Skeleton loading component
+const SkeletonTable = () => {
+  return (
+    <div className="overflow-x-auto">
+      <div className="animate-pulse">
+        {/* Header Skeleton */}
+        <div className="min-w-full border bg-white">
+          <div className="flex border-b">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="flex-1 p-4">
+                <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Rows Skeleton */}
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((row) => (
+            <div key={row} className="flex border-b">
+              {[1, 2, 3].map((cell) => (
+                <div key={cell} className="flex-1 p-4">
+                  <div className="h-4 bg-gray-100 rounded w-full"></div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Main VerbList component
 const VerbList = () => {
   const [verbs, setVerbs] = useState([]);
   const [filteredVerbs, setFilteredVerbs] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [language, setLanguage] = useState(getStoredLanguage());
   const [searchTerm, setSearchTerm] = useState('');
   const searchInputRef = useRef(null);
@@ -32,6 +65,8 @@ const VerbList = () => {
       } catch (err) {
         console.error('Error fetching verbs:', err);
         setError('Failed to load verbs data.');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -110,7 +145,11 @@ const VerbList = () => {
         />
       </div>
 
-      <VerbTable verbs={filteredVerbs} language={language} />
+      {loading ? (
+        <SkeletonTable />
+      ) : (
+        <VerbTable verbs={filteredVerbs} language={language} />
+      )}
     </div>
   );
 };
