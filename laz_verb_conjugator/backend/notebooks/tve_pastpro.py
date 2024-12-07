@@ -4,9 +4,9 @@
 # In[7]:
 
 
-# Most up-to-date formula with preverbs (ge [along with geç̌k̆u's exception), e, ce, dolo, do [along with 'doguru'], go, oxo (based on oxoʒ̆onu) me (as actual preverb i.e. 'meçamu' not additional), applicative and object conjugation (and Ardeşen rule), now including causative marke. 
+# Most up-to-date formula with preverbs (ge [along with geç̌ǩu's exception), e, ce, dolo, do [along with 'doguru'], go, oxo (based on oxoǯonu) me (as actual preverb i.e. 'meçamu' not additional), applicative and object conjugation (and Ardeşen rule), now including causative marke. 
 # directives ("me", "mo", "n") for non-preverb verbs are missing (i.e. oç̌aru - megiç̌aram)
-# added "n" root changer - gomʒ̆am (gonʒ̆alu)
+# added "n" root changer - gomǯam (gonǯalu)
 # added optional preverb 'me' and 'ko' - won't show up in conjugator
 # added preverb 'gama'
 import pandas as pd
@@ -43,7 +43,7 @@ def process_compound_verb(verb):
 
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'ok̆o', 'gama', 'mo', 'ye'): {
+    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye'): {
         'S1_Singular': 'v',
         'S2_Singular': '',
         'S3_Singular': '',
@@ -60,7 +60,7 @@ def get_phonetic_rules(region):
         phonetic_rules_v = {
             'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
             'b': ['l', 'a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-            'p̌': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆'],
+            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
             'm': ['n']
         }
     else:
@@ -68,7 +68,7 @@ def get_phonetic_rules(region):
             'v': ['a', 'e', 'i', 'o', 'u'],
             'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
             'b': ['l','d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-            'p̌': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆'],
+            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
             'm': ['n']
         }
 
@@ -76,7 +76,7 @@ def get_phonetic_rules(region):
         'g': ['a', 'e', 'i', 'o', 'u'],
         'k': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
         'g': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-        'k̆': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆']
+        'ǩ': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆']
     }
 
     return phonetic_rules_v, phonetic_rules_g
@@ -90,9 +90,9 @@ def adjust_prefix(prefix, first_letter, phonetic_rules):
 
 # Function to handle special letters
 def get_first_letter(root):
-    if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'k̆', 'p̌', 'ʒ̆']:
+    if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'ǩ', 'p̌', 'ǯ']:
         return root[:2]
-    elif root.startswith('gyoç̌k̆ams'):   # to skip the "gy" part.
+    elif root.startswith('gyoç̌ǩams'):   # to skip the "gy" part.
         return root[2:]
     return root[0]
 
@@ -122,16 +122,16 @@ def handle_marker(infinitive, root, marker):
         root = root[1:]  # Remove the first character 'd' from the root
     if infinitive == 'meşvelu' and marker:
         root = root[1:]        
-    if infinitive in ('oç̌k̆omu', 'oşk̆omu') and marker == 'o':
+    if infinitive in ('oç̌ǩomu', 'oşǩomu') and marker == 'o':
         root = 'çams'
         marker = ''
-    elif infinitive in ('oç̌k̆omu') and marker in ('i', 'u'):
-        root = marker + 'ç̌k̆omums'
-    elif infinitive in ('oşk̆omu') and marker in ('i', 'u'):
-        root = marker + 'şk̆omums'
-    elif infinitive in ('oç̌k̆omu', 'oşk̆omu'):
+    elif infinitive in ('oç̌ǩomu') and marker in ('i', 'u'):
+        root = marker + 'ç̌ǩomums'
+    elif infinitive in ('oşǩomu') and marker in ('i', 'u'):
+        root = marker + 'şǩomums'
+    elif infinitive in ('oç̌ǩomu', 'oşǩomu'):
         root = 'imxors'
-    elif infinitive == 'geç̌k̆u' and len(root) > 2: #special case for geç̌k̆u
+    elif infinitive == 'geç̌ǩu' and len(root) > 2: #special case for geç̌ǩu
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
                 root = root[:2] + marker + root[3:]  # Replace the third character 'i' or 'o' with 'i' or 'o'
@@ -158,8 +158,8 @@ def get_personal_pronouns(region):
         'S2_Singular': 'si',
         'S3_Singular': 'heyak' if region == "FA" else 'himuk' if region == "PZ" else 'him' if region == "AŞ" else '(h)emuk',
         'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else '(h)emus',
-        'S1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çki',
-        'S2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
+        'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çki',
+        'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
         'S3_Plural': 'hentepek' if region == "FA" else 'hinik' if region == "PZ" else 'hini' if region == "AŞ" else 'entepe',
         'O3_Plural': 'hentepes',
         'O1_Singular': 'ma',
@@ -238,7 +238,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            preverb_exceptions = {'gonʒ̆k̆u'}  # Ensure this set is defined appropriately, add additionally to 256
+            preverb_exceptions = {'gonǯǩu'}  # Ensure this set is defined appropriately, add additionally to 256
 
             # Check if the infinitive is NOT in the exception list before extracting preverbs
             if infinitive not in preverb_exceptions:
@@ -259,7 +259,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
 
                 
             # Remove the preverb from the third-person form if it exists
-            if preverb and root.startswith(preverb) and infinitive != 'gonʒ̆k̆u':
+            if preverb and root.startswith(preverb) and infinitive != 'gonǯǩu':
                 root = root[len(preverb):]
 
 
@@ -272,8 +272,8 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
             elif causative:
                 marker = determine_marker(subject, obj, 'causative')
                 marker_type = 'causative'
-            elif infinitive == 'oxoʒ̆onu' and (subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural']):
-                marker = 'o'  # Default to 'o' for oxoʒ̆onu if neither applicative nor causative
+            elif infinitive == 'oxoǯonu' and (subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural']):
+                marker = 'o'  # Default to 'o' for oxoǯonu if neither applicative nor causative
 
             if infinitive in ('oxenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
                 root = 'xenums'
@@ -291,7 +291,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
 
             handled_gontzku = False
 
-            if infinitive == 'gonʒ̆k̆u' and (obj in ('O3_Singular', 'O3_Plural') or obj is None) and not marker:
+            if infinitive == 'gonǯǩu' and (obj in ('O3_Singular', 'O3_Plural') or obj is None) and not marker:
                 preverb = ''  # Clear the preverb for special case
                 if subject in ('S1_Singular', 'S1_Plural'):
                     prefix = 'bgo'
@@ -303,7 +303,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
 
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                     preverb = 'ey' if region == 'PZ' else 'y'
-                if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive != 'geç̌k̆u' and preverb != 'me':
+                if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive != 'geç̌ǩu' and preverb != 'me':
                     preverb = preverb[:-1]
                 # Special handling for "me"
                 # Special handling for "me"
@@ -352,8 +352,8 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                     else:
                         prefix = 'do'
 
-                # Special handling for "geç̌k̆u"
-                elif preverb == 'ge' and main_infinitive in ['geç̌k̆u', 'gebažgu']:
+                # Special handling for "geç̌ǩu"
+                elif preverb == 'ge' and main_infinitive in ['geç̌ǩu', 'gebažgu']:
                     if marker:
                         root = root[2:]
                     else:
@@ -421,8 +421,8 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                     else:
                         prefix = 'oxo'
                         
-                # special handling for "ok̆o" 
-                elif preverb == 'ok̆o':
+                # special handling for "oǩo" 
+                elif preverb == 'oǩo':
                     if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')):
                             preverb = preverb[:-1]
                     if marker:
@@ -435,17 +435,17 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                             root = marker + root
                         first_letter = get_first_letter(root)
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                        prefix = 'ok̆o' + adjusted_prefix
+                        prefix = 'oǩo' + adjusted_prefix
                     elif subject in ['S1_Singular', 'S1_Plural']:
                         if marker_type != 'causative' and marker_type != 'applicative':
                             root = marker + root
                         first_letter = get_first_letter(root)
                         adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                        prefix = 'ok̆o' + adjusted_prefix
+                        prefix = 'oǩo' + adjusted_prefix
                     elif obj in ['O1_Singular', 'O1_Plural']:
                         if marker_type != 'causative':
                             root = 'o' + root
-                        prefix = 'ok̆om'
+                        prefix = 'oǩom'
                     elif marker_type in ('causative', 'applicative'):
                         prefix = preverb
                     else:
@@ -484,7 +484,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                         
                         if root == 'oroms':
                             if obj in ('O2_Singular', 'O2_Plural'):
-                                prefix = 'k̆'
+                                prefix = 'ǩ'
                             elif subject in ('S1_Singular', 'S1_Plural') and obj in ('O3_Singular', 'O3_Plural'):
                                 prefix = 'p̌'
                             elif subject in ('S1_Singular', 'S1_Plural'):
@@ -511,8 +511,8 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
 
 
             
-            # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/ok̆o preverbs, we could check here: if preverb ends with "o") root[:-1
-            # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/ok̆o preverbs, we could check here: if preverb ends with "o") root[:-1 
+            # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/oǩo preverbs, we could check here: if preverb ends with "o") root[:-1
+            # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/oǩo preverbs, we could check here: if preverb ends with "o") root[:-1 
             if applicative and causative:
                 if infinitive in (('oşu', 'dodvu', 'otku')):
                     root = root[:-3] + ('vapap' if region == "HO" else 'vapam')            
@@ -538,7 +538,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                 elif root.endswith('y'):
                     root = root[:-2] + 'ams'
             elif causative:
-                if root == ('çams'): #changed root for oç̌k̆omu/oşk̆omu
+                if root == ('çams'): #changed root for oç̌ǩomu/oşǩomu
                     root = root
                 elif infinitive in (('oşu', 'dodvu', 'otku')):
                     root = root[:-3] + ('vapap' if region == "HO" else 'vapam')  
@@ -630,8 +630,8 @@ personal_pronouns_general = {
     'O1_Singular': 'ma',
     'O2_Singular': 'si',
     'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else '(h)emus',
-    'O1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
-    'O2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
+    'O1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
+    'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
     'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == "PZ" else 'hini' if region == "AŞ" else 'entepes'
 }
 

@@ -39,7 +39,7 @@ def process_compound_verb(verb):
 
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'ok̆o', 'gama', 'mo', 'ye'): {
+    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye'): {
         'S1_Singular': 'v',
         'S2_Singular': '',
         'S3_Singular': '',
@@ -55,7 +55,7 @@ def get_phonetic_rules(region):
         phonetic_rules_v = {
             'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
             'b': ['a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-            'p̌': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆'],
+            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
             'm': ['n']
         }
     else:
@@ -63,7 +63,7 @@ def get_phonetic_rules(region):
             'v': ['a', 'e', 'i', 'o', 'u'],
             'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
             'b': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-            'p̌': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆'],
+            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
             'm': ['n']
         }
 
@@ -71,7 +71,7 @@ def get_phonetic_rules(region):
         'g': ['a', 'e', 'i', 'o', 'u'],
         'k': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
         'g': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-        'k̆': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆']
+        'ǩ': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆']
     }
 
     return phonetic_rules_v, phonetic_rules_g
@@ -85,9 +85,9 @@ def adjust_prefix(prefix, first_letter, phonetic_rules):
 
 # Function to handle special letters
 def get_first_letter(root):
-    if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'k̆', 'p̌', 'ʒ̆']:
+    if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'ǩ', 'p̌', 'ǯ']:
         return root[:2]
-    elif root.startswith('gyoç̌k̆ams'):   # to skip the "gy" part.
+    elif root.startswith('gyoç̌ǩams'):   # to skip the "gy" part.
         return root[2:]
     return root[0]
 
@@ -97,8 +97,8 @@ def get_personal_pronouns(region):
         'S2_Singular': 'si',
         'S3_Singular': 'heyas' if region == "FA" else 'himus' if region in ('AŞ', 'PZ') else '(h)emus',
         'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
-        'S1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çki',
-        'S2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
+        'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çki',
+        'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
         'S3_Plural': 'hentepes' if region == "FA" else 'hini' if region in ('AŞ') else 'hinis' if region == 'PZ' else 'entepes',
         'O3_Plural': 'hentepe',
         'O1_Singular': 'ma',
@@ -200,10 +200,10 @@ def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicati
             if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
             if preverb.endswith(('a', 'e', 'i', 'o', 'u')) and subject_markers[subject].startswith(('a', 'e', 'i', 'o', 'u')):
-                if infinitive in ('geç̌k̆u', 'gebažgu'):  # Add 'y' only for 'geç̌k̆u'
+                if infinitive in ('geç̌ǩu', 'gebažgu'):  # Add 'y' only for 'geç̌ǩu'
                     preverb = preverb[:-1] + 'y'
                 else:
-                    preverb = preverb # changed for gonʒ̆k̆u
+                    preverb = preverb # changed for gonǯǩu
 
             if preverb == "me" and subject_markers[subject].startswith(('a', 'e', 'i', 'o', 'u')):
                 preverb = "n"
@@ -264,8 +264,8 @@ personal_pronouns_general = {
     'O1_Singular': 'ma',
     'O2_Singular': 'si',
     'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
-    'O1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
-    'O2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
+    'O1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
+    'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
     'O3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe'
 }
 
