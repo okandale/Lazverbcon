@@ -152,8 +152,8 @@ def get_personal_pronouns(region):
     return {
         'S1_Singular': 'ma',
         'S2_Singular': 'si',
-        'S3_Singular': 'heyak' if region == "FA" else 'himuk' if region == "PZ" else 'him' if region == "AŞ" else 'emuk/hemuk',
-        'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else 'emus/hemus',
+        'S3_Singular': 'heyak' if region == "FA" else 'himuk' if region == "PZ" else 'him' if region == "AŞ" else '(h)emuk',
+        'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else '(h)emus',
         'S1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
         'S2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
         'S3_Plural': 'hentepek' if region == "FA" else 'hinik' if region == "PZ" else 'hini' if region == "AŞ" else 'entepek',
@@ -675,7 +675,7 @@ def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicati
 personal_pronouns_general = {
     'O1_Singular': 'ma',
     'O2_Singular': 'si',
-    'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else 'emus/hemus',
+    'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else '(h)emus',
     'O1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
     'O2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
     'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == "PZ" else 'hini' if region == "AŞ" else 'entepes'

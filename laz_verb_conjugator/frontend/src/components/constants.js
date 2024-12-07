@@ -14,13 +14,13 @@ export const regionNames = {
 
 export const subjectOrder = [
   'ma', 'si', 'him', 'himuk', 'himus', 'heya', 'heyas', 'heyak',
-  'em/hem', 'emus/hemus', 'emuk/hemuk', 'şk̆u', 'çki', 'çku', 'çkin', 't̆k̆va', 'tkvan',
+  '(h)em', '(h)emus', '(h)emuk', 'şk̆u', 'çki', 'çku', 'çkin', 't̆k̆va', 'tkvan',
   'hini', 'hinik', 'hinis', 'tkva', 'hentepe', 'hentepes', 'hentepek',
   'entepe', 'entepes', 'entepek',
 ];
 
 export const objectOrder = [
-  'ma', 'si', 'him', 'himus', 'heya', 'heyas', 'em/hem', 'emus/hemus', 'şk̆u', 'çki', 'çku', 'çkin',
+  'ma', 'si', 'him', 'himus', 'heya', 'heyas', '(h)em', '(h)emus', 'şk̆u', 'çki', 'çku', 'çkin',
   't̆k̆va', 'tkva', 'tkvan', 'hini', 'hinis', 'hentepe', 'hentepes', 'entepe', 'entepes'
 ];
 

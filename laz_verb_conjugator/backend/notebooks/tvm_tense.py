@@ -129,8 +129,8 @@ def get_personal_pronouns(region):
     return {
         'S1_Singular': 'ma',
         'S2_Singular': 'si',
-        'S3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'em/hem',
-        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'em/hem',
+        'S3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
+        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
         'S1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çki',
         'S2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
         'S3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe',
@@ -168,7 +168,7 @@ def get_suffixes(tense, region):
             'S3_Singular': 'u',
             'S1_Plural': 'it',
             'S2_Plural': 'it',
-            'S3_Plural': 'es'
+            'S3_Plural': 'ey' if region == "AŞ" else 'es'
         }
     elif tense == 'past progressive':
         suffixes = {
@@ -618,7 +618,7 @@ def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicati
 personal_pronouns_general = {
     'O1_Singular': 'ma',
     'O2_Singular': 'si',
-    'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'em/hem',
+    'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
     'O1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
     'O2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
     'O3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe'

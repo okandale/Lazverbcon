@@ -96,8 +96,8 @@ def get_personal_pronouns(region):
     return {
         'S1_Singular': 'ma',
         'S2_Singular': 'si',
-        'S3_Singular': 'heyas' if region == "FA" else 'himus' if region in ('AŞ', 'PZ') else 'emus/hemus',
-        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'em/hem',
+        'S3_Singular': 'heyas' if region == "FA" else 'himus' if region in ('AŞ', 'PZ') else '(h)emus',
+        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
         'S1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
         'S2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
         'S3_Plural': 'hentepes' if region == "FA" else 'hinis' if region in ('AŞ', 'PZ') else 'entepes',
@@ -265,6 +265,8 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
                 else:
                     preverb = 'gam' if subject in ('S3_Singular', 'S3_Plural') else 'gama'
                 prefix = preverb + subject_markers[subject]
+            elif preverb == 'do' and subject_markers[subject].startswith(('a','e','i','o','u')):
+                prefix = "dv" + subject_markers[subject] if region in ('HO', 'PZ', 'AŞ') else "d" + subject_markers[subject]
             elif preverb == 'go' and subject_markers[subject].startswith(('a','e','i','o','u')):
                 prefix = "gv" + subject_markers[subject] if region in ('HO', 'PZ', 'AŞ') else "g" + subject_markers[subject]
             elif preverb == 'e' and subject in ('S3_Singular', 'S3_Plural'):
@@ -333,7 +335,7 @@ def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicati
 personal_pronouns_general = {
     'O1_Singular': 'ma',
     'O2_Singular': 'si',
-    'O3_Singular': 'heyas' if region == "FA" else 'himus' if region in ('AŞ', 'PZ') else 'emus/hemus',
+    'O3_Singular': 'heyas' if region == "FA" else 'himus' if region in ('AŞ', 'PZ') else '(h)emus',
     'O1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
     'O2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
     'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region in ('AŞ', 'PZ') else 'entepes'
