@@ -1,0 +1,1313 @@
+[
+    {
+        "request": {
+            "infinitive": "ot̆axu",
+            "subject": "all",
+            "tense": "present",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "FA": [
+                "ma : p̌t̆axum",
+                "si : t̆axum",
+                "heyak : t̆axums",
+                "çku : p̌t̆axumt",
+                "tkva : t̆axumt",
+                "hentepek : t̆axuman"
+            ],
+            "AŞ": [
+                "ma : p̌t̆axum",
+                "si : t̆axum",
+                "him : t̆axuy",
+                "şk̆u : p̌t̆axumt",
+                "t̆k̆va : t̆axumt",
+                "hini : t̆axuman"
+            ],
+            "PZ": [
+                "ma : p̌t̆axum",
+                "si : t̆axum",
+                "himuk : t̆axums",
+                "şk̆u : p̌t̆axumt",
+                "t̆k̆va : t̆axumt",
+                "hinik : t̆axuman"
+            ],
+            "HO": [
+                "ma : p̌t̆axup",
+                "si : t̆axup",
+                "(h)emuk : t̆axups",
+                "çkin : p̌t̆axupt",
+                "tkvan : t̆axupt",
+                "entepek : t̆axupan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "gonʒ̆k̆u",
+            "subject": "all",
+            "tense": "present",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "HO": [
+                "ma : bgonʒ̆k̆ip",
+                "si : gonʒ̆k̆ip",
+                "(h)emuk : gonʒ̆k̆ips",
+                "çkin : bgonʒ̆k̆ipt",
+                "tkvan : gonʒ̆k̆ipt",
+                "entepek : gonʒ̆k̆ipan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "gonʒ̆k̆u",
+            "subject": "all",
+            "obj": "all",
+            "tense": "present",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "HO": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: gonk̆ʒ̆k̆ip",
+                "ma (h)emus: bgonʒ̆k̆ip",
+                "ma çkin: N/A - Geçersiz Kombinasyon",
+                "ma tkvan: gonk̆ʒ̆k̆ipt",
+                "ma entepes: bgonʒ̆k̆ip",
+                "si ma: gomʒ̆k̆ip",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si (h)emus: gonʒ̆k̆ip",
+                "si çkin: gomʒ̆k̆ipt",
+                "si tkvan: N/A - Geçersiz Kombinasyon",
+                "si entepes: gonʒ̆k̆ip",
+                "(h)emuk ma: gomʒ̆k̆ips",
+                "(h)emuk si: gonk̆ʒ̆k̆ips",
+                "(h)emuk (h)emus: gonʒ̆k̆ips",
+                "(h)emuk çkin: gomʒ̆k̆ipan",
+                "(h)emuk tkvan: gonk̆ʒ̆k̆ipan",
+                "(h)emuk entepes: gonʒ̆k̆ips",
+                "çkin ma: N/A - Geçersiz Kombinasyon",
+                "çkin si: gonk̆ʒ̆k̆ipt",
+                "çkin (h)emus: bgonʒ̆k̆ipt",
+                "çkin çkin: N/A - Geçersiz Kombinasyon",
+                "çkin tkvan: gonk̆ʒ̆k̆ipt",
+                "çkin entepes: bgonʒ̆k̆ipt",
+                "tkvan ma: gomʒ̆k̆ipt",
+                "tkvan si: N/A - Geçersiz Kombinasyon",
+                "tkvan (h)emus: gonʒ̆k̆ipt",
+                "tkvan çkin: gomʒ̆k̆ipt",
+                "tkvan tkvan: N/A - Geçersiz Kombinasyon",
+                "tkvan entepes: gonʒ̆k̆ipt",
+                "entepek ma: gomʒ̆k̆ipan",
+                "entepek si: gonk̆ʒ̆k̆ipan",
+                "entepek (h)emus: gonʒ̆k̆ipan",
+                "entepek çkin: gomʒ̆k̆ipan",
+                "entepek tkvan: gonk̆ʒ̆k̆ipan",
+                "entepek entepes: gonʒ̆k̆ipan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "gonʒ̆k̆u",
+            "subject": "all",
+            "obj": "all",
+            "tense": "present",
+            "applicative": "true",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "HO": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: goginʒ̆k̆ip",
+                "ma (h)emus: govunʒ̆k̆ip",
+                "ma çkin: N/A - Geçersiz Kombinasyon",
+                "ma tkvan: goginʒ̆k̆ipt",
+                "ma entepes: govunʒ̆k̆ip",
+                "si ma: gominʒ̆k̆ip",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si (h)emus: gunʒ̆k̆ip",
+                "si çkin: gominʒ̆k̆ipt",
+                "si tkvan: N/A - Geçersiz Kombinasyon",
+                "si entepes: gunʒ̆k̆ip",
+                "(h)emuk ma: gominʒ̆k̆ips",
+                "(h)emuk si: goginʒ̆k̆ips",
+                "(h)emuk (h)emus: gunʒ̆k̆ips",
+                "(h)emuk çkin: gominʒ̆k̆ipan",
+                "(h)emuk tkvan: goginʒ̆k̆ipan",
+                "(h)emuk entepes: gunʒ̆k̆ips",
+                "çkin ma: N/A - Geçersiz Kombinasyon",
+                "çkin si: goginʒ̆k̆ipt",
+                "çkin (h)emus: govunʒ̆k̆ipt",
+                "çkin çkin: N/A - Geçersiz Kombinasyon",
+                "çkin tkvan: goginʒ̆k̆ipt",
+                "çkin entepes: govunʒ̆k̆ipt",
+                "tkvan ma: gominʒ̆k̆ipt",
+                "tkvan si: N/A - Geçersiz Kombinasyon",
+                "tkvan (h)emus: gunʒ̆k̆ipt",
+                "tkvan çkin: gominʒ̆k̆ipt",
+                "tkvan tkvan: N/A - Geçersiz Kombinasyon",
+                "tkvan entepes: gunʒ̆k̆ipt",
+                "entepek ma: gominʒ̆k̆ipan",
+                "entepek si: goginʒ̆k̆ipan",
+                "entepek (h)emus: gunʒ̆k̆ipan",
+                "entepek çkin: gominʒ̆k̆ipan",
+                "entepek tkvan: goginʒ̆k̆ipan",
+                "entepek entepes: gunʒ̆k̆ipan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "gonʒ̆k̆u",
+            "subject": "all",
+            "obj": "all",
+            "tense": "present",
+            "applicative": "true",
+            "causative": "true",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "HO": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: goginʒ̆k̆apap",
+                "ma (h)emus: govunʒ̆k̆apap",
+                "ma çkin: N/A - Geçersiz Kombinasyon",
+                "ma tkvan: goginʒ̆k̆apapt",
+                "ma entepes: govunʒ̆k̆apap",
+                "si ma: gominʒ̆k̆apap",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si (h)emus: gunʒ̆k̆apap",
+                "si çkin: gominʒ̆k̆apapt",
+                "si tkvan: N/A - Geçersiz Kombinasyon",
+                "si entepes: gunʒ̆k̆apap",
+                "(h)emuk ma: gominʒ̆k̆apaps",
+                "(h)emuk si: goginʒ̆k̆apaps",
+                "(h)emuk (h)emus: gunʒ̆k̆apaps",
+                "(h)emuk çkin: gominʒ̆k̆apapan",
+                "(h)emuk tkvan: goginʒ̆k̆apapan",
+                "(h)emuk entepes: gunʒ̆k̆apaps",
+                "çkin ma: N/A - Geçersiz Kombinasyon",
+                "çkin si: goginʒ̆k̆apapt",
+                "çkin (h)emus: govunʒ̆k̆apapt",
+                "çkin çkin: N/A - Geçersiz Kombinasyon",
+                "çkin tkvan: goginʒ̆k̆apapt",
+                "çkin entepes: govunʒ̆k̆apapt",
+                "tkvan ma: gominʒ̆k̆apapt",
+                "tkvan si: N/A - Geçersiz Kombinasyon",
+                "tkvan (h)emus: gunʒ̆k̆apapt",
+                "tkvan çkin: gominʒ̆k̆apapt",
+                "tkvan tkvan: N/A - Geçersiz Kombinasyon",
+                "tkvan entepes: gunʒ̆k̆apapt",
+                "entepek ma: gominʒ̆k̆apapan",
+                "entepek si: goginʒ̆k̆apapan",
+                "entepek (h)emus: gunʒ̆k̆apapan",
+                "entepek çkin: gominʒ̆k̆apapan",
+                "entepek tkvan: goginʒ̆k̆apapan",
+                "entepek entepes: gunʒ̆k̆apapan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "gonʒ̆k̆u",
+            "subject": "all",
+            "obj": "all",
+            "tense": "present",
+            "applicative": "true",
+            "causative": "true",
+            "optative": "true",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "HO": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: goginʒ̆k̆apa",
+                "ma (h)emus: govunʒ̆k̆apa",
+                "ma çkin: N/A - Geçersiz Kombinasyon",
+                "ma tkvan: goginʒ̆k̆apa",
+                "ma entepes: govunʒ̆k̆apa",
+                "si ma: gominʒ̆k̆apa",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si (h)emus: gunʒ̆k̆apa",
+                "si çkin: gominʒ̆k̆apa",
+                "si tkvan: N/A - Geçersiz Kombinasyon",
+                "si entepes: gunʒ̆k̆apa",
+                "(h)emuk ma: gominʒ̆k̆apas",
+                "(h)emuk si: goginʒ̆k̆apas",
+                "(h)emuk (h)emus: gunʒ̆k̆apas",
+                "(h)emuk çkin: gominʒ̆k̆apan",
+                "(h)emuk tkvan: goginʒ̆k̆apan",
+                "(h)emuk entepes: gunʒ̆k̆apas",
+                "çkin ma: N/A - Geçersiz Kombinasyon",
+                "çkin si: goginʒ̆k̆apat",
+                "çkin (h)emus: govunʒ̆k̆apat",
+                "çkin çkin: N/A - Geçersiz Kombinasyon",
+                "çkin tkvan: goginʒ̆k̆apat",
+                "çkin entepes: govunʒ̆k̆apat",
+                "tkvan ma: gominʒ̆k̆apat",
+                "tkvan si: N/A - Geçersiz Kombinasyon",
+                "tkvan (h)emus: gunʒ̆k̆apat",
+                "tkvan çkin: gominʒ̆k̆apat",
+                "tkvan tkvan: N/A - Geçersiz Kombinasyon",
+                "tkvan entepes: gunʒ̆k̆apat",
+                "entepek ma: gominʒ̆k̆apan",
+                "entepek si: goginʒ̆k̆apan",
+                "entepek (h)emus: gunʒ̆k̆apan",
+                "entepek çkin: gominʒ̆k̆apan",
+                "entepek tkvan: goginʒ̆k̆apan",
+                "entepek entepes: gunʒ̆k̆apan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "gonʒ̆k̆u",
+            "subject": "all",
+            "obj": "all",
+            "tense": "present",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "true",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "HO": [
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si entepes: gonʒ̆k̆i",
+                "si çkin: gomʒ̆k̆it",
+                "si ma: gomʒ̆k̆i",
+                "si (h)emus: gonʒ̆k̆i",
+                "si tkvan: N/A - Geçersiz Kombinasyon",
+                "tkvan (h)emus: gonʒ̆k̆it",
+                "tkvan si: N/A - Geçersiz Kombinasyon",
+                "tkvan ma: gomʒ̆k̆it",
+                "tkvan çkin: gomʒ̆k̆it",
+                "tkvan entepes: gonʒ̆k̆it",
+                "tkvan tkvan: N/A - Geçersiz Kombinasyon"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "gonʒ̆k̆u",
+            "subject": "all",
+            "obj": "all",
+            "tense": "present",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "true"
+        },
+        "response": {
+            "HO": [
+                "si çkin: mo gomʒ̆k̆ipt",
+                "si si: mo N/A - Geçersiz Kombinasyon",
+                "si ma: mo gomʒ̆k̆ip",
+                "si (h)emus: mo gonʒ̆k̆ip",
+                "si entepes: mo gonʒ̆k̆ip",
+                "si tkvan: mo N/A - Geçersiz Kombinasyon",
+                "tkvan si: mo N/A - Geçersiz Kombinasyon",
+                "tkvan çkin: mo gomʒ̆k̆ipt",
+                "tkvan entepes: mo gonʒ̆k̆ipt",
+                "tkvan (h)emus: mo gonʒ̆k̆ipt",
+                "tkvan tkvan: mo N/A - Geçersiz Kombinasyon",
+                "tkvan ma: mo gomʒ̆k̆ipt"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "gonʒ̆k̆u",
+            "subject": "all",
+            "obj": "all",
+            "tense": "present",
+            "applicative": "true",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "true"
+        },
+        "response": {
+            "HO": [
+                "si ma: mo gominʒ̆k̆ip",
+                "si si: mo N/A - Geçersiz Kombinasyon",
+                "si çkin: mo gominʒ̆k̆ipt",
+                "si (h)emus: mo gunʒ̆k̆ip",
+                "si entepes: mo gunʒ̆k̆ip",
+                "si tkvan: mo N/A - Geçersiz Kombinasyon",
+                "tkvan entepes: mo gunʒ̆k̆ipt",
+                "tkvan si: mo N/A - Geçersiz Kombinasyon",
+                "tkvan ma: mo gominʒ̆k̆ipt",
+                "tkvan (h)emus: mo gunʒ̆k̆ipt",
+                "tkvan çkin: mo gominʒ̆k̆ipt",
+                "tkvan tkvan: mo N/A - Geçersiz Kombinasyon"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "gonʒ̆k̆u",
+            "subject": "all",
+            "tense": "present",
+            "aspect": "potential",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "HO": [
+                "ma : gomanʒ̆k̆en",
+                "si : goganʒ̆k̆en",
+                "(h)emus : gvanʒ̆k̆en",
+                "çkin : gomanʒ̆k̆enan",
+                "tkvan : goganʒ̆k̆enan",
+                "entepes : gvanʒ̆k̆enan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "gonʒ̆k̆u",
+            "subject": "all",
+            "tense": "present",
+            "aspect": "potential",
+            "applicative": "false",
+            "causative": "true",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "HO": [
+                "ma : gomanʒ̆k̆en",
+                "si : goganʒ̆k̆en",
+                "(h)emus : gvanʒ̆k̆en",
+                "çkin : gomanʒ̆k̆enan",
+                "tkvan : goganʒ̆k̆enan",
+                "entepes : gvanʒ̆k̆enan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "ot̆axu",
+            "subject": "all",
+            "tense": "present",
+            "aspect": "potential",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "FA": [
+                "ma : mat̆axen",
+                "si : gat̆axen",
+                "heyas : at̆axen",
+                "çku : mat̆axenan",
+                "tkva : gat̆axenan",
+                "hentepes : at̆axenan"
+            ],
+            "AŞ": [
+                "ma : mat̆axen",
+                "si : gat̆axen",
+                "himus : at̆axen",
+                "şk̆u : mat̆axenan",
+                "t̆k̆va : gat̆axenan",
+                "hinis : at̆axenan"
+            ],
+            "PZ": [
+                "ma : mat̆axen",
+                "si : gat̆axen",
+                "himus : at̆axen",
+                "şk̆u : mat̆axenan",
+                "t̆k̆va : gat̆axenan",
+                "hinis : at̆axenan"
+            ],
+            "HO": [
+                "ma : mat̆axen",
+                "si : gat̆axen",
+                "(h)emus : at̆axen",
+                "çkin : mat̆axenan",
+                "tkvan : gat̆axenan",
+                "entepes : at̆axenan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "ot̆axu",
+            "subject": "all",
+            "tense": "present",
+            "aspect": "passive",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "FA": [
+                "ma : bit̆axer",
+                "si : it̆axer",
+                "heya : it̆axen",
+                "çku : bit̆axert",
+                "tkva : it̆axert",
+                "hentepe : it̆axenan"
+            ],
+            "AŞ": [
+                "ma : vit̆axer",
+                "si : it̆axer",
+                "him : it̆axen",
+                "şk̆u : vit̆axert",
+                "t̆k̆va : it̆axert",
+                "hini : it̆axenan"
+            ],
+            "PZ": [
+                "ma : vit̆axer",
+                "si : it̆axer",
+                "him : it̆axen",
+                "şk̆u : vit̆axert",
+                "t̆k̆va : it̆axert",
+                "hini : it̆axenan"
+            ],
+            "HO": [
+                "ma : vit̆axer",
+                "si : it̆axer",
+                "(h)em : it̆axen",
+                "çkin : vit̆axert",
+                "tkvan : it̆axert",
+                "entepe : it̆axenan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "ot̆axu",
+            "subject": "all",
+            "tense": "past",
+            "aspect": "passive",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "FA": [
+                "ma : bit̆axi",
+                "si : it̆axi",
+                "heya : it̆axu",
+                "çku : bit̆axit",
+                "tkva : it̆axit",
+                "hentepe : it̆axes"
+            ],
+            "AŞ": [
+                "ma : vit̆axi",
+                "si : it̆axi",
+                "him : it̆axu",
+                "şk̆u : vit̆axit",
+                "t̆k̆va : it̆axit",
+                "hini : it̆axey"
+            ],
+            "PZ": [
+                "ma : vit̆axi",
+                "si : it̆axi",
+                "him : it̆axu",
+                "şk̆u : vit̆axit",
+                "t̆k̆va : it̆axit",
+                "hini : it̆axes"
+            ],
+            "HO": [
+                "ma : vit̆axi",
+                "si : it̆axi",
+                "(h)em : it̆axu",
+                "çkin : vit̆axit",
+                "tkvan : it̆axit",
+                "entepe : it̆axes"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "ot̆axu",
+            "subject": "all",
+            "tense": "future",
+            "aspect": "passive",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "FA": [
+                "ma : bit̆axare",
+                "si : it̆axare",
+                "heya : it̆axasen",
+                "çku : bit̆axaten",
+                "tkva : it̆axaten",
+                "hentepe : it̆axanenan"
+            ],
+            "AŞ": [
+                "ma : vit̆axare",
+                "si : it̆axare",
+                "him : it̆axasen",
+                "şk̆u : vit̆axaten",
+                "t̆k̆va : it̆axaten",
+                "hini : it̆axanenan"
+            ],
+            "PZ": [
+                "ma : vit̆axare",
+                "si : it̆axare",
+                "him : it̆axasere",
+                "şk̆u : vit̆axatere",
+                "t̆k̆va : it̆axatere",
+                "hini : it̆axaneran"
+            ],
+            "HO": [
+                "ma : vit̆axaminon",
+                "si : it̆axaginon",
+                "(h)em : it̆axasinon",
+                "çkin : vit̆axaminonan",
+                "tkvan : it̆axaginonan",
+                "entepe : it̆axasinonan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "ot̆axu",
+            "subject": "all",
+            "tense": "pastpro",
+            "aspect": "passive",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "FA": [
+                "ma : bit̆axert̆i",
+                "si : it̆axert̆i",
+                "heya : it̆axert̆u",
+                "çku : bit̆axert̆it",
+                "tkva : it̆axert̆it",
+                "hentepe : it̆axert̆es"
+            ],
+            "AŞ": [
+                "ma : vit̆axert̆i",
+                "si : it̆axert̆i",
+                "him : it̆axert̆u",
+                "şk̆u : vit̆axert̆it",
+                "t̆k̆va : it̆axert̆it",
+                "hini : it̆axert̆es"
+            ],
+            "PZ": [
+                "ma : vit̆axert̆i",
+                "si : it̆axert̆i",
+                "him : it̆axert̆u",
+                "şk̆u : vit̆axert̆it",
+                "t̆k̆va : it̆axert̆it",
+                "hini : it̆axert̆es"
+            ],
+            "HO": [
+                "ma : vit̆axert̆i",
+                "si : it̆axert̆i",
+                "(h)em : it̆axert̆u",
+                "çkin : vit̆axert̆it",
+                "tkvan : it̆axert̆it",
+                "entepe : it̆axert̆es"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "ot̆axu",
+            "subject": "all",
+            "tense": "present",
+            "aspect": "passive",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "FA": [
+                "ma : bit̆axer",
+                "si : it̆axer",
+                "heya : it̆axen",
+                "çku : bit̆axert",
+                "tkva : it̆axert",
+                "hentepe : it̆axenan"
+            ],
+            "AŞ": [
+                "ma : vit̆axer",
+                "si : it̆axer",
+                "him : it̆axen",
+                "şk̆u : vit̆axert",
+                "t̆k̆va : it̆axert",
+                "hini : it̆axenan"
+            ],
+            "PZ": [
+                "ma : vit̆axer",
+                "si : it̆axer",
+                "him : it̆axen",
+                "şk̆u : vit̆axert",
+                "t̆k̆va : it̆axert",
+                "hini : it̆axenan"
+            ],
+            "HO": [
+                "ma : vit̆axer",
+                "si : it̆axer",
+                "(h)em : it̆axen",
+                "çkin : vit̆axert",
+                "tkvan : it̆axert",
+                "entepe : it̆axenan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "geç̌k̆u",
+            "subject": "all",
+            "tense": "present",
+            "aspect": "passive",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "FA": [
+                "ma : gebiç̌k̆er",
+                "si : giç̌k̆er",
+                "heya : giç̌k̆en",
+                "çku : gebiç̌k̆ert",
+                "tkva : giç̌k̆ert",
+                "hentepe : giç̌k̆enan"
+            ],
+            "HO": [
+                "ma : geviç̌k̆er",
+                "si : giç̌k̆er",
+                "(h)em : giç̌k̆en",
+                "çkin : geviç̌k̆ert",
+                "tkvan : giç̌k̆ert",
+                "entepe : giç̌k̆enan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "mebazgu",
+            "subject": "all",
+            "obj": "O2_Singular",
+            "tense": "present",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "AŞ": [
+                "ma si: megibazgam",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "him si: megibazgay",
+                "şk̆u si: megibazgamt",
+                "t̆k̆va si: N/A - Geçersiz Kombinasyon",
+                "hini si: megibazgaman"
+            ],
+            "HO": [
+                "ma si: megžgup",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "(h)emuk si: megžgups",
+                "çkin si: megžgupt",
+                "tkvan si: N/A - Geçersiz Kombinasyon",
+                "entepek si: megžgupan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "Mebazgu",
+            "subject": "all",
+            "tense": "present",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "AŞ": [
+                "ma : mevobazgam",
+                "si : nobazgam",
+                "him : nobazgay",
+                "şk̆u : mevobazgamt",
+                "t̆k̆va : nobazgamt",
+                "hini : nobazgaman"
+            ],
+            "HO": [
+                "ma : mebžgup",
+                "si : mežgup",
+                "(h)emuk : mežgups",
+                "çkin : mebžgupt",
+                "tkvan : mežgupt",
+                "entepek : mežgupan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "Mebazgu",
+            "subject": "all",
+            "obj": "all",
+            "tense": "present",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "AŞ": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: megibazgam",
+                "ma him: mevobazgam",
+                "ma şk̆u: N/A - Geçersiz Kombinasyon",
+                "ma t̆k̆va: megibazgamt",
+                "ma hini: mevobazgam",
+                "si ma: momibazgam",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si him: nobazgam",
+                "si şk̆u: momibazgamt",
+                "si t̆k̆va: N/A - Geçersiz Kombinasyon",
+                "si hini: nobazgam",
+                "him ma: momibazgay",
+                "him si: megibazgay",
+                "him him: nobazgay",
+                "him şk̆u: momibazgaman",
+                "him t̆k̆va: megibazgaman",
+                "him hini: nobazgaman",
+                "şk̆u ma: N/A - Geçersiz Kombinasyon",
+                "şk̆u si: megibazgamt",
+                "şk̆u him: mevobazgamt",
+                "şk̆u şk̆u: N/A - Geçersiz Kombinasyon",
+                "şk̆u t̆k̆va: megibazgamt",
+                "şk̆u hini: mevobazgamt",
+                "t̆k̆va ma: momibazgamt",
+                "t̆k̆va si: N/A - Geçersiz Kombinasyon",
+                "t̆k̆va him: nobazgamt",
+                "t̆k̆va şk̆u: momibazgamt",
+                "t̆k̆va t̆k̆va: N/A - Geçersiz Kombinasyon",
+                "t̆k̆va hini: nobazgamt",
+                "hini ma: momibazgaman",
+                "hini si: megibazgaman",
+                "hini him: nobazgaman",
+                "hini şk̆u: momibazgaman",
+                "hini t̆k̆va: megibazgaman",
+                "hini hini: nobazgaman"
+            ],
+            "HO": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: megžgup",
+                "ma (h)emus: mebžgup",
+                "ma çkin: N/A - Geçersiz Kombinasyon",
+                "ma tkvan: megžgupt",
+                "ma entepes: mebžgup",
+                "si ma: momžgup",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si (h)emus: mežgup",
+                "si çkin: momžgupt",
+                "si tkvan: N/A - Geçersiz Kombinasyon",
+                "si entepes: mežgup",
+                "(h)emuk ma: momžgups",
+                "(h)emuk si: megžgups",
+                "(h)emuk (h)emus: mežgups",
+                "(h)emuk çkin: momžgupan",
+                "(h)emuk tkvan: megžgupan",
+                "(h)emuk entepes: mežgups",
+                "çkin ma: N/A - Geçersiz Kombinasyon",
+                "çkin si: megžgupt",
+                "çkin (h)emus: mebžgupt",
+                "çkin çkin: N/A - Geçersiz Kombinasyon",
+                "çkin tkvan: megžgupt",
+                "çkin entepes: mebžgupt",
+                "tkvan ma: momžgupt",
+                "tkvan si: N/A - Geçersiz Kombinasyon",
+                "tkvan (h)emus: mežgupt",
+                "tkvan çkin: momžgupt",
+                "tkvan tkvan: N/A - Geçersiz Kombinasyon",
+                "tkvan entepes: mežgupt",
+                "entepek ma: momžgupan",
+                "entepek si: megžgupan",
+                "entepek (h)emus: mežgupan",
+                "entepek çkin: momžgupan",
+                "entepek tkvan: megžgupan",
+                "entepek entepes: mežgupan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "Mebazgu",
+            "subject": "all",
+            "obj": "O2_Singular",
+            "tense": "present",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "AŞ": [
+                "ma si: megibazgam",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "him si: megibazgay",
+                "şk̆u si: megibazgamt",
+                "t̆k̆va si: N/A - Geçersiz Kombinasyon",
+                "hini si: megibazgaman"
+            ],
+            "HO": [
+                "ma si: megžgup",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "(h)emuk si: megžgups",
+                "çkin si: megžgupt",
+                "tkvan si: N/A - Geçersiz Kombinasyon",
+                "entepek si: megžgupan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "olimbu",
+            "subject": "all",
+            "obj": "O2_Singular",
+            "tense": "present",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "PZ": [
+                "ma si: malimber",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "himus si: alimber",
+                "şk̆u si: malimbert",
+                "t̆k̆va si: N/A - Geçersiz Kombinasyon",
+                "hinis si: alimber"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "olimbu",
+            "subject": "all",
+            "obj": "all",
+            "tense": "present",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "PZ": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: malimber",
+                "ma him: malimben",
+                "ma çku: N/A - Geçersiz Kombinasyon",
+                "ma tkva: malimbert",
+                "ma hentepe: malimben",
+                "si ma: galimber",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si him: galimben",
+                "si çku: galimbert",
+                "si tkva: N/A - Geçersiz Kombinasyon",
+                "si hentepe: galimben",
+                "himus ma: (go)valimber",
+                "himus si: alimber",
+                "himus him: alimben",
+                "himus çku: (go)valimbert",
+                "himus tkva: alimbert",
+                "himus hentepe: alimbenan",
+                "şk̆u ma: N/A - Geçersiz Kombinasyon",
+                "şk̆u si: malimbert",
+                "şk̆u him: malimbenan",
+                "şk̆u çku: N/A - Geçersiz Kombinasyon",
+                "şk̆u tkva: malimbert",
+                "şk̆u hentepe: malimbenan",
+                "t̆k̆va ma: galimbert",
+                "t̆k̆va si: N/A - Geçersiz Kombinasyon",
+                "t̆k̆va him: galimbenan",
+                "t̆k̆va çku: galimbert",
+                "t̆k̆va tkva: N/A - Geçersiz Kombinasyon",
+                "t̆k̆va hentepe: galimbenan",
+                "hinis ma: (go)valimber",
+                "hinis si: alimber",
+                "hinis him: alimbenan",
+                "hinis çku: (go)valimbenan",
+                "hinis tkva: alimbenan",
+                "hinis hentepe: alimbenan"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "olimbu",
+            "subject": "all",
+            "obj": "all",
+            "tense": "past",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "PZ": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: malimbi",
+                "ma him: malimbu",
+                "ma çku: N/A - Geçersiz Kombinasyon",
+                "ma tkva: malimbit",
+                "ma hentepe: malimbu",
+                "si ma: galimbi",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si him: galimbu",
+                "si çku: galimbit",
+                "si tkva: N/A - Geçersiz Kombinasyon",
+                "si hentepe: galimbu",
+                "himus ma: (go)valimbi",
+                "himus si: alimbi",
+                "himus him: alimbu",
+                "himus çku: (go)valimbit",
+                "himus tkva: alimbit",
+                "himus hentepe: alimbes",
+                "şk̆u ma: N/A - Geçersiz Kombinasyon",
+                "şk̆u si: malimbit",
+                "şk̆u him: malimbes",
+                "şk̆u çku: N/A - Geçersiz Kombinasyon",
+                "şk̆u tkva: malimbit",
+                "şk̆u hentepe: malimbes",
+                "t̆k̆va ma: galimbit",
+                "t̆k̆va si: N/A - Geçersiz Kombinasyon",
+                "t̆k̆va him: galimbes",
+                "t̆k̆va çku: galimbit",
+                "t̆k̆va tkva: N/A - Geçersiz Kombinasyon",
+                "t̆k̆va hentepe: galimbes",
+                "hinis ma: (go)valimbi",
+                "hinis si: alimbi",
+                "hinis him: alimbes",
+                "hinis çku: (go)valimbit",
+                "hinis tkva: alimbit",
+                "hinis hentepe: alimbes"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "oç̌k̆omu",
+            "subject": "all",
+            "obj": "all",
+            "tense": "past",
+            "applicative": "false",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "FA": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: k̆ç̌k̆omi",
+                "ma heyas: p̌ç̌k̆omi",
+                "ma çku: N/A - Geçersiz Kombinasyon",
+                "ma tkva: k̆ç̌k̆omit",
+                "ma hentepes: p̌ç̌k̆omi",
+                "si ma: mç̌k̆omi",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si heyas: ç̌k̆omi",
+                "si çku: mç̌k̆omit",
+                "si tkva: N/A - Geçersiz Kombinasyon",
+                "si hentepes: ç̌k̆omi",
+                "heyak ma: mç̌k̆omu",
+                "heyak si: k̆ç̌k̆omu",
+                "heyak heyas: ç̌k̆omu",
+                "heyak çku: mç̌k̆omes",
+                "heyak tkva: k̆ç̌k̆omes",
+                "heyak hentepes: ç̌k̆omu",
+                "çku ma: N/A - Geçersiz Kombinasyon",
+                "çku si: k̆ç̌k̆omit",
+                "çku heyas: p̌ç̌k̆omit",
+                "çku çku: N/A - Geçersiz Kombinasyon",
+                "çku tkva: k̆ç̌k̆omit",
+                "çku hentepes: p̌ç̌k̆omit",
+                "tkva ma: mç̌k̆omit",
+                "tkva si: N/A - Geçersiz Kombinasyon",
+                "tkva heyas: ç̌k̆omit",
+                "tkva çku: mç̌k̆omit",
+                "tkva tkva: N/A - Geçersiz Kombinasyon",
+                "tkva hentepes: ç̌k̆omit",
+                "hentepek ma: mç̌k̆omes",
+                "hentepek si: k̆ç̌k̆omes",
+                "hentepek heyas: ç̌k̆omes",
+                "hentepek çku: mç̌k̆omes",
+                "hentepek tkva: k̆ç̌k̆omes",
+                "hentepek hentepes: ç̌k̆omes"
+            ],
+            "HO": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: k̆ç̌k̆omi",
+                "ma (h)emus: p̌ç̌k̆omi",
+                "ma çkin: N/A - Geçersiz Kombinasyon",
+                "ma tkvan: k̆ç̌k̆omit",
+                "ma entepes: p̌ç̌k̆omi",
+                "si ma: mç̌k̆omi",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si (h)emus: ç̌k̆omi",
+                "si çkin: mç̌k̆omit",
+                "si tkvan: N/A - Geçersiz Kombinasyon",
+                "si entepes: ç̌k̆omi",
+                "(h)emuk ma: mç̌k̆omu",
+                "(h)emuk si: k̆ç̌k̆omu",
+                "(h)emuk (h)emus: ç̌k̆omu",
+                "(h)emuk çkin: mç̌k̆omes",
+                "(h)emuk tkvan: k̆ç̌k̆omes",
+                "(h)emuk entepes: ç̌k̆omu",
+                "çkin ma: N/A - Geçersiz Kombinasyon",
+                "çkin si: k̆ç̌k̆omit",
+                "çkin (h)emus: p̌ç̌k̆omit",
+                "çkin çkin: N/A - Geçersiz Kombinasyon",
+                "çkin tkvan: k̆ç̌k̆omit",
+                "çkin entepes: p̌ç̌k̆omit",
+                "tkvan ma: mç̌k̆omit",
+                "tkvan si: N/A - Geçersiz Kombinasyon",
+                "tkvan (h)emus: ç̌k̆omit",
+                "tkvan çkin: mç̌k̆omit",
+                "tkvan tkvan: N/A - Geçersiz Kombinasyon",
+                "tkvan entepes: ç̌k̆omit",
+                "entepek ma: mç̌k̆omes",
+                "entepek si: k̆ç̌k̆omes",
+                "entepek (h)emus: ç̌k̆omes",
+                "entepek çkin: mç̌k̆omes",
+                "entepek tkvan: k̆ç̌k̆omes",
+                "entepek entepes: ç̌k̆omes"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "oç̌k̆omu",
+            "subject": "all",
+            "obj": "all",
+            "tense": "past",
+            "applicative": "true",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "FA": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: k̆ç̌k̆omi",
+                "ma heyas: p̌ç̌k̆omi",
+                "ma çku: N/A - Geçersiz Kombinasyon",
+                "ma tkva: k̆ç̌k̆omit",
+                "ma hentepes: p̌ç̌k̆omi",
+                "si ma: mç̌k̆omi",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si heyas: ç̌k̆omi",
+                "si çku: mç̌k̆omit",
+                "si tkva: N/A - Geçersiz Kombinasyon",
+                "si hentepes: ç̌k̆omi",
+                "heyak ma: mç̌k̆omu",
+                "heyak si: k̆ç̌k̆omu",
+                "heyak heyas: ç̌k̆omu",
+                "heyak çku: mç̌k̆omes",
+                "heyak tkva: k̆ç̌k̆omes",
+                "heyak hentepes: ç̌k̆omu",
+                "çku ma: N/A - Geçersiz Kombinasyon",
+                "çku si: k̆ç̌k̆omit",
+                "çku heyas: p̌ç̌k̆omit",
+                "çku çku: N/A - Geçersiz Kombinasyon",
+                "çku tkva: k̆ç̌k̆omit",
+                "çku hentepes: p̌ç̌k̆omit",
+                "tkva ma: mç̌k̆omit",
+                "tkva si: N/A - Geçersiz Kombinasyon",
+                "tkva heyas: ç̌k̆omit",
+                "tkva çku: mç̌k̆omit",
+                "tkva tkva: N/A - Geçersiz Kombinasyon",
+                "tkva hentepes: ç̌k̆omit",
+                "hentepek ma: mç̌k̆omes",
+                "hentepek si: k̆ç̌k̆omes",
+                "hentepek heyas: ç̌k̆omes",
+                "hentepek çku: mç̌k̆omes",
+                "hentepek tkva: k̆ç̌k̆omes",
+                "hentepek hentepes: ç̌k̆omes"
+            ],
+            "HO": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: k̆ç̌k̆omi",
+                "ma (h)emus: p̌ç̌k̆omi",
+                "ma çkin: N/A - Geçersiz Kombinasyon",
+                "ma tkvan: k̆ç̌k̆omit",
+                "ma entepes: p̌ç̌k̆omi",
+                "si ma: mç̌k̆omi",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si (h)emus: ç̌k̆omi",
+                "si çkin: mç̌k̆omit",
+                "si tkvan: N/A - Geçersiz Kombinasyon",
+                "si entepes: ç̌k̆omi",
+                "(h)emuk ma: mç̌k̆omu",
+                "(h)emuk si: k̆ç̌k̆omu",
+                "(h)emuk (h)emus: ç̌k̆omu",
+                "(h)emuk çkin: mç̌k̆omes",
+                "(h)emuk tkvan: k̆ç̌k̆omes",
+                "(h)emuk entepes: ç̌k̆omu",
+                "çkin ma: N/A - Geçersiz Kombinasyon",
+                "çkin si: k̆ç̌k̆omit",
+                "çkin (h)emus: p̌ç̌k̆omit",
+                "çkin çkin: N/A - Geçersiz Kombinasyon",
+                "çkin tkvan: k̆ç̌k̆omit",
+                "çkin entepes: p̌ç̌k̆omit",
+                "tkvan ma: mç̌k̆omit",
+                "tkvan si: N/A - Geçersiz Kombinasyon",
+                "tkvan (h)emus: ç̌k̆omit",
+                "tkvan çkin: mç̌k̆omit",
+                "tkvan tkvan: N/A - Geçersiz Kombinasyon",
+                "tkvan entepes: ç̌k̆omit",
+                "entepek ma: mç̌k̆omes",
+                "entepek si: k̆ç̌k̆omes",
+                "entepek (h)emus: ç̌k̆omes",
+                "entepek çkin: mç̌k̆omes",
+                "entepek tkvan: k̆ç̌k̆omes",
+                "entepek entepes: ç̌k̆omes"
+            ]
+        }
+    },
+    {
+        "request": {
+            "infinitive": "oç̌k̆omu",
+            "subject": "all",
+            "obj": "all",
+            "tense": "past",
+            "applicative": "true",
+            "causative": "false",
+            "optative": "false",
+            "imperative": "false",
+            "neg_imperative": "false"
+        },
+        "response": {
+            "FA": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: k̆ç̌k̆omi",
+                "ma heyas: p̌ç̌k̆omi",
+                "ma çku: N/A - Geçersiz Kombinasyon",
+                "ma tkva: k̆ç̌k̆omit",
+                "ma hentepes: p̌ç̌k̆omi",
+                "si ma: mç̌k̆omi",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si heyas: ç̌k̆omi",
+                "si çku: mç̌k̆omit",
+                "si tkva: N/A - Geçersiz Kombinasyon",
+                "si hentepes: ç̌k̆omi",
+                "heyak ma: mç̌k̆omu",
+                "heyak si: k̆ç̌k̆omu",
+                "heyak heyas: ç̌k̆omu",
+                "heyak çku: mç̌k̆omes",
+                "heyak tkva: k̆ç̌k̆omes",
+                "heyak hentepes: ç̌k̆omu",
+                "çku ma: N/A - Geçersiz Kombinasyon",
+                "çku si: k̆ç̌k̆omit",
+                "çku heyas: p̌ç̌k̆omit",
+                "çku çku: N/A - Geçersiz Kombinasyon",
+                "çku tkva: k̆ç̌k̆omit",
+                "çku hentepes: p̌ç̌k̆omit",
+                "tkva ma: mç̌k̆omit",
+                "tkva si: N/A - Geçersiz Kombinasyon",
+                "tkva heyas: ç̌k̆omit",
+                "tkva çku: mç̌k̆omit",
+                "tkva tkva: N/A - Geçersiz Kombinasyon",
+                "tkva hentepes: ç̌k̆omit",
+                "hentepek ma: mç̌k̆omes",
+                "hentepek si: k̆ç̌k̆omes",
+                "hentepek heyas: ç̌k̆omes",
+                "hentepek çku: mç̌k̆omes",
+                "hentepek tkva: k̆ç̌k̆omes",
+                "hentepek hentepes: ç̌k̆omes"
+            ],
+            "HO": [
+                "ma ma: N/A - Geçersiz Kombinasyon",
+                "ma si: k̆ç̌k̆omi",
+                "ma (h)emus: p̌ç̌k̆omi",
+                "ma çkin: N/A - Geçersiz Kombinasyon",
+                "ma tkvan: k̆ç̌k̆omit",
+                "ma entepes: p̌ç̌k̆omi",
+                "si ma: mç̌k̆omi",
+                "si si: N/A - Geçersiz Kombinasyon",
+                "si (h)emus: ç̌k̆omi",
+                "si çkin: mç̌k̆omit",
+                "si tkvan: N/A - Geçersiz Kombinasyon",
+                "si entepes: ç̌k̆omi",
+                "(h)emuk ma: mç̌k̆omu",
+                "(h)emuk si: k̆ç̌k̆omu",
+                "(h)emuk (h)emus: ç̌k̆omu",
+                "(h)emuk çkin: mç̌k̆omes",
+                "(h)emuk tkvan: k̆ç̌k̆omes",
+                "(h)emuk entepes: ç̌k̆omu",
+                "çkin ma: N/A - Geçersiz Kombinasyon",
+                "çkin si: k̆ç̌k̆omit",
+                "çkin (h)emus: p̌ç̌k̆omit",
+                "çkin çkin: N/A - Geçersiz Kombinasyon",
+                "çkin tkvan: k̆ç̌k̆omit",
+                "çkin entepes: p̌ç̌k̆omit",
+                "tkvan ma: mç̌k̆omit",
+                "tkvan si: N/A - Geçersiz Kombinasyon",
+                "tkvan (h)emus: ç̌k̆omit",
+                "tkvan çkin: mç̌k̆omit",
+                "tkvan tkvan: N/A - Geçersiz Kombinasyon",
+                "tkvan entepes: ç̌k̆omit",
+                "entepek ma: mç̌k̆omes",
+                "entepek si: k̆ç̌k̆omes",
+                "entepek (h)emus: ç̌k̆omes",
+                "entepek çkin: mç̌k̆omes",
+                "entepek tkvan: k̆ç̌k̆omes",
+                "entepek entepes: ç̌k̆omes"
+            ]
+        }
+    }
+]
