@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const VerbTable = ({ verbs, language }) => {
   const navigate = useNavigate();
-
+  
   const columnTitles = {
     en: {
       laz: 'Laz Infinitive',
