@@ -104,7 +104,7 @@ export const translations = {
     },
     verbListMessage: 'See here for a',
     verbListLinkText: 'list of available verbs',
-    feedbackLoadingMessage: 'Submitting feedback, please wait...',
+    feedbackLoadingMessage: 'Submitting...',
     feedbackDisclaimer: 'Phone users using Google Chrome may experience difficulties submitting the form; please use a different browser or use Incognito Mode.',
     searchPlaceholder: 'Search verbs...',
     backToConjugator: 'Back to Conjugator',

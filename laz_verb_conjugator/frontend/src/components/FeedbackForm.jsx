@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const FeedbackForm = ({ isVisible, onClose, language, translations }) => {
   const [feedbackData, setFeedbackData] = useState({
@@ -6,6 +7,7 @@ const FeedbackForm = ({ isVisible, onClose, language, translations }) => {
     correction: '',
     explanation: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const firstInputRef = useRef(null);
 
@@ -41,12 +43,14 @@ const FeedbackForm = ({ isVisible, onClose, language, translations }) => {
 
   const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxocjHtMbmcehees6xRUs43RLaqTwFiLjp9IXbsswXZj52QcL-owsk4xDG4kkOQksbP/exec';
     
     try {
       const callbackName = 'callback' + Date.now();
       
       window[callbackName] = function(response) {
+        setIsSubmitting(false);
         if (response.result === 'success') {
           setFeedbackData({
             incorrectWord: '',
@@ -54,9 +58,9 @@ const FeedbackForm = ({ isVisible, onClose, language, translations }) => {
             explanation: '',
           });
           onClose();
-          alert('Thank you for your feedback!');
+          toast.success('Thank you for your feedback!');
         } else {
-          alert('An error occurred: ' + response.error);
+          toast.error('An error occurred: ' + response.error);
         }
         
         delete window[callbackName];
@@ -69,7 +73,8 @@ const FeedbackForm = ({ isVisible, onClose, language, translations }) => {
       
       document.body.appendChild(script);
     } catch (error) {
-      alert('An error occurred while submitting feedback. Please try again later.');
+      setIsSubmitting(false);
+      toast.error('An error occurred while submitting feedback. Please try again later.');
     }
   };
 
@@ -136,11 +141,24 @@ const FeedbackForm = ({ isVisible, onClose, language, translations }) => {
                 type="button"
                 onClick={onClose}
                 className="px-4 py-2 bg-gray-300 rounded"
+                disabled={isSubmitting}
               >
                 {translations[language].feedbackLabels.cancel}
               </button>
-              <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
-                {translations[language].feedbackLabels.submit}
+              <button 
+                type="submit" 
+                className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    {translations[language].feedbackLoadingMessage}
+                  </span>
+                ) : translations[language].feedbackLabels.submit}
               </button>
             </div>
           </form>

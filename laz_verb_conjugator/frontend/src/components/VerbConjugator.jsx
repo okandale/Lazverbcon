@@ -85,7 +85,22 @@ const VerbConjugator = () => {
         <LanguageToggle language={language} onToggle={toggleLanguage} />
       </div>
 
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{
+          top: '1rem',
+          right: '1rem',
+        }}
+      />
       
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
         {translations[language].title}
