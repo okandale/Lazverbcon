@@ -50,13 +50,13 @@ const Results = ({ results, language, translations }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+      <div className="border-b border-gray-200 px-6 py-4">
         <h2 className="text-2xl font-semibold text-gray-800">
           {translations[language].results}
         </h2>
       </div>
       
-      <div className="divide-y divide-gray-200">
+      <div className="divide-y-2 divide-gray-200">
         {regionOrder
           .map(regionCode => {
             const region = Object.entries(results.data).find(([key]) => key === regionCode);
@@ -67,14 +67,11 @@ const Results = ({ results, language, translations }) => {
 
             return (
               <div key={regionName} className="px-6 py-4">
-                <div className="flex items-center space-x-2 mb-4">
-                  <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                  <h3 className="text-lg font-medium text-gray-900">
-                    {regionDisplayName}
-                  </h3>
-                </div>
+                <h3 className="text-xl font-semibold text-blue-600 mb-4">
+                  {regionDisplayName}
+                </h3>
                 
-                <div className="grid grid-cols-1 gap-2">
+                <div className="divide-y divide-gray-200">
                   {Array.isArray(forms) ? (
                     sortForms(forms).map((form, index) => {
                       const { prefix, conjugation } = formatConjugation(form);
@@ -83,7 +80,7 @@ const Results = ({ results, language, translations }) => {
                       return (
                         <div 
                           key={index}
-                          className="flex flex-col sm:flex-row sm:items-center p-2 rounded-lg group relative"
+                          className="flex flex-col sm:flex-row sm:items-center py-3 group relative"
                         >
                           <div className="sm:w-1/3 font-medium text-gray-500 mb-1 sm:mb-0">
                             {prefix}

@@ -76,7 +76,7 @@ const FormSection = ({
   return (
     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       {/* Special Characters */}
-      <div className="flex flex-wrap justify-center gap-2 mb-6">
+      <div className="grid grid-cols-4 sm:flex sm:flex-wrap justify-center gap-2 mb-6">
         {specialCharacters.map((char, index) => (
           <SpecialCharButton
             key={index}
@@ -111,7 +111,7 @@ const FormSection = ({
             {translations[language].subject}:
           </label>
           <select
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
             id="subject"
             name="subject"
             value={formData.subject}
@@ -135,7 +135,7 @@ const FormSection = ({
           </label>
           <select
             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              isObjectDisabled ? 'bg-gray-200' : ''
+              isObjectDisabled ? 'bg-gray-200 opacity-60' : 'bg-white'
             }`}
             id="obj"
             name="obj"
@@ -161,7 +161,7 @@ const FormSection = ({
           </label>
           <select
             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              isTenseDisabled ? 'bg-gray-200' : ''
+              isTenseDisabled ? 'bg-gray-200 opacity-60' : 'bg-white'
             }`}
             id="tense"
             name="tense"
@@ -185,7 +185,7 @@ const FormSection = ({
           </label>
           <select
             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              isAspectDisabled ? 'bg-gray-200' : ''
+              isAspectDisabled ? 'bg-gray-200 opacity-60' : 'bg-white'
             }`}
             id="aspect"
             name="aspect"
