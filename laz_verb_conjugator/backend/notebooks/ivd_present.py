@@ -205,19 +205,24 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
     # Initialize region_conjugations
     region_conjugations = {region: [] for region in regions_list}
 
+    # Get the first word from the infinitive at the start
+    first_word_infinitive = get_first_word(infinitive)
+
     # Process each third-person form and its associated regions
     for third_person, region_str in third_person_forms:
         regions_for_form = region_str.split(',')
         for region in regions_for_form:
             region = region.strip()
             personal_pronouns = get_personal_pronouns(region)
-            phonetic_rules_v = get_phonetic_rules(region)
             
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
             first_word = get_first_word(third_person)  # Get the first word for compound verbs
             root = process_compound_verb(root)
 
+
+            # Use the first word from the infinitive consistently
+            first_word = first_word_infinitive
 
             subject_markers = {
                 'S1_Singular': 'm',
@@ -283,6 +288,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             first_letter = get_first_letter(root)
             adjusted_prefix = ''
             # Conjugate the verb
+
+
             if preverb:
                 preverb_form = preverbs_rules.get((preverb,), {}).get(subject, preverb)
             else:
@@ -357,7 +364,42 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Additional prefix adjustments based on subject and object
             if not preverb:
-                if subject in ('S3_Singular', 'S3_Plural') and obj in ('O1_Singular', 'O1_Plural'):
+                if root == "diç̌irs":
+                    root = 'ç̌irs'
+                    if subject in ('S3_Singular', 'S3_Plural'):
+                        if obj in ('O1_Singular', 'O1_Plural'):
+                            adjusted_prefix = 'dova' if region in ('PZ', 'AŞ', 'HO') else 'doba'
+                        else:
+                            adjusted_prefix = "di"
+                        prefix = adjusted_prefix
+                    elif subject in ('S1_Singular', 'S1_Plural'):
+                        adjusted_prefix = 'doma'
+                        prefix = adjusted_prefix
+                    elif subject in ('S2_Singular', 'S2_Plural'):
+                        adjusted_prefix = 'doga'
+                        prefix = adjusted_prefix
+                    else:
+                        prefix = subject_markers[subject]
+
+                if root == "dvaç̌irs":
+                    root = 'ç̌irs'
+                    if subject in ('S3_Singular', 'S3_Plural'):
+                        if obj in ('O1_Singular', 'O1_Plural'):
+                            adjusted_prefix = 'dova' if region in ('PZ', 'AŞ', 'HO') else 'doba'
+                        else:
+                            adjusted_prefix = "dva"
+                        prefix = adjusted_prefix
+                    elif subject in ('S1_Singular', 'S1_Plural'):
+                        adjusted_prefix = 'doma'
+                        prefix = adjusted_prefix
+                    elif subject in ('S2_Singular', 'S2_Plural'):
+                        adjusted_prefix = 'doga'
+                        prefix = adjusted_prefix
+                    else:
+                        prefix = subject_markers[subject]
+
+
+                elif subject in ('S3_Singular', 'S3_Plural') and obj in ('O1_Singular', 'O1_Plural'):
                     adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
                     if infinitive in ('olimbu', 'oropumu'):
                         prefix = '(go)' + adjusted_prefix
@@ -486,10 +528,6 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 # Function to get the first word of a compound verb
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
-
-
-
-
 
 
 
