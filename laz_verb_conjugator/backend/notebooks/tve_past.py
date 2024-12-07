@@ -515,7 +515,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
 
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/ok̆o preverbs, we could check here: if preverb ends with "o") root[:-1
             if applicative and causative:
-                if root in (('oşums', 'oşups', 'odums', 'otkums', 'otkups')):
+                if infinitive in (('oşu', 'dodvu', 'otku')):
                     root = root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'

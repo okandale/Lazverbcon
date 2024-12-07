@@ -351,7 +351,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         prefix = 'do'
 
                 # Special handling for "geç̌k̆u"
-                elif preverb == 'ge' and main_infinitive in ['geç̌k̆u', 'gebažgu']:
+                elif preverb == 'ge' and main_infinitive in ['geç̌k̆u', 'gebažgu', 'gemp̌onu']:
                     if marker:
                         root = root[2:]
                     else:
@@ -531,7 +531,9 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/ok̆o preverbs, we could check here: if preverb ends with "o") root[:-1 
             if applicative and causative:
-                if root.endswith(('umers', 'omers')) or root.endswith('amers'):
+                if infinitive in (('oşu', 'dodvu', 'otku')):
+                    root = root[:-3] + ('vapap' if region == "HO" else 'vapam')            
+                elif root.endswith(('umers', 'omers')) or root.endswith('amers'):
                     root = root[:-5] + 'apam'
                 elif root.endswith(('ms', 'ps')): 
                     root = root[:-3] + ('apap' if region == "HO" else 'apam')
@@ -544,7 +546,9 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 elif root.endswith('y'):
                     root = root[:-2] + 'apam'
             elif applicative:
-                if root.endswith(('ms', 'ups')):
+                if infinitive in (('oşu', 'dodvu', 'otku')):
+                    root = root[:-3] + ('vaps' if region == "HO" else 'vams') 
+                elif root.endswith(('ms', 'ups')):
                     root = root[:-3] + ('aps' if region == "HO" else 'ams')
                 elif root.endswith(('um')):
                     root = root[:-2] + 'ams'
@@ -553,6 +557,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif causative:
                 if root == ('çams'): #changed root for oç̌k̆omu/oşk̆omu
                     root = root
+                elif infinitive in (('oşu', 'dodvu', 'otku')):
+                    root = root[:-3] + ('vapap' if region == "HO" else 'vapam')  
                 elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'apam'
                 elif root.endswith(('ms', 'ps')): 
@@ -566,7 +572,17 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 elif root.endswith('y'):
                     root = root[:-2] + 'apam'
             # Mood adjustment for root - add to the above markers if a combination of marker and mood is possible:
-            if mood == 'optative' and root.endswith(('ms', 'ps')):
+
+            if mood == 'optative' and infinitive in (('oşu', 'dodvu', 'otku')):
+                if applicative and causative:
+                    root = root[:-2]
+                elif applicative:
+                    root = root[:-3] + 'v'
+                elif causative:
+                    root = root[:-2]
+                else:
+                    root = root[:-3] + 'v' 
+            elif mood == 'optative' and root.endswith(('ms', 'ps')):
                 root = root[:-3]
             elif mood == 'optative' and root.endswith(('umers', 'amers')):
                 root = root[:-5]
@@ -610,7 +626,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif subject in ('S1_Singular', 'S2_Singular') and mood == 'optative':
                 suffix = 'a'
             elif subject in ('S1_Plural', 'S2_Plural') and mood == 'optative':
-                suffix = 'atu' if region == "AŞ" else 'at'
+                suffix = 'at' if region == "AŞ" else 'at'
             elif subject in ['S1_Singular', 'S1_Plural'] and obj == 'O2_Plural':
                 suffix = 't'
             elif subject in ['S2_Singular', 'S2_Plural'] and obj == 'O1_Plural':
