@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { regionNames, subjectOrder, objectOrder } from './constants';
+import { Copy, Check } from 'lucide-react';
 
 const Results = ({ results, language, translations }) => {
+  const [copiedId, setCopiedId] = useState(null);
+
   if (results.error) {
-    return <p className="text-red-600">{results.error}</p>;
+    return (
+      <div className="rounded-lg bg-red-50 p-4 border border-red-200">
+        <p className="text-red-600 text-sm">{results.error}</p>
+      </div>
+    );
   }
 
   if (Object.entries(results.data).length === 0) {
@@ -24,35 +31,89 @@ const Results = ({ results, language, translations }) => {
     });
   };
 
+  const formatConjugation = (form) => {
+    const [prefix, conjugation] = form.split(':').map(part => part.trim());
+    return { prefix, conjugation };
+  };
+
+  const handleCopy = async (text, id) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
+
   const regionOrder = ['AŞ', 'PZ', 'FA', 'HO'];
 
   return (
-    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8">
-      <h2 className="text-2xl font-bold mb-4">{translations[language].results}:</h2>
-      {regionOrder
-        .map(regionCode => {
-          const region = Object.entries(results.data).find(([key]) => key === regionCode);
-          if (!region) return null;
+    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+        <h2 className="text-2xl font-semibold text-gray-800">
+          {translations[language].results}
+        </h2>
+      </div>
+      
+      <div className="divide-y divide-gray-200">
+        {regionOrder
+          .map(regionCode => {
+            const region = Object.entries(results.data).find(([key]) => key === regionCode);
+            if (!region) return null;
 
-          const [regionName, forms] = region;
-          return (
-            <div key={regionName} className="mb-4">
-              <h3 className="text-xl font-semibold text-blue-600">
-                {regionNames[regionName] || regionName}
-              </h3>
-              {Array.isArray(forms) ? (
-                sortForms(forms).map((form, index) => (
-                  <p key={index} className="ml-4">
-                    {form}
-                  </p>
-                ))
-              ) : (
-                <p>{forms}</p>
-              )}
-            </div>
-          );
-        })
-        .filter(Boolean)}
+            const [regionName, forms] = region;
+            const regionDisplayName = regionNames[regionName] || regionName;
+
+            return (
+              <div key={regionName} className="px-6 py-4">
+                <div className="flex items-center space-x-2 mb-4">
+                  <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                  <h3 className="text-lg font-medium text-gray-900">
+                    {regionDisplayName}
+                  </h3>
+                </div>
+                
+                <div className="grid grid-cols-1 gap-2">
+                  {Array.isArray(forms) ? (
+                    sortForms(forms).map((form, index) => {
+                      const { prefix, conjugation } = formatConjugation(form);
+                      const formId = `${regionName}-${index}`;
+                      
+                      return (
+                        <div 
+                          key={index}
+                          className="flex flex-col sm:flex-row sm:items-center p-2 rounded-lg group relative"
+                        >
+                          <div className="sm:w-1/3 font-medium text-gray-500 mb-1 sm:mb-0">
+                            {prefix}
+                          </div>
+                          <div className="sm:w-2/3 text-gray-900 flex items-center justify-between">
+                            <span>{conjugation}</span>
+                            <button
+                              onClick={() => handleCopy(conjugation, formId)}
+                              className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:text-blue-500"
+                              title="Copy to clipboard"
+                            >
+                              {copiedId === formId ? (
+                                <Check className="w-4 h-4 text-green-500" />
+                              ) : (
+                                <Copy className="w-4 h-4" />
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="text-gray-700">{forms}</div>
+                  )}
+                </div>
+              </div>
+            );
+          })
+          .filter(Boolean)}
+      </div>
     </div>
   );
 };
