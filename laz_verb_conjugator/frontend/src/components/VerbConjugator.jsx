@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -16,6 +17,7 @@ import {
 } from './constants';
 
 const VerbConjugator = () => {
+  const location = useLocation();
   const [language, setLanguage] = useState(getStoredLanguage());
   const [formData, setFormData] = useState(defaultFormData);
   const [results, setResults] = useState({ data: {}, error: '' });
