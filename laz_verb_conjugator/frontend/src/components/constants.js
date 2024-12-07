@@ -1,27 +1,27 @@
 export const API_URL = "/api/conjugate";
 
-export const specialCharacters = ['ç̌', 't̆', 'ž', 'k̆', 'ʒ', 'ʒ̆', 'p̌'];
+export const specialCharacters = ['ç̌', 't̆', 'ž', 'ǩ', 'ʒ', 'ǯ', 'p̌'];
 
 export const regionNames = {
   'AŞ': 'Ardeşen (Art̆aşeni)',
   'PZ': 'Pazar (Atina)',
-  'FA': 'Fındıklı/Arhavi (Viʒ̆e/Ark̆abi)',
+  'FA': 'Fındıklı/Arhavi (Viǯe/Arǩabi)',
   'HO': 'Hopa (Xopa)',
-  'FI': 'Fındıklı (Viʒ̆e)',
-  'AR': 'Arhavi (Ark̆abi)',
+  'FI': 'Fındıklı (Viǯe)',
+  'AR': 'Arhavi (Arǩabi)',
   'ÇX': 'Çhala (Çxala)',
 };
 
 export const subjectOrder = [
   'ma', 'si', 'him', 'himuk', 'himus', 'heya', 'heyas', 'heyak',
-  '(h)em', '(h)emus', '(h)emuk', 'şk̆u', 'çki', 'çku', 'çkin', 't̆k̆va', 'tkvan',
+  '(h)em', '(h)emus', '(h)emuk', 'şǩu', 'çki', 'çku', 'çkin', 't̆ǩva', 'tkvan',
   'hini', 'hinik', 'hinis', 'tkva', 'hentepe', 'hentepes', 'hentepek',
   'entepe', 'entepes', 'entepek',
 ];
 
 export const objectOrder = [
-  'ma', 'si', 'him', 'himus', 'heya', 'heyas', '(h)em', '(h)emus', 'şk̆u', 'çki', 'çku', 'çkin',
-  't̆k̆va', 'tkva', 'tkvan', 'hini', 'hinis', 'hentepe', 'hentepes', 'entepe', 'entepes'
+  'ma', 'si', 'him', 'himus', 'heya', 'heyas', '(h)em', '(h)emus', 'şǩu', 'çki', 'çku', 'çkin',
+  't̆ǩva', 'tkva', 'tkvan', 'hini', 'hinis', 'hentepe', 'hentepes', 'entepe', 'entepes'
 ];
 
 export const API_URLS = {

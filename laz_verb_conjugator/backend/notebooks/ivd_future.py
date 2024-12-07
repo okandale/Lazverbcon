@@ -69,7 +69,7 @@ preverbs_rules = {
 
 # Function to handle special letters
 def get_first_letter(root):
-    if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'k̆', 'p̌']:
+    if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'ǩ', 'p̌']:
         return root[:2]
     return root[0]
 
@@ -117,8 +117,8 @@ def get_personal_pronouns(region):
         'S2_Singular': 'si',
         'S3_Singular': 'heyas' if region == "FA" else 'himus' if region == 'PZ' else 'him' if region == 'AŞ' else '(h)emus',
         'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
-        'S1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çki',
-        'S2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
+        'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çki',
+        'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
         'S3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == 'PZ' else 'hini' if region == 'AŞ' else 'entepes',
         'O3_Plural': 'hentepe',
         'O1_Singular': 'ma',
@@ -202,7 +202,7 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            if main_infinitive != 'ok̆oreʒxu':
+            if main_infinitive != 'oǩoreʒxu':
                 for pv_group in preverbs_rules.keys():
                     if isinstance(pv_group, tuple):
                         for pv in pv_group:
@@ -455,8 +455,8 @@ personal_pronouns_general = {
     'O1_Singular': 'ma',
     'O2_Singular': 'si',
     'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
-    'O1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
-    'O2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
+    'O1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
+    'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
     'O3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe'
 }
 

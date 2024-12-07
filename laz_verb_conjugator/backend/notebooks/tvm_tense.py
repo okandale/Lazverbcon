@@ -39,7 +39,7 @@ def process_compound_verb(verb):
 
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'ok̆o', 'gama', 'mo', 'ye'): {
+    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye'): {
         'S1_Singular': 'v',
         'S2_Singular': '',
         'S3_Singular': '',
@@ -56,7 +56,7 @@ def get_phonetic_rules(region):
         phonetic_rules_v = {
             'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h', 'p'],
             'b': ['a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ',],
-            'p̌': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆'],
+            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
             'm': ['n']
         }
     else:
@@ -64,7 +64,7 @@ def get_phonetic_rules(region):
             'v': ['a', 'e', 'i', 'o', 'u'],
             'p': ['p', 't', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
             'b': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-            'p̌': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆'],
+            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
             'm': ['n']
         }
 
@@ -72,7 +72,7 @@ def get_phonetic_rules(region):
         'g': ['a', 'e', 'i', 'o', 'u'],
         'k': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
         'g': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-        'k̆': ['ç̌', 'k̆', 'q', 'ʒ̆', 't̆']
+        'ǩ': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆']
     }
 
     return phonetic_rules_v, phonetic_rules_g
@@ -86,9 +86,9 @@ def adjust_prefix(prefix, first_letter, phonetic_rules):
 
 # Function to handle special letters
 def get_first_letter(root):
-    if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'k̆', 'p̌', 'ʒ̆']:
+    if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'ǩ', 'p̌', 'ǯ']:
         return root[:2]
-    elif root.startswith('gyoç̌k̆ams'):   # to skip the "gy" part.
+    elif root.startswith('gyoç̌ǩams'):   # to skip the "gy" part.
         return root[2:]
     return root[0]
 
@@ -110,7 +110,7 @@ def determine_marker(subject, obj, marker_type):
 def handle_marker(infinitive, root, marker):
     if infinitive == 'doguru':
         root = root[1:]  # Remove the first character 'd' from the root
-    if infinitive == 'geç̌k̆u' and len(root) > 2: #special case for geç̌k̆u.
+    if infinitive == 'geç̌ǩu' and len(root) > 2: #special case for geç̌ǩu.
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
                 root = root[:2] + marker + root[3:]  # Replace the third character 'i' or 'o' with 'i' or 'o'
@@ -131,8 +131,8 @@ def get_personal_pronouns(region):
         'S2_Singular': 'si',
         'S3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
         'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
-        'S1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çki',
-        'S2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
+        'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çki',
+        'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
         'S3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe',
         'O3_Plural': 'hentepe',
         'O1_Singular': 'ma',
@@ -251,7 +251,7 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            preverb_exceptions = {'gonʒ̆k̆u'}  # Ensure this set is defined appropriately, add additionally to 256
+            preverb_exceptions = {'gonǯǩu'}  # Ensure this set is defined appropriately, add additionally to 256
 
             # Check if the infinitive is NOT in the exception list before extracting preverbs
             if infinitive not in preverb_exceptions:
@@ -269,13 +269,13 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
 
-            if root in ('imxors', 'ipxors') and infinitive == 'oç̌k̆omu':
-                root = 'ç̌k̆omums'
-            elif root in ('imxors') and infinitive == 'oşk̆omu':
-                root = 'şk̆omums'
+            if root in ('imxors', 'ipxors') and infinitive == 'oç̌ǩomu':
+                root = 'ç̌ǩomums'
+            elif root in ('imxors') and infinitive == 'oşǩomu':
+                root = 'şǩomums'
                 
             # Remove the preverb from the third-person form if it exists
-            if preverb and root.startswith(preverb) and infinitive != 'gonʒ̆k̆u':
+            if preverb and root.startswith(preverb) and infinitive != 'gonǯǩu':
                 root = root[len(preverb):]
 
             # Determine the marker (applicative or causative)
@@ -287,8 +287,8 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
             elif causative:
                 marker = determine_marker(subject, obj, 'causative')
                 marker_type = 'causative'
-            elif infinitive == 'oxoʒ̆onu' and (subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural']):
-                marker = 'o'  # Default to 'o' for oxoʒ̆onu if neither applicative nor causative
+            elif infinitive == 'oxoǯonu' and (subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural']):
+                marker = 'o'  # Default to 'o' for oxoǯonu if neither applicative nor causative
 
             if infinitive == 'oxenu' and marker in ('u', 'i', 'o'):  # marker case for oxenu
                 root = 'xenums'
@@ -302,7 +302,7 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
             # Special handling for "me"
             if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
-            if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive != 'geç̌k̆u' and preverb != 'me':
+            if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive != 'geç̌ǩu' and preverb != 'me':
                 preverb = preverb[:-1]
             # Special handling for "me"
             prefix = ''
@@ -346,7 +346,7 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                 else:
                     prefix = 'do'
 
-            # Special handling for "geç̌k̆u"
+            # Special handling for "geç̌ǩu"
             elif preverb == 'ge':
                 if marker:
                     root = root[2:]
@@ -408,8 +408,8 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                 else:
                     prefix = 'oxo'
                     
-            # special handling for "ok̆o" 
-            elif preverb == 'ok̆o':
+            # special handling for "oǩo" 
+            elif preverb == 'oǩo':
                 if marker:
                     root = root
                 else:
@@ -420,21 +420,21 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                         root = marker + root
                     first_letter = get_first_letter(root)
                     adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                    prefix = 'ok̆o' + adjusted_prefix
+                    prefix = 'oǩo' + adjusted_prefix
                 elif subject in ['S1_Singular', 'S1_Plural']:
                     if marker_type != 'causative' and marker_type != 'applicative':
                         root = marker + root
                     first_letter = get_first_letter(root)
                     adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                    prefix = 'ok̆o' + adjusted_prefix
+                    prefix = 'oǩo' + adjusted_prefix
                 elif obj in ['O1_Singular', 'O1_Plural']:
                     if marker_type != 'causative':
                         root = 'o' + root
-                    prefix = 'ok̆om'
+                    prefix = 'oǩom'
                 elif marker_type == 'causative':
-                    prefix = 'ok̆o'
+                    prefix = 'oǩo'
                 else:
-                    prefix = 'ok̆o'
+                    prefix = 'oǩo'
 
             # Special handling for "go"
             else:
@@ -478,7 +478,7 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                 else:
                     root = root[:-1] + 'ms'  # Ardeşen Exception root for non-S3 cases - added an s to this in past tense to simplify code
 
-            # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/ok̆o preverbs, we could check here: if preverb ends with "o") root[:-1
+            # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/oǩo preverbs, we could check here: if preverb ends with "o") root[:-1
             if marker_type == 'applicative' and root in ('işums', 'işups', 'idums'):
                 root = root[:-3] + 'vap'
             elif marker_type == 'applicative' and (root.endswith('ums') or root.endswith('ams')):
@@ -619,8 +619,8 @@ personal_pronouns_general = {
     'O1_Singular': 'ma',
     'O2_Singular': 'si',
     'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
-    'O1_Plural': 'çku' if region == "FA" else 'şk̆u' if region in ('AŞ', 'PZ') else 'çkin',
-    'O2_Plural': 'tkva' if region == "FA" else 't̆k̆va' if region in ('AŞ', 'PZ') else 'tkvan',
+    'O1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
+    'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
     'O3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe'
 }
 
