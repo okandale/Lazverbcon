@@ -126,9 +126,9 @@ def handle_marker(infinitive, root, marker):
         root = 'çams'
         marker = ''
     elif infinitive in ('oç̌k̆omu') and marker in ('i', 'u'):
-        root = 'ç̌k̆omums'
+        root = marker + 'ç̌k̆omums'
     elif infinitive in ('oşk̆omu') and marker in ('i', 'u'):
-        root = 'şk̆omums'
+        root = marker + 'şk̆omums'
     elif infinitive in ('oç̌k̆omu', 'oşk̆omu'):
         root = 'imxors'
     elif infinitive == 'geç̌k̆u' and len(root) > 2: #special case for geç̌k̆u
@@ -514,32 +514,46 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/ok̆o preverbs, we could check here: if preverb ends with "o") root[:-1
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/ok̆o preverbs, we could check here: if preverb ends with "o") root[:-1 
             if applicative and causative:
-                if root.endswith('umers') or root.endswith('amers'):
+                if infinitive in (('oşu', 'dodvu', 'otku')):
+                    root = root[:-3] + ('vapap' if region == "HO" else 'vapam')            
+                elif root.endswith(('umers', 'omers')) or root.endswith('amers'):
                     root = root[:-5] + 'apam'
-                elif root.endswith(('ms', 'ps')):
+                elif root.endswith(('ms', 'ps')): 
                     root = root[:-3] + ('apap' if region == "HO" else 'apam')
+                elif root.endswith('ams'):
+                    root = root[:-3] + 'apam'
                 elif root.endswith('rs'):
-                    root = root[:-1] + ('apap' if region == "HO" else 'apam')
-                elif root.endswith('uy'):
+                    root = root[:-1] + 'apam'
+                elif root.endswith(('um', 'om', 'op')) or root.endswith('am'):
+                    root = root[:-2] + ('apap' if region == "HO" else 'apam')
+                elif root.endswith('y'):
                     root = root[:-2] + 'apam'
             elif applicative:
-                if root.endswith(('ms', 'ups')):
+                if infinitive in (('oşu', 'dodvu', 'otku')):
+                    root = root[:-3] + ('vaps' if region == "HO" else 'vams') 
+                elif root.endswith(('ms', 'ups')):
                     root = root[:-3] + ('aps' if region == "HO" else 'ams')
+                elif root.endswith(('um')):
+                    root = root[:-2] + 'ams'
+                elif root.endswith('y'):
+                    root = root[:-2] + 'ams'
             elif causative:
-                if root == 'çams':
+                if root == ('çams'): #changed root for oç̌k̆omu/oşk̆omu
                     root = root
+                elif infinitive in (('oşu', 'dodvu', 'otku')):
+                    root = root[:-3] + ('vapap' if region == "HO" else 'vapam')  
                 elif root.endswith('umers') or root.endswith('amers'):
                     root = root[:-5] + 'apam'
-                elif root.endswith(('ms', 'ps')):
+                elif root.endswith(('ms', 'ps')): 
                     root = root[:-3] + ('apap' if region == "HO" else 'apam')
                 elif root.endswith('ams'):
                     root = root[:-3] + 'apam'
                 elif root.endswith('rs'):
                     root = root[:-1] + ('apap' if region == "HO" else 'apam')
-                elif root.endswith('uy'):
-                    root = root[:-2] + 'apam'         
-                else:
-                    root = root
+                elif root.endswith('um') or root.endswith('am'):
+                    root = root[:-2] + 'apam'
+                elif root.endswith('y'):
+                    root = root[:-2] + 'apam'
                 
             # Determine the suffix
             if subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular', 'O3_Plural']:

@@ -126,7 +126,9 @@ def handle_marker(infinitive, root, marker):
         root = 'çams'
         marker = ''
     elif infinitive in ('oç̌k̆omu') and marker in ('i, u'):
-        root = 'ç̌k̆omums'
+        root = marker + 'ç̌k̆omums'
+    elif infinitive in ('oşk̆omu') and marker in ('i, u'):
+        root = marker + 'şk̆omums'
     elif infinitive == 'geç̌k̆u' and len(root) > 2: #special case for geç̌k̆u
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
@@ -249,10 +251,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
 
-            if root in ('imxors', 'ipxors') and infinitive == 'oç̌k̆omu':
-                root = 'ç̌k̆omums'
-            elif root in ('imxors') and infinitive == 'oşk̆omu':
-                root = 'şk̆omums'
+
                 
             # Remove the preverb from the third-person form if it exists
             if preverb and root.startswith(preverb):
@@ -515,7 +514,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
 
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/ok̆o preverbs, we could check here: if preverb ends with "o") root[:-1
             if applicative and causative:
-                if root in (('oşums', 'oşups', 'odums', 'otkums', 'otkups')):
+                if infinitive in (('oşu', 'dodvu', 'otku')):
                     root = root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'
