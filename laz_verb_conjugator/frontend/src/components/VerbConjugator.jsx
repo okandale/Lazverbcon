@@ -96,7 +96,6 @@ const VerbConjugator = () => {
           <Link to="/verbs" className="text-blue-500 hover:underline">
             {translations[language].verbListLinkText}
           </Link>
-          .
         </p>
       </div>
 

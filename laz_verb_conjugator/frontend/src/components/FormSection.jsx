@@ -226,7 +226,7 @@ const FormSection = ({
       </fieldset>
 
       {/* Checkbox Options */}
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-2 gap-4 mb-8">
         {[
           { name: 'applicative', label: translations[language].applicative },
           { name: 'imperative', label: translations[language].imperative, disabled: formData.neg_imperative },
@@ -252,20 +252,24 @@ const FormSection = ({
       </div>
 
       {/* Submit and Reset Buttons */}
-      <div className="flex justify-between">
+      <div className="flex justify-between gap-4">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="flex-1 min-w-32 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-150 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
           type="submit"
           onClick={onSubmit}
         >
-          {translations[language].conjugate}
+          <span className="block w-full text-center">
+            {translations[language].conjugate}
+          </span>
         </button>
         <button
           type="button"
-          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="flex-1 min-w-32 bg-gray-500 hover:bg-gray-600 active:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-150 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
           onClick={handleReset}
         >
-          {translations[language].reset}
+          <span className="block w-full text-center">
+            {translations[language].reset}
+          </span>
         </button>
       </div>
     </div>
