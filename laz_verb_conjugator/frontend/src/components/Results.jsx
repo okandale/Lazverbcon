@@ -80,16 +80,16 @@ const Results = ({ results, language, translations }) => {
                       return (
                         <div 
                           key={index}
-                          className="flex flex-col sm:flex-row sm:items-center py-3 group relative"
+                          className="flex items-center py-3 group"
                         >
-                          <div className="sm:w-1/3 font-medium text-gray-500 mb-1 sm:mb-0">
+                          <div className="w-1/3 font-medium text-gray-500 min-w-fit pr-4">
                             {prefix}
                           </div>
-                          <div className="sm:w-2/3 text-gray-900 flex items-center justify-between">
-                            <span>{conjugation}</span>
+                          <div className="w-2/3 text-gray-900 flex items-center justify-between">
+                            <span className="mr-2">{conjugation}</span>
                             <button
                               onClick={() => handleCopy(conjugation, formId)}
-                              className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:text-blue-500"
+                              className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 hover:text-blue-500 flex-shrink-0"
                               title="Copy to clipboard"
                             >
                               {copiedId === formId ? (
