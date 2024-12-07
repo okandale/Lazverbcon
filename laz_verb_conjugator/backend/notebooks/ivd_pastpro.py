@@ -338,7 +338,7 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
                     else:
                         prefix = subject_markers[subject]
 
-                if root == "dvaç̌irs":
+                elif root == "dvaç̌irs":
                     root = 'ç̌irs'
                     if subject in ('S3_Singular', 'S3_Plural'):
                         if obj in ('O1_Singular', 'O1_Plural'):
@@ -354,7 +354,7 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
                         prefix = adjusted_prefix
                     else:
                         prefix = subject_markers[subject]
-                                        
+
                 if subject in ('S3_Singular', 'S3_Plural') and obj in ('O1_Singular', 'O1_Plural'):
                     adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
                     if infinitive in ('olimbu', 'oropumu'):

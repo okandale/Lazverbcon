@@ -327,7 +327,7 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
                     else:
                         prefix = subject_markers[subject]
 
-                if root == "dvaç̌irs":
+                elif root == "dvaç̌irs":
                     root = 'ç̌irs'
                     if subject in ('S3_Singular', 'S3_Plural'):
                         if obj in ('O1_Singular', 'O1_Plural'):

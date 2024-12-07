@@ -381,7 +381,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     else:
                         prefix = subject_markers[subject]
 
-                if root == "dvaç̌irs":
+                elif root == "dvaç̌irs":
                     root = 'ç̌irs'
                     if subject in ('S3_Singular', 'S3_Plural'):
                         if obj in ('O1_Singular', 'O1_Plural'):
@@ -528,7 +528,6 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 # Function to get the first word of a compound verb
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
-
 
 
 
