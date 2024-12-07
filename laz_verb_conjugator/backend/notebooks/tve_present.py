@@ -767,12 +767,3 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
 
-# Example usage for SxOx conjugations
-infinitive = 'xe ok̆oç̌apxu'
-obj = 'O3_Singular'
-optative = False
-object_pronoun = personal_pronouns_general[obj]
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}':")
-all_conjugations = collect_conjugations(infinitive, subjects, mood='optative' if optative else None)
-print(format_conjugations(all_conjugations))
-
