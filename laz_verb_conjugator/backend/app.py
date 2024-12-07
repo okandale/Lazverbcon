@@ -4,9 +4,30 @@ import importlib
 import logging
 import os
 import pandas as pd
+import json
+from datetime import datetime
 
+# Set up two loggers - one for general application logs and one for request/response logs
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
+# Create a separate logger for request/response logging
+req_res_logger = logging.getLogger('request_response')
+req_res_logger.setLevel(logging.INFO)
+
+# Create logs directory if it doesn't exist
+os.makedirs('logs', exist_ok=True)
+
+# Create a file handler for request/response logs
+req_res_handler = logging.FileHandler('logs/request_response.log')
+req_res_handler.setLevel(logging.INFO)
+
+# Create a formatter that includes timestamp
+formatter = logging.Formatter('%(asctime)s - %(message)s')
+req_res_handler.setFormatter(formatter)
+
+# Add the handler to the request/response logger
+req_res_logger.addHandler(req_res_handler)
 
 app = Flask(__name__, static_folder='../frontend/dist')
 CORS(app)
@@ -44,6 +65,18 @@ simplified_aspect_mapping = {
     'passive': ['tvm_tve_passive'],
 }
 
+def log_request_response(request_params, response_data, endpoint):
+    """
+    Log request parameters and response data to the log file
+    """
+    log_entry = {
+        'timestamp': datetime.now().isoformat(),
+        'endpoint': endpoint,
+        'request': request_params,
+        'response': response_data
+    }
+    req_res_logger.info(json.dumps(log_entry, ensure_ascii=False))
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
@@ -69,35 +102,43 @@ def get_verbs():
 
 @app.route('/api/conjugate', methods=['GET'])
 def conjugate():
-    infinitive = request.args.get('infinitive')
+    # Capture request parameters
+    request_params = dict(request.args)
+    
+    infinitive = request_params.get('infinitive')
     if infinitive:
         infinitive = infinitive.lower()
     else:
-        return jsonify({"error": "Infinitive is required"}), 400
-    subject = request.args.get('subject')
-    obj = request.args.get('obj', None)
+        response_data = {"error": "Infinitive is required"}
+        log_request_response(request_params, response_data, '/api/conjugate')
+        return jsonify(response_data), 400
+    
+    subject = request_params.get('subject')
+    obj = request_params.get('obj', None)
     
     # Normalize obj
     if obj in ['', 'None']:
         obj = None
     
-    applicative = request.args.get('applicative', 'false').lower() == 'true'
-    causative = request.args.get('causative', 'false').lower() == 'true'
-    optative = request.args.get('optative', 'false').lower() == 'true'
-    imperative = request.args.get('imperative', 'false').lower() == 'true'
-    neg_imperative = request.args.get('neg_imperative', 'false').lower() == 'true'
-    tense = request.args.get('tense')
-    aspect = request.args.get('aspect')
-    region_filter = request.args.get('region', None)
+    applicative = request_params.get('applicative', 'false').lower() == 'true'
+    causative = request_params.get('causative', 'false').lower() == 'true'
+    optative = request_params.get('optative', 'false').lower() == 'true'
+    imperative = request_params.get('imperative', 'false').lower() == 'true'
+    neg_imperative = request_params.get('neg_imperative', 'false').lower() == 'true'
+    tense = request_params.get('tense')
+    aspect = request_params.get('aspect')
+    region_filter = request_params.get('region', None)
 
-    logger.debug(f"Received request with parameters: {request.args}")
+    logger.debug(f"Received request with parameters: {request_params}")
 
     if not infinitive or not subject or (not tense and not aspect and not imperative and not neg_imperative):
-        return jsonify({"error": "Invalid input"}), 400
+        response_data = {"error": "Invalid input"}
+        log_request_response(request_params, response_data, '/api/conjugate')
+        return jsonify(response_data), 400
 
     conjugations = {}
-    module_found = False  # Flag to indicate if we found any valid module
-    used_module = None  # Track the module used for collecting conjugations
+    module_found = False
+    used_module = None
 
     # Define ordered subjects and objects
     ordered_subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
@@ -105,8 +146,6 @@ def conjugate():
 
     # Convert the region_filter to a set of regions if specified
     region_filter_set = set(region_filter.split(',')) if region_filter else None
-
-
 
     # Special error cases for specific verbs
     special_errors = {
@@ -116,27 +155,34 @@ def conjugate():
     }
 
     if infinitive in special_errors and obj:
-        return jsonify({"error": special_errors[infinitive]}), 400
+        response_data = {"error": special_errors[infinitive]}
+        log_request_response(request_params, response_data, '/api/conjugate')
+        return jsonify(response_data), 400
 
     ### New Section: Check for TVM-only error ###
     is_tvm_only = True
     for module_key, module in tense_modules.items():
         if hasattr(module, 'verbs') and infinitive in module.verbs:
             if not module_key.startswith('tvm'):
-                is_tvm_only = False  # Found in a non-TVM module
-
+                is_tvm_only = False
 
     if is_tvm_only and obj:
-        return jsonify({"error": f"This verb cannot have an object/bu fiil nesne alamaz."}), 400
+        response_data = {"error": f"This verb cannot have an object/bu fiil nesne alamaz."}
+        log_request_response(request_params, response_data, '/api/conjugate')
+        return jsonify(response_data), 400
 
     if neg_imperative:
         module = tense_modules.get('tve_present')
         if not module:
-            return jsonify({"error": "Negative imperative forms not supported for this verb."}), 400
+            response_data = {"error": "Negative imperative forms not supported for this verb."}
+            log_request_response(request_params, response_data, '/api/conjugate')
+            return jsonify(response_data), 400
 
         try:
             if not hasattr(module, 'verbs') or infinitive not in module.verbs:
-                return jsonify({"error": f"Infinitive {infinitive} not found in the database."}), 404
+                response_data = {"error": f"Infinitive {infinitive} not found in the database."}
+                log_request_response(request_params, response_data, '/api/conjugate')
+                return jsonify(response_data), 404
 
             subjects = ['S2_Singular', 'S2_Plural'] if subject == 'all' else [subject]
             objects = ordered_objects if obj == 'all' else [obj] if obj else [None]
@@ -154,25 +200,34 @@ def conjugate():
 
             neg_imperatives = module.extract_neg_imperatives(all_conjugations, subjects)
             formatted_conjugations = module.format_neg_imperatives(neg_imperatives)
-
+            
+            # Log successful response
+            log_request_response(request_params, formatted_conjugations, '/api/conjugate')
             return jsonify(formatted_conjugations)
 
         except Exception as e:
             logger.error(f"Error while processing negative imperative: {e}")
-            return jsonify({"error": str(e)}), 400
-
+            response_data = {"error": str(e)}
+            log_request_response(request_params, response_data, '/api/conjugate')
+            return jsonify(response_data), 400
 
     if imperative:
         if subject not in ['S2_Singular', 'S2_Plural', 'all']:
-            return jsonify({"error": "Imperatives are only available for S2_Singular, S2_Plural, or all"}), 400
+            response_data = {"error": "Imperatives are only available for S2_Singular, S2_Plural, or all"}
+            log_request_response(request_params, response_data, '/api/conjugate')
+            return jsonify(response_data), 400
 
-        module = tense_modules.get('tve_past')  # Assuming imperative forms are handled in past tense module
+        module = tense_modules.get('tve_past')
         if not module:
-            return jsonify({"error": "Imperative forms not supported for this verb."}), 400
+            response_data = {"error": "Imperative forms not supported for this verb."}
+            log_request_response(request_params, response_data, '/api/conjugate')
+            return jsonify(response_data), 400
 
         try:
             if not hasattr(module, 'verbs') or infinitive not in module.verbs:
-                return jsonify({"error": f"Infinitive {infinitive} not found in the database."}), 404
+                response_data = {"error": f"Infinitive {infinitive} not found in the database."}
+                log_request_response(request_params, response_data, '/api/conjugate')
+                return jsonify(response_data), 404
 
             subjects = ['S2_Singular', 'S2_Plural'] if subject == 'all' else [subject]
             objects = ordered_objects if obj == 'all' else [obj] if obj else [None]
@@ -188,24 +243,32 @@ def conjugate():
                             all_conjugations[region] = set()
                         all_conjugations[region].update(forms)
 
-            neg_imperatives = module.extract_imperatives(all_conjugations, subjects)
-            formatted_conjugations = module.format_imperatives(neg_imperatives)
-
+            imperatives = module.extract_imperatives(all_conjugations, subjects)
+            formatted_conjugations = module.format_imperatives(imperatives)
+            
+            # Log successful response
+            log_request_response(request_params, formatted_conjugations, '/api/conjugate')
             return jsonify(formatted_conjugations)
+
         except Exception as e:
             logger.error(f"Error while processing imperative: {e}")
-            return jsonify({"error": str(e)}), 400
-
+            response_data = {"error": str(e)}
+            log_request_response(request_params, response_data, '/api/conjugate')
+            return jsonify(response_data), 400
 
     if aspect:
         if aspect not in simplified_aspect_mapping:
-            return jsonify({"error": "Invalid aspect"}), 400
+            response_data = {"error": "Invalid aspect"}
+            log_request_response(request_params, response_data, '/api/conjugate')
+            return jsonify(response_data), 400
+
         for actual_aspect in simplified_aspect_mapping[aspect]:
             module = tense_modules.get(actual_aspect)
             if not module:
                 continue
             embedded_tense = tense
-            mood = 'optative' if optative and 'tve' in actual_aspect else None  # Apply optative as mood for 'tve' aspects
+            mood = 'optative' if optative and 'tve' in actual_aspect else None
+
             try:
                 if not hasattr(module, 'verbs') or infinitive not in module.verbs:
                     continue
@@ -230,21 +293,26 @@ def conjugate():
                                 else:
                                     result = module.collect_conjugations_all(infinitive, subjects=[subj], tense=embedded_tense, obj=obj_item, applicative=applicative, causative=causative)
                             else:
-                                return jsonify({"error": "Invalid module"}), 400
+                                response_data = {"error": "Invalid module"}
+                                log_request_response(request_params, response_data, '/api/conjugate')
+                                return jsonify(response_data), 400
                             for region, forms in result.items():
                                 if region_filter_set and region not in region_filter_set:
                                     continue
                                 if region not in conjugations:
                                     conjugations[region] = set()
                                 conjugations[region].update(forms)
-                            used_module = module  # Track the module used
+                            used_module = module
                             module_found = True
             except KeyError as e:
                 logger.error(f"KeyError: {e} in module {actual_aspect}")
                 continue
     else:
         if tense not in simplified_tense_mapping:
-            return jsonify({"error": "Invalid tense"}), 400
+            response_data = {"error": "Invalid tense"}
+            log_request_response(request_params, response_data, '/api/conjugate')
+            return jsonify(response_data), 400
+
         for mapping in simplified_tense_mapping[tense]:
             if isinstance(mapping, tuple):
                 actual_tense, embedded_tense = mapping
@@ -262,7 +330,8 @@ def conjugate():
             module = tense_modules.get(actual_tense)
             if not module:
                 continue
-            mood = 'optative' if optative and 'tve' in actual_tense else None  # Apply optative as mood for 'tve' tenses
+            mood = 'optative' if optative and 'tve' in actual_tense else None
+
             try:
                 if not hasattr(module, 'verbs') or infinitive not in module.verbs:
                     continue
@@ -287,32 +356,44 @@ def conjugate():
                                 else:
                                     result = module.collect_conjugations_all(infinitive, subjects=[subj], tense=embedded_tense, obj=obj_item, applicative=applicative, causative=causative)
                             else:
-                                return jsonify({"error": "Invalid module"}), 400
+                                response_data = {"error": "Invalid module"}
+                                log_request_response(request_params, response_data, '/api/conjugate')
+                                return jsonify(response_data), 400
                             for region, forms in result.items():
                                 if region_filter_set and region not in region_filter_set:
                                     continue
                                 if region not in conjugations:
                                     conjugations[region] = set()
                                 conjugations[region].update(forms)
-                            used_module = module  # Track the module used
+                            used_module = module
                             module_found = True
             except KeyError as e:
                 logger.error(f"KeyError: {e} in module {actual_tense}")
                 continue
             except ValueError as e:
                 logger.error(f"ValueError: {e}")
-                return jsonify({"error": str(e)}), 400
+                response_data = {"error": str(e)}
+                log_request_response(request_params, response_data, '/api/conjugate')
+                return jsonify(response_data), 400
 
     if not module_found:
-        return jsonify({"error": f"Infinitive {infinitive} not found in any module."}), 404
+        response_data = {"error": f"Infinitive {infinitive} not found in any module."}
+        log_request_response(request_params, response_data, '/api/conjugate')
+        return jsonify(response_data), 404
 
     # Convert sets to lists for JSON serialization
     for region in conjugations:
         conjugations[region] = list(conjugations[region])
 
-    # Format the conjugations using the module that was used for collecting conjugations
-    formatted_conjugations = format_conjugations(conjugations, used_module, ordered_subjects, ordered_objects)
-    return jsonify(formatted_conjugations)
+    try:
+        # Format the conjugations using the module that was used for collecting conjugations
+        formatted_conjugations = format_conjugations(conjugations, used_module, ordered_subjects, ordered_objects)
+        log_request_response(request_params, formatted_conjugations, '/api/conjugate')
+        return jsonify(formatted_conjugations)
+    except Exception as e:
+        error_response = {"error": str(e)}
+        log_request_response(request_params, error_response, '/api/conjugate')
+        return jsonify(error_response), 500
 
 def format_conjugations(conjugations, module, ordered_subjects, ordered_objects):
     formatted_conjugations = {}
@@ -323,7 +404,7 @@ def format_conjugations(conjugations, module, ordered_subjects, ordered_objects)
         for form in sorted_forms:
             if len(form) != 3:
                 continue
-            subject, obj, conjugated_verb = form  # Separate dictionaries for subject and object pronouns
+            subject, obj, conjugated_verb = form
             subject_pronoun = personal_pronouns.get(subject, subject)
             object_pronoun = personal_pronouns.get(obj, '') if obj else ''
             formatted_forms.append(f"{subject_pronoun} {object_pronoun}: {conjugated_verb}")
@@ -332,4 +413,3 @@ def format_conjugations(conjugations, module, ordered_subjects, ordered_objects)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
