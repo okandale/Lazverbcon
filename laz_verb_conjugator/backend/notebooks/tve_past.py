@@ -349,7 +349,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
 
                 # Special handling for "geç̌k̆u"
                 # Special handling for "geç̌k̆u"
-                elif preverb == 'ge' and main_infinitive == 'geç̌k̆u':
+                elif preverb == 'ge' and main_infinitive in ['geç̌k̆u', 'gebažgu']:
                     if marker:
                         root = root[2:]
                     else:
@@ -370,7 +370,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
 
                 # Special handling for "ceç̌alu"
                 elif preverb == 'ce':
-                    if infinitive == 'ceç̌u':
+                    if infinitive in ('ceç̌u', 'cebazgu'):
                         if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
                             root = root[1:]  # Remove only one character if there's a marker
                         else:

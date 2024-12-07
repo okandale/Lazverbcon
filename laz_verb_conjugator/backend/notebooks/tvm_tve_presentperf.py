@@ -200,7 +200,7 @@ def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicati
             if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
             if preverb.endswith(('a', 'e', 'i', 'o', 'u')) and subject_markers[subject].startswith(('a', 'e', 'i', 'o', 'u')):
-                if infinitive == 'geç̌k̆u':  # Add 'y' only for 'geç̌k̆u'
+                if infinitive in ('geç̌k̆u', 'gebažgu'):  # Add 'y' only for 'geç̌k̆u'
                     preverb = preverb[:-1] + 'y'
                 else:
                     preverb = preverb # changed for gonʒ̆k̆u
