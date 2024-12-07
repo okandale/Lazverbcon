@@ -423,6 +423,10 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             if obj:
                 if subject == 'S3_Singular' and obj == 'O3_Singular':
                     suffix = ''
+                elif subject == 'S3_Singular' and obj == 'O3_Plural':
+                    if root.endswith('rs'):
+                        root = root[:-1]
+                    suffix = 'an'
                 elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
                     if root.endswith(('en', 'rs')):
                         root = root[:-2] if infinitive.endswith('rs') else root[:-1]
@@ -441,10 +445,15 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     suffix = 'rt'
                 elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
                     suffix = ''
-                elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural', 'S3_Singular'] and obj in ('O3_Singular', 'O3_Plural'):
+                elif subject in ['S1_Plural', 'S2_Plural', 'S3_Singular'] and obj in ('O3_Singular', 'O3_Plural'):
+                    if root.endswith('rs'):
+                        root = root[:-1]
+                    suffix = 'an'
+                elif subject == 'S3_Plural':
+                    if root.endswith('rs'):
+                        root = root[:-1]
                     suffix = 'an'
 
-                final_root = root
 
             # Conjugate the verb
             # Conjugate the verb
