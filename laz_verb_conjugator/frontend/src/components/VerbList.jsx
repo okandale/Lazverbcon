@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import VerbTable from './VerbTable';
+import LanguageToggle from './ui/LanguageToggle';
+import SpecialCharButton from './ui/SpecialCharButton';
 import {
   translations,
   API_URLS,
@@ -51,7 +53,7 @@ const VerbList = () => {
     setStoredLanguage(newLanguage);
   };
 
-  const insertSpecialCharacter = char => {
+  const handleSpecialCharClick = char => {
     if (searchInputRef.current) {
       const input = searchInputRef.current;
       const start = input.selectionStart;
@@ -72,45 +74,27 @@ const VerbList = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4 relative">
-      {/* Language Toggle Buttons */}
-      <div className="absolute top-0 right-0 space-x-2">
-        <button
-          onClick={toggleLanguage}
-          className={`focus:outline-none p-1 rounded ${language === 'en' ? 'bg-blue-100' : ''}`}
-          aria-label="Switch to English"
-        >
-          <img src="/united-kingdom-flag-icon.svg" alt="British flag" className="w-6 h-6" />
-        </button>
-        <button
-          onClick={toggleLanguage}
-          className={`focus:outline-none p-1 rounded ${language === 'tr' ? 'bg-red-100' : ''}`}
-          aria-label="Türkçe'ye geç"
-        >
-          <img src="/turkey-flag-icon.svg" alt="Turkish flag" className="w-6 h-6" />
-        </button>
-      </div>
-
-      <nav className="mb-4">
+    <div className="max-w-4xl mx-auto p-4">
+      {/* Header section with back button and language toggle */}
+      <div className="flex justify-between items-center mb-8 pt-2">
         <Link to="/" className="text-blue-500 hover:underline">
           &larr; {translations[language].backToConjugator}
         </Link>
-      </nav>
+        <LanguageToggle language={language} onToggle={toggleLanguage} />
+      </div>
       
       <h1 className="text-3xl font-bold mb-6 text-center">
         {translations[language].verbsListTitle}
       </h1>
 
       {/* Special Characters */}
-      <div className="mb-4 flex justify-center space-x-2">
+      <div className="flex flex-wrap justify-center gap-2 mb-6">
         {specialCharacters.map((char, index) => (
-          <button
+          <SpecialCharButton
             key={index}
-            className="px-3 py-1 bg-gray-300 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
-            onClick={() => insertSpecialCharacter(char)}
-          >
-            {char}
-          </button>
+            char={char}
+            onClick={handleSpecialCharClick}
+          />
         ))}
       </div>
 

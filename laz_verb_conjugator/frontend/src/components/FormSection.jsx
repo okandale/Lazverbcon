@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { translations, specialCharacters } from './constants';
 import { useFormValidation } from './useFormValidation';
+import SpecialCharButton from './ui/SpecialCharButton';
 
 const FormSection = ({
   language,
@@ -54,7 +55,7 @@ const FormSection = ({
     setResults({ data: {}, error: '' });
   };
 
-  const insertSpecialCharacter = char => {
+  const handleSpecialCharClick = char => {
     if (infinitiveInputRef.current) {
       const input = infinitiveInputRef.current;
       const start = input.selectionStart;
@@ -75,16 +76,13 @@ const FormSection = ({
   return (
     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       {/* Special Characters */}
-      <div className="mb-4 flex justify-center space-x-2">
+      <div className="flex flex-wrap justify-center gap-2 mb-6">
         {specialCharacters.map((char, index) => (
-          <button
+          <SpecialCharButton
             key={index}
-            type="button"
-            className="px-3 py-1 bg-gray-300 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
-            onClick={() => insertSpecialCharacter(char)}
-          >
-            {char}
-          </button>
+            char={char}
+            onClick={handleSpecialCharClick}
+          />
         ))}
       </div>
 
