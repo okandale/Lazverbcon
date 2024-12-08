@@ -238,7 +238,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            preverb_exceptions = {'gonǯǩu'}  # Ensure this set is defined appropriately, add additionally to 256
+            preverb_exceptions = {'oǩoreʒxu'}  # Ensure this set is defined appropriately, add additionally to 256
 
             # Check if the infinitive is NOT in the exception list before extracting preverbs
             if infinitive not in preverb_exceptions:
