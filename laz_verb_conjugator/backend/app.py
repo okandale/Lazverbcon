@@ -95,6 +95,10 @@ def serve(path):
     else:
         return send_from_directory(app.static_folder, 'index.html')
 
+@app.route('/ping', methods=['GET'])
+def hi():
+    return jsonify({"response": "pong"})
+
 @app.route('/api/conjugate', methods=['GET'])
 def conjugate():
     # Capture request parameters
