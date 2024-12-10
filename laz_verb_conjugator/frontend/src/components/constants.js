@@ -1,5 +1,5 @@
 const BASE_URL = import.meta.env.PROD 
-  ? 'https://lazverbcon.onrender.com'
+  ? 'https://laz-verb-conjugator-backend.onrender.com'
   : '';
 
 export const API_URLS = {
