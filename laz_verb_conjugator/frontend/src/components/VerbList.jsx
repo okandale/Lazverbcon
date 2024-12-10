@@ -1,86 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import VerbTable from './VerbTable';
 import LanguageToggle from './ui/LanguageToggle';
 import SpecialCharButton from './ui/SpecialCharButton';
 import {
   translations,
-  API_URLS,
   getStoredLanguage,
   setStoredLanguage,
   specialCharacters
 } from './constants';
+import { 
+  verbList, 
+  processVerbSearch, 
+  formatVerbListForDisplay 
+} from './verb-data';
 
-// Skeleton loading component
-const SkeletonTable = () => {
-  return (
-    <div className="overflow-x-auto">
-      <div className="animate-pulse">
-        {/* Header Skeleton */}
-        <div className="min-w-full border bg-white">
-          <div className="flex border-b">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="flex-1 p-4">
-                <div className="h-6 bg-gray-200 rounded w-3/4"></div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Rows Skeleton */}
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((row) => (
-            <div key={row} className="flex border-b">
-              {[1, 2, 3].map((cell) => (
-                <div key={cell} className="flex-1 p-4">
-                  <div className="h-4 bg-gray-100 rounded w-full"></div>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Main VerbList component
 const VerbList = () => {
-  const [verbs, setVerbs] = useState([]);
-  const [filteredVerbs, setFilteredVerbs] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [language, setLanguage] = useState(getStoredLanguage());
   const [searchTerm, setSearchTerm] = useState('');
   const searchInputRef = useRef(null);
 
-  useEffect(() => {
-    const fetchVerbs = async () => {
-      try {
-        const response = await fetch(API_URLS.verbs);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setVerbs(data);
-        setFilteredVerbs(data);
-      } catch (err) {
-        console.error('Error fetching verbs:', err);
-        setError('Failed to load verbs data.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchVerbs();
-  }, []);
-
-  useEffect(() => {
-    const filtered = verbs.filter(verb => 
-      verb['Laz Infinitive'].toLowerCase().includes(searchTerm.toLowerCase()) ||
-      verb['Turkish Verb'].toLowerCase().includes(searchTerm.toLowerCase()) ||
-      verb['English Translation'].toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredVerbs(filtered);
-  }, [searchTerm, verbs]);
+  // Memoize the filtered and formatted verbs
+  const filteredVerbs = useMemo(() => {
+    const filtered = processVerbSearch(searchTerm);
+    return formatVerbListForDisplay(filtered);
+  }, [searchTerm]);
 
   const toggleLanguage = () => {
     const newLanguage = language === 'en' ? 'tr' : 'en';
@@ -104,13 +48,9 @@ const VerbList = () => {
     }
   };
 
-  if (error) {
-    return <div className="text-red-500 text-center">{error}</div>;
-  }
-
   return (
     <div className="max-w-4xl mx-auto p-4">
-      {/* Header section with back button and language toggle */}
+      {/* Header with navigation and language toggle */}
       <div className="flex justify-between items-center mb-8 pt-2">
         <Link to="/" className="text-blue-500 hover:underline">
           &larr; {translations[language].backToConjugator}
@@ -118,6 +58,7 @@ const VerbList = () => {
         <LanguageToggle language={language} onToggle={toggleLanguage} />
       </div>
       
+      {/* Title */}
       <h1 className="text-3xl font-bold mb-6 text-center">
         {translations[language].verbsListTitle}
       </h1>
@@ -133,7 +74,7 @@ const VerbList = () => {
         ))}
       </div>
 
-      {/* Search Bar */}
+      {/* Search Input */}
       <div className="mb-6">
         <input
           ref={searchInputRef}
@@ -145,11 +86,16 @@ const VerbList = () => {
         />
       </div>
 
-      {loading ? (
-        <SkeletonTable />
-      ) : (
-        <VerbTable verbs={filteredVerbs} language={language} />
-      )}
+      {/* Verb Table */}
+      <VerbTable 
+        verbs={filteredVerbs}
+        language={language}
+      />
+
+      {/* Verb count */}
+      <div className="mt-4 text-center text-sm text-gray-600">
+        {filteredVerbs.length} {language === 'en' ? 'verbs' : 'fiil'}
+      </div>
     </div>
   );
 };

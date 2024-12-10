@@ -6,6 +6,7 @@ import os
 import pandas as pd
 import json
 from datetime import datetime
+from flask import make_response
 
 # Set up two loggers - one for general application logs and one for request/response logs
 logging.basicConfig(level=logging.DEBUG)
@@ -33,7 +34,7 @@ app = Flask(__name__, static_folder='../frontend/dist')
 CORS(app)
 
 # Enable CORS for your app
-CORS(app, origins=['https://laz-verb-conjugator.onrender.com'])
+CORS(app, origins=['https://lazuri.org', 'http://lazuri.org/'])
 
 # Loading tense modules
 tense_modules = {
@@ -84,21 +85,6 @@ def serve(path):
         return send_from_directory(app.static_folder, path)
     else:
         return send_from_directory(app.static_folder, 'index.html')
-    
-@app.route('/api/verbs', methods=['GET'])
-def get_verbs():
-    try:
-        csv_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
-        if not os.path.exists(csv_path):
-            return jsonify({"error": "Verb data file not found"}), 404
-            
-        df = pd.read_csv(csv_path)
-        verb_list = df[['Laz Infinitive', 'Turkish Verb', 'English Translation']].dropna().to_dict('records')
-        
-        return jsonify(verb_list)
-    except Exception as e:
-        logger.error(f"Error in get_verbs: {str(e)}")
-        return jsonify({"error": "Internal server error"}), 500
 
 @app.route('/api/conjugate', methods=['GET'])
 def conjugate():
