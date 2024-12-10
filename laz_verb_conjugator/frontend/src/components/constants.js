@@ -1,4 +1,11 @@
-export const API_URL = "/api/conjugate";
+const BASE_URL = import.meta.env.PROD 
+  ? 'https://your-aws-backend-url.com'  // Replace with your AWS URL
+  : '';
+
+export const API_URLS = {
+  conjugate: `${BASE_URL}/api/conjugate`,
+  verbs: `${BASE_URL}/api/verbs`
+};
 
 export const specialCharacters = ['ç̌', 't̆', 'ž', 'ǩ', 'ʒ', 'ǯ', 'p̌'];
 
@@ -23,11 +30,6 @@ export const objectOrder = [
   'ma', 'si', 'him', 'himus', 'heya', 'heyas', '(h)em', '(h)emus', 'şǩu', 'çki', 'çku', 'çkin',
   't̆ǩva', 'tkva', 'tkvan', 'hini', 'hinis', 'hentepe', 'hentepes', 'entepe', 'entepes'
 ];
-
-export const API_URLS = {
-  conjugate: "/api/conjugate",
-  verbs: "/api/verbs"
-};
 
 // Language persistence helper functions
 export const getStoredLanguage = () => {
