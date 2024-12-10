@@ -1,5 +1,5 @@
 const BASE_URL = import.meta.env.PROD 
-  ? 'https://3.79.111.23'
+  ? 'https://lazverbcon.onrender.com'
   : '';
 
 export const API_URLS = {
