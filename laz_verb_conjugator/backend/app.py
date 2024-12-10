@@ -38,7 +38,7 @@ CORS(app, resources={
         "origins": [
             "https://lazuri.org",
             "http://lazuri.org",
-            "http://localhost:5173"  # for local development
+            "https://lazverbcon.pages.dev"  # for local development
         ],
         "methods": ["GET", "OPTIONS"],
         "allow_headers": ["Content-Type"]
