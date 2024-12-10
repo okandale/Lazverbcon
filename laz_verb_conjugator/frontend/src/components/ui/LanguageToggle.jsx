@@ -1,6 +1,6 @@
 import React from 'react';
-import ukFlag from '/united-kingdom-flag-icon.svg';
-import turkeyFlag from '/turkey-flag-icon.svg';
+import ukFlag from '/images/united-kingdom-flag-icon.svg';
+import turkeyFlag from '/images/turkey-flag-icon.svg';
 
 const LanguageToggle = ({ language, onToggle }) => {
   return (
