@@ -1,5 +1,5 @@
 const BASE_URL = import.meta.env.PROD 
-  ? '3.79.111.23'
+  ? 'http://3.79.111.23'
   : '';
 
 export const API_URLS = {
