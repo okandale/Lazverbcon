@@ -31,10 +31,19 @@ req_res_handler.setFormatter(formatter)
 req_res_logger.addHandler(req_res_handler)
 
 app = Flask(__name__, static_folder='../frontend/dist')
-CORS(app)
 
-# Enable CORS for your app
-CORS(app, origins=['https://lazuri.org', 'http://lazuri.org/'])
+# Enable CORS with specific configuration
+CORS(app, resources={
+    r"/api/*": {
+        "origins": [
+            "https://lazuri.org",
+            "http://lazuri.org",
+            "http://localhost:5173"  # for local development
+        ],
+        "methods": ["GET", "OPTIONS"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 # Loading tense modules
 tense_modules = {
