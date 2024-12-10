@@ -34,7 +34,7 @@ app = Flask(__name__, static_folder='../frontend/dist')
 CORS(app)
 
 # Enable CORS for your app
-CORS(app, origins=['https://lazuri.org', 'http://lazuri.org', 'http://localhost:8080', 'http://localhost:5000'])
+CORS(app, origins=['https://lazuri.org', 'http://lazuri.org/'])
 
 # Loading tense modules
 tense_modules = {

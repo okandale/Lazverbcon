@@ -1,5 +1,5 @@
 const BASE_URL = import.meta.env.PROD 
-  ? 'https://your-aws-backend-url.com'  // Replace with your AWS URL
+  ? '3.79.111.23'
   : '';
 
 export const API_URLS = {
