@@ -86,23 +86,6 @@ def serve(path):
     else:
         return send_from_directory(app.static_folder, 'index.html')
 
-@app.route('/api/verbs', methods=['GET'])
-def get_verbs():
-    try:
-        csv_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
-        if not os.path.exists(csv_path):
-            return jsonify({"error": "Verb data file not found"}), 404
-            
-        df = pd.read_csv(csv_path)
-        verb_list = df[['Laz Infinitive', 'Turkish Verb', 'English Translation']].dropna().to_dict('records')
-        
-        response = make_response(jsonify(verb_list))
-        response.headers['Cache-Control'] = 'public, max-age=3600'  # Cache for 1 hour
-        return response
-    except Exception as e:
-        logger.error(f"Error in get_verbs: {str(e)}")
-        return jsonify({"error": "Internal server error"}), 500
-
 @app.route('/api/conjugate', methods=['GET'])
 def conjugate():
     # Capture request parameters
