@@ -6,6 +6,7 @@ import os
 import pandas as pd
 import json
 from datetime import datetime
+from flask import make_response
 
 # Set up two loggers - one for general application logs and one for request/response logs
 logging.basicConfig(level=logging.DEBUG)
@@ -84,7 +85,7 @@ def serve(path):
         return send_from_directory(app.static_folder, path)
     else:
         return send_from_directory(app.static_folder, 'index.html')
-    
+
 @app.route('/api/verbs', methods=['GET'])
 def get_verbs():
     try:
@@ -95,7 +96,9 @@ def get_verbs():
         df = pd.read_csv(csv_path)
         verb_list = df[['Laz Infinitive', 'Turkish Verb', 'English Translation']].dropna().to_dict('records')
         
-        return jsonify(verb_list)
+        response = make_response(jsonify(verb_list))
+        response.headers['Cache-Control'] = 'public, max-age=3600'  # Cache for 1 hour
+        return response
     except Exception as e:
         logger.error(f"Error in get_verbs: {str(e)}")
         return jsonify({"error": "Internal server error"}), 500
