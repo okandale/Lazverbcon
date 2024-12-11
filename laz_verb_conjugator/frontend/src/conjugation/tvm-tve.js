@@ -12,9 +12,10 @@ export class TVMTVEConjugation extends ConjugationBase {
   }
 
   initializeConstants() {
+    // Preverbs for all forms
     this.PREVERBS = [
       'ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 
-      'mo', 'ye'
+      'mo', 'ye', 'gela', 'ela', 'ceǩo', 'eǩo', 'ama', 'mo', 'ǩoǩo'
     ];
 
     // Present Perfect Suffixes
@@ -74,6 +75,14 @@ export class TVMTVEConjugation extends ConjugationBase {
           'S2_Plural': 'apinerit',
           'S3_Plural': 'apinenanu'
         }
+      },
+      FUTURE: {
+        'S1_Singular': 'are',
+        'S2_Singular': 'are',
+        'S3_Singular': 'asere',
+        'S1_Plural': 'atere',
+        'S2_Plural': 'atere',
+        'S3_Plural': 'anere'
       }
     };
 
@@ -104,20 +113,38 @@ export class TVMTVEConjugation extends ConjugationBase {
           'S2_Plural': 'asinonan',
           'S3_Plural': 'asinonan'
         }
+      },
+      OPTATIVE: {
+        'S1_Singular': 'as',
+        'S2_Singular': 'as',
+        'S3_Singular': 'as',
+        'S1_Plural': 'an',
+        'S2_Plural': 'an',
+        'S3_Plural': 'an'
       }
     };
   }
 
+  // Validation methods
   validate(infinitive, subject, obj, options = {}) {
-    const { passive } = options;
+    const { passive, potential } = options;
+
+    if (!this.verbs.has(infinitive)) {
+      throw new Error(`Infinitive ${infinitive} not found`);
+    }
 
     if (passive && obj) {
       throw new Error('Passive form cannot have an object');
     }
 
+    if (potential && obj) {
+      throw new Error('Potential form cannot have an object');
+    }
+
     return true;
   }
 
+  // Core conjugation methods
   conjugatePassive(infinitive, tense, subject, options = {}) {
     const { causative = false } = options;
     this.validate(infinitive, subject, null, { passive: true });
@@ -141,23 +168,18 @@ export class TVMTVEConjugation extends ConjugationBase {
           root = root.slice(preverb.length);
         }
 
-        // Add passive marker
+        // Add passive marker and transform root
         root = 'i' + root;
-
-        // Transform root based on tense
-        if (root.endsWith('en')) {
-          root = root.slice(0, -2);
-        }
-        if (root.endsWith('s')) {
-          root = root.slice(0, -1);
-        }
+        if (root.endsWith('en')) root = root.slice(0, -2);
+        if (root.endsWith('s')) root = root.slice(0, -1);
 
         // Get appropriate suffix
-        const suffixSet = causative ? 
-          this.PASSIVE_SUFFIXES[tense].CAUSATIVE : 
-          this.PASSIVE_SUFFIXES[tense].BASE;
+        const suffixSet = this.PASSIVE_SUFFIXES[tense] || this.PASSIVE_SUFFIXES.PRESENT;
+        const suffix = causative ? 
+          suffixSet.CAUSATIVE?.[subject] || suffixSet.BASE[subject] : 
+          suffixSet.BASE?.[subject] || suffixSet[subject];
 
-        const conjugatedForm = `${preverb || ''}${root}${suffixSet[subject]}`.trim();
+        const conjugatedForm = `${preverb || ''}${root}${suffix}`.trim();
         results[region].push([subject, null, conjugatedForm]);
       }
     }
@@ -180,38 +202,32 @@ export class TVMTVEConjugation extends ConjugationBase {
         }
 
         let root = this.processCompoundVerb(thirdPerson);
+        const firstWord = root.firstWord || '';
+        root = root.root || root;
 
-        // Handle preverb
+        // Handle preverb and special cases
         const preverb = this.PREVERBS.find(p => root.startsWith(p));
-        if (preverb) {
-          root = root.slice(preverb.length);
-        }
-
-        // Special handling for specific verbs
-        if (root === 'geçamu') {
-          root = 'geçu';
-        } else if (root === 'ceçamu') {
-          root = 'ceçu';
-        }
-
-        // Handle gama/gam preverb specially
         if (preverb === 'gama' || preverb === 'gam') {
           root = 'ç';
           const prefix = subject.startsWith('S3_') ? 'gam' : 'gamo';
           root = prefix + root;
+        } else if (preverb) {
+          root = root.slice(preverb.length);
         }
 
-        // Get appropriate suffix
+        // Get appropriate suffix based on tense and region
         let suffix;
         if (tense === TenseType.FUTURE) {
           suffix = region === 'HO' ? 
             this.POTENTIAL_SUFFIXES.FUTURE.HO[subject] : 
             this.POTENTIAL_SUFFIXES.FUTURE.BASE[subject];
+        } else if (tense === TenseType.OPTATIVE) {
+          suffix = this.POTENTIAL_SUFFIXES.OPTATIVE[subject];
         } else {
           suffix = this.POTENTIAL_SUFFIXES.PRESENT[subject];
         }
 
-        const conjugatedForm = `${preverb || ''}${root}${suffix}`.trim();
+        const conjugatedForm = `${firstWord} ${preverb || ''}${root}${suffix}`.trim();
         results[region].push([subject, null, conjugatedForm]);
       }
     }
@@ -234,6 +250,8 @@ export class TVMTVEConjugation extends ConjugationBase {
         }
 
         let root = this.processCompoundVerb(thirdPerson);
+        const firstWord = root.firstWord || '';
+        root = root.root || root;
 
         // Handle preverb
         const preverb = this.PREVERBS.find(p => root.startsWith(p));
@@ -256,7 +274,7 @@ export class TVMTVEConjugation extends ConjugationBase {
           this.PRESENT_PERFECT_SUFFIXES.FA[subject] : 
           this.PRESENT_PERFECT_SUFFIXES.OTHER[subject];
 
-        const conjugatedForm = `${prefix}${root}${suffix}`.trim();
+        const conjugatedForm = `${firstWord} ${prefix}${root}${suffix}`.trim();
         results[region].push([subject, null, conjugatedForm]);
       }
     }
@@ -264,6 +282,33 @@ export class TVMTVEConjugation extends ConjugationBase {
     return results;
   }
 
+  // Support methods for handling preverbs and root transformations
+  handlePreverbTransformation(preverb, subject, root, region) {
+    if (preverb === 'me' || !preverb) {
+      const prefix = this.handleMePreverb(subject, root, region);
+      return { prefix, root };
+    }
+
+    if (preverb === 'gama' || preverb === 'gam') {
+      root = 'ç';
+      const prefix = subject.startsWith('S3_') ? 'gam' : 'gamo';
+      return { prefix, root };
+    }
+
+    return { prefix: preverb, root };
+  }
+
+  handleMePreverb(subject, root, region) {
+    if (subject.startsWith('S1_')) {
+      return 'mev';
+    }
+    if (root.startsWith('n')) {
+      return 'n';
+    }
+    return 'me';
+  }
+
+  // Negative form handling
   handleNegative(infinitive, tense, subject, obj = null, options = {}) {
     const { passive, potential } = options;
     let conjugationMethod;
@@ -287,5 +332,11 @@ export class TVMTVEConjugation extends ConjugationBase {
     }
 
     return results;
+  }
+
+  // Error handling
+  handleError(error, type = 'validation') {
+    console.error(`${type} error:`, error.message);
+    throw error;
   }
 }
