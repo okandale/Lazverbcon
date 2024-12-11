@@ -279,6 +279,11 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             if marker:
                 root = handle_marker(main_infinitive, root, marker)
 
+            if mood == 'optative' and infinitive == 'oç̌ǩomu':
+                    root = 'ç̌ǩomum'
+            elif mood == 'optative' and infinitive == 'oşǩomu':
+                    root = 'şǩomum'
+
             # Get the first letter after the marker is attached
             first_letter = get_first_letter(root)
             adjusted_prefix = ''
