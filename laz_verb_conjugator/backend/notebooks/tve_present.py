@@ -146,11 +146,11 @@ def handle_marker(infinitive, root, marker):
                 root = root[:1] + marker + root[2:]  # Replace the second character 'i' or 'o' with 'i' or 'o'
             elif marker == 'u':
                 root = root[:1] + 'u' + root[2:]  # Replace the second character 'i' or 'o' with 'u'
-        elif root.startswith(('i', 'u', 'o')):
-            if marker in ['i', 'o', 'u']:
-                root = marker + root[1:]  # Replace the first 'i' or 'o' with 'i' or 'o'
-            elif marker == 'u': # may be redundant now
-                root = 'u' + root[1:]  # Replace the first 'i' or 'o' with 'u'
+    elif root.startswith(('i', 'u', 'o')):
+        if marker in ['i', 'o', 'u']:
+            root = marker + root[1:]  # Replace the first 'i' or 'o' with 'i' or 'o'
+        elif marker == 'u': # may be redundant now
+            root = 'u' + root[1:]  # Replace the first 'i' or 'o' with 'u'
     else:
         root = marker + root
     return root
@@ -537,7 +537,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/oǩo preverbs, we could check here: if preverb ends with "o") root[:-1 
             if applicative and causative:
                 if infinitive in (('oşu', 'dodvu', 'otku')):
-                    root = root[:-3] + ('vapap' if region == "HO" else 'vapam')            
+                    root = root[:-3] + ('vapap' if region == "HO" else 'vapam')  
                 elif root.endswith(('umers', 'omers')) or root.endswith('amers'):
                     root = root[:-5] + 'apam'
                 elif root.endswith(('ms', 'ps')): 
@@ -561,6 +561,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     root = root[:-2] + 'ams'
             elif causative:
                 if root == ('çams'): #changed root for oç̌ǩomu/oşǩomu
+                    root = root
+                elif infinitive == 'doguru':
                     root = root
                 elif infinitive in (('oşu', 'dodvu', 'otku')):
                     root = root[:-3] + ('vapap' if region == "HO" else 'vapam')  
