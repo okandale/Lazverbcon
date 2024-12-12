@@ -46,7 +46,7 @@ def is_vowel(char):
     return char in 'aeiou'
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'cele', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'gela', 'ela', 'ceǩo', 'eǩo', 'ama', 'mo', 'ǩoǩo'): {
+    ('ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'gela', 'ela', 'ceǩo', 'eǩo', 'ama', 'mo', 'ǩoǩo'): {
         'S1_Singular': 'v',
         'S2_Singular': '',
         'S3_Singular': '',
@@ -134,8 +134,11 @@ def handle_marker(infinitive, root, marker):
         root = 'xvenams'
     elif infinitive in ('oç̌ǩomu') and marker in ('i', 'u'):
         root = 'ç̌ǩomums'
-    elif infinitive in ('gemgaru', 'cebgaru') and marker:
-        marker = ''
+    elif infinitive in ('gemgaru', 'cebgaru'):
+        if marker in ['i', 'o', 'u']:
+            root = marker + root[2:]
+        else:
+            marker = ''
     elif infinitive == 'geç̌ǩu' and len(root) > 2: #special case for geç̌ǩu
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
@@ -380,8 +383,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
 
                 # Special handling for "ceç̌alu"
-                elif preverb in ('cele'):
-                    if infinitive in ('celebalu'):
+                elif preverb in ('cel'):
+                    if infinitive in ('celabalu'):
                         if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
                             if applicative and causative:
                                 root = 'i' + root[5:]
@@ -829,3 +832,17 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
 
+
+# Example usage for Sx conjugations with a specific object and marker
+infinitive = 'cebgaru'
+obj = 'O3_Singular'
+marker = '' # Change to 'causative' or 'applicative' or 'both' if needed
+object_pronoun = personal_pronouns_general[obj]
+
+# Determine the flags for causative and applicative based on the marker value
+is_causative = marker in ['causative', 'both']
+is_applicative = marker in ['applicative', 'both']
+
+print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}' and {marker} marker:")
+all_conjugations = collect_conjugations(infinitive, subjects, obj=obj, causative=is_causative, applicative=is_applicative)
+print(format_conjugations(all_conjugations))
