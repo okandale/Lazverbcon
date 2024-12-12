@@ -1,0 +1,151 @@
+# General application settings
+app:
+  data_file: data/verb_data.csv
+  logging:
+    level: INFO
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    file: logs/lazuri.log
+  cache:
+    enabled: true
+    max_size: 1000
+    ttl: 3600  # Time to live in seconds
+
+# Supported regions and dialects
+regions:
+  - FA
+  - PZ
+  - AŞ
+  - HO
+
+# Verb conjugation rules
+verb_rules:
+  # Preverb rules
+  preverbs:
+    standard:
+      - ge
+      - e
+      - ce
+      - do
+      - ye
+    special:
+      go:
+        S1_Singular: gom
+        S2_Singular: gog
+        S3_Singular: go
+        S1_Plural: gom
+        S2_Plural: gog
+        S3_Plural: go
+      gy:
+        S1_Singular: gem
+        S2_Singular: geg
+        S3_Singular: gyo
+        S1_Plural: gem
+        S2_Plural: geg
+        S3_Plural: gyo
+      coz:
+        S1_Singular: cem
+        S2_Singular: ceg
+        S3_Singular: coz
+        S1_Plural: cem
+        S2_Plural: ceg
+        S3_Plural: coz
+
+  # Phonetic rules
+  phonetic_rules:
+    FA:
+      v_rules:
+        p: [t, k, ʒ, ç, f, s, ş, x, h]
+        b: [l, a, e, i, o, u, d, g, ž, c, v, z, j, ğ]
+        p̌: [ç̌, ǩ, q, ǯ, t̆]
+        m: [n]
+    default:
+      v_rules:
+        v: [a, e, i, o, u]
+        p: [t, k, ʒ, ç, f, s, ş, x, h]
+        b: [l, d, g, ž, c, v, z, j, ğ]
+        p̌: [ç̌, ǩ, q, ǯ, t̆]
+        m: [n]
+
+  # Special verb restrictions
+  special_verbs:
+    coxons:
+      no_object: true
+    cozun:
+      no_object: true
+    gyožin:
+      no_object: true
+
+  # Verb categories and their properties
+  verb_categories:
+    IVD:
+      can_take_object: true
+      supported_tenses:
+        - present
+        - past
+        - future
+        - past_progressive
+    TVE:
+      can_take_object: true
+      supported_tenses:
+        - present
+        - past
+        - future
+        - past_progressive
+      supported_aspects:
+        - potential
+        - passive
+    TVM:
+      can_take_object: false
+      supported_tenses:
+        - present
+        - past
+        - future
+        - past_progressive
+      supported_aspects:
+        - potential
+        - passive
+
+  # Subject-object combination rules
+  subject_object_rules:
+    invalid_combinations:
+      - [S1_Singular, O1_Singular]
+      - [S1_Plural, O1_Plural]
+      - [S2_Singular, O2_Singular]
+      - [S2_Plural, O2_Plural]
+
+  # Tense endings
+  tense_endings:
+    present:
+      S1_Singular: r
+      S2_Singular: r
+      S3_Singular: n
+      S1_Plural: rt
+      S2_Plural: rt
+      S3_Plural: nan
+    past:
+      S1_Singular: i
+      S2_Singular: i
+      S3_Singular: u
+      S1_Plural: it
+      S2_Plural: it
+      S3_Plural: es
+    future:
+      default:
+        S1_Singular: are
+        S2_Singular: are
+        S3_Singular: asen
+        S1_Plural: aten
+        S2_Plural: aten
+        S3_Plural: anen
+      HO:
+        S1_Singular: aminon
+        S2_Singular: aginon
+        S3_Singular: asinon
+        S1_Plural: aminonan
+        S2_Plural: aginonan
+        S3_Plural: asinonan
+      PZ:
+        S3_Singular: asere
+        S1_Plural: atere
+        S2_Plural: atere
+        S3_Plural: anere
