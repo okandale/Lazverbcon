@@ -123,18 +123,20 @@ def determine_marker(subject, obj, marker_type):
 def handle_marker(infinitive, root, marker):
     if infinitive == 'doguru':
         root = root[1:]  # Remove the first character 'd' from the root
-    if infinitive == 'meşvelu':
+    elif infinitive == 'meşvelu':
         root = root[1:]
-    if infinitive in ('oç̌ǩomu', 'oşǩomu') and marker == 'o':
+    elif infinitive in ('oç̌ǩomu', 'oşǩomu') and marker == 'o':
         root = 'çams'
         marker = ''
-    if infinitive in ('oxenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
+    elif infinitive in ('oxenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
         root = 'xenams'
-    if infinitive in ('oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
+    elif infinitive in ('oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
         root = 'xvenams'
     elif infinitive in ('oç̌ǩomu') and marker in ('i', 'u'):
         root = 'ç̌ǩomums'
-    if infinitive == 'geç̌ǩu' and len(root) > 2: #special case for geç̌ǩu
+    elif infinitive in ('gemgaru', 'cebgaru') and marker:
+        marker = ''
+    elif infinitive == 'geç̌ǩu' and len(root) > 2: #special case for geç̌ǩu
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
                 root = root[:2] + marker + root[3:]  # Replace the third character 'i' or 'o' with 'i' or 'o'
@@ -356,7 +358,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         prefix = 'do'
 
                 # Special handling for "geç̌ǩu"
-                elif preverb == 'ge' and main_infinitive in ['geç̌ǩu', 'gebažgu', 'gemp̌onu']:
+                elif preverb == 'ge' and main_infinitive in ['geç̌ǩu', 'gebažgu', 'gemp̌onu', 'gemgaru']:
                     if marker:
                         root = root[2:]
                     else:
@@ -377,7 +379,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
                 # Special handling for "ceç̌alu"
                 elif preverb == 'ce':
-                    if infinitive in ('ceç̌u', 'cebazgu'):
+                    if infinitive in ('ceç̌u', 'cebazgu', 'cebgaru'):
                         if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
                             root = root[1:]  # Remove only one character if there's a marker
                         else:

@@ -130,6 +130,8 @@ def handle_marker(infinitive, root, marker):
         root = marker + 'ç̌ǩomums'
     elif infinitive in ('oşǩomu') and marker in ('i, u'):
         root = marker + 'şǩomums'
+    elif infinitive in ('gemgaru', 'cebgaru') and marker:
+        marker = ''
     elif infinitive == 'geç̌ǩu' and len(root) > 2: #special case for geç̌ǩu
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
@@ -354,7 +356,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                         prefix = 'do'
 
                 # Special handling for "geç̌ǩu"
-                elif preverb == 'ge' and main_infinitive in ['geç̌ǩu', 'gebažgu']:
+                elif preverb == 'ge' and main_infinitive in ['geç̌ǩu', 'gebažgu', 'gemgaru']:
                     if marker:
                         root = root[2:]
                     else:
@@ -375,7 +377,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
 
                 # Special handling for "ceç̌alu"
                 elif preverb == 'ce':
-                    if infinitive in ('ceç̌u', 'cebazgu'):
+                    if infinitive in ('ceç̌u', 'cebazgu', 'cebgaru'):
                         if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
                             root = root[1:]  # Remove only one character if there's a marker
                         else:
