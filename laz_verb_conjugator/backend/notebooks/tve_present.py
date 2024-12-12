@@ -699,7 +699,7 @@ def extract_neg_imperatives(all_conjugations, subjects):
         for subject, obj, conjugation in conjugations:
             if subject in subjects:
                 # Use "mo" for region "HO", otherwise "mot"
-                neg_prefix = "mo" if region == "HO" else "mot"
+                neg_prefix = "mo" if region in ("HO", "AŞ") else "mot"
                 conjugation_with_neg = f"{neg_prefix} {conjugation}"
                 imperatives[region].append((subject, obj, conjugation_with_neg))
     return imperatives
