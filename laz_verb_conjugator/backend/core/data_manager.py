@@ -170,3 +170,11 @@ class VerbDataManager:
     def clear_cache(self) -> None:
         """Clear all cached conjugated forms."""
         self.cached_forms.clear()
+
+    def get_regional_variants(self, infinitive: str, region: str) -> List[str]:
+        """Get region-specific verb forms."""
+        pass
+
+    def get_alternative_forms(self, infinitive: str) -> List[str]:
+        """Get alternative forms of a verb."""
+        pass

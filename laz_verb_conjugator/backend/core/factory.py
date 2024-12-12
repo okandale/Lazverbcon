@@ -220,3 +220,12 @@ class ConjugationFactory:
         }
 
         return verb_type in aspect_support.get(aspect, [])
+    
+    def get_imperative_conjugator(self, verb: str, negative: bool = False) -> Optional[ConjugationBase]:
+        """Get conjugator for imperative forms."""
+        verb_type = self._data_manager.get_verb_type(verb)
+        if verb_type not in ['TVE', 'TVM']:
+            return None
+            
+        cache_key = f"{verb_type}_{'negative_' if negative else ''}imperative"
+        # Add imperative handling from old implementation

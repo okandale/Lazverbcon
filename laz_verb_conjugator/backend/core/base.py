@@ -259,3 +259,19 @@ class ConjugationBase(ABC):
             Dictionary mapping subject types to suffixes
         """
         raise NotImplementedError("Get_suffixes method must be implemented by derived classes")
+    
+    def handle_compound_verb(self, verb: str, subject: str) -> str:
+        """Handle special cases for compound verbs."""
+        parts = verb.split()
+        if len(parts) <= 1:
+            return verb
+        first_word = parts[0]
+        if first_word in self._compound_markers:
+            # Add compound verb logic from old implementation
+            pass
+        return verb
+    
+    def handle_special_preverbs(self, preverb: str, root: str) -> str:
+        """Handle special preverb cases from old implementation."""
+        # Add special preverb handling from old implementation
+        pass

@@ -256,3 +256,11 @@ class PhoneticProcessor:
         if not first_part:
             return rest
         return f"{first_part} {rest}"
+    
+    def handle_regional_phonetics(self, word: str, region: str) -> str:
+        """Handle region-specific phonetic rules."""
+        pass
+
+    def apply_compound_phonetics(self, first_part: str, second_part: str, region: str) -> str:
+        """Apply phonetic rules to compound verbs."""
+        pass
