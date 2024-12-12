@@ -245,6 +245,10 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
 
             # Specific case: preverb modifications based on subject
             if preverb in ('ge', 'e', 'ce'):
+                if root.startswith('ca'):
+                    if subject in ('S3_Singular', 'S3_Plural'):
+                        preverb = 'c'
+                    root = root[1:]
                 if subject in ['S1_Singular', 'S1_Plural']:
                     prefix = preverb + 'om'
                 elif subject in ['S2_Singular', 'S2_Plural']:

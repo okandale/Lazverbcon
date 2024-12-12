@@ -297,8 +297,17 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Specific case: preverb modifications based on subject
             preverb_form = ''
-            
+
+            if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and preverb == 'e':
+                preverb = 'ey' if region == 'PZ' else 'y'
+            if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')):
+                preverb = preverb[:-1] 
+
             if preverb in ('ge', 'e', 'ce'):
+                if root.startswith('ca'):
+                    if subject in ('S3_Singular', 'S3_Plural'):
+                        preverb = 'c'
+                    root = root[1:]
                 if subject in ['S1_Singular', 'S1_Plural']:
                     prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
