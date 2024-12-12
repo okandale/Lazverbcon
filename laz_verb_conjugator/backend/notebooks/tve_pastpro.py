@@ -43,7 +43,7 @@ def process_compound_verb(verb):
 
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye'): {
+    ('ge', 'e', 'cele', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye'): {
         'S1_Singular': 'v',
         'S2_Singular': '',
         'S3_Singular': '',
@@ -375,7 +375,42 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                         prefix = 'gy'
 
                 # Special handling for "ceç̌alu"
-                elif preverb == 'ce':
+                elif preverb in ('cele'):
+                    if infinitive in ('celebalu'):
+                        if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
+                            if applicative and causative:
+                                root = 'i' + root[5:]
+                            if applicative:
+                                root = 'i' + root[5:]
+                            elif causative:
+                                root = 'o' + root[5:]
+                            else:
+                                root = 'o' + root[4:]  # Remove only one character if there's a marker
+                        else:
+                            root = root[1:]
+                            preverb = preverb[:-3]
+                    else:
+                        if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
+                            root = root
+                        else:
+                            root = root
+                    first_letter = get_first_letter(root)
+                    if obj in ['O2_Singular', 'O2_Plural']:
+                        adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                        prefix = preverb + adjusted_prefix
+                    elif subject in ['S1_Singular', 'S1_Plural']:
+                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
+                        prefix = preverb + adjusted_prefix
+                    elif obj in ['O1_Singular', 'O1_Plural']:
+                        prefix = preverb + 'm'
+                    elif marker_type == 'causative':
+                        prefix = preverb
+                    else:
+                        prefix = preverb
+
+
+                # Special handling for "ceç̌alu"
+                elif preverb in ('ce'):
                     if infinitive in ('ceç̌u', 'cebazgu', 'cebgaru'):
                         if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
                             root = root[1:]  # Remove only one character if there's a marker
@@ -388,16 +423,19 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                         else:
                             root = root
                     first_letter = get_first_letter(root)
+                    if infinitive in ('ceyonu') and not marker: # add for other tenses
+                        root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
+                    first_letter = get_first_letter(root)
                     if obj in ['O2_Singular', 'O2_Plural']:
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                        prefix = 'ce' + adjusted_prefix
+                        prefix = preverb + adjusted_prefix
                     elif subject in ['S1_Singular', 'S1_Plural']:
                         adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                        prefix = 'ce' + adjusted_prefix
+                        prefix = preverb + adjusted_prefix
                     elif obj in ['O1_Singular', 'O1_Plural']:
-                        prefix = 'cem'
+                        prefix = preverb + 'm'
                     elif marker_type == 'causative':
-                        prefix = 'ce'
+                        prefix = preverb
                     else:
                         prefix = preverb
 
