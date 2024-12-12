@@ -123,36 +123,36 @@ def determine_marker(subject, obj, marker_type):
 def handle_marker(infinitive, root, marker):
     if infinitive == 'doguru':
         root = root[1:]  # Remove the first character 'd' from the root
-    elif infinitive == 'meşvelu':
+    if infinitive == 'meşvelu':
         root = root[1:]
-    elif infinitive in ('oç̌ǩomu', 'oşǩomu') and marker == 'o':
+    if infinitive in ('oç̌ǩomu', 'oşǩomu') and marker == 'o':
         root = 'çams'
         marker = ''
-    elif infinitive in ('oxenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
+    if infinitive in ('oxenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
         root = 'xenams'
-    elif infinitive in ('oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
+    if infinitive in ('oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
         root = 'xvenams'
-    elif infinitive in ('oç̌ǩomu') and marker in ('i', 'u'):
+    if infinitive in ('oç̌ǩomu') and marker in ('i', 'u'):
         root = 'ç̌ǩomums'
-    elif infinitive in ('gemgaru', 'cebgaru'):
+    if infinitive in ('gemgaru', 'cebgaru'):
         if marker in ['i', 'o', 'u']:
             root = marker + root[2:]
         else:
             marker = ''
-    elif infinitive == 'geç̌ǩu' and len(root) > 2: #special case for geç̌ǩu
+    if infinitive == 'geç̌ǩu' and len(root) > 2: #special case for geç̌ǩu
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
                 root = root[:2] + marker + root[3:]  # Replace the third character 'i' or 'o' with 'i' or 'o'
             elif marker == 'u':
                 root = root[:2] + 'u' + root[3:]  # Replace the third character 'i' or 'o' with 'u'
 
-    elif infinitive == 'ceç̌u' and len(root) > 1: #special case for ceç̌u
+    if infinitive == 'ceç̌u' and len(root) > 1: #special case for ceç̌u
         if root[1] in ['i', 'o']:
             if marker in ['i', 'o']:
                 root = root[:1] + marker + root[2:]  # Replace the second character 'i' or 'o' with 'i' or 'o'
             elif marker == 'u':
                 root = root[:1] + 'u' + root[2:]  # Replace the second character 'i' or 'o' with 'u'
-    elif root.startswith(('i', 'u', 'o')):
+    if root.startswith(('i', 'u', 'o')):
         if marker in ['i', 'o', 'u']:
             root = marker + root[1:]  # Replace the first 'i' or 'o' with 'i' or 'o'
         elif marker == 'u': # may be redundant now
@@ -213,7 +213,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             root = process_compound_verb(third_person)
             first_word = get_first_word(third_person)  # Get the first word for compound verbs
             root = process_compound_verb(root)
-            
+
             subject_markers = {
                 'S1_Singular': 'v',
                 'S2_Singular': '',
@@ -267,6 +267,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             # Remove the preverb from the third-person form if it exists
             if preverb and root.startswith(preverb):
                 root = root[len(preverb):]
+            # After extracting third_person, root, and region but before preverb logic:
+
 
             # Determine the marker (applicative or causative)
             marker = ''
@@ -418,7 +420,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
 
                 # Special handling for "ceç̌alu"
-                elif preverb in ('ce'):
+                elif preverb == 'ce':
+                    print("DEBUG: This won't run if preverb != 'ce'")
                     if infinitive in ('ceç̌u', 'cebazgu', 'cebgaru'):
                         if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
                             root = root[1:]  # Remove only one character if there's a marker
@@ -831,18 +834,3 @@ subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural
 # Function to get the first word of a compound verb
 def get_first_word(verb):
     return verb.split()[0] if len(verb.split()) > 1 else ''
-
-
-# Example usage for Sx conjugations with a specific object and marker
-infinitive = 'cebgaru'
-obj = 'O3_Singular'
-marker = '' # Change to 'causative' or 'applicative' or 'both' if needed
-object_pronoun = personal_pronouns_general[obj]
-
-# Determine the flags for causative and applicative based on the marker value
-is_causative = marker in ['causative', 'both']
-is_applicative = marker in ['applicative', 'both']
-
-print(f"All subject conjugations of infinitive '{infinitive}' with object '{object_pronoun}' and {marker} marker:")
-all_conjugations = collect_conjugations(infinitive, subjects, obj=obj, causative=is_causative, applicative=is_applicative)
-print(format_conjugations(all_conjugations))
