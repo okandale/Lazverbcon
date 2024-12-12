@@ -337,7 +337,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 
                 # Special handling for "do"
                 elif preverb == 'do':
-                    if root in ('diguraps', 'digurams'):
+                    if root.startswith("di"): # Changed to 'di' from 'digurams', 'diguraps' to see if it's a general rule
                         root = root[1:]
                     if obj in ['O2_Singular', 'O2_Plural']:
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)

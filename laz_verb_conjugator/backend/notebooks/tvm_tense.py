@@ -333,7 +333,10 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
             
             # Special handling for "do"
             elif preverb == 'do':
-                if obj in ['O2_Singular', 'O2_Plural']:
+                if root.startswith("di"): # Changed to 'di' from 'digurams', 'diguraps' to see if it's a general rule
+                    root = root[1:]
+                    prefix = 'do' + ('b' if region == 'FA' else 'v') if subject in ('S1_Singular', 'S1_Plural') else 'd'
+                elif obj in ['O2_Singular', 'O2_Plural']:
                     adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
                     prefix = 'do' + adjusted_prefix
                 elif subject in ['S1_Singular', 'S1_Plural']:
