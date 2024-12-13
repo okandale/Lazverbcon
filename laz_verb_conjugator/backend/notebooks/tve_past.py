@@ -129,8 +129,9 @@ def handle_marker(infinitive, root, marker):
         root = marker + 'ç̌ǩomums'
     elif infinitive in ('oşǩomu') and marker in ('i, u'):
         root = marker + 'şǩomums'
-    elif infinitive in ('gemgaru', 'cebgaru') and marker:
-        marker = ''
+    if infinitive in ('gemgaru', 'cebgaru'):
+        if marker in ['i', 'o', 'u']:
+            root = root[:1] + marker + root[3:] 
     elif infinitive == 'geç̌ǩu' and len(root) > 2: #special case for geç̌ǩu
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
@@ -370,8 +371,8 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                         prefix = 'gy'
 
                 # Special handling for "ceç̌alu"
-                elif preverb in ('cele'):
-                    if infinitive in ('celebalu'):
+                elif preverb == 'cel':
+                    if infinitive in ('celabalu'):
                         if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
                             if applicative and causative:
                                 root = 'i' + root[5:]

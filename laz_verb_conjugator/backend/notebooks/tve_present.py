@@ -136,9 +136,7 @@ def handle_marker(infinitive, root, marker):
         root = 'ç̌ǩomums'
     if infinitive in ('gemgaru', 'cebgaru'):
         if marker in ['i', 'o', 'u']:
-            root = marker + root[2:]
-        else:
-            marker = ''
+            root = root[:1] + marker + root[3:] 
     if infinitive == 'geç̌ǩu' and len(root) > 2: #special case for geç̌ǩu
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
@@ -385,7 +383,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
 
                 # Special handling for "ceç̌alu"
-                elif preverb in ('cel'):
+                elif preverb == 'cel':
                     if infinitive in ('celabalu'):
                         if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
                             if applicative and causative:
@@ -421,13 +419,11 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
                 # Special handling for "ceç̌alu"
                 elif preverb == 'ce':
-                    print("DEBUG: This won't run if preverb != 'ce'")
                     if infinitive in ('ceç̌u', 'cebazgu', 'cebgaru'):
-                        if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
-                            root = root[1:]  # Remove only one character if there's a marker
+                        if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
+                            root = root[2:]  # Remove only one character if there's a marker
                         else:
                             root = root[1:]
-                            preverb = preverb[:-1]
                     else:
                         if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
                             root = root
