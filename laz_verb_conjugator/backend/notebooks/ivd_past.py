@@ -36,7 +36,7 @@ def process_compound_verb(verb):
 
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'do', 'ye'): {
+    ('ge', 'e', 'cel', 'ce', 'do', 'ye'): {
         'S1_Singular': 'om',
         'S2_Singular': 'og',
         'S3_Singular': '',
@@ -137,8 +137,6 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
         return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
     
-    if applicative and causative:
-        raise ValueError("A verb can either have an applicative marker or a causative marker, but not both.")
     if applicative and obj is None:
         raise ValueError("Applicative requires an object to be specified.")
     if causative and obj is None:

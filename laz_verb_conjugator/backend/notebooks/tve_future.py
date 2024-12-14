@@ -44,7 +44,7 @@ def process_compound_verb(verb):
 
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'cele', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'cele'): {
+    ('ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'cele'): {
         'S1_Singular': 'v',
         'S2_Singular': '',
         'S3_Singular': '',
@@ -139,12 +139,12 @@ def handle_marker(infinitive, root, marker):
                 root = root[:2] + marker + root[3:]  # Replace the third character 'i' or 'o' with 'i' or 'o'
             elif marker == 'u':
                 root = root[:2] + 'u' + root[3:]  # Replace the third character 'i' or 'o' with 'u'
-    elif infinitive == 'ceç̌u' and len(root) > 1: #special case for ceç̌u
+    if root.startswith('co'): #special case for ceç̌u
         if root[1] in ['i', 'o']:
             if marker in ['i', 'o']:
                 root = root[:1] + marker + root[2:]  # Replace the second character 'i' or 'o' with 'i' or 'o'
             elif marker == 'u':
-                root = root[:1] + 'u' + root[2:]  # Replace the second character 'i' or 'o' with 'u'
+                root = 'u' + root[2:]  # Replace the second character 'i' or 'o' with 'u'
     elif root.startswith(('i', 'u', 'o')):
         if marker in ['i', 'o', 'u']:
             root = marker + root[1:]  # Replace the first 'i' or 'o' with 'i' or 'o'
@@ -412,13 +412,12 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
 
 
                 # Special handling for "ceç̌alu"
-                elif preverb in ('ce'):
-                    if infinitive in ('ceç̌u', 'cebazgu', 'cebgaru'):
-                        if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
-                            root = root[1:]  # Remove only one character if there's a marker
+                elif preverb == 'ce':
+                    if infinitive in ('ceç̌u', 'cebazgu', 'cebgaru', 'ceginu'):
+                        if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural' 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
+                            root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root[1:]  # Remove only one character if there's a marker
                         else:
                             root = root[1:]
-                            preverb = preverb[:-1]
                     else:
                         if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
                             root = root
@@ -439,7 +438,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                     elif marker_type == 'causative':
                         prefix = preverb
                     else:
-                        prefix = preverb
+                        prefix = preverb[:1] if root.startswith(('a','e','i','o','u')) else preverb
 
                 # Special handling for "oxo"
                 elif preverb == 'oxo':

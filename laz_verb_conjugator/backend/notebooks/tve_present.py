@@ -144,15 +144,16 @@ def handle_marker(infinitive, root, marker):
             elif marker == 'u':
                 root = root[:2] + 'u' + root[3:]  # Replace the third character 'i' or 'o' with 'u'
 
-    if infinitive == 'ceç̌u' and len(root) > 1: #special case for ceç̌u
+    if root.startswith('co'): #special case for ceç̌u
         if root[1] in ['i', 'o']:
             if marker in ['i', 'o']:
                 root = root[:1] + marker + root[2:]  # Replace the second character 'i' or 'o' with 'i' or 'o'
             elif marker == 'u':
-                root = root[:1] + 'u' + root[2:]  # Replace the second character 'i' or 'o' with 'u'
+                root = 'u' + root[2:]  # Replace the second character 'i' or 'o' with 'u'
     if root.startswith(('i', 'u', 'o')):
         if marker in ['i', 'o', 'u']:
-            root = marker + root[1:]  # Replace the first 'i' or 'o' with 'i' or 'o'
+            root = marker + root[1:]
+              # Replace the first 'i' or 'o' with 'i' or 'o'
         elif marker == 'u': # may be redundant now
             root = 'u' + root[1:]  # Replace the first 'i' or 'o' with 'u'
     else:
@@ -419,9 +420,9 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
                 # Special handling for "ceç̌alu"
                 elif preverb == 'ce':
-                    if infinitive in ('ceç̌u', 'cebazgu', 'cebgaru'):
-                        if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
-                            root = root[2:]  # Remove only one character if there's a marker
+                    if infinitive in ('ceç̌u', 'cebazgu', 'cebgaru', 'ceginu'):
+                        if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural' 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
+                            root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root[2:]  # Remove only one character if there's a marker
                         else:
                             root = root[1:]
                     else:
@@ -444,7 +445,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     elif marker_type == 'causative':
                         prefix = preverb
                     else:
-                        prefix = preverb
+                        prefix = preverb[:1] if root.startswith(('a','e','i','o','u')) else preverb
 
                 # Special handling for "oxo"
                 elif preverb == 'oxo':
