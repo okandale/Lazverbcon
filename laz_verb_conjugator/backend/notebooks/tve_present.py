@@ -253,7 +253,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            preverb_exceptions = {'oǩoreʒxu'}  # Ensure this set is defined appropriately, add additionally to 256
+            preverb_exceptions = {'oǩoreʒxu', 'oǩoru'}  # Ensure this set is defined appropriately, add additionally to 256
 
 
 
@@ -490,13 +490,17 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
 
                 # special handling for "oǩo" 
-                elif preverb == 'oǩo'and infinitive not in ['oǩoreʒxu']:
-                    if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')):
-                            preverb = preverb[:-1]
-                    if marker:
-                        root = root
+                elif preverb == 'oǩo':
+                    if infinitive in ('oǩobğu'):
+                        if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural' 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
+                            root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root  # Remove only one character if there's a marker
+                        else:
+                            root = 'o' + root
                     else:
-                        root = root
+                        if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
+                            root = root
+                        else:
+                            root = root
                     first_letter = get_first_letter(root)
                     if obj in ['O2_Singular', 'O2_Plural']:
                         if marker_type != 'causative' and marker_type != 'applicative':
@@ -512,7 +516,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         prefix = 'oǩo' + adjusted_prefix
                     elif obj in ['O1_Singular', 'O1_Plural']:
                         if marker_type != 'causative':
-                            root = 'o' + root
+                            root = root
                         prefix = 'oǩom'
                     elif marker_type in ('causative', 'applicative'):
                         prefix = preverb

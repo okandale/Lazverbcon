@@ -438,7 +438,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                 elif preverb == 'ce':
                     if infinitive in co_verbs:
                         if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural' 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
-                            root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root[1:]  # Remove only one character if there's a marker
+                            root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root[2:]  # Remove only one character if there's a marker
                         else:
                             root = root[1:]
                     else:
@@ -487,12 +487,16 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                         
                 # special handling for "oǩo" 
                 elif preverb == 'oǩo':
-                    if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')):
-                            preverb = preverb[:-1]
-                    if marker:
-                        root = root
+                    if infinitive in ('oǩobğu'):
+                        if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural' 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
+                            root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root  # Remove only one character if there's a marker
+                        else:
+                            root = 'o' + root
                     else:
-                        root = root
+                        if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
+                            root = root
+                        else:
+                            root = root
                     first_letter = get_first_letter(root)
                     if obj in ['O2_Singular', 'O2_Plural']:
                         if marker_type != 'causative' and marker_type != 'applicative':
@@ -508,7 +512,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                         prefix = 'oǩo' + adjusted_prefix
                     elif obj in ['O1_Singular', 'O1_Plural']:
                         if marker_type != 'causative':
-                            root = 'o' + root
+                            root = root
                         prefix = 'oǩom'
                     elif marker_type in ('causative', 'applicative'):
                         prefix = preverb
