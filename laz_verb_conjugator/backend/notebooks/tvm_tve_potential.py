@@ -215,7 +215,7 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            preverb_exceptions = {'oǩoreʒxu'}  # Ensure this set is defined appropriately, add additionally to 256
+            preverb_exceptions = {'oǩoreʒxu', 'oǩoru', 'oxop̌u'}  # Ensure this set is defined appropriately, add additionally to 256
 
             # Check if the infinitive is NOT in the exception list before extracting preverbs
             if infinitive not in preverb_exceptions:
@@ -250,7 +250,7 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
                 elif preverb == 'ce':
                     preverb = preverb[:-1]
                 else:
-                    preverb = preverb # changed this for gonǯǩu 
+                    preverb = preverb if infinitive == 'gonǯǩu' else preverb[:-1] # changed this for gonǯǩu 
               
 
             first_letter = get_first_letter(root)

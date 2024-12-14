@@ -284,9 +284,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             elif causative:
                 marker = determine_marker(subject, obj, 'causative')
                 marker_type = 'causative'
-            elif infinitive == 'oxoǯonu' and (subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural']):
-                marker = 'o'  # Default to 'o' for oxoǯonu if neither applicative nor causative
-
+                
             if infinitive in ('oxenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
                 root = 'xenums'
 
@@ -315,7 +313,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                     preverb = 'ey' if region == 'PZ' else 'y'
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
-                    preverb = preverb[:-1]
+                    preverb = preverb[:-1] + 'y' if preverb == 'ge' else preverb[:-1] # added for 'geçamu' as it would omit the 'y' in (no S1) O3 conjugations.
                 # Special handling for "me"
                 if preverb == 'me' or (use_optional_preverb and not preverb):
                     if main_infinitive in ('meşvelu') and not marker or root.startswith('n') and not marker:
@@ -391,7 +389,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                     elif marker_type == 'causative':
                         prefix = ''
                     else:
-                        prefix = preverb if subject in ('S1_Singular', 'S1_Plural') or obj in ('O2_Singular', 'O2_Plural') else preverb[:1]
+                        prefix = preverb if subject in ('S1_Singular', 'S1_Plural') or obj in ('O2_Singular', 'O2_Plural') else preverb[:1] if infinitive in gyo_verbs else preverb
 
                 # Special handling for "ceç̌alu"
                 elif preverb == 'cel':
@@ -460,25 +458,35 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
 
                 # Special handling for "oxo"
                 elif preverb == 'oxo':
-                    if marker:
-                        root = root
+                    if infinitive in ('oxoǯonu', 'oxoşkvinu'):
+                        if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural' 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
+                            root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root  # Remove only one character if there's a marker
+                        else:
+                            root = 'o' + root
                     else:
-                        root = root
+                        if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
+                            root = root
+                        else:
+                            root = root
                     first_letter = get_first_letter(root)
                     if obj in ['O2_Singular', 'O2_Plural']:
+                        first_letter = get_first_letter(root)
+                        root = root[1:] if marker and subject == 'S3_Singular' and obj == 'O2_Plural' else root
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                        prefix = 'oxo' + adjusted_prefix
+                        prefix = preverb + adjusted_prefix
                     elif subject in ['S1_Singular', 'S1_Plural']:
                         adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                        prefix = 'oxo' + adjusted_prefix
+                        if root.startswith('n'):
+                            root = root[1:]
+                        prefix = preverb + adjusted_prefix
                     elif obj in ['O1_Singular', 'O1_Plural']:
-                        if marker_type != 'causative':
-                            root = 'o' + root
-                        prefix = 'oxom'
-                    elif marker_type == 'causative':
-                        prefix = 'oxo'
+                        if root.startswith('n'):
+                            root = root[1:]
+                        prefix = preverb + 'm'
+                    elif marker_type in ('causative', 'applicative'):
+                        prefix = preverb
                     else:
-                        prefix = 'oxo'
+                        prefix = preverb
                         
                 # special handling for "oǩo" 
                 elif preverb == 'oǩo':
