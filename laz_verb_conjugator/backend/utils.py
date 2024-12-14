@@ -29,8 +29,6 @@ def is_vowel(char):
     """Check if a character is a vowel."""
     return char in 'aeiou'
 
-
-
 def adjust_prefix(prefix, first_letter, phonetic_rules):
     """Adjust prefix based on phonetic rules."""
     for p, letters in phonetic_rules.items():
@@ -68,55 +66,54 @@ def handle_special_case_coz(root, subject):
 subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
 objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']
 
+def get_phonetic_rules(region: str, is_tvm: bool = False) -> tuple:
+    """Get phonetic rules for a given region and verb type."""
+    if is_tvm:
+        if region == 'FA':
+            phonetic_rules_v = {
+                'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
+                'b': ['a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+                'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
+                'm': ['n']
+            }
+        else:
+            phonetic_rules_v = {
+                'v': ['a', 'e', 'i', 'o', 'u'],
+                'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
+                'b': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+                'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
+                'm': ['n']
+            }
+        
+        phonetic_rules_g = {
+            'g': ['a', 'e', 'i', 'o', 'u'],
+            'k': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
+            'g': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+            'ǩ': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆']
+        }
 
-"""
-# from tvm_tve_presentperf and tvm_tve_passive and tvm_tense and ivd_pastpro and ivd_past and ivd_future
-# Define personal pronouns outside of regions
-personal_pronouns_general = {
-    'O1_Singular': 'ma',
-    'O2_Singular': 'si',
-    'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
-    'O1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
-    'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
-    'O3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe'
-}
+    else:
+        if region == 'FA':
+            phonetic_rules_v = {
+                'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
+                'b': ['l', 'a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+                'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
+                'm': ['n']
+            }
+        else:
+            phonetic_rules_v = {
+                'v': ['a', 'e', 'i', 'o', 'u'],
+                'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
+                'b': ['l', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+                'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
+                'm': ['n']
+            }
 
+        phonetic_rules_g = {
+            'g': ['a', 'e', 'i', 'o', 'u'],
+            'k': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
+            'g': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+            'ǩ': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆']
+        }
 
-# from tvm_tve_potential
-# Define personal pronouns outside of regions
-personal_pronouns_general = {
-    'O1_Singular': 'ma',
-    'O2_Singular': 'si',
-    'O3_Singular': 'heyas' if region == "FA" else 'himus' if region in ('AŞ', 'PZ') else '(h)emus',
-    'O1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
-    'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
-    'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region in ('AŞ', 'PZ') else 'entepes'
-}
-
-# from all ivd modules and tve_present and tvm_tense and all tvm_tve modules
-
-def format_conjugations(all_conjugations):
-    result = []
-    for region, conjugations in all_conjugations.items():
-        personal_pronouns = get_personal_pronouns(region)
-        result.append(f"{region}:")
-        for subject, obj, conjugation in sorted(conjugations, key=lambda x: subjects.index(x[0])):
-            subject_pronoun = personal_pronouns[subject]
-            object_pronoun = personal_pronouns.get(obj, '')
-            result.append(f"{subject_pronoun} {object_pronoun} {conjugation}")
-    return '\n'.join(result)
-
-# for all tve modules except tve_present 
-
-def format_conjugations(all_conjugations):
-    result = []
-    for region, conjugations in all_conjugations.items():
-        personal_pronouns = get_personal_pronouns(region)  # Added line
-        result.append(f"{region}:")
-        for subject, obj, conjugation in sorted(conjugations, key=lambda x: subjects.index(x[0])):
-            subject_pronoun = personal_pronouns[subject]
-            object_pronoun = personal_pronouns.get(obj, '')
-            result.append(f"{subject_pronoun} {object_pronoun} {conjugation}")
-    return '\n'.join(result)
-
-"""
+    return phonetic_rules_v, phonetic_rules_g

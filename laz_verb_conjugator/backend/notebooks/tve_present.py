@@ -13,6 +13,7 @@ from utils import (
     get_first_word,
     adjust_prefix,
     is_vowel,
+    get_phonetic_rules,
     subjects
 )
 
@@ -60,32 +61,6 @@ preverbs_rules = {
         'S3_Plural': ''
     }
 }
-# Phonetic rules for 'v' and 'g'
-def get_phonetic_rules(region):
-    if region == 'FA':
-        phonetic_rules_v = {
-            'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-            'b': ['l', 'a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-            'm': ['n']
-        }
-    else:
-        phonetic_rules_v = {
-            'v': ['a', 'e', 'i', 'o', 'u'],
-            'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-            'b': ['l','d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-            'm': ['n']
-        }
-
-    phonetic_rules_g = {
-        'g': ['a', 'e', 'i', 'o', 'u'],
-        'k': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-        'g': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-        'ǩ': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆']
-    }
-
-    return phonetic_rules_v, phonetic_rules_g
 
 # Function to adjust the prefix based on the first letter of the root
 def adjust_prefix(prefix, first_letter, phonetic_rules):

@@ -77,33 +77,6 @@ preverbs_rules = {
     }
 }
 
-# Phonetic rules for 'v' and 'g'
-def get_phonetic_rules(region):
-    if region == 'FA':
-        phonetic_rules_v = {
-            'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-            'b': ['l', 'a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-            'm': ['n']
-        }
-    else:
-        phonetic_rules_v = {
-            'v': ['a', 'e', 'i', 'o', 'u'],
-            'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-            'b': ['l', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-            'm': ['n']
-        }
-
-    phonetic_rules_g = {
-        'g': ['a', 'e', 'i', 'o', 'u'],
-        'k': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-        'g': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-        'ǩ': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆']
-    }
-
-    return phonetic_rules_v
-
 def get_personal_pronouns(region):
     return {
         'S1_Singular': 'ma',
@@ -120,7 +93,6 @@ def get_personal_pronouns(region):
         'O2_Plural': 'tkva'
     }
 
-# Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
 # Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
 def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False):
     # Check for invalid SxOx combinations

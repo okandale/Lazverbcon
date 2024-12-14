@@ -45,7 +45,7 @@ preverbs_rules = {
     }
 }
 
-# Phonetic rules for 'v' and 'g'
+# Phonetic rules for 'v' and 'g' ff
 def get_phonetic_rules(region):
     if region == 'FA':
         phonetic_rules_v = {

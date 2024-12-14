@@ -5,6 +5,7 @@ from utils import (
     process_compound_verb,
     get_first_letter,
     get_first_word,
+    get_phonetic_rules,
     subjects
 )
 # Load the CSV file
@@ -42,33 +43,6 @@ preverbs_rules = {
         'S3_Plural': ''
     }
 }
-
-# Phonetic rules for 'v' and 'g'
-def get_phonetic_rules(region):
-    if region == 'FA':
-        phonetic_rules_v = {
-            'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-            'b': ['a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-            'm': ['n']
-        }
-    else:
-        phonetic_rules_v = {
-            'v': ['a', 'e', 'i', 'o', 'u'],
-            'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-            'b': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-            'm': ['n']
-        }
-
-    phonetic_rules_g = {
-        'g': ['a', 'e', 'i', 'o', 'u'],
-        'k': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-        'g': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-        'ǩ': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆']
-    }
-
-    return phonetic_rules_v, phonetic_rules_g
 
 def get_personal_pronouns(region):
     return {
@@ -167,7 +141,7 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
         for region in regions_for_form:
             region = region.strip()
             personal_pronouns = get_personal_pronouns(region)
-            phonetic_rules_v, phonetic_rules_g = get_phonetic_rules(region)
+            phonetic_rules_v, phonetic_rules_g = get_phonetic_rules(region, is_tvm=True)
             
             # Set root to infinitive
             root = infinitive
