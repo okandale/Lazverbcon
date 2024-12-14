@@ -8,29 +8,9 @@ from utils import (
     get_phonetic_rules,
     subjects
 )
-# Load the CSV file
-file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
+from dataloader import load_tvm_tve_potential
 
-# Read the CSV file.
-df = pd.read_csv(file_path)
-
-# Filter for 'TVE' and 'TVM' verbs
-df_tve = df[df['Category'].isin(['TVE', 'TVM'])]
-
-# Convert the dataframe to a dictionary
-verbs = {}
-regions = {}
-for index, row in df_tve.iterrows():
-    infinitive = row['Laz Infinitive']
-    potential_forms = row[['Laz 3rd Person Singular Present', 'Laz 3rd Person Singular Present Alternative 1', 'Laz 3rd Person Singular Present Alternative 2']].dropna().tolist()
-    region = row[['Region', 'Region Alternative 1', 'Region Alternative 2']].dropna().tolist()
-    regions_list = []
-    for reg in region:
-        regions_list.extend([r.strip() for r in reg.split(',')])
-    if not regions_list:
-        regions_list = ["All"]
-    verbs[infinitive] = list(zip(potential_forms, region))
-    regions[infinitive] = regions_list
+verbs, regions = load_tvm_tve_potential()
 
 # Define preverbs and their specific rules
 preverbs_rules = {

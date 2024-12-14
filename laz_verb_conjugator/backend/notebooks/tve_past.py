@@ -17,39 +17,9 @@ from utils import (
     subjects,
     get_phonetic_rules
 )
+from dataloader import load_tve_verbs
 
-# Load the CSV file
-file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
-
-# Read the CSV file.
-df = pd.read_csv(file_path)
-
-# Filter for 'TVE' verbs --- Transitive Verbs Ergative
-df_tve = df[df['Category'] == 'TVE']
-
-# Convert the dataframe to a dictionary
-verbs = {}
-regions = {}
-co_verbs = []
-gyo_verbs = []
-for index, row in df_tve.iterrows():
-    infinitive = row['Laz Infinitive']
-    present_forms = row[['Laz 3rd Person Singular Present', 'Laz 3rd Person Singular Present Alternative 1', 'Laz 3rd Person Singular Present Alternative 2']].dropna().tolist()
-    # If any third person form starts with 'co', add its infinitive to co_verbs
-    if any(form.startswith('co') for form in present_forms):
-        co_verbs.append(infinitive)
-
-        # If any third person form starts with 'gyo', add its infinitive to gyo_verbs
-    if any(form.startswith('gyo') for form in present_forms):
-        gyo_verbs.append(infinitive)
-    region = row[['Region', 'Region Alternative 1', 'Region Alternative 2']].dropna().tolist()
-    regions_list = []
-    for reg in region:
-        regions_list.extend([r.strip() for r in reg.split(',')])
-    if not regions_list:
-        regions_list = ["All"]
-    verbs[infinitive] = list(zip(present_forms, region))
-    regions[infinitive] = regions_list
+verbs, regions, co_verbs, gyo_verbs = load_tve_verbs()
 
 # Define preverbs and their specific rules
 preverbs_rules = {
@@ -573,14 +543,15 @@ def extract_imperatives(all_conjugations, subjects):
 def format_imperatives(imperatives):
     result = {}
     for region, conjugations in imperatives.items():
-        personal_pronouns = get_personal_pronouns(region)
+        subject_pronouns = get_personal_pronouns(region)
+        object_pronouns = get_personal_pronouns_general(region)
         formatted_conjugations = []
         # Filter only S2_Singular and S2_Plural for sorting
         sorted_conjugations = sorted(conjugations, key=lambda x: (x[0] == 'S2_Singular', x[0] == 'S2_Plural'), reverse=True)
         for subject, obj, conjugation in sorted_conjugations:
             if subject in ['S2_Singular', 'S2_Plural']:  # Filter to include only S2_Singular and S2_Plural
-                subject_pronoun = personal_pronouns[subject]
-                obj_pronoun = personal_pronouns_general.get(obj, '')
+                subject_pronoun = subject_pronouns[subject]
+                obj_pronoun = object_pronouns.get(obj, '')
                 formatted_conjugations.append(f"{subject_pronoun} {obj_pronoun}: {conjugation}")
         result[region] = formatted_conjugations
     return result
@@ -603,14 +574,15 @@ def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicati
     return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb)
 
 # Define personal pronouns outside of regions
-personal_pronouns_general = {
-    'O1_Singular': 'ma',
-    'O2_Singular': 'si',
-    'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else '(h)emus',
-    'O1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
-    'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
-    'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == "PZ" else 'hini' if region == "AŞ" else 'entepes'
-}
+def get_personal_pronouns_general(region):
+    return {
+        'O1_Singular': 'ma',
+        'O2_Singular': 'si',
+        'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else '(h)emus',
+        'O1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
+        'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
+        'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == "PZ" else 'hini' if region == "AŞ" else 'entepes'
+    }
 
 
 

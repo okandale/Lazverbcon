@@ -14,32 +14,9 @@ from utils import (
     handle_special_case_u,
     subjects
 )
-# Load the CSV file
-file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
+from dataloader import load_ivd_verbs
 
-# Read the CSV file.
-df = pd.read_csv(file_path)
-
-# Now continue with your original processing logic
-
-# Filter for 'IVD' verbs (if you have already added the 'Category' column)
-df_ivd = df[df['Category'] == 'IVD']
-
-
-# Convert the filtered dataframe to a dictionary
-verbs = {}
-regions = {}
-for index, row in df_ivd.iterrows():
-    infinitive = row['Laz Infinitive']
-    present_forms = row[['Laz 3rd Person Singular Present', 'Laz 3rd Person Singular Present Alternative 1', 'Laz 3rd Person Singular Present Alternative 2']].dropna().tolist()
-    region = row[['Region', 'Region Alternative 1', 'Region Alternative 2']].dropna().tolist()
-    regions_list = []
-    for reg in region:
-        regions_list.extend([r.strip() for r in reg.split(',')])
-    if not regions_list:
-        regions_list = ["All"]
-    verbs[infinitive] = list(zip(present_forms, region))
-    regions[infinitive] = regions_list
+verbs, regions = load_ivd_verbs()
 
 # Define preverbs and their specific rules
 preverbs_rules = {

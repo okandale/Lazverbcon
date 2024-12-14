@@ -17,39 +17,9 @@ from utils import (
     handle_marker,
     subjects
 )
+from dataloader import load_tve_verbs
 
-# Load the CSV file
-file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
-
-# Read the CSV file.
-df = pd.read_csv(file_path)
-
-# Filter for 'TVE' verbs --- Transitive Verbs Ergative
-df_tve = df[df['Category'] == 'TVE']
-
-# Convert the dataframe to a dictionary
-verbs = {}
-regions = {}
-co_verbs = []
-gyo_verbs = []
-for index, row in df_tve.iterrows():
-    infinitive = row['Laz Infinitive']
-    present_forms = row[['Laz 3rd Person Singular Present', 'Laz 3rd Person Singular Present Alternative 1', 'Laz 3rd Person Singular Present Alternative 2']].dropna().tolist()
-    # If any third person form starts with 'co', add its infinitive to co_verbs
-    if any(form.startswith('co') for form in present_forms):
-        co_verbs.append(infinitive)
-
-        # If any third person form starts with 'gyo', add its infinitive to gyo_verbs
-    if any(form.startswith('gyo') for form in present_forms):
-        gyo_verbs.append(infinitive)
-    region = row[['Region', 'Region Alternative 1', 'Region Alternative 2']].dropna().tolist()
-    regions_list = []
-    for reg in region:
-        regions_list.extend([r.strip() for r in reg.split(',')])
-    if not regions_list:
-        regions_list = ["All"]
-    verbs[infinitive] = list(zip(present_forms, region))
-    regions[infinitive] = regions_list
+verbs, regions, co_verbs, gyo_verbs = load_tve_verbs()
 
 # Define preverbs and their specific rules
 preverbs_rules = {

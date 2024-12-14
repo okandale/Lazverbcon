@@ -18,39 +18,9 @@ from utils import (
     handle_marker,
     subjects
 )
+from dataloader import load_tve_verbs
 
-# Load the CSV file
-file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
-
-# Read the CSV file.
-df = pd.read_csv(file_path)
-
-# Filter for 'TVE' verbs --- Transitive Verbs Ergative
-df_tve = df[df['Category'] == 'TVE']
-
-# Convert the dataframe to a dictionary
-verbs = {}
-regions = {}
-co_verbs = []
-gyo_verbs = []
-for index, row in df_tve.iterrows():
-    infinitive = row['Laz Infinitive']
-    present_forms = row[['Laz 3rd Person Singular Present', 'Laz 3rd Person Singular Present Alternative 1', 'Laz 3rd Person Singular Present Alternative 2']].dropna().tolist()
-    # If any third person form starts with 'co', add its infinitive to co_verbs
-    if any(form.startswith('co') for form in present_forms):
-        co_verbs.append(infinitive)
-
-        # If any third person form starts with 'gyo', add its infinitive to gyo_verbs
-    if any(form.startswith('gyo') for form in present_forms):
-        gyo_verbs.append(infinitive)
-    region = row[['Region', 'Region Alternative 1', 'Region Alternative 2']].dropna().tolist()
-    regions_list = []
-    for reg in region:
-        regions_list.extend([r.strip() for r in reg.split(',')])
-    if not regions_list:
-        regions_list = ["All"]
-    verbs[infinitive] = list(zip(present_forms, region))
-    regions[infinitive] = regions_list
+verbs, regions, co_verbs, gyo_verbs = load_tve_verbs()
 
 # Define preverbs and their specific rules
 preverbs_rules = {
@@ -667,21 +637,25 @@ ordered_objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2
 def format_neg_imperatives(imperatives):
     result = {}
     for region, conjugations in imperatives.items():
-        personal_pronouns = get_personal_pronouns(region)
+        # Get both subject and object pronouns for this region
+        subject_pronouns = get_personal_pronouns(region)
+        object_pronouns = get_personal_pronouns_general(region)
+        
         formatted_conjugations = []
         for subject, obj, conjugation in conjugations:
-            subject_pronoun = personal_pronouns[subject]
-            obj_pronoun = personal_pronouns_general.get(obj, '')
+            subject_pronoun = subject_pronouns[subject]
+            obj_pronoun = object_pronouns.get(obj, '')
             formatted_conjugations.append(f"{subject_pronoun} {obj_pronoun}: {conjugation}")
 
         # Reorder for negative imperatives, ensuring S2_Singular comes before S2_Plural
         formatted_conjugations.sort(key=lambda x: (
-            x.split()[0] == personal_pronouns['S2_Plural'],  # Place S2_Plural last
-            x.split()[0] == personal_pronouns['S2_Singular'],  # Place S2_Singular first
+            x.split()[0] == subject_pronouns['S2_Plural'],  # Place S2_Plural last
+            x.split()[0] == subject_pronouns['S2_Singular'],  # Place S2_Singular first
             ordered_objects.index(x.split()[1]) if len(x.split()) > 1 and x.split()[1] in ordered_objects else -1
         ))
         
         result[region] = formatted_conjugations
+    
     return result
 
 def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, use_optional_preverb=False, mood=None):
@@ -711,7 +685,8 @@ def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicati
 
 
 # Define personal pronouns outside of regions
-personal_pronouns_general = {
+def get_personal_pronouns_general(region):
+    return {
     'O1_Singular': 'ma',
     'O2_Singular': 'si',
     'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else '(h)emus',
@@ -719,3 +694,4 @@ personal_pronouns_general = {
     'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
     'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == "PZ" else 'hini' if region == "AŞ" else 'entepes'
 }
+
