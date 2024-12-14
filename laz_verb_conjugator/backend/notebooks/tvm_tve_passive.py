@@ -1,14 +1,16 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[11]:
-
-
 # passive form with present, past, future, past progressive tense
 # update similarily to potential form if all forms stay the same.
 import pandas as pd
 import os
-
+from utils import (
+    process_compound_verb,
+    get_first_letter,
+    get_personal_pronouns,
+    get_first_word,
+    is_vowel,
+    adjust_prefix,
+    subjects
+)
 # Load the CSV file
 file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
 
@@ -33,15 +35,6 @@ for index, row in df_tve.iterrows():
     verbs[infinitive] = list(zip(passive_forms, region))
     regions[infinitive] = regions_list
 
-# Function to process compound verbs and return the latter part
-def process_compound_verb(verb):
-    root = ' '.join(verb.split()[1:]) if len(verb.split()) > 1 else verb
-    return root
-
-# Function to get the first word of a compound verb
-def get_first_word(verb):
-    return verb.split()[0] if len(verb.split()) > 1 else ''
-
 # Define preverbs and their specific rules
 preverbs_rules = {
     ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye'): {
@@ -53,8 +46,7 @@ preverbs_rules = {
         'S3_Plural': ''
     }
 }
-def is_vowel(char):
-    return char in 'aeiou'
+
 # Phonetic rules for 'v' and 'g'
 def get_phonetic_rules(region):
     if region == 'FA':
@@ -81,21 +73,6 @@ def get_phonetic_rules(region):
     }
 
     return phonetic_rules_v, phonetic_rules_g
-
-# Function to adjust the prefix based on the first letter of the root
-def adjust_prefix(prefix, first_letter, phonetic_rules):
-    for p, letters in phonetic_rules.items():
-        if first_letter in letters:
-            return p
-    return prefix
-
-# Function to handle special letters
-def get_first_letter(root):
-    if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'ǩ', 'p̌', 'ǯ']:
-        return root[:2]
-    elif root.startswith('gyoç̌ǩams'):   # to skip the "gy" part.
-        return root[2:]
-    return root[0]
 
 def get_personal_pronouns(region):
     return {
@@ -377,7 +354,6 @@ personal_pronouns_general = {
     'O3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe'
 }
 
-subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
 
 
 

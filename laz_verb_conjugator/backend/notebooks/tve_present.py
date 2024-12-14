@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[4]:
-
-
 # Most up-to-date formula with preverbs (ge [along with geç̌ǩu's exception), e, ce, dolo, do [along with 'doguru'], go, oxo (based on oxoǯonu) me (as actual preverb i.e. 'meçamu' not additional), applicative and object conjugation (and Ardeşen rule), now including causative marke. 
 # directives ("me", "mo", "n") for non-preverb verbs are missing (i.e. oç̌aru - megiç̌aram)
 # added "n" root changer - gomǯam (gonǯalu)
@@ -13,6 +7,15 @@
 # added negative imperative
 import pandas as pd
 import os
+from utils import (
+    process_compound_verb,
+    get_first_letter,
+    get_personal_pronouns,
+    get_first_word,
+    adjust_prefix,
+    is_vowel,
+    subjects
+)
 
 # Load the CSV file
 file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
@@ -38,12 +41,6 @@ for index, row in df_tve.iterrows():
     verbs[infinitive] = list(zip(present_forms, region))
     regions[infinitive] = regions_list
 
-# Function to process compound verbs and return the latter part
-def process_compound_verb(verb):
-    return ' '.join(verb.split()[1:]) if len(verb.split()) > 1 else verb
-
-def is_vowel(char):
-    return char in 'aeiou'
 # Define preverbs and their specific rules
 preverbs_rules = {
     ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'gela', 'ela', 'ceǩo', 'eǩo', 'ama', 'mo', 'ǩoǩo'): {
@@ -783,10 +780,3 @@ personal_pronouns_general = {
     'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
     'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == "PZ" else 'hini' if region == "AŞ" else 'entepes'
 }
-
-subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
-
-# Function to get the first word of a compound verb
-def get_first_word(verb):
-    return verb.split()[0] if len(verb.split()) > 1 else ''
-

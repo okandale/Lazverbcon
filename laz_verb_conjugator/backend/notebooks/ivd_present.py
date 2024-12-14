@@ -1,15 +1,17 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[101]:
-
-
 # the version with correct simple present tense SxOx conjugations and "d" preverb, but the preverb function needs to be tidied up.
 # the version with correct simple present tense SxOx conjugations and "d" preverb..
 # added optional preverb 'ko' - won't reflect in conjugator
 # added compound words
 import pandas as pd
 import os
+from utils import (
+    process_compound_verb,
+    get_first_letter,
+    get_personal_pronouns,
+    get_first_word,
+    get_first_vowel_index,
+    subjects
+)
 
 # Load the CSV file
 file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
@@ -37,11 +39,6 @@ for index, row in df_ivd.iterrows():
         regions_list = ["All"]
     verbs[infinitive] = list(zip(present_forms, region))
     regions[infinitive] = regions_list
-
-
-# Function to process compound verbs and return the latter part
-def process_compound_verb(verb):
-    return ' '.join(verb.split()[1:]) if len(verb.split()) > 1 else verb
 
 # Define preverbs and their specific rules
 preverbs_rules = {
@@ -106,31 +103,6 @@ def get_phonetic_rules(region):
 
     return phonetic_rules_v
 
-
-
-
-# Function to handle special letters
-def get_first_letter(root):
-    if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'ǩ', 'p̌']:
-        return root[:2]
-    return root[0]
-
-def adjust_prefix(prefix, first_letter, phonetic_rules):
-    for p, letters in phonetic_rules.items():
-        if first_letter in letters:
-            return p
-    return prefix
-
-
-
-# Function to handle special letters
-def get_first_vowel_index(word):
-    vowels = "aeiou"
-    for index, char in enumerate(word):
-        if char in vowels:
-            return index
-    return -1
-
 # Function to handle the specific case for verbs starting with 'u' and verbs with 'i' in the root
 def handle_special_case_u(root, subject, preverb):
     if root.startswith('u'):
@@ -156,10 +128,6 @@ def handle_special_case_gy(root, subject):
 # Function to handle special case for 'coz' preverb
 def handle_special_case_coz(root, subject):
     return 'ozun'
-
-# Function to remove the first character for certain roots
-def remove_first_character(root):
-    return root[1:]
 
 def get_personal_pronouns(region):
     return {
@@ -531,12 +499,3 @@ personal_pronouns_general = {
     'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
     'O3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe'
 }
-
-subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
-
-# Function to get the first word of a compound verb
-def get_first_word(verb):
-    return verb.split()[0] if len(verb.split()) > 1 else ''
-
-
-
