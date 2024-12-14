@@ -14,6 +14,8 @@ from utils import (
     adjust_prefix,
     is_vowel,
     get_phonetic_rules,
+    determine_marker,
+    handle_marker,
     subjects
 )
 
@@ -74,73 +76,6 @@ def get_first_letter(root):
     if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'ǩ', 'p̌', 'ǯ']:
         return root[:2]
     return root[0]
-
-# Function to determine the correct marker (applicative or causative)
-def determine_marker(subject, obj, marker_type):
-    if marker_type == 'applicative':
-        if (subject in ['S1_Singular', 'S2_Singular', 'S1_Plural', 'S2_Plural', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular', 'O1_Plural', 'O2_Plural']) or \
-           (obj in ['S1_Singular', 'S2_Singular', 'S1_Plural', 'S2_Plural'] and subject in ['O1_Singular', 'O2_Singular', 'O1_Plural', 'O2_Plural', 'S3_Singular', 'S3_Plural']):
-            return 'i'
-        elif 'O3' in obj:
-            return 'u'
-        else:
-            return ''
-    elif marker_type == 'causative':
-        return 'o'
-    elif marker_type == 'causative and applicative':
-        if (subject in ['S1_Singular', 'S2_Singular', 'S1_Plural', 'S2_Plural', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular', 'O1_Plural', 'O2_Plural']) or \
-           (obj in ['S1_Singular', 'S2_Singular', 'S1_Plural', 'S2_Plural'] and subject in ['O1_Singular', 'O2_Singular', 'O1_Plural', 'O2_Plural', 'S3_Singular', 'S3_Plural']):
-            return 'i'
-        elif 'O3' in obj:
-            return 'u'
-    return ''
-
-
-
-# Function to handle marker and special case for verbs starting with 'i' or 'o'
-def handle_marker(infinitive, root, marker, subject, obj):
-    if infinitive == 'doguru':
-        root = root[1:]  # Remove the first character 'd' from the root
-    if infinitive == 'meşvelu':
-        root = root[1:]
-    if infinitive in ('oç̌ǩomu', 'oşǩomu') and marker == 'o':
-        root = 'çams'
-        marker = ''
-    if infinitive in ('oxenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
-        root = 'xenams'
-    if infinitive in ('oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
-        root = 'xvenams'
-    if infinitive in ('oç̌ǩomu') and marker in ('i', 'u'):
-        root = 'ç̌ǩomums'
-    if infinitive in ('gemgaru', 'cebgaru'):
-        if marker in ['i', 'o', 'u']:
-            root = root[:1] + marker + root[3:] 
-    if root.startswith('gyo'): #special case for geç̌ǩu
-        if root[2] in ['i', 'o']:
-            if marker in ['i']:
-                root = root[:1] + marker + root[3:]  # Replace the second character 'i' or 'o' with 'i' or 'o'
-            elif marker == 'o':
-                root = root[:1] + marker + root[3:] if subject in ('S1_Singular', 'S1_Plural') or obj in ('O1_Singular', 'O2_Singular', 'O1_Plural', 'O2_Plural') else root[1:] 
-            elif marker == 'u':
-                root = marker + root[2:]  # Replace the second character 'i' or 'o' with 'u'
-
-    if root.startswith('co'): #special case for ceç̌u
-        if root[1] in ['i', 'o']:
-            if marker in ['i']:
-                root = root[:1] + marker + root[2:]  # Replace the second character 'i' or 'o' with 'i' or 'o'
-            elif marker == 'o':
-                root = root[:1] + marker + root[2:] if subject in ('S1_Singular', 'S1_Plural') or obj in ('O1_Singular', 'O2_Singular', 'O1_Plural', 'O2_Plural') else marker + root[2:] 
-            elif marker == 'u':
-                root = 'u' + root[2:]  # Replace the second character 'i' or 'o' with 'u'
-    if root.startswith(('i', 'u', 'o')):
-        if marker in ['i', 'o', 'u']:
-            root = marker + root[1:]
-              # Replace the first 'i' or 'o' with 'i' or 'o'
-        elif marker == 'u': # may be redundant now
-            root = 'u' + root[1:]  # Replace the first 'i' or 'o' with 'u'
-    else:
-        root = marker + root
-    return root
 
 def get_personal_pronouns(region):
     return {
