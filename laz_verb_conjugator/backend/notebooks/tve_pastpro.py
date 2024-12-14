@@ -497,21 +497,19 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                             root = root
                     first_letter = get_first_letter(root)
                     if obj in ['O2_Singular', 'O2_Plural']:
-                        if marker_type != 'causative' and marker_type != 'applicative':
-                            root = marker + root
                         first_letter = get_first_letter(root)
+                        root = root[1:] if marker and subject == 'S3_Singular' and obj == 'O2_Plural' else root
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
                         prefix = 'oǩo' + adjusted_prefix
                     elif subject in ['S1_Singular', 'S1_Plural']:
-                        if marker_type != 'causative' and marker_type != 'applicative':
-                            root = marker + root
-                        first_letter = get_first_letter(root)
                         adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                        prefix = 'oǩo' + adjusted_prefix
+                        if root.startswith('n'):
+                            root = root[1:]
+                        prefix = preverb + adjusted_prefix
                     elif obj in ['O1_Singular', 'O1_Plural']:
-                        if marker_type != 'causative':
-                            root = root
-                        prefix = 'oǩom'
+                        if root.startswith('n'):
+                            root = root[1:]
+                        prefix = preverb + 'm'
                     elif marker_type in ('causative', 'applicative'):
                         prefix = preverb
                     else:
