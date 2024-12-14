@@ -9,7 +9,6 @@ import os
 from utils import (
     process_compound_verb,
     get_first_letter,
-    get_personal_pronouns,
     get_first_word,
     adjust_prefix,
     is_vowel,
@@ -617,12 +616,6 @@ def format_imperatives(imperatives):
                 formatted_conjugations.append(f"{subject_pronoun} {obj_pronoun}: {conjugation}")
         result[region] = formatted_conjugations
     return result
-
-
-
-
-
-
 
 # Function to format the output with region-specific pronouns
 def format_conjugations(all_conjugations):

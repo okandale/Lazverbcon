@@ -3,7 +3,6 @@ import os
 from utils import (
     process_compound_verb,
     get_first_letter,
-    get_personal_pronouns,
     get_first_word,
     get_first_vowel_index,
     subjects
@@ -96,6 +95,22 @@ def handle_special_case_gy(root, subject):
 # Function to handle special case for 'coz' preverb
 def handle_special_case_coz(root, subject):
     return 'ozun'
+
+def get_personal_pronouns(region):
+    return {
+        'S1_Singular': 'ma',
+        'S2_Singular': 'si',
+        'S3_Singular': 'heyas' if region == "FA" else 'himus' if region == 'PZ' else 'him' if region == 'AŞ' else '(h)emus',
+        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
+        'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çki',
+        'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
+        'S3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == 'PZ' else 'hini' if region == 'AŞ' else 'entepes',
+        'O3_Plural': 'hentepe',
+        'O1_Singular': 'ma',
+        'O2_Singular': 'si',
+        'O1_Plural': 'çku',
+        'O2_Plural': 'tkva'
+    }
 
 # Function to conjugate past tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
 def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False):

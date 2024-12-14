@@ -3,9 +3,9 @@ import os
 from utils import (
     process_compound_verb,
     get_first_letter,
-    get_personal_pronouns,
     get_first_word,
-    get_first_vowel_index
+    get_first_vowel_index,
+    subjects
 )
 
 # Load the CSV file

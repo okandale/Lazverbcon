@@ -3,7 +3,6 @@ import os
 from utils import (
     process_compound_verb,
     get_first_letter,
-    get_personal_pronouns,
     get_first_word,
     subjects
 )
