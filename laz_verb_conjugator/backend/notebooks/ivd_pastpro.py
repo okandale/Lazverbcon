@@ -44,11 +44,11 @@ def process_compound_verb(verb):
 # Define preverbs and their specific rules
 preverbs_rules = {
     ('ge', 'e', 'cel', 'ce', 'do', 'ye'): {
-        'S1_Singular': 'om',
-        'S2_Singular': 'og',
+        'S1_Singular': 'm',
+        'S2_Singular': 'g',
         'S3_Singular': '',
-        'S1_Plural': 'om',
-        'S2_Plural': 'og',
+        'S1_Plural': 'm',
+        'S2_Plural': 'g',
         'S3_Plural': ''
     },
     ('go',): {
@@ -125,8 +125,8 @@ def get_personal_pronouns(region):
     return {
         'S1_Singular': 'ma',
         'S2_Singular': 'si',
-        'S3_Singular': 'heyas' if region == "FA" else 'himus' if region == 'PZ' else 'him' if region == 'AŞ' else '(h)emus',
-        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
+        'S3_Singular': 'heyas' if region == "FA" else 'himus' if region == 'PZ' else 'him' if region == 'AŞ' else 'hemus',
+        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'hem',
         'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çki',
         'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
         'S3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == 'PZ' else 'hini' if region == 'AŞ' else 'entepes',
@@ -259,9 +259,9 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
                         preverb = 'c'
                     root = root[1:]
                 if subject in ['S1_Singular', 'S1_Plural']:
-                    prefix = preverb + 'om'
+                    prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
-                    prefix = preverb + 'og'
+                    prefix = preverb + 'g'
                 else:
                     prefix = preverb
             

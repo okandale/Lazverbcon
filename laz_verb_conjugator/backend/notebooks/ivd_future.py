@@ -34,11 +34,11 @@ def process_compound_verb(verb):
 # Define preverbs and their specific rules
 preverbs_rules = {
     ('ge', 'e', 'cel', 'ce', 'do', 'ye'): {
-        'S1_Singular': 'om',
-        'S2_Singular': 'og',
+        'S1_Singular': 'm',
+        'S2_Singular': 'g',
         'S3_Singular': '',
-        'S1_Plural': 'om',
-        'S2_Plural': 'og',
+        'S1_Plural': 'm',
+        'S2_Plural': 'g',
         'S3_Plural': ''
     },
     ('go',): {
@@ -249,9 +249,9 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
                         preverb = 'c'
                     root = root[1:]
                 if subject in ['S1_Singular', 'S1_Plural']:
-                    prefix = preverb + 'om'
+                    prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
-                    prefix = preverb + 'og'
+                    prefix = preverb + 'g'
                 else:
                     prefix = preverb
             
