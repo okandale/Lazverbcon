@@ -26,9 +26,13 @@ df_tve = df[df['Category'] == 'TVE']
 # Convert the dataframe to a dictionary
 verbs = {}
 regions = {}
+co_verbs = []
 for index, row in df_tve.iterrows():
     infinitive = row['Laz Infinitive']
     present_forms = row[['Laz 3rd Person Singular Present', 'Laz 3rd Person Singular Present Alternative 1', 'Laz 3rd Person Singular Present Alternative 2']].dropna().tolist()
+    # If any third person form starts with 'co', add its infinitive to co_verbs
+    if any(form.startswith('co') for form in present_forms):
+        co_verbs.append(infinitive)
     region = row[['Region', 'Region Alternative 1', 'Region Alternative 2']].dropna().tolist()
     regions_list = []
     for reg in region:
@@ -420,7 +424,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
                 # Special handling for "ceç̌alu"
                 elif preverb == 'ce':
-                    if infinitive in ('ceç̌u', 'cebazgu', 'cebgaru', 'ceginu'):
+                    if infinitive in co_verbs:
                         if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural' 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
                             root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root[2:]  # Remove only one character if there's a marker
                         else:
