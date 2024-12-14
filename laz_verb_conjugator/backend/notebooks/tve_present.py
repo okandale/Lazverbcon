@@ -722,28 +722,6 @@ def format_neg_imperatives(imperatives):
         result[region] = formatted_conjugations
     return result
 
-
-
-
-
-
-
-# The rest of tve_present.py remains unchanged
-
-
-
-# Function to format the output with region-specific pronouns
-def format_conjugations(all_conjugations):
-    result = []
-    for region, conjugations in all_conjugations.items():
-        personal_pronouns = get_personal_pronouns(region)
-        result.append(f"{region}:")
-        for subject, obj, conjugation in sorted(conjugations, key=lambda x: subjects.index(x[0])):
-            subject_pronoun = personal_pronouns[subject]
-            object_pronoun = personal_pronouns.get(obj, '')
-            result.append(f"{subject_pronoun} {object_pronoun} {conjugation}")
-    return '\n'.join(result)
-
 def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, use_optional_preverb=False, mood=None):
     subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
     objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']

@@ -581,33 +581,6 @@ def format_neg_imperatives(imperatives):
         result[region] = formatted_conjugations
     return result
 
-# Define the function to format the output with region-specific pronouns
-def format_conjugations(all_conjugations):
-    result = []
-    for region, conjugations in all_conjugations.items():
-        personal_pronouns = get_personal_pronouns(region)
-        result.append(f"{region}:")
-        for subject, obj, conjugation in sorted(conjugations, key=lambda x: subjects.index(x[0])):
-            subject_pronoun = personal_pronouns[subject]
-            object_pronoun = personal_pronouns.get(obj, '')
-            result.append(f"{subject_pronoun} {object_pronoun} {conjugation}")
-    return '\n'.join(result)
-
 def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False):
     subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
     return collect_conjugations_all_subjects_specific_object(infinitive, subjects, obj, applicative, causative, use_optional_preverb)
-
-# Define personal pronouns outside of regions
-personal_pronouns_general = {
-    'O1_Singular': 'ma',
-    'O2_Singular': 'si',
-    'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
-    'O1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
-    'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
-    'O3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe'
-}
-
-
-
-
-
