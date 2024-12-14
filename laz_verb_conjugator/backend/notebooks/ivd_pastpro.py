@@ -43,12 +43,12 @@ for index, row in df_ivd.iterrows():
 
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'do', 'ye'): {
-        'S1_Singular': 'om',
-        'S2_Singular': 'og',
+    ('ge', 'e', 'cel', 'ce', 'do', 'ye'): {
+        'S1_Singular': 'm',
+        'S2_Singular': 'g',
         'S3_Singular': '',
-        'S1_Plural': 'om',
-        'S2_Plural': 'og',
+        'S1_Plural': 'm',
+        'S2_Plural': 'g',
         'S3_Plural': ''
     },
     ('go',): {
@@ -81,8 +81,8 @@ def get_personal_pronouns(region):
     return {
         'S1_Singular': 'ma',
         'S2_Singular': 'si',
-        'S3_Singular': 'heyas' if region == "FA" else 'himus' if region == 'PZ' else 'him' if region == 'AŞ' else '(h)emus',
-        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
+        'S3_Singular': 'heyas' if region == "FA" else 'himus' if region == 'PZ' else 'him' if region == 'AŞ' else 'hemus',
+        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else 'hem',
         'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çki',
         'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
         'S3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == 'PZ' else 'hini' if region == 'AŞ' else 'entepes',
@@ -100,8 +100,6 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
         return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
     
-    if applicative and causative:
-        raise ValueError("A verb can either have an applicative marker or a causative marker, but not both.")
     if applicative and obj is None:
         raise ValueError("Applicative requires an object to be specified.")
     if causative and obj is None:
@@ -203,10 +201,14 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
 
             # Specific case: preverb modifications based on subject
             if preverb in ('ge', 'e', 'ce'):
+                if root.startswith('ca'):
+                    if subject in ('S3_Singular', 'S3_Plural'):
+                        preverb = 'c'
+                    root = root[1:]
                 if subject in ['S1_Singular', 'S1_Plural']:
-                    prefix = preverb + 'om'
+                    prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
-                    prefix = preverb + 'og'
+                    prefix = preverb + 'g'
                 else:
                     prefix = preverb
             

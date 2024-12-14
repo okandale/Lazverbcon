@@ -38,12 +38,12 @@ for index, row in df_ivd.iterrows():
 
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'ce', 'do', 'ye'): {
-        'S1_Singular': 'om',
-        'S2_Singular': 'og',
+    ('ge', 'e', 'cel', 'ce', 'do', 'ye'): {
+        'S1_Singular': 'm',
+        'S2_Singular': 'g',
         'S3_Singular': '',
-        'S1_Plural': 'om',
-        'S2_Plural': 'og',
+        'S1_Plural': 'm',
+        'S2_Plural': 'g',
         'S3_Plural': ''
     },
     ('go',): {
@@ -95,8 +95,6 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
         return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
     
-    if applicative and causative:
-        raise ValueError("A verb can either have an applicative marker or a causative marker, but not both.")
     if applicative and obj is None:
         raise ValueError("Applicative requires an object to be specified.")
     if causative and obj is None:
@@ -196,12 +194,21 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
             else:
                 prefix = subject_markers[subject]
 
+            if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and preverb == 'e':
+                preverb = 'ey' if region == 'PZ' else 'y'
+            if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')):
+                preverb = preverb[:-1] 
+
             # Specific case: preverb modifications based on subject
             if preverb in ('ge', 'e', 'ce'):
+                if root.startswith('ca'):
+                    if subject in ('S3_Singular', 'S3_Plural'):
+                        preverb = 'c'
+                    root = root[1:]
                 if subject in ['S1_Singular', 'S1_Plural']:
-                    prefix = preverb + 'om'
+                    prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
-                    prefix = preverb + 'og'
+                    prefix = preverb + 'g'
                 else:
                     prefix = preverb
             
@@ -209,7 +216,7 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
                 if subject in ('S3_Singular', 'S3_Plural') and not obj:
                     preverb = ''
                 else:
-                    root = root[1:] if region in ('PZ', 'AŞ', 'HO') else root[1:]
+                    root = root[2:] if region in ('PZ', 'AŞ', 'HO') else root[1:]
                 
                 if subject in ('S3_Singular', 'S3_Plural'):
                     if obj in ('O1_Singular', 'O1_Plural'):

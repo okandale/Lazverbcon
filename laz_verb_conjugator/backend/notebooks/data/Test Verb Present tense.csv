@@ -1,13 +1,13 @@
 Laz Infinitive,Category,Laz 3rd Person Singular Present,Region,Laz 3rd Person Singular Present Alternative 1,Region Alternative 1,Laz 3rd Person Singular Present Alternative 2,Region Alternative 2,English Translation,Turkish Verb
 avara doskudu,TVM,avara doskudun,"PZ, AŞ, FA, HO",,,,,,avare kalmak
 cebazgu,TVE,cobazgams,"PZ, AŞ",,,,,"to press, to step on something",basmak
-cebgaru,TVE,cebgars,"PZ, AŞ",,,,,to lament over something,ağıt yakmak
+cebgaru,TVE,cabgars,PZ,,,,,to lament over something,ağıt yakmak
 ceçamu,TVE,ceçams,"PZ, AŞ",,,,,to hit something/someone,vurmak (bir şeye)
 ceç̌u,TVE,coç̌ams,"PZ, AŞ",,,,,to begin,başlamak
 cegapu,TVM,cagen,"PZ, AŞ",,,,,to get used to,alışmak
 ceginu,TVE,coginams,"PZ, AŞ",,,,,to get someone become familiar with something,alıştırmak
 ceginu,IVD,cadginen,"PZ, AŞ",,,,,to crave,aşermek
-celabalu,TVE,calabams,"PZ, AŞ",,,,,to hang,asmak
+celabalu,TVE,celabams,"PZ, AŞ",,,,,to hang,asmak
 cemp̌onu,TVE,comp̌onams,AŞ,,,,,to vaccinate/fertilize,aşılamak
 cexunu,TVM,cexedun,"PZ, AŞ",,,,,to get on/ride/ascend,binmek
 ceyonu,TVE,ciyonams,PZ,,,,,to vaccinate/fertilize,aşılamak
@@ -20,7 +20,7 @@ dobadu,TVM,dibaden,"PZ, AŞ, FA, HO",,,,,to be born,doğmak
 dobalu,TVE,dobams,"PZ, AŞ, FA",dobaps,HO,,,to pour ,akıtmak
 dobalu,TVM,diben,"PZ, AŞ, FA, HO",,,,,"to flow, to leak",akmak
 dobazginapu,TVE,dobazginapams,"PZ, AŞ, FA",,,,,to step on the floor,bastırmak
-dodginu,TVM,dvadginen,"PZ, AŞ, FA, HO",,,,,to stand,ayakta durmak
+dodginu,IVD,dvadginen,"PZ, AŞ, HO",dadginen,FA,,,to stand,ayakta durmak
 dodgitu,TVM,dodgitun,"PZ, AŞ, FA",,,,,to stand,ayakta durmak
 dodumu,TVE,dodums,"FA, PZ, AŞ",,,,,"to put, to place (something on the floor)",koymak (yere)
 dodvumu,TVE,dodvups,HO,,,,,"to put, to place (something on the floor)",koymak (yere)
@@ -68,7 +68,7 @@ goşinu,TVE,goişinams,"FA, AŞ, PZ",goişinaps,HO,,,to remind,hatırlatmak
 goxiru,TVE,goixirams,"PZ, AŞ, FA",goixiraps,HO,,,to steal,araklamak
 guri donç̌inu,IVD,guri danç̌en,"PZ, AŞ, FA, HO",,,,,to feel pity for someone,acımak
 guri meç̌valu,IVD,guri naç̌ven,"PZ, AŞ, FA, HO",,,,,to feel pity for someone,acımak
-guri mentxalu,TVM,guri nantxen,"PZ, AŞ, FA, HO",,,,,to faint,bayılmak
+guri mentxu,TVM,guri nantxen,"PZ, AŞ, FA, HO",,,,,to faint,bayılmak
 gyožin,IVD,gyožin,"FA, HO",,,,,to be called,adında olmak
 ǩai doǯonu,IVD,daǯonen,"FA, HO",,,,,to like,beğenmek
 ǩoǩoǯalu,TVE,ǩoǩoǯams,"PZ, AŞ, FA",,,,,"to divide, to detach",ayırmak (ikiye)
@@ -121,7 +121,7 @@ oçedinu,TVE,oçedinams,"PZ, AŞ, FA",,,,,"to cheat, to defraud",aldatmak
 oceru,TVM,icers,HO,,,,,to believe,inanmak
 oçilu,TVM,içilers,HO,,,,,to marry (male),erkeğin evlenmesi
 oçindu,IVD,açinden,"PZ, AŞ, FA, HO",,,,,to sneeze,aksırmak
-oçinu,TVE,içinems,"PZ, AŞ, FA",içinaps,HO,,,to know someone,tanımak
+oçinu,TVE,içinems,"PZ, AŞ",içinaps,HO,içinams,FA,to know someone,tanımak
 oç̌ǩadu,TVE,ç̌ǩadups,HO,,,,,to flint,çakmak
 oçkinu,IVD,uçkin,"FA, HO",,,,,to know,bilmek
 oçǩiru,TVE,çǩirups,HO,,,,,to cut,kesmek
