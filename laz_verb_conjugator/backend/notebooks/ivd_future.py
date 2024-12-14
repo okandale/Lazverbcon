@@ -4,7 +4,9 @@ from utils import (
     process_compound_verb,
     get_first_letter,
     get_first_word,
-    get_first_vowel_index,
+    handle_special_case_u,
+    handle_special_case_gy,
+    handle_special_case_coz,
     subjects
 )
 
@@ -69,32 +71,6 @@ preverbs_rules = {
         'S3_Plural': 'coz'
     }
 }
-
-# Function to handle the specific case for verbs starting with 'u' and verbs with 'i' in the root
-def handle_special_case_u(root, subject, preverb):
-    if root.startswith('u'):
-        if subject in ['S1_Singular', 'S2_Singular', 'S1_Plural', 'S2_Plural']:
-            root = 'i' + root[1:]
-
-    if preverb == 'd':
-        first_vowel_index = get_first_vowel_index(root)
-        if first_vowel_index != -1 and root[first_vowel_index] == 'i':
-            if subject in ['S1_Singular', 'S2_Singular', 'S1_Plural', 'S2_Plural']:
-                root = root[:first_vowel_index] + 'a' + root[first_vowel_index + 1:]
-        else:
-            root = root
-
-    return root
-
-# Function to handle special case for 'gy' preverb
-def handle_special_case_gy(root, subject):
-    if subject in ['S1_Singular', 'S2_Singular', 'S1_Plural', 'S2_Plural']:
-        root = root[0] + root[1:]
-    return root
-
-# Function to handle special case for 'coz' preverb
-def handle_special_case_coz(root, subject):
-    return 'ozun'
 
 def get_personal_pronouns(region):
     return {
