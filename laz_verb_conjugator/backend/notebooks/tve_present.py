@@ -124,7 +124,7 @@ def determine_marker(subject, obj, marker_type):
 
 
 # Function to handle marker and special case for verbs starting with 'i' or 'o'
-def handle_marker(infinitive, root, marker):
+def handle_marker(infinitive, root, marker, subject, obj):
     if infinitive == 'doguru':
         root = root[1:]  # Remove the first character 'd' from the root
     if infinitive == 'meşvelu':
@@ -150,8 +150,10 @@ def handle_marker(infinitive, root, marker):
 
     if root.startswith('co'): #special case for ceç̌u
         if root[1] in ['i', 'o']:
-            if marker in ['i', 'o']:
+            if marker in ['i']:
                 root = root[:1] + marker + root[2:]  # Replace the second character 'i' or 'o' with 'i' or 'o'
+            elif marker == 'o':
+                root = root[:1] + marker + root[2:] if subject in ('S1_Singular', 'S1_Plural') or obj in ('O1_Singular', 'O2_Singular', 'O1_Plural', 'O2_Plural') else marker + root[2:] 
             elif marker == 'u':
                 root = 'u' + root[2:]  # Replace the second character 'i' or 'o' with 'u'
     if root.startswith(('i', 'u', 'o')):
@@ -288,7 +290,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Handle special case for verbs starting with 'i' or 'o'
             if marker:
-                root = handle_marker(main_infinitive, root, marker)
+                root = handle_marker(main_infinitive, root, marker, subject, obj)
 
             if mood == 'optative' and infinitive == 'oç̌ǩomu':
                     root = 'ç̌ǩomum'
@@ -390,18 +392,18 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 # Special handling for "ceç̌alu"
                 elif preverb == 'cel':
                     if infinitive in ('celabalu'):
-                        if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']:
+                        if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O3_Singular', 'O3_Plural'] and marker:
                             if applicative and causative:
-                                root = 'i' + root[5:]
+                                root = 'i' + root[2:]
                             if applicative:
-                                root = 'i' + root[5:]
+                                root = 'i' + root[2:]
                             elif causative:
-                                root = 'o' + root[5:]
+                                root = 'o' + root[2:]
                             else:
-                                root = 'o' + root[4:]  # Remove only one character if there's a marker
+                                root = 'o' + root[1:]  # Remove only one character if there's a marker
                         else:
                             root = root[1:]
-                            preverb = preverb[:-3]
+                            preverb = preverb
                     else:
                         if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
                             root = root
@@ -410,16 +412,16 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     first_letter = get_first_letter(root)
                     if obj in ['O2_Singular', 'O2_Plural']:
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                        prefix = preverb + adjusted_prefix
+                        prefix = preverb + 'e' + adjusted_prefix
                     elif subject in ['S1_Singular', 'S1_Plural']:
                         adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                        prefix = preverb + adjusted_prefix
+                        prefix = preverb + 'e' + adjusted_prefix
                     elif obj in ['O1_Singular', 'O1_Plural']:
-                        prefix = preverb + 'm'
+                        prefix = preverb + 'em'
                     elif marker_type == 'causative':
-                        prefix = preverb
+                        prefix = preverb 
                     else:
-                        prefix = preverb
+                        prefix = preverb + 'a'
 
 
                 # Special handling for "ceç̌alu"
@@ -447,7 +449,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     elif obj in ['O1_Singular', 'O1_Plural']:
                         prefix = preverb + 'm'
                     elif marker_type == 'causative':
-                        prefix = preverb
+                        prefix = ''
                     else:
                         prefix = preverb[:1] if root.startswith(('a','e','i','o','u')) else preverb
 
@@ -675,7 +677,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('y'):
                 suffix = ''
             elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
-                suffix = 'an'
+                suffix = 'man' if (root.endswith('m') and region == "AŞ") else 'an'
             elif subject in ('S1_Singular', 'S2_Singular') and mood == 'optative':
                 suffix = 'a'
             elif subject in ('S1_Plural', 'S2_Plural') and mood == 'optative':

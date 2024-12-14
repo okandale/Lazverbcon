@@ -121,38 +121,42 @@ def determine_marker(subject, obj, marker_type):
     return ''
 
 # Function to handle marker and special case for verbs starting with 'i' or 'o'
-def handle_marker(infinitive, root, marker):
+def handle_marker(infinitive, root, marker, subject, obj):
     if infinitive == 'doguru':
         root = root[1:]  # Remove the first character 'd' from the root
-    if infinitive == 'meşvelu' and marker:
-        root = root[1:]        
+    if infinitive == 'meşvelu':
+        root = root[1:]
     if infinitive in ('oç̌ǩomu', 'oşǩomu') and marker == 'o':
         root = 'çams'
         marker = ''
-    elif infinitive in ('oç̌ǩomu') and marker in ('i', 'u'):
-        root = marker + 'ç̌ǩomums'
-    elif infinitive in ('oşǩomu') and marker in ('i', 'u'):
-        root = marker + 'şǩomums'
-    elif infinitive in ('oç̌ǩomu', 'oşǩomu'):
-        root = 'imxors'
+    if infinitive in ('oxenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
+        root = 'xenams'
+    if infinitive in ('oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
+        root = 'xvenams'
+    if infinitive in ('oç̌ǩomu') and marker in ('i', 'u'):
+        root = 'ç̌ǩomums'
     if infinitive in ('gemgaru', 'cebgaru'):
         if marker in ['i', 'o', 'u']:
             root = root[:1] + marker + root[3:] 
-    elif infinitive == 'geç̌ǩu' and len(root) > 2: #special case for geç̌ǩu
+    if infinitive == 'geç̌ǩu' and len(root) > 2: #special case for geç̌ǩu
         if root[2] in ['i', 'o']:
             if marker in ['i', 'o']:
                 root = root[:2] + marker + root[3:]  # Replace the third character 'i' or 'o' with 'i' or 'o'
             elif marker == 'u':
                 root = root[:2] + 'u' + root[3:]  # Replace the third character 'i' or 'o' with 'u'
+
     if root.startswith('co'): #special case for ceç̌u
         if root[1] in ['i', 'o']:
-            if marker in ['i', 'o']:
+            if marker in ['i']:
                 root = root[:1] + marker + root[2:]  # Replace the second character 'i' or 'o' with 'i' or 'o'
+            elif marker == 'o':
+                root = root[:1] + marker + root[2:] if subject in ('S1_Singular', 'S1_Plural') or obj in ('O1_Singular', 'O2_Singular', 'O1_Plural', 'O2_Plural') else marker + root[2:] 
             elif marker == 'u':
                 root = 'u' + root[2:]  # Replace the second character 'i' or 'o' with 'u'
-    elif root.startswith(('i', 'u', 'o')):
+    if root.startswith(('i', 'u', 'o')):
         if marker in ['i', 'o', 'u']:
-            root = marker + root[1:]  # Replace the first 'i' or 'o' with 'i' or 'o'
+            root = marker + root[1:]
+              # Replace the first 'i' or 'o' with 'i' or 'o'
         elif marker == 'u': # may be redundant now
             root = 'u' + root[1:]  # Replace the first 'i' or 'o' with 'u'
     else:
@@ -289,7 +293,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                 root = 'xenums'            
             
             # Handle special case for verbs starting with 'i' or 'o'
-            root = handle_marker(main_infinitive, root, marker)
+            root = handle_marker(main_infinitive, root, marker, subject, obj)
 
 
             # Get the first letter after the marker is attached
@@ -390,10 +394,10 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                             elif causative:
                                 root = 'o' + root[5:]
                             else:
-                                root = 'o' + root[4:]  # Remove only one character if there's a marker
+                                root = 'o' + root[1:]  # Remove only one character if there's a marker
                         else:
                             root = root[1:]
-                            preverb = preverb[:-3]
+                            preverb = preverb
                     else:
                         if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
                             root = root
@@ -402,16 +406,16 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                     first_letter = get_first_letter(root)
                     if obj in ['O2_Singular', 'O2_Plural']:
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                        prefix = preverb + adjusted_prefix
+                        prefix = preverb + 'e' + adjusted_prefix
                     elif subject in ['S1_Singular', 'S1_Plural']:
                         adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                        prefix = preverb + adjusted_prefix
+                        prefix = preverb + 'e' + adjusted_prefix
                     elif obj in ['O1_Singular', 'O1_Plural']:
-                        prefix = preverb + 'm'
+                        prefix = preverb + 'em'
                     elif marker_type == 'causative':
-                        prefix = preverb
+                        prefix = preverb + 'a'
                     else:
-                        prefix = preverb
+                        prefix = preverb + 'a'
 
 
                 # Special handling for "ceç̌alu"
