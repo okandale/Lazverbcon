@@ -10,15 +10,10 @@ from utils import (
     subjects
 )
 
-# Load the CSV file
 file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
-
-# Read the CSV file.
 df = pd.read_csv(file_path)
 
-# Now continue with your original processing logic
-
-# Filter for 'IVD' verbs (if you have already added the 'Category' column).
+# Filter the dataframe to only include IVD verbs
 df_ivd = df[df['Category'] == 'IVD']
 
 # Convert the filtered dataframe to a dictionary
@@ -150,15 +145,6 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
                 'S1_Plural': 'rt̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anere' if region == 'PZ' else 'asinonan' if region == 'HO' else 'anen',
                 'S2_Plural': 'rt̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anere' if region == 'PZ' else 'asinonan' if region == 'HO' else 'anen',
                 'S3_Plural': 'rt̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anere' if region == 'PZ' else 'asinonan' if region == 'HO' else 'anen',
-            }
-        
-            object_prefixes = {
-                'O1_Singular': 'm',
-                'O1_Plural': 'm',
-                'O2_Singular': 'g',
-                'O2_Plural': 'g',
-                'O3_Singular': '',
-                'O3_Plural': ''
             }
 
             # Extract the preverb from the infinitive if it exists

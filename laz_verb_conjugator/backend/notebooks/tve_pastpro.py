@@ -208,15 +208,6 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                 'S3_Plural': 't̆ey' if region == "AŞ" else 't̆es' # Ardeşen rule
             }
 
-            object_prefixes = {
-                'O1_Singular': 'm',
-                'O1_Plural': 'm',
-                'O2_Singular': 'g',
-                'O2_Plural': 'g',
-                'O3_Singular': '',
-                'O3_Plural': ''
-            }
-
             # Extract the preverb from the infinitive if it exists
             preverb = ''
             preverb_exceptions = {'oǩoreʒxu'}  # Ensure this set is defined appropriately, add additionally to 256

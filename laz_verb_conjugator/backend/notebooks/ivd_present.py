@@ -184,15 +184,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 'S2_Plural': 'an',
                 'S3_Plural': 'an'
             }
-        
-            object_prefixes = {
-                'O1_Singular': 'm',
-                'O1_Plural': 'm',
-                'O2_Singular': 'g',
-                'O2_Plural': 'g',
-                'O3_Singular': '',
-                'O3_Plural': ''
-            }
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''

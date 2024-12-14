@@ -219,16 +219,6 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
 
             suffixes = get_suffixes(tense, region)
 
-
-            object_prefixes = {
-                'O1_Singular': 'm',
-                'O1_Plural': 'm',
-                'O2_Singular': 'g',
-                'O2_Plural': 'g',
-                'O3_Singular': '',
-                'O3_Plural': ''
-            }
-
             # Extract the preverb from the infinitive if it exists
             preverb = ''
             preverb_exceptions = {'gonǯǩu'}  # Ensure this set is defined appropriately, add additionally to 256

@@ -152,15 +152,6 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
                 'S2_Plural': 'es',
                 'S3_Plural': 'es'
             }
-        
-            object_prefixes = {
-                'O1_Singular': 'm',
-                'O1_Plural': 'm',
-                'O2_Singular': 'g',
-                'O2_Plural': 'g',
-                'O3_Singular': '',
-                'O3_Plural': ''
-            }
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
