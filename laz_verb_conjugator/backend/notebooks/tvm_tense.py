@@ -370,7 +370,7 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                     prefix = 'gy'
 
            # Special handling for "ceç̌alu"
-            elif preverb == 'ce' and main_infinitive == 'ceç̌alu':
+            elif preverb == 'ce':
                 if marker:
                     root = root[2:]
                 else:

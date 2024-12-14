@@ -267,7 +267,7 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
                 if subject in ('S3_Singular', 'S3_Plural') and not obj:
                     preverb = ''
                 else:
-                    root = root[1:] if region in ('PZ', 'AŞ', 'HO') else root[1:]
+                    root = root[2:] if region in ('PZ', 'AŞ', 'HO') else root[1:]
                 
                 if subject in ('S3_Singular', 'S3_Plural'):
                     if obj in ('O1_Singular', 'O1_Plural'):
