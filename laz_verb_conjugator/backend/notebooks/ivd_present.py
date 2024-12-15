@@ -1,183 +1,27 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[101]:
-
-
 # the version with correct simple present tense SxOx conjugations and "d" preverb, but the preverb function needs to be tidied up.
 # the version with correct simple present tense SxOx conjugations and "d" preverb..
 # added optional preverb 'ko' - won't reflect in conjugator
 # added compound words
 import pandas as pd
 import os
+from utils import (
+    process_compound_verb,
+    get_first_letter,
+    get_first_word,
+    handle_special_case_coz,
+    handle_special_case_gy,
+    handle_special_case_u,
+    get_personal_pronouns,
+    get_preverbs_rules,
+    ivd_subject_markers as subject_markers,
+    subjects
+)
+from dataloader import load_ivd_verbs
 
-# Load the CSV file
-file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
+verbs, regions = load_ivd_verbs()
 
-# Read the CSV file.
-df = pd.read_csv(file_path)
+preverbs_rules = get_preverbs_rules('ivd_present')
 
-# Now continue with your original processing logic
-
-# Filter for 'IVD' verbs (if you have already added the 'Category' column)
-df_ivd = df[df['Category'] == 'IVD']
-
-
-# Convert the filtered dataframe to a dictionary
-verbs = {}
-regions = {}
-for index, row in df_ivd.iterrows():
-    infinitive = row['Laz Infinitive']
-    present_forms = row[['Laz 3rd Person Singular Present', 'Laz 3rd Person Singular Present Alternative 1', 'Laz 3rd Person Singular Present Alternative 2']].dropna().tolist()
-    region = row[['Region', 'Region Alternative 1', 'Region Alternative 2']].dropna().tolist()
-    regions_list = []
-    for reg in region:
-        regions_list.extend([r.strip() for r in reg.split(',')])
-    if not regions_list:
-        regions_list = ["All"]
-    verbs[infinitive] = list(zip(present_forms, region))
-    regions[infinitive] = regions_list
-
-
-# Function to process compound verbs and return the latter part
-def process_compound_verb(verb):
-    return ' '.join(verb.split()[1:]) if len(verb.split()) > 1 else verb
-
-# Define preverbs and their specific rules
-preverbs_rules = {
-    ('ge', 'e', 'cel', 'ce', 'do', 'ye'): {
-        'S1_Singular': 'om',
-        'S2_Singular': 'og',
-        'S3_Singular': '',
-        'S1_Plural': 'om',
-        'S2_Plural': 'og',
-        'S3_Plural': ''
-    },
-    ('go',): {
-        'S1_Singular': 'gom',
-        'S2_Singular': 'gog',
-        'S3_Singular': 'go',
-        'S1_Plural': 'gom',
-        'S2_Plural': 'gog',
-        'S3_Plural': 'go'
-    },
-    ('gy',): {
-        'S1_Singular': 'gem',
-        'S2_Singular': 'geg',
-        'S3_Singular': 'gyo',
-        'S1_Plural': 'gem',
-        'S2_Plural': 'geg',
-        'S3_Plural': 'gyo'
-    },
-    ('coz',): {
-        'S1_Singular': 'cem',
-        'S2_Singular': 'ceg',
-        'S3_Singular': 'coz',
-        'S1_Plural': 'cem',
-        'S2_Plural': 'ceg',
-        'S3_Plural': 'coz'
-    }
-}
-
-# Phonetic rules for 'v' and 'g'
-def get_phonetic_rules(region):
-    if region == 'FA':
-        phonetic_rules_v = {
-            'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-            'b': ['l', 'a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-            'm': ['n']
-        }
-    else:
-        phonetic_rules_v = {
-            'v': ['a', 'e', 'i', 'o', 'u'],
-            'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-            'b': ['l', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-            'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-            'm': ['n']
-        }
-
-    phonetic_rules_g = {
-        'g': ['a', 'e', 'i', 'o', 'u'],
-        'k': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-        'g': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-        'ǩ': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆']
-    }
-
-    return phonetic_rules_v
-
-
-
-
-# Function to handle special letters
-def get_first_letter(root):
-    if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'ǩ', 'p̌']:
-        return root[:2]
-    return root[0]
-
-def adjust_prefix(prefix, first_letter, phonetic_rules):
-    for p, letters in phonetic_rules.items():
-        if first_letter in letters:
-            return p
-    return prefix
-
-
-
-# Function to handle special letters
-def get_first_vowel_index(word):
-    vowels = "aeiou"
-    for index, char in enumerate(word):
-        if char in vowels:
-            return index
-    return -1
-
-# Function to handle the specific case for verbs starting with 'u' and verbs with 'i' in the root
-def handle_special_case_u(root, subject, preverb):
-    if root.startswith('u'):
-        if subject in ['S1_Singular', 'S2_Singular', 'S1_Plural', 'S2_Plural']:
-            root = 'i' + root[1:]
-
-    if preverb == 'd':
-        first_vowel_index = get_first_vowel_index(root)
-        if first_vowel_index != -1 and root[first_vowel_index] == 'i':
-            if subject in ['S1_Singular', 'S2_Singular', 'S1_Plural', 'S2_Plural']:
-                root = root[:first_vowel_index] + 'a' + root[first_vowel_index + 1:]
-        else:
-            root = root
-
-    return root
-
-# Function to handle special case for 'gy' preverb
-def handle_special_case_gy(root, subject):
-    if subject in ['S1_Singular', 'S2_Singular', 'S1_Plural', 'S2_Plural']:
-        root = root[0] + root[1:]
-    return root
-
-# Function to handle special case for 'coz' preverb
-def handle_special_case_coz(root, subject):
-    return 'ozun'
-
-# Function to remove the first character for certain roots
-def remove_first_character(root):
-    return root[1:]
-
-def get_personal_pronouns(region):
-    return {
-        'S1_Singular': 'ma',
-        'S2_Singular': 'si',
-        'S3_Singular': 'heyas' if region == "FA" else 'himus' if region == 'PZ' else 'him' if region == 'AŞ' else '(h)emus',
-        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
-        'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çki',
-        'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
-        'S3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == 'PZ' else 'hini' if region == 'AŞ' else 'entepes',
-        'O3_Plural': 'hentepe',
-        'O1_Singular': 'ma',
-        'O2_Singular': 'si',
-        'O1_Plural': 'çku',
-        'O2_Plural': 'tkva'
-    }
-
-# Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
 # Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
 def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False):
     # Check for invalid SxOx combinations
@@ -211,7 +55,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
         regions_for_form = region_str.split(',')
         for region in regions_for_form:
             region = region.strip()
-            personal_pronouns = get_personal_pronouns(region)
+            personal_pronouns = get_personal_pronouns(region, 'ivd_present')
             
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
@@ -221,15 +65,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Use the first word from the infinitive consistently
             first_word = first_word_infinitive
-
-            subject_markers = {
-                'S1_Singular': 'm',
-                'S2_Singular': 'g',
-                'S3_Singular': '',
-                'S1_Plural': 'm',
-                'S2_Plural': 'g',
-                'S3_Plural': ''
-            }
         
             suffixes = {
                 'S1_Singular': '',
@@ -238,15 +73,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 'S1_Plural': 'an',
                 'S2_Plural': 'an',
                 'S3_Plural': 'an'
-            }
-        
-            object_prefixes = {
-                'O1_Singular': 'm',
-                'O1_Plural': 'm',
-                'O2_Singular': 'g',
-                'O2_Plural': 'g',
-                'O3_Singular': '',
-                'O3_Plural': ''
             }
 
             # Extract the preverb from the infinitive if it exists
@@ -498,18 +324,6 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
                 all_conjugations[region].add((subject, obj, conjugation[2]))  # Ensure unique conjugation for each combination
     return all_conjugations
 
-# Define the function to format the output with region-specific pronouns
-def format_conjugations(all_conjugations):
-    result = []
-    for region, conjugations in all_conjugations.items():
-        personal_pronouns = get_personal_pronouns(region)
-        result.append(f"{region}:")
-        for subject, obj, conjugation in sorted(conjugations, key=lambda x: subjects.index(x[0])):
-            subject_pronoun = personal_pronouns[subject]
-            object_pronoun = personal_pronouns.get(obj, '')
-            result.append(f"{subject_pronoun} {object_pronoun} {conjugation}")
-    return '\n'.join(result)
-
 def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, use_optional_preverb=False):
     subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
     objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']
@@ -527,23 +341,3 @@ def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False,
 def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False):
     subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
     return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb)
-
-
-# Define personal pronouns outside of regions
-personal_pronouns_general = {
-    'O1_Singular': 'ma',
-    'O2_Singular': 'si',
-    'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
-    'O1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
-    'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
-    'O3_Plural': 'hentepe' if region == "FA" else 'hini' if region in ('AŞ', 'PZ') else 'entepe'
-}
-
-subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
-
-# Function to get the first word of a compound verb
-def get_first_word(verb):
-    return verb.split()[0] if len(verb.split()) > 1 else ''
-
-
-
