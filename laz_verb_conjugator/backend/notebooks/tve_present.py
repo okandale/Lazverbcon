@@ -16,7 +16,9 @@ from utils import (
     get_phonetic_rules,
     determine_marker,
     handle_marker,
-    subjects
+    get_personal_pronouns,
+    tve_subject_markers as subject_markers,
+    ordered_objects
 )
 from dataloader import load_tve_verbs
 
@@ -33,35 +35,6 @@ preverbs_rules = {
         'S3_Plural': ''
     }
 }
-
-# Function to adjust the prefix based on the first letter of the root
-def adjust_prefix(prefix, first_letter, phonetic_rules):
-    for p, letters in phonetic_rules.items():
-        if first_letter in letters:
-            return p
-    return prefix
-
-# Function to handle special letters
-def get_first_letter(root):
-    if len(root) > 1 and root[:2] in ['t̆', 'ç̌', 'ǩ', 'p̌', 'ǯ']:
-        return root[:2]
-    return root[0]
-
-def get_personal_pronouns(region):
-    return {
-        'S1_Singular': 'ma',
-        'S2_Singular': 'si',
-        'S3_Singular': 'heyak' if region == "FA" else 'himuk' if region == "PZ" else 'him' if region == "AŞ" else '(h)emuk',
-        'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
-        'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
-        'S3_Plural': 'hentepek' if region == "FA" else 'hinik' if region == "PZ" else 'hini' if region == "AŞ" else 'entepek',
-        'O1_Singular': 'ma',
-        'O2_Singular': 'si',
-        'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else '(h)emus',
-        'O1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
-        'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
-        'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == "PZ" else 'hini' if region == "AŞ" else 'entepes'
-    }
 
 # Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
 def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False, mood=None):
@@ -99,15 +72,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             root = process_compound_verb(third_person)
             first_word = get_first_word(third_person)  # Get the first word for compound verbs
             root = process_compound_verb(root)
-
-            subject_markers = {
-                'S1_Singular': 'v',
-                'S2_Singular': '',
-                'S3_Singular': '',
-                'S1_Plural': 'v',
-                'S2_Plural': '',
-                'S3_Plural': ''
-            }
         
             suffixes = {
                 'S1_Singular': '',
@@ -450,11 +414,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                             else:
                                 prefix = subject_markers[subject]
 
-
-
-
-
-
             # Handle the Ardeşen rule
             if third_person.endswith('y'):
                 if subject == 'S3_Singular':
@@ -617,9 +576,6 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
         all_conjugations[region] = list(all_conjugations[region])
     return all_conjugations
 
-
-
-
 def extract_neg_imperatives(all_conjugations, subjects):
     imperatives = {}
     for region, conjugations in all_conjugations.items():
@@ -632,13 +588,11 @@ def extract_neg_imperatives(all_conjugations, subjects):
                 imperatives[region].append((subject, obj, conjugation_with_neg))
     return imperatives
 
-ordered_objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']
-
 def format_neg_imperatives(imperatives):
     result = {}
     for region, conjugations in imperatives.items():
         # Get both subject and object pronouns for this region
-        subject_pronouns = get_personal_pronouns(region)
+        subject_pronouns = get_personal_pronouns(region, 'tve_present')
         object_pronouns = get_personal_pronouns_general(region)
         
         formatted_conjugations = []

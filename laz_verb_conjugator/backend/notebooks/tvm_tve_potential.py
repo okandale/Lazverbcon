@@ -6,6 +6,8 @@ from utils import (
     get_first_letter,
     get_first_word,
     get_phonetic_rules,
+    get_personal_pronouns,
+    potential_subject_markers as subject_markers,
     subjects
 )
 from dataloader import load_tvm_tve_potential
@@ -23,22 +25,6 @@ preverbs_rules = {
         'S3_Plural': ''
     }
 }
-
-def get_personal_pronouns(region):
-    return {
-        'S1_Singular': 'ma',
-        'S2_Singular': 'si',
-        'S3_Singular': 'heyas' if region == "FA" else 'himus' if region in ('AŞ', 'PZ') else '(h)emus',
-        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
-        'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
-        'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
-        'S3_Plural': 'hentepes' if region == "FA" else 'hinis' if region in ('AŞ', 'PZ') else 'entepes',
-        'O3_Plural': 'hentepe',
-        'O1_Singular': 'ma',
-        'O2_Singular': 'si',
-        'O1_Plural': 'çku',
-        'O2_Plural': 'tkva'
-    }
 
 def get_suffixes(tense, region):
     suffixes = {}
@@ -120,22 +106,13 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
         regions_for_form = region_str.split(',')
         for region in regions_for_form:
             region = region.strip()
-            personal_pronouns = get_personal_pronouns(region)
+            personal_pronouns = get_personal_pronouns(region, 'tvm_tve_potential')
             phonetic_rules_v, phonetic_rules_g = get_phonetic_rules(region, is_tvm=True)
             
             # Set root to infinitive
             root = infinitive
             first_word = get_first_word(root)
             root = process_compound_verb(root)
-
-            subject_markers = {
-                'S1_Singular': 'ma',
-                'S2_Singular': 'ga',
-                'S3_Singular': 'a',
-                'S1_Plural': 'ma',
-                'S2_Plural': 'ga',
-                'S3_Plural': 'a'
-            }
 
             suffixes = get_suffixes(tense, region)
 

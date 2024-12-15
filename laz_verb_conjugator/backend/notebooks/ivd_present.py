@@ -11,6 +11,8 @@ from utils import (
     handle_special_case_coz,
     handle_special_case_gy,
     handle_special_case_u,
+    get_personal_pronouns,
+    ivd_subject_markers as subject_markers,
     subjects
 )
 from dataloader import load_ivd_verbs
@@ -53,22 +55,6 @@ preverbs_rules = {
     }
 }
 
-def get_personal_pronouns(region):
-    return {
-        'S1_Singular': 'ma',
-        'S2_Singular': 'si',
-        'S3_Singular': 'heyas' if region == "FA" else 'himus' if region == 'PZ' else 'him' if region == 'AŞ' else '(h)emus',
-        'O3_Singular': 'heya' if region == "FA" else 'him' if region in ('AŞ', 'PZ') else '(h)em',
-        'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çki',
-        'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
-        'S3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == 'PZ' else 'hini' if region == 'AŞ' else 'entepes',
-        'O3_Plural': 'hentepe',
-        'O1_Singular': 'ma',
-        'O2_Singular': 'si',
-        'O1_Plural': 'çku',
-        'O2_Plural': 'tkva'
-    }
-
 # Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
 def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False):
     # Check for invalid SxOx combinations
@@ -102,7 +88,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
         regions_for_form = region_str.split(',')
         for region in regions_for_form:
             region = region.strip()
-            personal_pronouns = get_personal_pronouns(region)
+            personal_pronouns = get_personal_pronouns(region, 'ivd_present')
             
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
@@ -112,15 +98,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Use the first word from the infinitive consistently
             first_word = first_word_infinitive
-
-            subject_markers = {
-                'S1_Singular': 'm',
-                'S2_Singular': 'g',
-                'S3_Singular': '',
-                'S1_Plural': 'm',
-                'S2_Plural': 'g',
-                'S3_Plural': ''
-            }
         
             suffixes = {
                 'S1_Singular': '',

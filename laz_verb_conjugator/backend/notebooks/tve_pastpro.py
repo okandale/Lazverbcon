@@ -14,6 +14,8 @@ from utils import (
     get_phonetic_rules,
     determine_marker,
     handle_marker,
+    get_personal_pronouns,
+    tve_subject_markers as subject_markers,
     subjects
 )
 from dataloader import load_tve_verbs
@@ -31,22 +33,6 @@ preverbs_rules = {
         'S3_Plural': ''
     }
 }
-
-def get_personal_pronouns(region):
-    return {
-        'S1_Singular': 'ma',
-        'S2_Singular': 'si',
-        'S3_Singular': 'heyak' if region == "FA" else 'himuk' if region == "PZ" else 'him' if region == "AŞ" else '(h)emuk',
-        'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else '(h)emus',
-        'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çki',
-        'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
-        'S3_Plural': 'hentepek' if region == "FA" else 'hinik' if region == "PZ" else 'hini' if region == "AŞ" else 'entepe',
-        'O3_Plural': 'hentepes',
-        'O1_Singular': 'ma',
-        'O2_Singular': 'si',
-        'O1_Plural': 'çku',
-        'O2_Plural': 'tkva'
-    }
 
 # Update the conjugate_past_progressive function to return a dictionary
 def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=False, causative=False, use_optional_preverb=False):
@@ -81,22 +67,13 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
         regions_for_form = region_str.split(',')
         for region in regions_for_form:
             region = region.strip()
-            personal_pronouns = get_personal_pronouns(region)
+            personal_pronouns = get_personal_pronouns(region, 'tve_pastpro')
             phonetic_rules_v, phonetic_rules_g = get_phonetic_rules(region)
             
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
             first_word = get_first_word(third_person)
             root = process_compound_verb(root)
-
-            subject_markers = {
-                'S1_Singular': 'v',
-                'S2_Singular': '',
-                'S3_Singular': '',
-                'S1_Plural': 'v',
-                'S2_Plural': '',
-                'S3_Plural': ''
-            }
 
             suffixes = {
                 'S1_Singular': 't̆i',

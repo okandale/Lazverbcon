@@ -14,6 +14,8 @@ from utils import (
     is_vowel,
     determine_marker,
     handle_marker,
+    get_personal_pronouns,
+    tve_subject_markers as subject_markers,
     subjects,
     get_phonetic_rules
 )
@@ -32,22 +34,6 @@ preverbs_rules = {
         'S3_Plural': ''
     }
 }
-
-def get_personal_pronouns(region):
-    return {
-        'S1_Singular': 'ma',
-        'S2_Singular': 'si',
-        'S3_Singular': 'heyak' if region == "FA" else 'himuk' if region == "PZ" else 'him' if region == "AŞ" else '(h)emuk',
-        'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else '(h)emus',
-        'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
-        'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
-        'S3_Plural': 'hentepek' if region == "FA" else 'hinik' if region == "PZ" else 'hini' if region == "AŞ" else 'entepek',
-        'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == "PZ" else 'hini' if region == "AŞ" else 'entepes',
-        'O1_Singular': 'ma',
-        'O2_Singular': 'si',
-        'O1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
-        'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan'
-    }
 
 # Update the conjugate_past function to return a dictionary
 def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causative=False, use_optional_preverb=False):
@@ -79,22 +65,13 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
         regions_for_form = region_str.split(',')
         for region in regions_for_form:
             region = region.strip()
-            personal_pronouns = get_personal_pronouns(region)
+            personal_pronouns = get_personal_pronouns(region, 'tve_past')
             phonetic_rules_v, phonetic_rules_g = get_phonetic_rules(region)
             adjusted_prefix = ''    
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
             first_word = get_first_word(third_person)  # Get the first word for compound verbs
             root = process_compound_verb(root)
-
-            subject_markers = {
-                'S1_Singular': 'v',
-                'S2_Singular': '',
-                'S3_Singular': '',
-                'S1_Plural': 'v',
-                'S2_Plural': '',
-                'S3_Plural': ''
-            }
 
             suffixes = {
                 'S1_Singular': 'i',
@@ -543,7 +520,7 @@ def extract_imperatives(all_conjugations, subjects):
 def format_imperatives(imperatives):
     result = {}
     for region, conjugations in imperatives.items():
-        subject_pronouns = get_personal_pronouns(region)
+        subject_pronouns = get_personal_pronouns(region, 'tve_past')
         object_pronouns = get_personal_pronouns_general(region)
         formatted_conjugations = []
         # Filter only S2_Singular and S2_Plural for sorting
@@ -569,6 +546,7 @@ def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False,
                 for conjugation in conjugation_list:
                     all_conjugations[region].add((subject, obj, conjugation[2]))
     return all_conjugations
+
 def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False):
     subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
     return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb)

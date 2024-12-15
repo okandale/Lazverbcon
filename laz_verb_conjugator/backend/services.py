@@ -208,7 +208,7 @@ class ConjugationService:
         module_name = module.__name__.split('.')[-1]
 
         for region, forms in conjugations.items():
-            personal_pronouns = module.get_personal_pronouns(region)
+            personal_pronouns = module.get_personal_pronouns(region, module_name)
             formatted_forms = []
 
             sorted_forms = sorted(
