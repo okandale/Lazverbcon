@@ -55,7 +55,7 @@ def is_vowel(char):
     return char in 'aeiou'
 # Define preverbs and their specific rules
 preverbs_rules = {
-    ('ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'gela', 'ela', 'ceǩo', 'eǩo', 'ama', 'mo', 'ǩoǩo'): {
+    ('ge', 'ela', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'gela', 'ela', 'ceǩo', 'eǩo', 'ama', 'mo', 'ǩoǩo'): {
         'S1_Singular': 'v',
         'S2_Singular': '',
         'S3_Singular': '',
@@ -399,6 +399,42 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         prefix = ''
                     else:
                         prefix = preverb if subject in ('S1_Singular', 'S1_Plural') or obj in ('O2_Singular', 'O2_Plural') else preverb[:1] if infinitive in gyo_verbs else preverb
+
+
+
+                # Special handling for "ceç̌alu"
+                elif preverb == 'ela':
+                    if infinitive in ('elaşinu'):
+                        if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O3_Singular', 'O3_Plural'] and marker:
+                            if applicative and causative:
+                                root = 'i' + root[2:]
+                            if applicative:
+                                root = marker + root[2:] if obj in ('O3_Singular', 'O3_Plural') else marker + root[2:]
+                            elif causative:
+                                root = 'o' + root[2:]
+                            else:
+                                root = root[2:]  # Remove only one character if there's a marker
+                        else:
+                            root = root[1:]
+                            preverb = preverb
+                    else:
+                        if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
+                            root = root
+                        else:
+                            root = root[2:]
+                    first_letter = get_first_letter(root)
+                    if obj in ['O2_Singular', 'O2_Plural']:
+                        adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                        prefix = preverb + adjusted_prefix
+                    elif subject in ['S1_Singular', 'S1_Plural']:
+                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
+                        prefix = preverb + adjusted_prefix
+                    elif obj in ['O1_Singular', 'O1_Plural']:
+                        prefix = preverb + 'm'
+                    elif marker_type == 'causative':
+                        prefix = preverb 
+                    else:
+                        prefix = preverb[:2]
 
 
                 # Special handling for "ceç̌alu"
