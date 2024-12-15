@@ -147,10 +147,11 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                                 root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
                             if marker:
                                 root = marker + root[3:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else marker + root[3:]
-                        elif root.startswith('no'):
-                            root = 'i' + root[1:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else 'u' + root[2:]                            
+                        else:
+                            if marker:
+                                root = marker + root[1:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else marker + root[2:]                            
                             if not marker:
-                                root = root[1:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else 'o' + root[1:]
+                                root = root[1:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
                             else:
                                 root = marker + root[3:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else marker + root[2:]
                     first_letter = get_first_letter(root)
