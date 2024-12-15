@@ -23,7 +23,7 @@ from utils import (
 )
 from dataloader import load_tve_verbs
 
-verbs, regions, co_verbs, gyo_verbs = load_tve_verbs()
+verbs, regions, co_verbs, gyo_verbs, no_verbs = load_tve_verbs()
 
 preverbs_rules = get_preverbs_rules('tve_present')
 
@@ -140,19 +140,22 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             if not handled_gontzku:
 
+                
+
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                     preverb = 'ey' if region == 'PZ' else 'y'
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
                     preverb = preverb[:-1] + 'y' if preverb == 'ge' else preverb[:-1] # added for 'geçamu' as it would omit the 'y' in (no S1) O3 conjugations. 
+                
                 # Special handling for "me"
                 if preverb == 'me' or (use_optional_preverb and not preverb):
                     if infinitive in no_verbs:
-                        if root.startswith('nu'):
-                            root = 'ii' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root
+                        if root.startswith('nu', 'nu'):
+                            root = 'ii' + root[5:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root
                         else:
                             root = 'i' + root[1:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else 'u' + root[2:]                            
                         if not marker:
-                            root = root[1:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
+                            root = root[1:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else 'o' + root[1:]
                         else:
                             root = marker + root[3:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else marker + root[2:]
                     first_letter = get_first_letter(root)

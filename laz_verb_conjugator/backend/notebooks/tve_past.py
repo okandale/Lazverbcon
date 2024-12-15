@@ -22,7 +22,7 @@ from utils import (
 )
 from dataloader import load_tve_verbs
 
-verbs, regions, co_verbs, gyo_verbs = load_tve_verbs()
+verbs, regions, co_verbs, gyo_verbs, no_verbs = load_tve_verbs()
 
 preverbs_rules = get_preverbs_rules('tve_past')
 
