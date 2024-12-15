@@ -70,7 +70,7 @@ def load_tve_verbs():
             co_verbs.append(infinitive)
         if any(form and form.startswith('gyo') for form in present_forms):
             gyo_verbs.append(infinitive)
-        if any(form and form.startswith('no') for form in present_forms):
+        if any(form and form.startswith(('no', 'nu')) for form in present_forms):
             no_verbs.append(infinitive)        
         region_data = []
         for key in ['Region', 'Region Alternative 1', 'Region Alternative 2']:
