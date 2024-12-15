@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[4]:
-
-
 # Most up-to-date formula with preverbs (ge [along with geç̌ǩu's exception), e, ce, dolo, do [along with 'doguru'], go, oxo (based on oxoǯonu) me (as actual preverb i.e. 'meçamu' not additional), applicative and object conjugation (and Ardeşen rule), now including causative marke. 
 # directives ("me", "mo", "n") for non-preverb verbs are missing (i.e. oç̌aru - megiç̌aram)
 # added "n" root changer - gomǯam (gonǯalu)
@@ -13,10 +7,25 @@
 # added negative imperative
 import pandas as pd
 import os
+from utils import (
+    process_compound_verb,
+    get_first_letter,
+    get_first_word,
+    adjust_prefix,
+    is_vowel,
+    get_phonetic_rules,
+    determine_marker,
+    handle_marker,
+    get_personal_pronouns,
+    get_preverbs_rules,
+    tve_subject_markers as subject_markers,
+    ordered_objects
+)
+from dataloader import load_tve_verbs
 
-# Load the CSV file
-file_path = os.path.join('notebooks', 'data', 'Test Verb Present tense.csv')
+verbs, regions, co_verbs, gyo_verbs = load_tve_verbs()
 
+<<<<<<< HEAD
 # Read the CSV file.
 df = pd.read_csv(file_path)
 
@@ -189,6 +198,9 @@ def get_personal_pronouns(region):
         'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
         'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == "PZ" else 'hini' if region == "AŞ" else 'entepes'
     }
+=======
+preverbs_rules = get_preverbs_rules('tve_present')
+>>>>>>> f8bb4122dfea4c2f4c367336912dce403595ea29
 
 # Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
 def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False, mood=None):
@@ -226,15 +238,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             root = process_compound_verb(third_person)
             first_word = get_first_word(third_person)  # Get the first word for compound verbs
             root = process_compound_verb(root)
-
-            subject_markers = {
-                'S1_Singular': 'v',
-                'S2_Singular': '',
-                'S3_Singular': '',
-                'S1_Plural': 'v',
-                'S2_Plural': '',
-                'S3_Plural': ''
-            }
         
             suffixes = {
                 'S1_Singular': '',
@@ -243,15 +246,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 'S1_Plural': 't',
                 'S2_Plural': 't',
                 'S3_Plural': 'an'
-            }
-        
-            object_prefixes = {
-                'O1_Singular': 'm',
-                'O1_Plural': 'm',
-                'O2_Singular': 'g',
-                'O2_Plural': 'g',
-                'O3_Singular': '',
-                'O3_Plural': ''
             }
 
             # Extract the preverb from the infinitive if it exists
@@ -641,11 +635,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                             else:
                                 prefix = subject_markers[subject]
 
-
-
-
-
-
             # Handle the Ardeşen rule
             if third_person.endswith('y'):
                 if subject == 'S3_Singular':
@@ -808,9 +797,6 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
         all_conjugations[region] = list(all_conjugations[region])
     return all_conjugations
 
-
-
-
 def extract_neg_imperatives(all_conjugations, subjects):
     imperatives = {}
     for region, conjugations in all_conjugations.items():
@@ -823,49 +809,29 @@ def extract_neg_imperatives(all_conjugations, subjects):
                 imperatives[region].append((subject, obj, conjugation_with_neg))
     return imperatives
 
-ordered_objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']
-
 def format_neg_imperatives(imperatives):
     result = {}
     for region, conjugations in imperatives.items():
-        personal_pronouns = get_personal_pronouns(region)
+        # Get both subject and object pronouns for this region
+        subject_pronouns = get_personal_pronouns(region, 'tve_present')
+        object_pronouns = get_personal_pronouns_general(region)
+        
         formatted_conjugations = []
         for subject, obj, conjugation in conjugations:
-            subject_pronoun = personal_pronouns[subject]
-            obj_pronoun = personal_pronouns_general.get(obj, '')
+            subject_pronoun = subject_pronouns[subject]
+            obj_pronoun = object_pronouns.get(obj, '')
             formatted_conjugations.append(f"{subject_pronoun} {obj_pronoun}: {conjugation}")
 
         # Reorder for negative imperatives, ensuring S2_Singular comes before S2_Plural
         formatted_conjugations.sort(key=lambda x: (
-            x.split()[0] == personal_pronouns['S2_Plural'],  # Place S2_Plural last
-            x.split()[0] == personal_pronouns['S2_Singular'],  # Place S2_Singular first
+            x.split()[0] == subject_pronouns['S2_Plural'],  # Place S2_Plural last
+            x.split()[0] == subject_pronouns['S2_Singular'],  # Place S2_Singular first
             ordered_objects.index(x.split()[1]) if len(x.split()) > 1 and x.split()[1] in ordered_objects else -1
         ))
         
         result[region] = formatted_conjugations
+    
     return result
-
-
-
-
-
-
-
-# The rest of tve_present.py remains unchanged
-
-
-
-# Function to format the output with region-specific pronouns
-def format_conjugations(all_conjugations):
-    result = []
-    for region, conjugations in all_conjugations.items():
-        personal_pronouns = get_personal_pronouns(region)
-        result.append(f"{region}:")
-        for subject, obj, conjugation in sorted(conjugations, key=lambda x: subjects.index(x[0])):
-            subject_pronoun = personal_pronouns[subject]
-            object_pronoun = personal_pronouns.get(obj, '')
-            result.append(f"{subject_pronoun} {object_pronoun} {conjugation}")
-    return '\n'.join(result)
 
 def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, use_optional_preverb=False, mood=None):
     subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
@@ -894,7 +860,8 @@ def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicati
 
 
 # Define personal pronouns outside of regions
-personal_pronouns_general = {
+def get_personal_pronouns_general(region):
+    return {
     'O1_Singular': 'ma',
     'O2_Singular': 'si',
     'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else '(h)emus',
@@ -903,8 +870,3 @@ personal_pronouns_general = {
     'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == "PZ" else 'hini' if region == "AŞ" else 'entepes'
 }
 
-subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
-
-# Function to get the first word of a compound verb
-def get_first_word(verb):
-    return verb.split()[0] if len(verb.split()) > 1 else ''
