@@ -1,5 +1,3 @@
-import pandas as pd
-import os
 from utils import (
     process_compound_verb,
     get_first_letter,
@@ -10,7 +8,8 @@ from utils import (
     get_personal_pronouns,
     get_preverbs_rules,
     ivd_subject_markers as subject_markers,
-    subjects
+    subjects,
+    objects
 )
 from dataloader import load_ivd_verbs
 
@@ -297,8 +296,6 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
     return all_conjugations
 
 def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, use_optional_preverb=False):
-    subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
-    objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']
     all_conjugations = {}
     for subject in subjects:
         for obj in objects:
@@ -311,5 +308,4 @@ def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False,
     return all_conjugations
 
 def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False):
-    subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
     return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb)

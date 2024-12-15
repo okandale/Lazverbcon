@@ -1,12 +1,3 @@
-# Most up-to-date formula with preverbs (ge [along with geç̌ǩu's exception), e, ce, dolo, do [along with 'doguru'], go, oxo (based on oxoǯonu) me (as actual preverb i.e. 'meçamu' not additional), applicative and object conjugation (and Ardeşen rule), now including causative marke. 
-# directives ("me", "mo", "n") for non-preverb verbs are missing (i.e. oç̌aru - megiç̌aram)
-# added "n" root changer - gomǯam (gonǯalu)
-# added optional preverb 'me' and 'ko' - won't show up in conjugator
-# added preverb 'gama'
-# added regions and regional variences'
-# added negative imperative
-import pandas as pd
-import os
 from utils import (
     process_compound_verb,
     get_first_letter,
@@ -19,7 +10,9 @@ from utils import (
     get_personal_pronouns,
     get_preverbs_rules,
     tve_subject_markers as subject_markers,
-    ordered_objects
+    ordered_objects,
+    subjects,
+    objects
 )
 from dataloader import load_tve_verbs
 
@@ -665,8 +658,6 @@ def format_neg_imperatives(imperatives):
     return result
 
 def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, use_optional_preverb=False, mood=None):
-    subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
-    objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']
     all_conjugations = {}
     for subject in subjects:
         for obj in objects:
@@ -684,7 +675,6 @@ def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False,
 
 
 def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False, mood=None):
-    subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
     return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb, mood)
 
 

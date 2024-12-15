@@ -1,5 +1,3 @@
-import pandas as pd
-import os
 from utils import (
     process_compound_verb,
     get_first_letter,
