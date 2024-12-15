@@ -139,7 +139,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     preverb = 'ey' if region == 'PZ' else 'y'
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
                     preverb = preverb[:-1] + 'y' if preverb == 'ge' else preverb[:-1] # added for 'geçamu' as it would omit the 'y' in (no S1) O3 conjugations. 
-                print("Current root before preverb rules are applied:", root)
                 # Special handling for "me"
                 if preverb == 'me' or (use_optional_preverb and not preverb):
                     if infinitive in no_verbs:
