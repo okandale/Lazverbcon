@@ -15,6 +15,7 @@ from utils import (
     determine_marker,
     handle_marker,
     get_personal_pronouns,
+    get_preverbs_rules,
     tve_subject_markers as subject_markers,
     subjects
 )
@@ -22,17 +23,7 @@ from dataloader import load_tve_verbs
 
 verbs, regions, co_verbs, gyo_verbs = load_tve_verbs()
 
-# Define preverbs and their specific rules
-preverbs_rules = {
-    ('ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye'): {
-        'S1_Singular': 'v',
-        'S2_Singular': '',
-        'S3_Singular': '',
-        'S1_Plural': 'v',
-        'S2_Plural': '',
-        'S3_Plural': ''
-    }
-}
+preverbs_rules = get_preverbs_rules('tve_pastpro')
 
 # Update the conjugate_past_progressive function to return a dictionary
 def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=False, causative=False, use_optional_preverb=False):

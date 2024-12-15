@@ -222,6 +222,133 @@ potential_subject_markers = {
                 'S3_Plural': 'a'
             }
 
+def get_preverbs_rules(mode):
+    if mode in ['ivd_future', 'ivd_past', 'ivd_pastpro']:
+        return {
+            ('ge', 'e', 'cel', 'ce', 'do', 'ye'): {
+                'S1_Singular': 'm',
+                'S2_Singular': 'g',
+                'S3_Singular': '',
+                'S1_Plural': 'm',
+                'S2_Plural': 'g',
+                'S3_Plural': ''
+            },
+            ('go',): {
+                'S1_Singular': 'gom',
+                'S2_Singular': 'gog',
+                'S3_Singular': 'go',
+                'S1_Plural': 'gom',
+                'S2_Plural': 'gog',
+                'S3_Plural': 'go'
+            },
+            ('gy',): {
+                'S1_Singular': 'gem',
+                'S2_Singular': 'geg',
+                'S3_Singular': 'gyo',
+                'S1_Plural': 'gem',
+                'S2_Plural': 'geg',
+                'S3_Plural': 'gyo'
+            },
+            ('coz',): {
+                'S1_Singular': 'cem',
+                'S2_Singular': 'ceg',
+                'S3_Singular': 'coz',
+                'S1_Plural': 'cem',
+                'S2_Plural': 'ceg',
+                'S3_Plural': 'coz'
+            }
+        }
+    elif mode in ['ivd_present']:
+        return {
+            ('ge', 'e', 'cel', 'ce', 'do', 'ye'): {
+                'S1_Singular': 'om',
+                'S2_Singular': 'og',
+                'S3_Singular': '',
+                'S1_Plural': 'om',
+                'S2_Plural': 'og',
+                'S3_Plural': ''
+            },
+            ('go',): {
+                'S1_Singular': 'gom',
+                'S2_Singular': 'gog',
+                'S3_Singular': 'go',
+                'S1_Plural': 'gom',
+                'S2_Plural': 'gog',
+                'S3_Plural': 'go'
+            },
+            ('gy',): {
+                'S1_Singular': 'gem',
+                'S2_Singular': 'geg',
+                'S3_Singular': 'gyo',
+                'S1_Plural': 'gem',
+                'S2_Plural': 'geg',
+                'S3_Plural': 'gyo'
+            },
+            ('coz',): {
+                'S1_Singular': 'cem',
+                'S2_Singular': 'ceg',
+                'S3_Singular': 'coz',
+                'S1_Plural': 'cem',
+                'S2_Plural': 'ceg',
+                'S3_Plural': 'coz'
+            }
+        }
+    elif mode in ['tve_past', 'tve_pastpro']:
+        return {
+            ('ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye'): {
+                'S1_Singular': 'v',
+                'S2_Singular': '',
+                'S3_Singular': '',
+                'S1_Plural': 'v',
+                'S2_Plural': '',
+                'S3_Plural': ''
+            }
+        }
+    elif mode in ['tve_future']:
+        return {
+            ('ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'cele'): {
+                'S1_Singular': 'v',
+                'S2_Singular': '',
+                'S3_Singular': '',
+                'S1_Plural': 'v',
+                'S2_Plural': '',
+                'S3_Plural': ''
+            }
+        }
+    elif mode in ['tve_present']:
+        return {
+            ('ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'gela', 'ela', 'ceǩo', 'eǩo', 'ama', 'mo', 'ǩoǩo'): {
+                'S1_Singular': 'v',
+                'S2_Singular': '',
+                'S3_Singular': '',
+                'S1_Plural': 'v',
+                'S2_Plural': '',
+                'S3_Plural': ''
+            }
+        }
+    elif mode in ['tvm_tense']:
+        return {
+            ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye'): {
+                'S1_Singular': 'v',
+                'S2_Singular': '',
+                'S3_Singular': '',
+                'S1_Plural': 'v',
+                'S2_Plural': '',
+                'S3_Plural': ''
+            }
+        }
+    elif mode in ['tvm_tve_passive', 'tvm_tve_potential', 'tvm_tve_presentperf']:
+        return {
+            ('ge', 'e', 'cele', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye'): {
+                'S1_Singular': 'v',
+                'S2_Singular': '',
+                'S3_Singular': '',
+                'S1_Plural': 'v',
+                'S2_Plural': '',
+                'S3_Plural': ''
+            }
+        }
+
 def get_personal_pronouns(region, mode):
     # Base pronouns that are always the same
     pronouns = {

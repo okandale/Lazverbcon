@@ -12,6 +12,7 @@ from utils import (
     handle_special_case_gy,
     handle_special_case_u,
     get_personal_pronouns,
+    get_preverbs_rules,
     ivd_subject_markers as subject_markers,
     subjects
 )
@@ -19,41 +20,7 @@ from dataloader import load_ivd_verbs
 
 verbs, regions = load_ivd_verbs()
 
-# Define preverbs and their specific rules
-preverbs_rules = {
-    ('ge', 'e', 'cel', 'ce', 'do', 'ye'): {
-        'S1_Singular': 'om',
-        'S2_Singular': 'og',
-        'S3_Singular': '',
-        'S1_Plural': 'om',
-        'S2_Plural': 'og',
-        'S3_Plural': ''
-    },
-    ('go',): {
-        'S1_Singular': 'gom',
-        'S2_Singular': 'gog',
-        'S3_Singular': 'go',
-        'S1_Plural': 'gom',
-        'S2_Plural': 'gog',
-        'S3_Plural': 'go'
-    },
-    ('gy',): {
-        'S1_Singular': 'gem',
-        'S2_Singular': 'geg',
-        'S3_Singular': 'gyo',
-        'S1_Plural': 'gem',
-        'S2_Plural': 'geg',
-        'S3_Plural': 'gyo'
-    },
-    ('coz',): {
-        'S1_Singular': 'cem',
-        'S2_Singular': 'ceg',
-        'S3_Singular': 'coz',
-        'S1_Plural': 'cem',
-        'S2_Plural': 'ceg',
-        'S3_Plural': 'coz'
-    }
-}
+preverbs_rules = get_preverbs_rules('ivd_present')
 
 # Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
 def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False):

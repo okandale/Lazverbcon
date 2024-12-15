@@ -7,6 +7,7 @@ from utils import (
     is_vowel,
     adjust_prefix, 
     get_personal_pronouns,
+    get_preverbs_rules,
     subjects
 )
 
@@ -14,17 +15,7 @@ from dataloader import load_tvm_tense
 
 verbs, regions = load_tvm_tense()
 
-# Define preverbs and their specific rules
-preverbs_rules = {
-    ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye'): {
-        'S1_Singular': 'v',
-        'S2_Singular': '',
-        'S3_Singular': '',
-        'S1_Plural': 'v',
-        'S2_Plural': '',
-        'S3_Plural': ''
-    }
-}
+preverbs_rules = get_preverbs_rules('tvm_tense')
 
 # Phonetic rules for 'v' and 'g' ff
 def get_phonetic_rules(region):

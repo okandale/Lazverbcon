@@ -17,6 +17,7 @@ from utils import (
     determine_marker,
     handle_marker,
     get_personal_pronouns,
+    get_preverbs_rules,
     tve_subject_markers as subject_markers,
     ordered_objects
 )
@@ -24,17 +25,7 @@ from dataloader import load_tve_verbs
 
 verbs, regions, co_verbs, gyo_verbs = load_tve_verbs()
 
-# Define preverbs and their specific rules
-preverbs_rules = {
-    ('ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'gela', 'ela', 'ceǩo', 'eǩo', 'ama', 'mo', 'ǩoǩo'): {
-        'S1_Singular': 'v',
-        'S2_Singular': '',
-        'S3_Singular': '',
-        'S1_Plural': 'v',
-        'S2_Plural': '',
-        'S3_Plural': ''
-    }
-}
+preverbs_rules = get_preverbs_rules('tve_present')
 
 # Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
 def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False, mood=None):

@@ -10,6 +10,7 @@ from utils import (
     adjust_prefix,
     get_phonetic_rules,
     get_personal_pronouns,
+    get_preverbs_rules,
     tve_subject_markers as subject_markers,
     subjects
 )
@@ -17,17 +18,7 @@ from dataloader import load_tvm_tve_passive
 
 verbs, regions = load_tvm_tve_passive()
 
-# Define preverbs and their specific rules
-preverbs_rules = {
-    ('ge', 'e', 'cele', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye'): {
-        'S1_Singular': 'v',
-        'S2_Singular': '',
-        'S3_Singular': '',
-        'S1_Plural': 'v',
-        'S2_Plural': '',
-        'S3_Plural': ''
-    }
-}
+preverbs_rules = get_preverbs_rules('tvm_tve_passive')
 
 def get_suffixes(tense, region, causative):
     suffixes = {}
