@@ -28,6 +28,7 @@ verbs = {}
 regions = {}
 co_verbs = []
 gyo_verbs = []
+no_verbs = []
 for index, row in df_tve.iterrows():
     infinitive = row['Laz Infinitive']
     present_forms = row[['Laz 3rd Person Singular Present', 'Laz 3rd Person Singular Present Alternative 1', 'Laz 3rd Person Singular Present Alternative 2']].dropna().tolist()
@@ -38,6 +39,8 @@ for index, row in df_tve.iterrows():
         # If any third person form starts with 'gyo', add its infinitive to gyo_verbs
     if any(form.startswith('gyo') for form in present_forms):
         gyo_verbs.append(infinitive)
+    if any(form.startswith(('no', 'nu')) for form in present_forms):
+        no_verbs.append(infinitive)
     region = row[['Region', 'Region Alternative 1', 'Region Alternative 2']].dropna().tolist()
     regions_list = []
     for reg in region:
@@ -130,7 +133,7 @@ def determine_marker(subject, obj, marker_type):
 def handle_marker(infinitive, root, marker, subject, obj):
     if infinitive == 'doguru':
         root = root[1:]  # Remove the first character 'd' from the root
-    if infinitive == 'meşvelu':
+    if infinitive in no_verbs and root.startswith('nu'):
         root = root[1:]
     if infinitive in ('oç̌ǩomu', 'oşǩomu') and marker == 'o':
         root = 'çams'
@@ -324,11 +327,19 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     preverb = preverb[:-1] + 'y' if preverb == 'ge' else preverb[:-1] # added for 'geçamu' as it would omit the 'y' in (no S1) O3 conjugations. 
                 # Special handling for "me"
                 if preverb == 'me' or (use_optional_preverb and not preverb):
-                    if infinitive in ('meşvelu') and not marker or root.startswith('n') and not marker:
-                        root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
+                    if infinitive in no_verbs:
+                        if root.startswith('nu'):
+                            root = 'ii' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root
+                        else:
+                            root = 'i' + root[1:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else 'u' + root[2:]                            
+                        if not marker:
+                            root = root[1:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
+                        else:
+                            root = marker + root[3:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else marker + root[2:]
                     first_letter = get_first_letter(root)
                     if obj in ['O2_Singular', 'O2_Plural']:
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                        preverb = 'n' if root.startswith(('a', 'e', 'i', 'o', 'u')) else preverb
                         prefix = preverb + adjusted_prefix
                     elif subject in ['S1_Singular', 'S1_Plural']:
                         adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
