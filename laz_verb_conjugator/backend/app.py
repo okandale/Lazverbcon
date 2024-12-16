@@ -1,28 +1,16 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import importlib
 import logging
 import os
-import pandas as pd
 import json
-from datetime import datetime
-from flask import make_response
 from validators import ConjugationValidator
-from services import ConjugationService
-import hmac
-import hashlib
-import subprocess
+from services.conjugation import ConjugationService
+from config.webhook_config import WebhookConfig
+from services.webhook import WebhookService, WebhookError, SignatureVerificationError, WebhookDisabledError
 
-try:
-    with open('/var/www/webserver/config/webhook_config.json', 'r') as f:
-        config = json.load(f)
-    WEBHOOK_SECRET = config['webhook_secret']
-except Exception as e:
-    logging.error(f"Failed to load webhook config: {e}")
-    WEBHOOK_SECRET = None
-
-# Set up two loggers - one for general application logs and one for request/response logs
-logging.basicConfig(level=logging.DEBUG)
+# Set up logging
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Create a separate logger for request/response logging
@@ -44,6 +32,7 @@ req_res_handler.setFormatter(formatter)
 req_res_logger.addHandler(req_res_handler)
 
 app = Flask(__name__)
+app.debug = False
 
 # Enable CORS with specific configuration
 CORS(app, resources={
@@ -57,6 +46,10 @@ CORS(app, resources={
         "allow_headers": ["Content-Type"]
     }
 })
+
+# Initialize webhook configuration and service
+webhook_config = WebhookConfig.load()
+webhook_service = WebhookService(webhook_config)
 
 # Loading tense modules
 tense_modules = {
@@ -74,7 +67,7 @@ tense_modules = {
     'tve_future': importlib.import_module('notebooks.tve_future'),
 }
 
-# Mapping tenses to their modules
+# Mapping tenses to their modules (keep your existing mappings)
 simplified_tense_mapping = {
     'present': ['ivd_present', 'tve_present', ('tvm_tense', 'present')],
     'past': ['ivd_past', 'tve_past', ('tvm_tense', 'past')],
@@ -89,12 +82,8 @@ simplified_aspect_mapping = {
 }
 
 def log_request_response(request_params, response_data, endpoint):
-    """
-    Log request parameters and response data to the log file
-    """
+    """Log request parameters and response data to the log file"""
     log_entry = {
-        #'timestamp': datetime.now().isoformat(),
-        #'endpoint': endpoint,
         'request': request_params,
         'response': response_data
     }
@@ -102,43 +91,31 @@ def log_request_response(request_params, response_data, endpoint):
 
 @app.route('/update', methods=['POST'])
 def webhook_update():
-    if not WEBHOOK_SECRET:
-        logger.error("Webhook secret not configured")
-        return 'Webhook not configured', 500
-
-    # Verify signature
-    signature = request.headers.get('X-Hub-Signature-256')
-    if not signature:
-        logger.warning("No signature in webhook request")
-        return 'No signature', 400
-
-    # Calculate expected signature
-    expected_signature = hmac.new(
-        WEBHOOK_SECRET.encode(),
-        request.data,
-        hashlib.sha256
-    ).hexdigest()
-    expected_signature = f'sha256={expected_signature}'
-
-    if not hmac.compare_digest(signature, expected_signature):
-        logger.warning("Invalid webhook signature")
-        return 'Invalid signature', 401
-
-    if request.headers.get('X-GitHub-Event') == 'push':
-        try:
-            # Update the repository
-            subprocess.run(
-                ['git', 'pull'],
-                cwd='/var/www/webserver/Lazverbcon/laz_verb_conjugator/backend',
-                check=True
-            )
-            logger.info("Successfully pulled updates from git")
-            return 'Updated successfully', 200
-        except subprocess.CalledProcessError as e:
-            logger.error(f"Git pull failed: {e}")
-            return f'Update failed: {str(e)}', 500
-    
-    return 'Wrong event type', 400
+    try:
+        webhook_service.verify_request(
+            signature=request.headers.get('X-Hub-Signature-256'),
+            payload=request.data,
+            event_type=request.headers.get('X-GitHub-Event')
+        )
+        
+        webhook_service.handle_update()
+        return jsonify({'status': 'success'}), 200
+        
+    except WebhookDisabledError as e:
+        logger.warning(str(e))
+        return jsonify({'error': 'Webhook disabled'}), 404
+        
+    except SignatureVerificationError as e:
+        logger.warning(str(e))
+        return jsonify({'error': 'Invalid signature'}), 401
+        
+    except WebhookError as e:
+        logger.warning(str(e))
+        return jsonify({'error': str(e)}), 400
+        
+    except Exception as e:
+        logger.error(f"Unexpected error in webhook: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
 
 @app.route('/ping', methods=['GET'])
 def hi():
@@ -188,4 +165,4 @@ def conjugate():
         return jsonify(error), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
