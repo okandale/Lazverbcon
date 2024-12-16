@@ -76,32 +76,33 @@ class WebhookService:
             self.signature_verifier = None
 
     def handle_update(self) -> None:
-        """Handle the actual git pull and service restart"""
         try:
             # Git pull
             result = subprocess.run(
                 ['git', 'pull'],
-                cwd='/var/www/webserver/Lazverbcon/laz_verb_conjugator/backend',
+                cwd=self.config.git_repo_path,
                 capture_output=True,
                 text=True,
                 check=True
             )
             logger.info(f"Git pull output: {result.stdout}")
-            
-            # Restart service
-            result = subprocess.run(
-                ['sudo', 'systemctl', 'restart', 'flask-app.service'],
-                capture_output=True,
-                text=True,
-                check=True
+
+            # Launch restart script in background
+            subprocess.Popen(
+                ['/var/www/webserver/scripts/restart_service.sh'],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                start_new_session=True
             )
-            logger.info(f"Service restart output: {result.stdout}")
             
+            logger.info("Service restart scheduled")
+            return True
+
         except subprocess.CalledProcessError as e:
             logger.error(f"Command failed: {e.cmd}")
             logger.error(f"Output: {e.output}")
             raise WebhookError(f"Update failed: {e.output}")
-
+    
     def verify_request(self, signature: Optional[str], payload: bytes, event_type: Optional[str]) -> None:
         if not self.config.enabled:
             raise WebhookDisabledError("Webhook functionality is disabled")
