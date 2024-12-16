@@ -119,7 +119,7 @@ def webhook_update():
 
 @app.route('/ping', methods=['GET'])
 def hi():
-    return jsonify({"response": "pong"})
+    return jsonify({"response": "pong!"})
 
 @app.route('/api/conjugate', methods=['GET'])
 def conjugate():
