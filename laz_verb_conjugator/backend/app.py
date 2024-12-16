@@ -1,17 +1,16 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import importlib
 import logging
 import os
-import pandas as pd
 import json
-from datetime import datetime
-from flask import make_response
 from validators import ConjugationValidator
-from services import ConjugationService
+from services.conjugation import ConjugationService
+from config.webhook_config import WebhookConfig
+from services.webhook import WebhookService, WebhookError, SignatureVerificationError, WebhookDisabledError
 
-# Set up two loggers - one for general application logs and one for request/response logs
-logging.basicConfig(level=logging.DEBUG)
+# Set up logging
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Create a separate logger for request/response logging
@@ -32,7 +31,8 @@ req_res_handler.setFormatter(formatter)
 # Add the handler to the request/response logger
 req_res_logger.addHandler(req_res_handler)
 
-app = Flask(__name__, static_folder='../frontend/dist')
+app = Flask(__name__)
+app.debug = False
 
 # Enable CORS with specific configuration
 CORS(app, resources={
@@ -46,6 +46,10 @@ CORS(app, resources={
         "allow_headers": ["Content-Type"]
     }
 })
+
+# Initialize webhook configuration and service
+webhook_config = WebhookConfig.load()
+webhook_service = WebhookService(webhook_config)
 
 # Loading tense modules
 tense_modules = {
@@ -63,7 +67,7 @@ tense_modules = {
     'tve_future': importlib.import_module('notebooks.tve_future'),
 }
 
-# Mapping tenses to their modules
+# Mapping tenses to their modules (keep your existing mappings)
 simplified_tense_mapping = {
     'present': ['ivd_present', 'tve_present', ('tvm_tense', 'present')],
     'past': ['ivd_past', 'tve_past', ('tvm_tense', 'past')],
@@ -78,24 +82,40 @@ simplified_aspect_mapping = {
 }
 
 def log_request_response(request_params, response_data, endpoint):
-    """
-    Log request parameters and response data to the log file
-    """
+    """Log request parameters and response data to the log file"""
     log_entry = {
-        #'timestamp': datetime.now().isoformat(),
-        #'endpoint': endpoint,
         'request': request_params,
         'response': response_data
     }
     req_res_logger.info(json.dumps(log_entry, ensure_ascii=False))
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve(path):
-    if path != "" and os.path.exists(app.static_folder + '/' + path):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
+@app.route('/update', methods=['POST'])
+def webhook_update():
+    try:
+        webhook_service.verify_request(
+            signature=request.headers.get('X-Hub-Signature-256'),
+            payload=request.data,
+            event_type=request.headers.get('X-GitHub-Event')
+        )
+        
+        webhook_service.handle_update()
+        return jsonify({'status': 'success'}), 200
+        
+    except WebhookDisabledError as e:
+        logger.warning(str(e))
+        return jsonify({'error': 'Webhook disabled'}), 404
+        
+    except SignatureVerificationError as e:
+        logger.warning(str(e))
+        return jsonify({'error': 'Invalid signature'}), 401
+        
+    except WebhookError as e:
+        logger.warning(str(e))
+        return jsonify({'error': str(e)}), 400
+        
+    except Exception as e:
+        logger.error(f"Unexpected error in webhook: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
 
 @app.route('/ping', methods=['GET'])
 def hi():
@@ -145,4 +165,4 @@ def conjugate():
         return jsonify(error), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
