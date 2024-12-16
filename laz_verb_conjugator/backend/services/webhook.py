@@ -55,7 +55,7 @@ class WebhookService:
             
             # Restart service
             result = subprocess.run(
-                ['sudo', 'systemctl', 'restart', 'gunicorn'],
+                ['sudo', 'systemctl', 'restart', 'flask-app.service'],
                 capture_output=True,
                 text=True,
                 check=True
