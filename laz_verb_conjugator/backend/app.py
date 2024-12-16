@@ -9,6 +9,17 @@ from datetime import datetime
 from flask import make_response
 from validators import ConjugationValidator
 from services import ConjugationService
+import hmac
+import hashlib
+import subprocess
+
+try:
+    with open('/var/www/webserver/config/webhook_config.json', 'r') as f:
+        config = json.load(f)
+    WEBHOOK_SECRET = config['webhook_secret']
+except Exception as e:
+    logging.error(f"Failed to load webhook config: {e}")
+    WEBHOOK_SECRET = None
 
 # Set up two loggers - one for general application logs and one for request/response logs
 logging.basicConfig(level=logging.DEBUG)
@@ -32,7 +43,7 @@ req_res_handler.setFormatter(formatter)
 # Add the handler to the request/response logger
 req_res_logger.addHandler(req_res_handler)
 
-app = Flask(__name__, static_folder='../frontend/dist')
+app = Flask(__name__)
 
 # Enable CORS with specific configuration
 CORS(app, resources={
@@ -89,13 +100,45 @@ def log_request_response(request_params, response_data, endpoint):
     }
     req_res_logger.info(json.dumps(log_entry, ensure_ascii=False))
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve(path):
-    if path != "" and os.path.exists(app.static_folder + '/' + path):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
+@app.route('/update', methods=['POST'])
+def webhook_update():
+    if not WEBHOOK_SECRET:
+        logger.error("Webhook secret not configured")
+        return 'Webhook not configured', 500
+
+    # Verify signature
+    signature = request.headers.get('X-Hub-Signature-256')
+    if not signature:
+        logger.warning("No signature in webhook request")
+        return 'No signature', 400
+
+    # Calculate expected signature
+    expected_signature = hmac.new(
+        WEBHOOK_SECRET.encode(),
+        request.data,
+        hashlib.sha256
+    ).hexdigest()
+    expected_signature = f'sha256={expected_signature}'
+
+    if not hmac.compare_digest(signature, expected_signature):
+        logger.warning("Invalid webhook signature")
+        return 'Invalid signature', 401
+
+    if request.headers.get('X-GitHub-Event') == 'push':
+        try:
+            # Update the repository
+            subprocess.run(
+                ['git', 'pull'],
+                cwd='/var/www/webserver/Lazverbcon/laz_verb_conjugator/backend',
+                check=True
+            )
+            logger.info("Successfully pulled updates from git")
+            return 'Updated successfully', 200
+        except subprocess.CalledProcessError as e:
+            logger.error(f"Git pull failed: {e}")
+            return f'Update failed: {str(e)}', 500
+    
+    return 'Wrong event type', 400
 
 @app.route('/ping', methods=['GET'])
 def hi():
