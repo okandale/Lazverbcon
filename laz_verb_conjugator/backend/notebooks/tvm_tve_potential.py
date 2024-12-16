@@ -140,6 +140,8 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
             
 
             # Get the first letter after the marker is attached
+            if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and preverb == 'me':
+                preverb = 'n'
             if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
             if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular'):
