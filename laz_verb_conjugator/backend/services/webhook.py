@@ -32,7 +32,42 @@ class WebhookSignatureVerifier:
         
         return hmac.compare_digest(expected, received)
 
+import threading
+import time
+
 class WebhookService:
+    def handle_update(self) -> None:
+        try:
+            # Git pull
+            result = subprocess.run(
+                ['git', 'pull'],
+                cwd=self.config.git_repo_path,
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            logger.info(f"Git pull output: {result.stdout}")
+            
+            # Schedule the restart to happen after response is sent
+            def delayed_restart():
+                time.sleep(2)  # Wait 2 seconds
+                subprocess.run(
+                    ['sudo', 'systemctl', 'restart', 'flask-app.service'],
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
+            
+            thread = threading.Thread(target=delayed_restart)
+            thread.daemon = True
+            thread.start()
+            
+            logger.info("Service restart scheduled")
+            
+        except subprocess.CalledProcessError as e:
+            logger.error(f"Command failed: {e.cmd}")
+            logger.error(f"Output: {e.output}")
+            raise WebhookError(f"Update failed: {e.output}")
     def __init__(self, config):
         self.config = config
         if config and config.enabled:
