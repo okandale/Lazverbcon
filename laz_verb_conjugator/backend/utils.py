@@ -64,6 +64,7 @@ def handle_special_case_coz(root, subject):
 
 # Shared constants
 subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
+objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']
 ordered_objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']
 
 def get_phonetic_rules(region: str, is_tvm: bool = False) -> tuple:
@@ -143,8 +144,6 @@ def determine_marker(subject, obj, marker_type):
 def handle_marker(infinitive, root, marker, subject, obj):
     if infinitive == 'doguru':
         root = root[1:]  # Remove the first character 'd' from the root
-    if infinitive == 'meşvelu':
-        root = root[1:]
     if infinitive in ('oç̌ǩomu', 'oşǩomu') and marker == 'o':
         root = 'çams'
         marker = ''

@@ -1,6 +1,3 @@
-import requests
-import pandas as pd
-import os
 from utils import (
     process_compound_verb,
     get_first_letter,
@@ -9,7 +6,8 @@ from utils import (
     get_personal_pronouns,
     get_preverbs_rules,
     potential_subject_markers as subject_markers,
-    subjects
+    subjects,
+    objects
 )
 from dataloader import load_tvm_tve_potential
 
@@ -115,7 +113,7 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            preverb_exceptions = {'oǩoreʒxu'}  # Ensure this set is defined appropriately, add additionally to 256
+            preverb_exceptions = {'oǩoreʒxu', 'oǩoru', 'oxop̌u'}  # Ensure this set is defined appropriately, add additionally to 256
 
             # Check if the infinitive is NOT in the exception list before extracting preverbs
             if infinitive not in preverb_exceptions:
@@ -142,6 +140,8 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
             
 
             # Get the first letter after the marker is attached
+            if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and preverb == 'me':
+                preverb = 'n'
             if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
             if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular'):
@@ -150,7 +150,7 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
                 elif preverb == 'ce':
                     preverb = preverb[:-1]
                 else:
-                    preverb = preverb # changed this for gonǯǩu 
+                    preverb = preverb if infinitive == 'gonǯǩu' else preverb[:-1] # changed this for gonǯǩu 
               
 
             first_letter = get_first_letter(root)
@@ -205,8 +205,6 @@ def collect_conjugations_all(infinitive, subjects, tense='present', obj=None, ap
     return all_conjugations
 
 def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, use_optional_preverb=False):
-    subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
-    objects = ['O1_Singular', 'O2_Singular', 'O3_Singular', 'O1_Plural', 'O2_Plural', 'O3_Plural']
     all_conjugations = {}
     for subject in subjects:
         for obj in objects:
@@ -217,6 +215,6 @@ def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False,
                 for conjugation in conjugation_list:
                     all_conjugations[region].add((subject, obj, conjugation[2]))
     return all_conjugations
+
 def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False):
-    subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural']
     return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb)

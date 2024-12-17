@@ -54,7 +54,7 @@ def load_tve_verbs():
     regions = {}
     co_verbs = []
     gyo_verbs = []
-    
+    no_verbs = []
     for row in df_tve:
         infinitive = row['Laz Infinitive']
         
@@ -70,7 +70,8 @@ def load_tve_verbs():
             co_verbs.append(infinitive)
         if any(form and form.startswith('gyo') for form in present_forms):
             gyo_verbs.append(infinitive)
-        
+        if any(form and form.startswith(('no', 'nu')) for form in present_forms):
+            no_verbs.append(infinitive)        
         region_data = []
         for key in ['Region', 'Region Alternative 1', 'Region Alternative 2']:
             if row.get(key):
@@ -87,7 +88,7 @@ def load_tve_verbs():
         verbs[infinitive] = list(zip(present_forms, region_data))
         regions[infinitive] = regions_list
 
-    return verbs, regions, co_verbs, gyo_verbs
+    return verbs, regions, co_verbs, gyo_verbs, no_verbs
 
 def load_tvm_tense():
     """Load TVM (Middle Voice) tense data from JSON file."""
