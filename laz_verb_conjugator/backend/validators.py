@@ -58,7 +58,7 @@ class ConjugationValidator:
 
         # Process and normalize parameters
         params = {
-            'infinitive': infinitive.lower(),
+            'infinitive': infinitive.lower().rstrip(),
             'subject': subject,
             'obj': request_params.get('obj'),
             'applicative': request_params.get('applicative', 'false').lower() == 'true',
