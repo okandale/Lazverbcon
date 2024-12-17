@@ -55,6 +55,14 @@ def load_tve_verbs():
     co_verbs = []
     gyo_verbs = []
     no_verbs = []
+
+    def check_prefix_in_words(form, prefix):
+        """Check if any word in the form starts with the given prefix."""
+        if not form:
+            return False
+        words = form.split()
+        return any(word.startswith(prefix) for word in words)
+    
     for row in df_tve:
         infinitive = row['Laz Infinitive']
         
@@ -65,13 +73,14 @@ def load_tve_verbs():
             if row.get(key):
                 present_forms.append(row[key])
         
-        # Check for co- and gyo- prefixes
-        if any(form and form.startswith('co') for form in present_forms):
+        # Check for prefixes in any word of the form
+        if any(form and check_prefix_in_words(form, 'co') for form in present_forms):
             co_verbs.append(infinitive)
-        if any(form and form.startswith('gyo') for form in present_forms):
+        if any(form and check_prefix_in_words(form, 'gyo') for form in present_forms):
             gyo_verbs.append(infinitive)
-        if any(form and form.startswith(('no', 'nu')) for form in present_forms):
-            no_verbs.append(infinitive)        
+        if any(form and (check_prefix_in_words(form, 'no') or check_prefix_in_words(form, 'nu')) 
+               for form in present_forms):
+            no_verbs.append(infinitive)       
         region_data = []
         for key in ['Region', 'Region Alternative 1', 'Region Alternative 2']:
             if row.get(key):
