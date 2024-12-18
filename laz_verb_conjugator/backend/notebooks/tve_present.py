@@ -163,7 +163,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
                         prefix = preverb + adjusted_prefix
                     elif obj in ['O1_Singular', 'O1_Plural']:
-                        prefix = 'mom'
+                        prefix = 'mem' if infinitive in no_verbs else 'mom'
                     else:
                         prefix = 'me'
                     
