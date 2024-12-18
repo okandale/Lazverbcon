@@ -1286,10 +1286,10 @@
   {
     "Laz Infinitive": "obaxu",
     "Category": "TVE",
-    "Laz 3rd Person Singular Present": "baxups",
-    "Region": "HO",
-    "Laz 3rd Person Singular Present Alternative 1": null,
-    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present": "baxums",
+    "Region": "FA",
+    "Laz 3rd Person Singular Present Alternative 1": "baxups",
+    "Region Alternative 1": "HO",
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
     "English Translation": "to beat up",
@@ -3170,7 +3170,7 @@
   {
     "Laz Infinitive": "oxoşkvinu",
     "Category": "TVE",
-    "Laz 3rd Person Singular Present": "oxuşkums",
+    "Laz 3rd Person Singular Present": "oxoşkums",
     "Region": "PZ, AŞ, FA",
     "Laz 3rd Person Singular Present Alternative 1": null,
     "Region Alternative 1": null,
