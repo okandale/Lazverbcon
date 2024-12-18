@@ -139,9 +139,10 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     preverb = 'ey' if region == 'PZ' else 'y'
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
                     preverb = preverb[:-1] + 'y' if preverb == 'ge' else preverb[:-1] # added for 'geçamu' as it would omit the 'y' in (no S1) O3 conjugations. 
-           
-                if preverb == 'mo':
-                    if infinitive.startswith('mu'):
+                print(f"root: {root}")
+                print (f"preverb {preverb}")
+                if preverb == 'mo' or infinitive.startswith('mo'):
+                    if root.startswith(('mu', 'imu', 'umu', 'omu')):
                         if root.startswith(('mu', 'imu', 'umu', 'omu')):
                             if not marker:
                                 root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
@@ -154,10 +155,11 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                                 root = root[1:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
                             else:
                                 root = marker + root[3:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[2:]
+                    preverb = 'm' if subject in ('S2_Singular', 'S3_Singular', 'S2_Plural', 'S3_Plural') and obj in ('O3_Singular', 'O3_Plural') else preverb
                     first_letter = get_first_letter(root)
                     if obj in ['O2_Singular', 'O2_Plural']:
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                        preverb = 'n' if root.startswith(('a', 'e', 'i', 'o', 'u')) else preverb
+                        preverb = 'm' if adjusted_prefix.startswith(('a', 'e', 'i', 'o', 'u')) else preverb
                         prefix = preverb + adjusted_prefix
                     elif subject in ['S1_Singular', 'S1_Plural']:
                         adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
