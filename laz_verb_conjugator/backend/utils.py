@@ -73,9 +73,9 @@ def get_phonetic_rules(region: str, is_tvm: bool = False) -> tuple:
         if region == 'FA':
             phonetic_rules_v = {
                 'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-                'b': ['b', 'a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+                'b': ['a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
                 'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-                'm': ['n']
+                'm': ['b', 'n']
             }
         else:
             phonetic_rules_v = {
@@ -97,9 +97,9 @@ def get_phonetic_rules(region: str, is_tvm: bool = False) -> tuple:
         if region == 'FA':
             phonetic_rules_v = {
                 'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-                'b': ['b', 'l', 'a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
+                'b': ['l', 'a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
                 'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-                'm': ['n']
+                'm': ['b', 'n']
             }
         else:
             phonetic_rules_v = {
