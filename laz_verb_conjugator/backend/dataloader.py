@@ -106,20 +106,45 @@ def load_tvm_tense():
     
     # Filter for TVM verbs
     df_tvm = [row for row in data if row['Category'] == 'TVM']
-    
+
+    def check_prefix_in_words(form, prefix):
+        """Check if any word in the form starts with the given prefix."""
+        if not form:
+            return False
+        words = form.split()
+        return any(word.startswith(prefix) for word in words)
+
     verbs = {}
     regions = {}
+    co_verbs = []
+    gyo_verbs = []
+    no_verbs = []
+
+    def check_prefix_in_words(form, prefix):
+        """Check if any word in the form starts with the given prefix."""
+        if not form:
+            return False
+        words = form.split()
+        return any(word.startswith(prefix) for word in words)
     
     for row in df_tvm:
         infinitive = row['Laz Infinitive']
         
-        verb_forms = []
+        present_forms = []
         for key in ['Laz 3rd Person Singular Present', 
                    'Laz 3rd Person Singular Present Alternative 1', 
                    'Laz 3rd Person Singular Present Alternative 2']:
             if row.get(key):
-                verb_forms.append(row[key])
+                present_forms.append(row[key])
         
+        # Check for prefixes in any word of the form
+        if any(form and check_prefix_in_words(form, 'co') for form in present_forms):
+            co_verbs.append(infinitive)
+        if any(form and check_prefix_in_words(form, 'gyo') for form in present_forms):
+            gyo_verbs.append(infinitive)
+        if any(form and (check_prefix_in_words(form, 'no') or check_prefix_in_words(form, 'nu')) 
+               for form in present_forms):
+            no_verbs.append(infinitive)       
         region_data = []
         for key in ['Region', 'Region Alternative 1', 'Region Alternative 2']:
             if row.get(key):
@@ -133,11 +158,10 @@ def load_tvm_tense():
         if not regions_list:
             regions_list = ["All"]
         
-        verbs[infinitive] = list(zip(verb_forms, region_data))
+        verbs[infinitive] = list(zip(present_forms, region_data))
         regions[infinitive] = regions_list
 
-    return verbs, regions
-
+    return verbs, regions, co_verbs, gyo_verbs, no_verbs
 def load_tvm_tve_passive():
     """Load TVM and TVE passive forms from JSON file."""
     with open('data/verb_data.json', 'r', encoding='utf-8') as f:

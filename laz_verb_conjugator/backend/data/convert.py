@@ -40,5 +40,5 @@ def csv_to_json(csv_file: str, json_file: str) -> None:
 # Usage
 if __name__ == "__main__":
     input_file = "Test Verb Present tense.csv"
-    output_file = "laz_verbs.json"
+    output_file = "verb_data.json"
     csv_to_json(input_file, output_file)

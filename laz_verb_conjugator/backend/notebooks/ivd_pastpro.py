@@ -109,6 +109,7 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
             # Adjust the prefix based on the preverb and subject
             first_letter = get_first_letter(root)
             adjusted_prefix = ''
+            prefix = ''
             # Conjugate the verb
             if preverb:
                 preverb_form = preverbs_rules.get((preverb,), {}).get(subject, preverb)
@@ -116,6 +117,17 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
                 prefix = subject_markers[subject]
 
             # Specific case: preverb modifications based on subject
+            if preverb == 'me' or (use_optional_preverb and not preverb):
+                if root.startswith('na') and subject not in ('S3_Singular', ):
+                    root = root[1:]
+                    prefix = preverb_form + 'm' if subject in ('S1_Singular', 'S1_Plural') else preverb + 'g'
+                else:
+                    if subject in ('S3_Singular', 'S3_Plural'):
+                        if obj in ('O1_Singular', 'O1_Plural'):
+                            adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
+                            prefix = preverb + adjusted_prefix
+                            root = root[1:]   
+   
             if preverb in ('ge', 'e', 'ce'):
                 if root.startswith('ca'):
                     if subject in ('S3_Singular', 'S3_Plural'):
@@ -181,8 +193,6 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
                     prefix = 'ceg'
                 else:
                     prefix = 'c'
-            else:
-                prefix = ''
 
             # Additional prefix adjustments based on subject and object
             if not preverb:

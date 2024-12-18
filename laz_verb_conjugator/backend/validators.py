@@ -85,14 +85,27 @@ class ConjugationValidator:
 
     def validate_tvm_only(self, infinitive, obj):
         """Validate TVM-only verb constraints."""
-        is_tvm_only = True
+        if not obj:  # If no object, no need to validate
+            return None
+            
+        # Check if verb exists in any non-TVM module
+        exists_in_other_modules = False
         for module_key, module in self.tense_modules.items():
-            if hasattr(module, 'verbs') and infinitive in module.verbs:
-                if not module_key.startswith('tvm'):
-                    is_tvm_only = False
+            if not module_key.startswith('tvm'):
+                if hasattr(module, 'verbs') and infinitive in module.verbs:
+                    exists_in_other_modules = True
                     break
 
-        if is_tvm_only and obj:
+        # Check if verb exists in TVM modules
+        exists_in_tvm = False
+        for module_key, module in self.tense_modules.items():
+            if module_key.startswith('tvm'):
+                if hasattr(module, 'verbs') and infinitive in module.verbs:
+                    exists_in_tvm = True
+                    break
+
+        # Only return error if verb is TVM-only (exists in TVM but not in other modules)
+        if exists_in_tvm and not exists_in_other_modules:
             return {"error": f"This verb cannot have an object/bu fiil nesne alamaz."}, 400
         return None
 
