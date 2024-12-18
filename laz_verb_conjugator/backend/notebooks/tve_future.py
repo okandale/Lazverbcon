@@ -201,8 +201,8 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                         prefix = 'k'
                 
                 # Special handling for "do"
-                elif preverb in ['do', 'd']:
-                    if root.startswith(('du', 'idu', 'udu', 'odu')): # Changed to 'di' from 'digurams', 'diguraps' to see if it's a general rule
+                elif preverb == 'do' or infinitive.startswith('do'):
+                    if root.startswith(('du', 'idu', 'udu', 'odu')) and infinitive not in 'dodumu':  # added dodumu as exception as its root turns to 'du...' at this point
                         root = root[1:] if root.startswith('du') else root[2:]
                         preverb = 'do' if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] else 'd'
                         if applicative:
