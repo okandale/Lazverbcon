@@ -108,6 +108,7 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
             # Adjust the prefix based on the preverb and subject
             first_letter = get_first_letter(root)
             adjusted_prefix = ''
+
             # Conjugate the verb
             preverb_form = preverb # Default to preverb itself if no specific rule is found
             if preverb:
@@ -115,12 +116,25 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
             else:
                 prefix = subject_markers[subject]
 
+            prefix = ''
+
             if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
-            if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')):
+            if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and preverb not in ('me'):
                 preverb = preverb[:-1] 
 
             # Specific case: preverb modifications based on subject
+            if preverb == 'me' or (use_optional_preverb and not preverb):
+                if root.startswith('na') and subject not in ('S3_Singular', ):
+                    root = root[1:]
+                    prefix = preverb_form + 'm' if subject in ('S1_Singular', 'S1_Plural') else preverb + 'g'
+                else:
+                    if subject in ('S3_Singular', 'S3_Plural'):
+                        if obj in ('O1_Singular', 'O1_Plural'):
+                            adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
+                            prefix = preverb + adjusted_prefix
+                            root = root[1:]
+
             if preverb in ('ge', 'e', 'ce'):
                 if root.startswith('ca'):
                     if subject in ('S3_Singular', 'S3_Plural'):
@@ -186,8 +200,6 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
                     prefix = 'ceg'
                 else:
                     prefix = 'c'
-            else:
-                prefix = preverb_form
 
             # Additional prefix adjustments based on subject and object
             if not preverb:

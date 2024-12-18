@@ -224,7 +224,7 @@ potential_subject_markers = {
 def get_preverbs_rules(mode):
     if mode in ['ivd_future', 'ivd_past', 'ivd_pastpro']:
         return {
-            ('ge', 'e', 'cel', 'ce', 'do', 'ye'): {
+            ('ge', 'e', 'cel', 'ce', 'do', 'ye', 'me'): {
                 'S1_Singular': 'm',
                 'S2_Singular': 'g',
                 'S3_Singular': '',
@@ -259,7 +259,7 @@ def get_preverbs_rules(mode):
         }
     elif mode in ['ivd_present']:
         return {
-            ('ge', 'e', 'cel', 'ce', 'do', 'ye'): {
+            ('ge', 'e', 'cel', 'ce', 'do', 'ye', 'me'): {
                 'S1_Singular': 'om',
                 'S2_Singular': 'og',
                 'S3_Singular': '',

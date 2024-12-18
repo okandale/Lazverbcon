@@ -72,6 +72,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
+            prefix = ''
             if main_infinitive != 'oǩoreʒxu':
                 for pv_group in preverbs_rules.keys():
                     if isinstance(pv_group, tuple):
@@ -115,12 +116,29 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 prefix = subject_markers[subject]
 
             # Specific case: preverb modifications based on subject
-            preverb_form = ''
+
 
             if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
-            if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')):
+            if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and preverb not in 'me':
                 preverb = preverb[:-1] 
+
+            print(f"preverb: {preverb}")
+            print(f"[DEBUG] root: {root}")
+            # Special handling for "me"
+            if preverb == 'me' or (use_optional_preverb and not preverb):
+                if root.startswith('na') and subject not in ('S3_Singular', ):
+                    root = root[1:]
+                    prefix = preverb_form + 'm' if subject in ('S1_Singular', 'S1_Plural') else preverb + 'g'
+                else:
+                    if subject in ('S3_Singular', 'S3_Plural'):
+                        if obj in ('O1_Singular', 'O1_Plural'):
+                            adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
+                            prefix = preverb + adjusted_prefix
+                            root = root[1:]
+
+
+
 
             if preverb in ('ge', 'e', 'ce'):
                 if root.startswith('ca'):
@@ -187,8 +205,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     prefix = 'ceg'
                 else:
                     prefix = 'c'
-            else:
-                prefix = preverb_form
 
             # Additional prefix adjustments based on subject and object
             if not preverb:
