@@ -139,6 +139,9 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     preverb = 'ey' if region == 'PZ' else 'y'
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
                     preverb = preverb[:-1] + 'y' if preverb == 'ge' else preverb[:-1] # added for 'geçamu' as it would omit the 'y' in (no S1) O3 conjugations. 
+                
+                print(f"[DEBUG] preverb: {preverb}")
+
                 # Special handling for "me"
                 if preverb == 'me' or (use_optional_preverb and not preverb):
                     if infinitive in no_verbs:
@@ -180,26 +183,37 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     prefix = 'ko' + prefix
                     if subject in ['O3_Singular', 'O3_Plural']:
                         prefix = 'k'
-                
+
                 # Special handling for "do"
-                elif preverb == 'do':
-                    if root.startswith("di"): # Changed to 'di' from 'digurams', 'diguraps' to see if it's a general rule
+                elif preverb in ['do', 'd']:
+                    if root.startswith(('du', 'idu', 'udu', 'odu')): # Changed to 'di' from 'digurams', 'diguraps' to see if it's a general rule
+                        root = root[1:] if root.startswith('du') else root[2:]
+                        preverb = 'do' if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] else 'd'
+                        if applicative:
+                            if obj in ['O1_Singular', 'O1_Plural', 'O2_Singular', 'O2_Plural']:
+                                root = marker + root
+                        if causative:
+                            root = marker + root[1:]
+                        else:
+                            root = 'i' + root[2:] if subject in ['S1_Singular', 'S1_Plural'] and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] else root
+                    first_letter = get_first_letter(root)
+                    if root.startswith('di'): # Changed to 'di' from 'digurams', 'diguraps' to see if it's a general rule
                         root = root[1:]
                     if obj in ['O2_Singular', 'O2_Plural']:
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                        prefix = 'do' + adjusted_prefix
+                        prefix = preverb + adjusted_prefix
                     elif subject in ['S1_Singular', 'S1_Plural']:
                         if root in ('iguraps', 'igurams'):
                             prefix = 'do' + 'b' if region == "FA" else 'do' + 'v'
                         else:
                             adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                            prefix = 'do' + adjusted_prefix
+                            prefix = preverb + adjusted_prefix
                     elif obj in ['O1_Singular', 'O1_Plural']:
-                        prefix = 'dom'
+                        prefix = preverb + 'm'
                     elif marker_type == 'causative' or main_infinitive == 'doguru':  # to prevent double 'o's in causative form and S1O3 conjugations for doguru
                         prefix = 'd'
                     else:
-                        prefix = 'do'
+                        prefix = preverb
 
                 # Special handling for "geç̌ǩu"
                 elif preverb == 'ge':

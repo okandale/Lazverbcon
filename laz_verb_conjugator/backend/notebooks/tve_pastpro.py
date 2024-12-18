@@ -178,21 +178,36 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                         prefix = 'k'
                 
                 # Special handling for "do"
-                elif preverb == 'do':
-                    if root in ('diguraps', 'digurams'):
+                # Special handling for "do"
+                elif preverb in ['do', 'd']:
+                    if root.startswith(('du', 'idu', 'udu', 'odu')): # Changed to 'di' from 'digurams', 'diguraps' to see if it's a general rule
+                        root = root[1:] if root.startswith('du') else root[2:]
+                        preverb = 'do' if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] else 'd'
+                        if applicative:
+                            if obj in ['O1_Singular', 'O1_Plural', 'O2_Singular', 'O2_Plural']:
+                                root = marker + root
+                        if causative:
+                            root = marker + root[1:]
+                        else:
+                            root = 'i' + root[2:] if subject in ['S1_Singular', 'S1_Plural'] and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] else root
+                    first_letter = get_first_letter(root)
+                    if root.startswith('di'): # Changed to 'di' from 'digurams', 'diguraps' to see if it's a general rule
                         root = root[1:]
                     if obj in ['O2_Singular', 'O2_Plural']:
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                        prefix = 'do' + adjusted_prefix
+                        prefix = preverb + adjusted_prefix
                     elif subject in ['S1_Singular', 'S1_Plural']:
-                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                        prefix = 'do' + adjusted_prefix
+                        if root in ('iguraps', 'igurams'):
+                            prefix = 'do' + 'b' if region == "FA" else 'do' + 'v'
+                        else:
+                            adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
+                            prefix = preverb + adjusted_prefix
                     elif obj in ['O1_Singular', 'O1_Plural']:
-                        prefix = 'dom'
+                        prefix = preverb + 'm'
                     elif marker_type == 'causative' or main_infinitive == 'doguru':  # to prevent double 'o's in causative form and S1O3 conjugations for doguru
                         prefix = 'd'
                     else:
-                        prefix = 'do'
+                        prefix = preverb
 
                 # Special handling for "geç̌ǩu"
                 elif preverb == 'ge':

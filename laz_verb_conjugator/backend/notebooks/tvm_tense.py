@@ -288,23 +288,32 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
 
            # Special handling for "ceç̌alu"
             elif preverb == 'ce':
-                if marker:
-                    root = root[2:]
+                if infinitive in co_verbs:
+                    if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural' 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
+                        root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root[2:]  # Remove only one character if there's a marker
+                    else:
+                        root = root[1:]
                 else:
-                    root = root[1:]
+                    if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
+                        root = root
+                    else:
+                        root = root
+                first_letter = get_first_letter(root)
+                if infinitive in ('ceyonu') and not marker: # add for other tenses
+                    root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
                 first_letter = get_first_letter(root)
                 if obj in ['O2_Singular', 'O2_Plural']:
                     adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                    prefix = 'ce' + adjusted_prefix
+                    prefix = preverb + adjusted_prefix
                 elif subject in ['S1_Singular', 'S1_Plural']:
                     adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                    prefix = 'ce' + adjusted_prefix
+                    prefix = preverb + adjusted_prefix
                 elif obj in ['O1_Singular', 'O1_Plural']:
-                    prefix = 'cem'
+                    prefix = preverb + 'm'
                 elif marker_type == 'causative':
-                    prefix = 'ce'
+                    prefix = ''
                 else:
-                    prefix = 'c'
+                    prefix = preverb[:1] if root.startswith(('a','e','i','o','u')) else preverb
 
             # Special handling for "oxo"
             elif preverb == 'oxo':

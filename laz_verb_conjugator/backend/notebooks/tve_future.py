@@ -173,7 +173,18 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                         prefix = 'k'
                 
                 # Special handling for "do"
-                elif preverb == 'do':
+                elif preverb in ['do', 'd']:
+                    if root.startswith(('du', 'idu', 'udu', 'odu')): # Changed to 'di' from 'digurams', 'diguraps' to see if it's a general rule
+                        root = root[1:] if root.startswith('du') else root[2:]
+                        preverb = 'do' if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] else 'd'
+                        if applicative:
+                            if obj in ['O1_Singular', 'O1_Plural', 'O2_Singular', 'O2_Plural']:
+                                root = marker + root[1:]
+                        if causative:
+                            root = marker + root[1:]
+                        else:
+                            root = 'i' + root[1:] if subject in ['S1_Singular', 'S1_Plural'] and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] else root
+                    first_letter = get_first_letter(root)
                     if root in ('diguraps', 'digurams'):
                         root = root[1:]
                     if obj in ['O2_Singular', 'O2_Plural']:
