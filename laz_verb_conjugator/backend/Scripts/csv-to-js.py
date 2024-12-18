@@ -97,7 +97,7 @@ if __name__ == "__main__":
     # Assuming script is in the backend folder alongside the CSV
     script_dir = Path(__file__).parent.parent
     
-    input_path = script_dir / "notebooks" / "data" / "Test Verb Present tense.csv"
+    input_path = script_dir / "data" / "Test Verb Present tense.csv"
     output_path = script_dir.parent / "frontend" / "src" / "components" / "verb-data.js"
     
     # Create output directory if it doesn't exist
