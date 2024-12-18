@@ -155,7 +155,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                                 root = root[1:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
                             else:
                                 root = marker + root[3:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[2:]
-                    preverb = 'm' if subject in ('S2_Singular', 'S3_Singular', 'S2_Plural', 'S3_Plural') and obj in ('O3_Singular', 'O3_Plural') else preverb
+                        preverb = 'm' if subject in ('S2_Singular', 'S3_Singular', 'S2_Plural', 'S3_Plural') and obj in ('O3_Singular', 'O3_Plural') else 'm' if subject in ('S2_Singular', 'S2_Plural') and not obj else preverb
                     first_letter = get_first_letter(root)
                     if obj in ['O2_Singular', 'O2_Plural']:
                         adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
