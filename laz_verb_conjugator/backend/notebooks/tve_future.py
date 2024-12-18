@@ -114,7 +114,6 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             # Get the first letter after the marker is attached
             first_letter = get_first_letter(root)
             adjusted_prefix = ''
-
             handled_gontzku = False
 
             if infinitive == 'gonǯǩu' and (obj in ('O3_Singular', 'O3_Plural') or obj is None) and not marker:
@@ -131,7 +130,36 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                     preverb = 'ey' if region == 'PZ' else 'y'
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
                     preverb = preverb[:-1] + 'y' if preverb == 'ge' else preverb[:-1] # added for 'geçamu' as it would omit the 'y' in (no S1) O3 conjugations.
+                
+
                 # Special handling for "me"
+                if preverb == 'mo':
+                    if infinitive.startswith('mu'):
+                        if root.startswith(('mu', 'imu', 'umu', 'omu')):
+                            if not marker:
+                                root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
+                            if marker:
+                                root = marker + root[3:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else marker + root[3:]
+                        else:
+                            if marker:
+                                root = marker + root[1:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else marker + root[2:]                            
+                            if not marker:
+                                root = root[1:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
+                            else:
+                                root = marker + root[3:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[2:]
+                    first_letter = get_first_letter(root)
+                    if obj in ['O2_Singular', 'O2_Plural']:
+                        adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                        preverb = 'n' if root.startswith(('a', 'e', 'i', 'o', 'u')) else preverb
+                        prefix = preverb + adjusted_prefix
+                    elif subject in ['S1_Singular', 'S1_Plural']:
+                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
+                        prefix = preverb + adjusted_prefix
+                    elif obj in ['O1_Singular', 'O1_Plural']:
+                        prefix = 'mom'
+                    else:
+                        prefix = ''
+
                 if preverb == 'me' or (use_optional_preverb and not preverb):
                     if infinitive in no_verbs:
                         if root.startswith(('nu', 'inu', 'unu', 'onu')):
@@ -155,7 +183,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                         adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
                         prefix = preverb + adjusted_prefix
                     elif obj in ['O1_Singular', 'O1_Plural']:
-                        prefix = 'mom'
+                        prefix = 'mem' if infinitive in no_verbs else 'mom'
                     else:
                         prefix = 'me'
                     

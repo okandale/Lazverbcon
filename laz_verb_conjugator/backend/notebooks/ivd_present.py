@@ -123,8 +123,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and preverb not in 'me':
                 preverb = preverb[:-1] 
 
-            print(f"preverb: {preverb}")
-            print(f"[DEBUG] root: {root}")
             # Special handling for "me"
             if preverb == 'me' or (use_optional_preverb and not preverb):
                 if root.startswith('na') and subject not in ('S3_Singular', ):
