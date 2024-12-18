@@ -153,6 +153,8 @@ def handle_marker(infinitive, root, marker, subject, obj):
         root = 'xvenams'
     if infinitive in ('oç̌ǩomu') and marker in ('i', 'u'):
         root = 'ç̌ǩomums'
+    if infinitive in ('oşǩomu') and marker in ('i', 'u'):
+        root = 'şǩomums'
     if infinitive in ('gemgaru', 'cebgaru'):
         if marker in ['i', 'o', 'u']:
             root = root[:1] + marker + root[3:] 
