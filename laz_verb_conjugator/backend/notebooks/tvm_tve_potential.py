@@ -156,7 +156,8 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
             first_letter = get_first_letter(root)
 
             
-
+            print(f"root: {root}")
+            print(f"preverb: {preverb}")
             if preverb == "me" and subject_markers[subject].startswith(('a', 'e', 'i', 'o', 'u')):
                 preverb = "n"
                 prefix = preverb + subject_markers[subject]
@@ -167,7 +168,7 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
                 else:
                     preverb = 'gam' if subject in ('S3_Singular', 'S3_Plural') else 'gama'
                 prefix = preverb + subject_markers[subject]
-            elif preverb == 'do' and subject_markers[subject].startswith(('a','e','i','o','u')):
+            elif infinitive.startswith('do') and subject_markers[subject].startswith(('a','e','i','o','u')):
                 prefix = "dv" + subject_markers[subject] if region in ('HO', 'PZ', 'AŞ') else "d" + subject_markers[subject]
             elif preverb == 'go' and subject_markers[subject].startswith(('a','e','i','o','u')):
                 prefix = "gv" + subject_markers[subject] if region in ('HO', 'PZ', 'AŞ') else "g" + subject_markers[subject]
