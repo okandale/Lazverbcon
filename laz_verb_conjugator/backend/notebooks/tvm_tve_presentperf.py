@@ -98,7 +98,7 @@ def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicati
             if preverb.endswith(('a','e','i','o','u')) and subject in subject_markers and subject_markers[subject].startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
             if preverb.endswith(('a', 'e', 'i', 'o', 'u')) and subject_markers[subject].startswith(('a', 'e', 'i', 'o', 'u')):
-                if infinitive in ('geç̌ǩu', 'gebažgu'):  # Add 'y' only for 'geç̌ǩu'
+                if root.startswith('gyo'):  # Add 'y' only for 'geç̌ǩu'
                     preverb = preverb[:-1] + 'y'
                 else:
                     preverb = preverb # changed for gonǯǩu
@@ -117,6 +117,8 @@ def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicati
             elif preverb == 'e' and subject in ('S3_Singular', 'S3_Plural'):
                 prefix = "y" + subject_markers[subject]
             elif preverb:
+                if preverb.endswith(('a', 'e', 'i', 'o', 'u')) and subject_markers[subject].startswith(('a', 'e', 'i', 'o', 'u')):
+                    preverb = preverb[:-1]
                 prefix = preverb + subject_markers[subject]
             else:
                 prefix = subject_markers[subject]
