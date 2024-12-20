@@ -224,7 +224,7 @@ potential_subject_markers = {
 def get_preverbs_rules(mode):
     if mode in ['ivd_future', 'ivd_past', 'ivd_pastpro']:
         return {
-            ('ge', 'e', 'cel', 'ce', 'do', 'ye', 'me', 'mola', 'mo', 'oǩo', 'ǩoǩo'): {
+            ('gelo', 'ge', 'e', 'cel', 'ce', 'do', 'ye', 'me', 'mola', 'mo', 'oǩo', 'ǩoǩo'): {
                 'S1_Singular': 'm',
                 'S2_Singular': 'g',
                 'S3_Singular': '',
@@ -259,7 +259,7 @@ def get_preverbs_rules(mode):
         }
     elif mode in ['ivd_present']:
         return {
-            ('ge', 'e', 'cel', 'ce', 'do', 'ye', 'me', 'mola', 'mo', 'oǩo', 'ǩoǩo'): {
+            ('gelo', 'ge', 'e', 'cel', 'ce', 'do', 'ye', 'me', 'mola', 'mo', 'oǩo', 'ǩoǩo'): {
                 'S1_Singular': 'om',
                 'S2_Singular': 'og',
                 'S3_Singular': '',
@@ -294,7 +294,7 @@ def get_preverbs_rules(mode):
         }
     elif mode in ['tve_past', 'tve_pastpro']:
         return {
-            ('ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mola', 'ye', 'mo', 'ǩoǩo'): {
+            ('gelo', 'ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mola', 'ye', 'mo', 'ǩoǩo'): {
                 'S1_Singular': 'v',
                 'S2_Singular': '',
                 'S3_Singular': '',
@@ -305,7 +305,7 @@ def get_preverbs_rules(mode):
         }
     elif mode in ['tve_future']:
         return {
-            ('ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'cele', 'mola', 'mo', 'ǩoǩo'): {
+            ('gelo', 'ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'cele', 'mola', 'mo', 'ǩoǩo'): {
                 'S1_Singular': 'v',
                 'S2_Singular': '',
                 'S3_Singular': '',
@@ -316,7 +316,7 @@ def get_preverbs_rules(mode):
         }
     elif mode in ['tve_present']:
         return {
-            ('ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mola', 'ye', 'gela', 'ela', 'ceǩo', 'eǩo', 'ama', 'mo', 'ǩoǩo'): {
+            ('gelo', 'ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mola', 'ye', 'gela', 'ela', 'ceǩo', 'eǩo', 'ama', 'mo', 'ǩoǩo'): {
                 'S1_Singular': 'v',
                 'S2_Singular': '',
                 'S3_Singular': '',
@@ -327,7 +327,7 @@ def get_preverbs_rules(mode):
         }
     elif mode in ['tvm_tense']:
         return {
-            ('ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'mola', 'mo', 'ǩoǩo'): {
+            ('gel', 'ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'mola', 'mo', 'ǩoǩo'): {
                 'S1_Singular': 'v',
                 'S2_Singular': '',
                 'S3_Singular': '',
@@ -338,7 +338,7 @@ def get_preverbs_rules(mode):
         }
     elif mode in ['tvm_tve_passive', 'tvm_tve_potential', 'tvm_tve_presentperf']:
         return {
-            ('ge', 'e', 'cele', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mola', 'mo', 'ye', 'ǩoǩo'): {
+            ('gel', 'ge', 'e', 'cele', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mola', 'mo', 'ye', 'ǩoǩo'): {
                 'S1_Singular': 'v',
                 'S2_Singular': '',
                 'S3_Singular': '',
