@@ -329,7 +329,7 @@ def get_preverbs_rules(mode):
         }
     elif mode in ['tvm_tense']:
         return {
-            ('gel', 'ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'mola', 'mo', 'ǩoǩo'): {
+            ('gelo', 'ge', 'e', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mo', 'ye', 'mola', 'mo', 'ǩoǩo'): {
                 'S1_Singular': 'v',
                 'S2_Singular': '',
                 'S3_Singular': '',
@@ -340,7 +340,7 @@ def get_preverbs_rules(mode):
         }
     elif mode in ['tvm_tve_passive', 'tvm_tve_potential', 'tvm_tve_presentperf']:
         return {
-            ('gel', 'ge', 'e', 'cele', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mola', 'mo', 'ye', 'ǩoǩo'): {
+            ('gelo', 'ge', 'e', 'cele', 'ce', 'dolo', 'do', 'oxo', 'me', 'go', 'oǩo', 'gama', 'mola', 'mo', 'ye', 'ǩoǩo'): {
                 'S1_Singular': 'v',
                 'S2_Singular': '',
                 'S3_Singular': '',
