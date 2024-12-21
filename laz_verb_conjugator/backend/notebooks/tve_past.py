@@ -336,7 +336,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
 
                 # Special handling for "ceç̌alu"
                 # Special handling for "ceç̌alu"
-                elif preverb == 'ce':
+                elif preverb == 'ce' or infinitive.startswith('ce'):
                     if infinitive in co_verbs:
                         if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural' 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
                             root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root[2:]  # Remove only one character if there's a marker
@@ -348,6 +348,24 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                         else:
                             root = root
                     first_letter = get_first_letter(root)
+
+                    if root.startswith(('ca', 'ic', 'uc', 'oc')):
+                        if infinitive == 'cebgaru' and marker:
+                            root = root[:3] + 'b' + root[3:]
+                        if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in [['O2_Singular', 'O3_Singular', 'O3_Plural' 'O2_Plural', 'O1_Singular', 'O1_Plural']] and marker:
+                            if marker:
+                                root = root[2:]
+                            else:
+                                root = root[1:]  # Remove only one character if there's a marker
+                        elif subject in ['S1_Singular', 'S1_Plural'] or subject in ['S3_Singular', 'S3_Plural'] and obj in ['O2_Singular', 'O2_Plural']:
+                            root = root[2:] if obj in ['O2_Plural', 'O2_Singular'] and marker else root[1:]  # no idea why but marker and S3 x O2_plural combination lead to this line
+                            preverb = 'ce'
+                        elif obj in ['O1_Singular', 'O1_Plural', 'O2_Plural']:
+                            root = root[2:] if marker else root[1:]
+                            preverb = 'ce'
+                        else:
+                            root = root
+                            preverb = ''
                     if infinitive in ('ceyonu') and not marker: # add for other tenses
                         root = 'i' + root[2:] if obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
                     first_letter = get_first_letter(root)
@@ -363,7 +381,8 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                         prefix = preverb
                     else:
                         prefix = preverb[:1] if root.startswith(('a','e','i','o','u')) else preverb
-
+                    if root.startswith(('ic', 'uc', 'oc')):
+                        root = root[1:]
                 # Special handling for "oxo"
                 elif preverb == 'oxo':
                     if infinitive in ('oxoǯonu', 'oxoşkvinu'):
