@@ -156,7 +156,8 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
             first_letter = get_first_letter(root)
 
             
-
+            print(f"root: {root}")
+            print(f"preverb: {preverb}")
             if preverb == "me" and subject_markers[subject].startswith(('a', 'e', 'i', 'o', 'u')):
                 preverb = "n"
                 prefix = preverb + subject_markers[subject]
