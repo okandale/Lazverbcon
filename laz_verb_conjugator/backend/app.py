@@ -101,29 +101,147 @@ def serve(path):
 def hi():
     return jsonify({"response": "pong"})
 
+def check_verb_existence(infinitive, tense_modules):
+    """
+    Check if a verb exists in IVD and/or TVE modules
+    Returns: (bool, bool) - (exists_in_ivd, exists_in_tve)
+    """
+    logger.debug(f"Starting detailed verb check for infinitive: {infinitive}")
+    
+    ivd_modules = ['ivd_present', 'ivd_past', 'ivd_pastpro', 'ivd_future']
+    tve_modules = ['tve_present', 'tve_past', 'tve_pastpro', 'tve_future']
+
+    # IVD check with detailed logging
+    exists_in_ivd = False
+    for module in ivd_modules:
+        if hasattr(tense_modules[module], 'df'):
+            df = tense_modules[module].df
+            # Ensure we're working with string values
+            df_infinitives = df['infinitive'].astype(str).values
+            infinitive_str = str(infinitive)
+            
+            # Check if infinitive exists in this module
+            if infinitive_str in df_infinitives:
+                logger.debug(f"Found {infinitive} in IVD module: {module}")
+                exists_in_ivd = True
+                break
+            else:
+                logger.debug(f"Checking {module}:")
+                logger.debug(f"- First few infinitives: {df_infinitives[:5]}")
+                logger.debug(f"- DataFrame shape: {df.shape}")
+
+    # TVE check with detailed logging
+    exists_in_tve = False
+    for module in tve_modules:
+        if hasattr(tense_modules[module], 'df'):
+            df = tense_modules[module].df
+            # Ensure we're working with string values
+            df_infinitives = df['infinitive'].astype(str).values
+            infinitive_str = str(infinitive)
+            
+            # Check if infinitive exists in this module
+            if infinitive_str in df_infinitives:
+                logger.debug(f"Found {infinitive} in TVE module: {module}")
+                exists_in_tve = True
+                break
+            else:
+                logger.debug(f"Checking {module}:")
+                logger.debug(f"- First few infinitives: {df_infinitives[:5]}")
+                logger.debug(f"- DataFrame shape: {df.shape}")
+
+    logger.debug(f"Final result for {infinitive} - IVD: {exists_in_ivd}, TVE: {exists_in_tve}")
+    return exists_in_ivd, exists_in_tve
+
 @app.route('/api/conjugate', methods=['GET'])
 def conjugate():
     # Capture request parameters
     request_params = dict(request.args)
+    infinitive = request_params.get('infinitive')
     
+    logger.debug("1. Starting conjugation for infinitive: %s", infinitive)
+    logger.debug("2. Full request params: %s", request_params)
+    
+    if not infinitive:
+        error_response = {"error": "Infinitive is required"}
+        log_request_response(request_params, error_response, '/api/conjugate')
+        return jsonify(error_response), 400
+
+    # Special check for "guri mentxu"
+    if infinitive == 'guri mentxu' and request_params.get('aspect') != 'potential':
+        error_response = {
+            "error": "This verb only exists in potential form. You need to select the potential form under 'Aspect' / Bu fiil yalnızca yeterlilik kipinde vardır. 'Görünüş' altında yeterlilik kipini seçmeniz gerekiyor."
+        }
+        log_request_response(request_params, error_response, '/api/conjugate')
+        return jsonify(error_response), 400
+
+    # Check if any markers are selected
+    has_markers = any(request_params.get(marker) == 'true' 
+                     for marker in ['applicative', 'causative', 'optative'])
+    
+    # Create initial validator and service with full mapping
     validator = ConjugationValidator(
         tense_modules, 
         simplified_tense_mapping,
         simplified_aspect_mapping
     )
     
-    # Run all validations
+    # First check if the verb exists in the complete dataset
+    full_params, _ = validator.validate_request(request_params)
+    initial_conjugations = ConjugationService(
+        tense_modules, 
+        simplified_tense_mapping,
+        simplified_aspect_mapping
+    ).conjugate(full_params)
+
+    # If the verb exists at all, check which type it is
+    if initial_conjugations is not None:
+        exists_in_ivd, exists_in_tve = check_verb_existence(infinitive, tense_modules)
+        logger.debug("Verb type check - IVD: %s, TVE: %s", exists_in_ivd, exists_in_tve)
+        
+        # If it's IVD-only and has markers, return error
+        if exists_in_ivd and not exists_in_tve and has_markers:
+            error_response = {
+                "error": "This verb belongs to a verb group that cannot take additional markers (applicative, causative, or optative) / Bu fiil, ek işaretleyiciler (ettirgen, işteş veya istek kipi) alamayan bir fiil grubuna aittir."
+            }
+            log_request_response(request_params, error_response, '/api/conjugate')
+            return jsonify(error_response), 400
+
+    # If we get here, either the verb doesn't exist at all, or it can take markers
+    # Prepare tense mapping based on markers
+    current_tense_mapping = simplified_tense_mapping.copy()
+    if has_markers:
+        # Filter out IVD modules when markers are present
+        current_tense_mapping = {}
+        for tense, modules in simplified_tense_mapping.items():
+            if isinstance(modules, list):
+                filtered_modules = [
+                    module for module in modules 
+                    if (isinstance(module, tuple) or not module.startswith('ivd_'))
+                ]
+                if filtered_modules:
+                    current_tense_mapping[tense] = filtered_modules
+            else:
+                current_tense_mapping[tense] = modules
+
+    # Create validator and service with appropriate mapping
+    validator = ConjugationValidator(
+        tense_modules, 
+        current_tense_mapping,
+        simplified_aspect_mapping
+    )
+    
+    conjugation_service = ConjugationService(
+        tense_modules, 
+        current_tense_mapping,
+        simplified_aspect_mapping
+    )
+
+    # Run validations
     params, error = validator.validate_request(request_params)
     if error:
         error_response, status_code = error
         log_request_response(request_params, error_response, '/api/conjugate')
         return jsonify(error_response), status_code
-
-    conjugation_service = ConjugationService(
-        tense_modules, 
-        simplified_tense_mapping,
-        simplified_aspect_mapping
-    )
 
     try:
         conjugations = conjugation_service.conjugate(params)
@@ -143,6 +261,6 @@ def conjugate():
         error = {"error": str(e)}
         log_request_response(request_params, error, '/api/conjugate')
         return jsonify(error), 500
-
+                                                    
 if __name__ == '__main__':
     app.run(debug=True)
