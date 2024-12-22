@@ -216,6 +216,12 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
             # Special handling for "me"
             prefix = ''
             if preverb == 'me' or (use_optional_preverb and not preverb):
+                if root.startswith('no'):
+                    if subject in ('S1_Singular', 'S1_Plural'):
+                        root = root[2:]
+                    else:
+                        root = root[1:]
+                        preverb = ''
                 first_letter = get_first_letter(root)
                 if obj in ['O2_Singular', 'O2_Plural']:
                     adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
