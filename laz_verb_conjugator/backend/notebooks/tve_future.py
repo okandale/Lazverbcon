@@ -160,7 +160,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                     else:
                         prefix = ''
 
-                    if preverb.endswith('o') and root.startswith(('a', 'e', 'i', 'o', 'u' )):
+                    if preverb.endswith('o') and root.startswith(('a', 'e', 'i', 'o', 'u' )) and prefix in (''):
                         preverb = preverb[:1]
 
                 if preverb == 'me' or (use_optional_preverb and not preverb):
