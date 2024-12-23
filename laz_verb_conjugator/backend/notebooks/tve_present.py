@@ -166,7 +166,11 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         prefix = 'mom'
                     else:
                         prefix = ''
-
+                    if preverb.endswith('o') and root.startswith(('a', 'e', 'i', 'o', 'u' )):
+                        preverb = preverb[:1]
+                    
+                    print(f"prever {preverb}")
+                    print(f"root {root}")
                 # Special handling for "me"
                 if preverb == 'me' or (use_optional_preverb and not preverb):
                     if infinitive in no_verbs:

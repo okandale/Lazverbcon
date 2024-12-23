@@ -163,6 +163,8 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                         prefix = 'mom'
                     else:
                         prefix = ''
+                    if preverb.endswith('o') and root.startswith(('a', 'e', 'i', 'o', 'u' )):
+                        preverb = preverb[:1]                    
                 # Special handling for "me"
                 if preverb == 'me' or (use_optional_preverb and not preverb):
                     if infinitive in no_verbs:
