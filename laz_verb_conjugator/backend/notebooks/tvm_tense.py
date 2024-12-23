@@ -266,18 +266,14 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
 
             # Special handling for "geç̌ǩu"
             elif preverb == 'ge':
-                if infinitive in gyo_verbs:
-                    if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
-                        root = 'u' + root[2:] if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root[2:]  # Remove only one character if there's a marker
-                    elif subject in ('S2_Singular', 'S2_Plural', 'S3_Singular', 'S3_Plural') and marker:
-                        root = 'yu' + root[2:] if applicative or applicative and causative else 'gy' + root[2:] 
+                if infinitive in gyo_verbs or root.startswith('gya'):
+                    if subject in ['S1_Singular', 'S1_Plural']:
+                        root = root[2:]
                     else:
-                        root = root[2:] if subject in ('S1_Singular', 'S1_Plural') or obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural') else root[1:]
+                        root = root
+                        preverb = ''
                 else:
-                    if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
-                        root = root
-                    else:
-                        root = root
+                    root = root
                 first_letter = get_first_letter(root)
                 if obj in ['O2_Singular', 'O2_Plural']:
                     adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
