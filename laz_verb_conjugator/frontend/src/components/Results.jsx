@@ -28,6 +28,7 @@ const Results = ({ results, language, translations }) => {
   };
 
   const regionOrder = ['AŞ', 'PZ', 'FA', 'HO'];
+  // Updated groupOrder to include all possible verb groups
   const groupOrder = ['Dative', 'Ergative', 'Nominative'];
 
   return (

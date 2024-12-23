@@ -35,15 +35,19 @@ class ConjugationService:
         formatted = {}
         module_name = module.__name__.split('.')[-1]
         
-        # Get the verb group and source module type
+        # More nuanced verb group determination
         if module_name.startswith('tve'):
             verb_group = "Ergative"
-        elif module_name.startswith('ivd'):
+        elif module_name.startswith('ivd') or (module_name.startswith('tvm_tve') and any(x in module_name for x in ['potential'])):
             verb_group = "Dative"
-        elif module_name.startswith('tvm'):
+        elif module_name == 'tvm_tense' or (module_name.startswith('tvm_tve') and any(x in module_name for x in ['passive'])):
             verb_group = "Nominative"
         else:
-            verb_group = "Unknown"
+            # For other cases, determine based on presence of certain patterns
+            if 'tve' in module_name:
+                verb_group = "Ergative"
+            else:
+                verb_group = "Unknown"
 
         for region, forms in conjugations.items():
             if region not in formatted:
