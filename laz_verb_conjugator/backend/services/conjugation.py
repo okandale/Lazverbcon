@@ -29,6 +29,86 @@ class ConjugationService:
                 params['optative'], params['region_filter'])
 
         return conjugations
+        
+    def format_conjugations(self, conjugations, module):
+        """Format conjugations for response with verb group information."""
+        formatted = {}
+        module_name = module.__name__.split('.')[-1]
+        
+        # More nuanced verb group determination
+        if module_name.startswith('tve'):
+            verb_group = "Ergative"
+        elif module_name.startswith('ivd') or (module_name.startswith('tvm_tve') and any(x in module_name for x in ['potential'])):
+            verb_group = "Dative"
+        elif module_name == 'tvm_tense' or (module_name.startswith('tvm_tve') and any(x in module_name for x in ['passive'])):
+            verb_group = "Nominative"
+        else:
+            # For other cases, determine based on presence of certain patterns
+            if 'tve' in module_name:
+                verb_group = "Ergative"
+            else:
+                verb_group = "Unknown"
+
+        for region, forms in conjugations.items():
+            if region not in formatted:
+                formatted[region] = {}
+            
+            if verb_group not in formatted[region]:
+                formatted[region][verb_group] = []
+
+            personal_pronouns = module.get_personal_pronouns(region, module_name)
+            current_forms = []
+
+            sorted_forms = sorted(
+                forms,
+                key=lambda x: (
+                    self.ordered_subjects.index(x[0]),
+                    self.ordered_objects.index(x[1]) if x[1] else -1
+                )
+            )
+
+            for subject, obj, conjugated_verb in sorted_forms:
+                if any(p is None for p in (subject, conjugated_verb)):
+                    continue
+                subject_pronoun = personal_pronouns.get(subject, subject)
+                object_pronoun = personal_pronouns.get(obj, '') if obj else ''
+                current_forms.append({
+                    "subject": subject_pronoun,
+                    "object": object_pronoun,
+                    "conjugation": conjugated_verb
+                })
+
+            formatted[region][verb_group] = current_forms
+
+        return formatted
+
+    def _call_conjugation_method(self, module, infinitive, subjects, obj, tense=None,
+                               applicative=False, causative=False, mood=None):
+        """Helper method to call appropriate conjugation method based on module capabilities."""
+        if hasattr(module, 'collect_conjugations'):
+            if hasattr(module.collect_conjugations, '__code__') and 'mood' in module.collect_conjugations.__code__.co_varnames:
+                return module.collect_conjugations(
+                    infinitive, subjects, obj=obj,
+                    applicative=applicative, causative=causative, mood=mood
+                )
+            else:
+                return module.collect_conjugations(
+                    infinitive, subjects, obj=obj,
+                    applicative=applicative, causative=causative
+                )
+        elif hasattr(module, 'collect_conjugations_all'):
+            if hasattr(module.collect_conjugations_all, '__code__') and 'mood' in module.collect_conjugations_all.__code__.co_varnames:
+                return module.collect_conjugations_all(
+                    infinitive, subjects=subjects, tense=tense,
+                    obj=obj, applicative=applicative, causative=causative, mood=mood
+                )
+            else:
+                return module.collect_conjugations_all(
+                    infinitive, subjects=subjects, tense=tense,
+                    obj=obj, applicative=applicative, causative=causative
+                )
+        else:
+            raise ValueError("Invalid module")
 
     def process_imperative(self, infinitive, subject, obj, applicative, causative, region_filter):
         """Process imperative conjugations."""
@@ -55,7 +135,7 @@ class ConjugationService:
                     all_conjugations[region].update(forms)
 
         imperatives = module.extract_imperatives(all_conjugations, subjects)
-        return module.format_imperatives(imperatives)
+        return self.format_conjugations(imperatives, module)
 
     def process_negative_imperative(self, infinitive, subject, obj, applicative, causative, region_filter):
         """Process negative imperative conjugations."""
@@ -82,7 +162,7 @@ class ConjugationService:
                     all_conjugations[region].update(forms)
 
         neg_imperatives = module.extract_neg_imperatives(all_conjugations, subjects)
-        return module.format_neg_imperatives(neg_imperatives)
+        return self.format_conjugations(neg_imperatives, module)
 
     def process_aspect_conjugation(self, infinitive, subject, obj, aspect, tense,
                                  applicative, causative, optative, region_filter):
@@ -123,7 +203,7 @@ class ConjugationService:
         if not module_found:
             return None
 
-        return self._format_conjugations(conjugations, used_module)
+        return self.format_conjugations(conjugations, used_module)
 
     def process_tense_conjugation(self, infinitive, subject, obj, tense,
                                 applicative, causative, optative, region_filter):
@@ -172,60 +252,4 @@ class ConjugationService:
         if not module_found:
             return None
 
-        return self._format_conjugations(conjugations, used_module)
-
-    def _call_conjugation_method(self, module, infinitive, subjects, obj, tense=None,
-                               applicative=False, causative=False, mood=None):
-        """Helper method to call appropriate conjugation method based on module capabilities."""
-        if hasattr(module, 'collect_conjugations'):
-            if hasattr(module.collect_conjugations, '__code__') and 'mood' in module.collect_conjugations.__code__.co_varnames:
-                return module.collect_conjugations(
-                    infinitive, subjects, obj=obj,
-                    applicative=applicative, causative=causative, mood=mood
-                )
-            else:
-                return module.collect_conjugations(
-                    infinitive, subjects, obj=obj,
-                    applicative=applicative, causative=causative
-                )
-        elif hasattr(module, 'collect_conjugations_all'):
-            if hasattr(module.collect_conjugations_all, '__code__') and 'mood' in module.collect_conjugations_all.__code__.co_varnames:
-                return module.collect_conjugations_all(
-                    infinitive, subjects=subjects, tense=tense,
-                    obj=obj, applicative=applicative, causative=causative, mood=mood
-                )
-            else:
-                return module.collect_conjugations_all(
-                    infinitive, subjects=subjects, tense=tense,
-                    obj=obj, applicative=applicative, causative=causative
-                )
-        else:
-            raise ValueError("Invalid module")
-
-    def _format_conjugations(self, conjugations, module):
-        """Format conjugations for response."""
-        formatted = {}
-        module_name = module.__name__.split('.')[-1]
-
-        for region, forms in conjugations.items():
-            personal_pronouns = module.get_personal_pronouns(region, module_name)
-            formatted_forms = []
-
-            sorted_forms = sorted(
-                forms,
-                key=lambda x: (
-                    self.ordered_subjects.index(x[0]),
-                    self.ordered_objects.index(x[1]) if x[1] else -1
-                )
-            )
-
-            for subject, obj, conjugated_verb in sorted_forms:
-                if any(p is None for p in (subject, conjugated_verb)):
-                    continue
-                subject_pronoun = personal_pronouns.get(subject, subject)
-                object_pronoun = personal_pronouns.get(obj, '') if obj else ''
-                formatted_forms.append(f"{subject_pronoun} {object_pronoun}: {conjugated_verb}")
-
-            formatted[region] = formatted_forms
-
-        return formatted
+        return self.format_conjugations(conjugations, used_module)
