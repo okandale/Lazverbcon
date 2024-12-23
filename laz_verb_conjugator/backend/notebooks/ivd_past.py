@@ -135,17 +135,6 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
                             prefix = preverb + adjusted_prefix
                             root = root[1:]
 
-            if preverb in ('ge', 'e', 'ce'):
-                if root.startswith('ca'):
-                    if subject in ('S3_Singular', 'S3_Plural'):
-                        preverb = 'c'
-                    root = root[1:]
-                if subject in ['S1_Singular', 'S1_Plural']:
-                    prefix = preverb + 'm'
-                elif subject in ['S2_Singular', 'S2_Plural']:
-                    prefix = preverb + 'g'
-                else:
-                    prefix = preverb
             
             elif preverb == 'do':
                 if subject in ('S3_Singular', 'S3_Plural') and not obj:
@@ -243,6 +232,22 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
                         prefix = adjusted_prefix
                 else:
                     prefix = subject_markers[subject]
+
+
+            elif preverb:
+                if root.startswith('ca'):
+                    if subject in ('S3_Singular', 'S3_Plural'):
+                        preverb = 'c'
+                    root = root[1:]
+                if root.startswith(('ma', 'mu')):
+                    root = root if subject in ('S3_Singular', 'S3_Plural') else root[1:]
+                    preverb = '' if subject in ('S3_Singular', 'S3_Plural') else preverb
+                if subject in ['S1_Singular', 'S1_Plural']:
+                    prefix = preverb + 'm'
+                elif subject in ['S2_Singular', 'S2_Plural']:
+                    prefix = preverb + 'g'
+                else:
+                    prefix = preverb
 
             # Optional preverb handling
             if use_optional_preverb and not preverb:

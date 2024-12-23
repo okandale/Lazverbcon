@@ -160,7 +160,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                     else:
                         prefix = ''
 
-                    if preverb.endswith('o') and root.startswith(('a', 'e', 'i', 'o', 'u' )):
+                    if preverb.endswith('o') and root.startswith(('a', 'e', 'i', 'o', 'u' )) and prefix in (''):
                         preverb = preverb[:1]
                 # Special handling for "me"
                 if preverb == 'me' or (use_optional_preverb and not preverb):
