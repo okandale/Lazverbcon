@@ -3,7 +3,6 @@ from flask_cors import CORS
 import importlib
 import logging
 import os
-import pandas as pd
 import json
 from datetime import datetime
 from flask import make_response
@@ -82,8 +81,6 @@ def log_request_response(request_params, response_data, endpoint):
     Log request parameters and response data to the log file
     """
     log_entry = {
-        #'timestamp': datetime.now().isoformat(),
-        #'endpoint': endpoint,
         'request': request_params,
         'response': response_data
     }
@@ -135,13 +132,14 @@ def check_verb_existence(infinitive, tense_modules):
 
 @app.route('/api/conjugate', methods=['GET'])
 def conjugate():
-    # Capture request parameters
+    # 1. Capture request parameters
     request_params = dict(request.args)
     infinitive = request_params.get('infinitive')
     
     logger.debug("1. Starting conjugation for infinitive: %s", infinitive)
     logger.debug("2. Full request params: %s", request_params)
     
+    # 2. Basic checks
     if not infinitive:
         error_response = {"error": "Infinitive is required"}
         log_request_response(request_params, error_response, '/api/conjugate')
@@ -150,86 +148,98 @@ def conjugate():
     # Special check for "guri mentxu"
     if infinitive == 'guri mentxu' and request_params.get('aspect') != 'potential':
         error_response = {
-            "error": "This verb only exists in potential form. You need to select the potential form under 'Aspect' / Bu fiil yalnızca yeterlilik kipinde vardır. 'Görünüş' altında yeterlilik kipini seçmeniz gerekiyor."
+            "error": "This verb only exists in potential form. You need to select the potential form under 'Aspect' / "
+                     "Bu fiil yalnızca yeterlilik kipinde vardır. 'Görünüş' altında yeterlilik kipini seçmeniz gerekiyor."
         }
         log_request_response(request_params, error_response, '/api/conjugate')
         return jsonify(error_response), 400
 
-    # Check if any markers are selected
-    has_markers = any(request_params.get(marker) == 'true' 
-                     for marker in ['applicative', 'causative', 'optative'])
-    
-    # Check verb existence and type first
+    # 3. Check if any markers are selected
+    has_markers = any(request_params.get(marker) == 'true'
+                      for marker in ['applicative', 'causative', 'optative'])
+
+    # 4. Check verb existence and type
     exists_in_ivd, exists_in_tve = check_verb_existence(infinitive, tense_modules)
     
     # If it's EXCLUSIVELY an IVD verb (exists in IVD but NOT in TVE) and has markers, return error
     if exists_in_ivd and not exists_in_tve and has_markers:
         error_response = {
-            "error": "This verb belongs to a verb group that cannot take additional markers (applicative, causative, or optative) / Bu fiil, ek işaretleyiciler (ettirgen, uygulamalı veya istek kipi) alamayan bir fiil grubuna aittir."
+            "error": "This verb belongs to a verb group that cannot take additional markers "
+                     "(applicative, causative, or optative) / "
+                     "Bu fiil, ek işaretleyiciler (ettirgen, uygulamalı veya istek kipi) "
+                     "alamayan bir fiil grubuna aittir."
         }
         log_request_response(request_params, error_response, '/api/conjugate')
         return jsonify(error_response), 400
 
-    # Prepare tense mapping based on markers
-    current_tense_mapping = simplified_tense_mapping.copy()
-    if has_markers:
-        # Filter out IVD modules when markers are present
-        current_tense_mapping = {}
-        for tense, modules in simplified_tense_mapping.items():
-            if isinstance(modules, list):
-                filtered_modules = [
-                    module for module in modules 
-                    if (isinstance(module, tuple) or not module.startswith('ivd_'))
-                ]
-                if filtered_modules:
-                    current_tense_mapping[tense] = filtered_modules
-            else:
-                current_tense_mapping[tense] = modules
-
-    # Create validator and service with appropriate mapping
-    validator = ConjugationValidator(
-        tense_modules, 
-        current_tense_mapping,
-        simplified_aspect_mapping
-    )
+    # 5. Prepare separate tense mappings for IVD and TVE
+    ivd_mapping = {}
+    tve_mapping = {}
     
-    conjugation_service = ConjugationService(
-        tense_modules, 
-        current_tense_mapping,
-        simplified_aspect_mapping
-    )
+    for tense, modules in simplified_tense_mapping.items():
+        # modules can be a list or a single object, so check carefully
+        if isinstance(modules, list):
+            # separate out the modules that start with 'ivd_' vs. 'tve_' or are tuples (for tvm_tense)
+            ivd_modules = [
+                m for m in modules
+                if isinstance(m, str) and m.startswith('ivd_')
+            ]
+            tvex_modules = [
+                m for m in modules
+                if (isinstance(m, tuple) or (isinstance(m, str) and m.startswith('tve_')))
+            ]
+            
+            # Only assign the IVD mapping if the verb actually exists in IVD and no markers
+            if ivd_modules and exists_in_ivd and not has_markers:
+                ivd_mapping[tense] = ivd_modules
+            
+            # Assign TVE mapping if the verb exists in TVE
+            if tvex_modules and exists_in_tve:
+                tve_mapping[tense] = tvex_modules
 
-    # Run validations
-    params, error = validator.validate_request(request_params)
-    if error:
-        error_response, status_code = error
-        log_request_response(request_params, error_response, '/api/conjugate')
-        return jsonify(error_response), status_code
+        else:
+            # If modules is not a list, you can decide if/how to handle it. For simplicity:
+            pass
 
-    try:
-        conjugations = conjugation_service.conjugate(params)
-        if conjugations is None:
-            # If conjugation fails, check if it's an IVD-only verb with markers
-            if exists_in_ivd and not exists_in_tve and has_markers:
-                error = {
-                    "error": "This verb belongs to a verb group that cannot take additional markers (applicative, causative, or optative) / Bu fiil, ek işaretleyiciler (ettirgen, işteş veya istek kipi) alamayan bir fiil grubuna aittir."
-                }
-            else:
-                error = {"error": f"Infinitive {params['infinitive']} not found in any module."}
-            log_request_response(request_params, error, '/api/conjugate')
-            return jsonify(error), 404
+    # 6. Create a combined results dict
+    results = {}
 
-        log_request_response(request_params, conjugations, '/api/conjugate')
-        return jsonify(conjugations)
+    # 7. IVD phase (only if exists_in_ivd and !has_markers)
+    if exists_in_ivd and not has_markers:
+        ivd_validator = ConjugationValidator(tense_modules, ivd_mapping, {})
+        ivd_service = ConjugationService(tense_modules, ivd_mapping, {})
+        ivd_params, ivd_error = ivd_validator.validate_request(request_params)
+        
+        if not ivd_error:
+            ivd_results = ivd_service.conjugate(ivd_params)
+            if ivd_results:
+                # Just put them directly under results
+                results.update(ivd_results)
 
-    except ValueError as e:
-        error = {"error": str(e)}
+    # 8. TVE phase (if exists_in_tve)
+    if exists_in_tve:
+        tve_validator = ConjugationValidator(tense_modules, tve_mapping, simplified_aspect_mapping)
+        tve_service = ConjugationService(tense_modules, tve_mapping, simplified_aspect_mapping)
+        tve_params, tve_error = tve_validator.validate_request(request_params)
+        
+        if not tve_error:
+            tve_results = tve_service.conjugate(tve_params)
+            if tve_results:
+                # Merge them carefully so they don't overwrite any IVD keys
+                for region in tve_results:
+                    if region not in results:
+                        results[region] = {}
+                    results[region].update(tve_results[region])
+
+    # 9. If we didn’t get any results from either approach, return 404
+    if not results:
+        error = {"error": f"Infinitive {infinitive} not found in any module."}
         log_request_response(request_params, error, '/api/conjugate')
-        return jsonify(error), 400
-    except Exception as e:
-        error = {"error": str(e)}
-        log_request_response(request_params, error, '/api/conjugate')
-        return jsonify(error), 500
-    
+        return jsonify(error), 404
+
+    # 10. Otherwise, return everything
+    log_request_response(request_params, results, '/api/conjugate')
+    return jsonify(results)
+
 if __name__ == '__main__':
     app.run(debug=True)
