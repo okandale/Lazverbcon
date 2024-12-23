@@ -128,47 +128,28 @@ def check_verb_existence(infinitive, tense_modules):
     """
     logger.debug(f"Starting detailed verb check for infinitive: {infinitive}")
     
-    ivd_modules = ['ivd_present', 'ivd_past', 'ivd_pastpro', 'ivd_future']
-    tve_modules = ['tve_present', 'tve_past', 'tve_pastpro', 'tve_future']
-
-    # IVD check with detailed logging
+    # Check IVD verbs
     exists_in_ivd = False
-    for module in ivd_modules:
-        if hasattr(tense_modules[module], 'df'):
-            df = tense_modules[module].df
-            # Ensure we're working with string values
-            df_infinitives = df['infinitive'].astype(str).values
-            infinitive_str = str(infinitive)
-            
-            # Check if infinitive exists in this module
-            if infinitive_str in df_infinitives:
-                logger.debug(f"Found {infinitive} in IVD module: {module}")
+    ivd_modules = ['ivd_present', 'ivd_past', 'ivd_pastpro', 'ivd_future']
+    for module_name in ivd_modules:
+        if hasattr(tense_modules[module_name], 'verbs'):
+            verbs = tense_modules[module_name].verbs
+            if infinitive in verbs:
+                logger.debug(f"Found {infinitive} in {module_name} verbs dictionary")
                 exists_in_ivd = True
                 break
-            else:
-                logger.debug(f"Checking {module}:")
-                logger.debug(f"- First few infinitives: {df_infinitives[:5]}")
-                logger.debug(f"- DataFrame shape: {df.shape}")
-
-    # TVE check with detailed logging
+    
+    # Check TVE verbs
     exists_in_tve = False
-    for module in tve_modules:
-        if hasattr(tense_modules[module], 'df'):
-            df = tense_modules[module].df
-            # Ensure we're working with string values
-            df_infinitives = df['infinitive'].astype(str).values
-            infinitive_str = str(infinitive)
-            
-            # Check if infinitive exists in this module
-            if infinitive_str in df_infinitives:
-                logger.debug(f"Found {infinitive} in TVE module: {module}")
+    tve_modules = ['tve_present', 'tve_past', 'tve_pastpro', 'tve_future']
+    for module_name in tve_modules:
+        if hasattr(tense_modules[module_name], 'verbs'):
+            verbs = tense_modules[module_name].verbs
+            if infinitive in verbs:
+                logger.debug(f"Found {infinitive} in {module_name} verbs dictionary")
                 exists_in_tve = True
                 break
-            else:
-                logger.debug(f"Checking {module}:")
-                logger.debug(f"- First few infinitives: {df_infinitives[:5]}")
-                logger.debug(f"- DataFrame shape: {df.shape}")
-
+    
     logger.debug(f"Final result for {infinitive} - IVD: {exists_in_ivd}, TVE: {exists_in_tve}")
     return exists_in_ivd, exists_in_tve
 
@@ -198,35 +179,17 @@ def conjugate():
     has_markers = any(request_params.get(marker) == 'true' 
                      for marker in ['applicative', 'causative', 'optative'])
     
-    # Create initial validator and service with full mapping
-    validator = ConjugationValidator(
-        tense_modules, 
-        simplified_tense_mapping,
-        simplified_aspect_mapping
-    )
+    # Check verb existence and type first
+    exists_in_ivd, exists_in_tve = check_verb_existence(infinitive, tense_modules)
     
-    # First check if the verb exists in the complete dataset
-    full_params, _ = validator.validate_request(request_params)
-    initial_conjugations = ConjugationService(
-        tense_modules, 
-        simplified_tense_mapping,
-        simplified_aspect_mapping
-    ).conjugate(full_params)
+    # If it's EXCLUSIVELY an IVD verb (exists in IVD but NOT in TVE) and has markers, return error
+    if exists_in_ivd and not exists_in_tve and has_markers:
+        error_response = {
+            "error": "This verb belongs to a verb group that cannot take additional markers (applicative, causative, or optative) / Bu fiil, ek işaretleyiciler (ettirgen, uygulamalı veya istek kipi) alamayan bir fiil grubuna aittir."
+        }
+        log_request_response(request_params, error_response, '/api/conjugate')
+        return jsonify(error_response), 400
 
-    # If the verb exists at all, check which type it is
-    if initial_conjugations is not None:
-        exists_in_ivd, exists_in_tve = check_verb_existence(infinitive, tense_modules)
-        logger.debug("Verb type check - IVD: %s, TVE: %s", exists_in_ivd, exists_in_tve)
-        
-        # If it's IVD-only and has markers, return error
-        if exists_in_ivd and not exists_in_tve and has_markers:
-            error_response = {
-                "error": "This verb belongs to a verb group that cannot take additional markers (applicative, causative, or optative) / Bu fiil, ek işaretleyiciler (ettirgen, işteş veya istek kipi) alamayan bir fiil grubuna aittir."
-            }
-            log_request_response(request_params, error_response, '/api/conjugate')
-            return jsonify(error_response), 400
-
-    # If we get here, either the verb doesn't exist at all, or it can take markers
     # Prepare tense mapping based on markers
     current_tense_mapping = simplified_tense_mapping.copy()
     if has_markers:
@@ -266,7 +229,13 @@ def conjugate():
     try:
         conjugations = conjugation_service.conjugate(params)
         if conjugations is None:
-            error = {"error": f"Infinitive {params['infinitive']} not found in any module."}
+            # If conjugation fails, check if it's an IVD-only verb with markers
+            if exists_in_ivd and not exists_in_tve and has_markers:
+                error = {
+                    "error": "This verb belongs to a verb group that cannot take additional markers (applicative, causative, or optative) / Bu fiil, ek işaretleyiciler (ettirgen, işteş veya istek kipi) alamayan bir fiil grubuna aittir."
+                }
+            else:
+                error = {"error": f"Infinitive {params['infinitive']} not found in any module."}
             log_request_response(request_params, error, '/api/conjugate')
             return jsonify(error), 404
 
@@ -281,6 +250,6 @@ def conjugate():
         error = {"error": str(e)}
         log_request_response(request_params, error, '/api/conjugate')
         return jsonify(error), 500
-                                                    
+    
 if __name__ == '__main__':
     app.run()
