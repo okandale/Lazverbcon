@@ -266,7 +266,15 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                         prefix = 'do'
 
                 # Special handling for "geç̌ǩu"
-                elif preverb == 'ge':
+                elif preverb == 'ge' or infinitive.startswith('ge'):
+                    if infinitive == 'gemgaru':
+                        if marker:
+                            root = marker + root[3:]
+                        else:
+                            if subject in ('S1_Singular', 'S1_Plural') or obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'):
+                                root = root[2:]
+                            else:
+                                preverb = ''
                     if infinitive in gyo_verbs:
                         if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
                             root = 'u' + root[2:] if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root[2:]  # Remove only one character if there's a marker

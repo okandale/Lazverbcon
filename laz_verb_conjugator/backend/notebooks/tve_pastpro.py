@@ -130,7 +130,6 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                 handled_gontzku = True  # Set the flag
 
             if not handled_gontzku:
-                print(f"root {root}")
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                     preverb = 'ey' if region == 'PZ' else 'y'
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
@@ -273,7 +272,15 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                         prefix = preverb
 
                 # Special handling for "geç̌ǩu"
-                elif preverb == 'ge':
+                elif preverb == 'ge' or infinitive.startswith('ge'):
+                    if infinitive == 'gemgaru':
+                        if marker:
+                            root = marker + root[3:]
+                        else:
+                            if subject in ('S1_Singular', 'S1_Plural') or obj in ('O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'):
+                                root = root[2:]
+                            else:
+                                preverb = ''
                     if infinitive in gyo_verbs:
                         if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
                             root = 'u' + root[2:] if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root[2:]  # Remove only one character if there's a marker
