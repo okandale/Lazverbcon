@@ -111,9 +111,13 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 root = handle_marker(main_infinitive, root, marker, subject, obj)
 
             if mood == 'optative' and infinitive == 'oç̌ǩomu':
-                    root = 'ç̌ǩomum'
+                root = marker + 'ç̌ǩomum' if marker else 'ç̌ǩomum'
             elif mood == 'optative' and infinitive == 'oşǩomu':
-                    root = 'şǩomum'
+                root = marker + 'şǩomum' if marker else 'şǩomum'
+            elif mood == 'optative' and infinitive == 'oxvenu':
+                root = marker + 'xvenams' if marker else 'xvenams'
+            elif mood == 'optative' and infinitive == 'oxenu':
+                root = marker + 'xenams' if marker else 'xenams'
 
             # Get the first letter after the marker is attached
             first_letter = get_first_letter(root)
@@ -715,10 +719,15 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 final_root = final_root[1:]
 
 
+
             # Conjugate the verb
             conjugated_verb = f"{prefix}{final_root}{suffix}"
+
+            if mood == 'optative' and infinitive in ('oxvenu', 'oxenu') and obj is None:
+                    conjugated_verb = 'p̌a' if subject == 'S1_Singular' else 'p̌at' if subject == 'S1_Plural' else 'N/A - geçersiz kombinasyon'  
             region_conjugations[region].append((subject, obj, f"{first_word} {conjugated_verb}".strip()))
 
+ 
 
     return region_conjugations
 
