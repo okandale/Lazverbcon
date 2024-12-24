@@ -106,12 +106,15 @@ def check_verb_existence(infinitive, tense_modules):
     """
     logger.debug(f"Starting detailed verb check for infinitive: {infinitive}")
     
+    # Normalize infinitive to lowercase
+    infinitive = infinitive.lower().strip()
+    
     # Check IVD verbs
     exists_in_ivd = False
     ivd_modules = ['ivd_present', 'ivd_past', 'ivd_pastpro', 'ivd_future']
     for module_name in ivd_modules:
         if hasattr(tense_modules[module_name], 'verbs'):
-            verbs = tense_modules[module_name].verbs
+            verbs = {v.lower().strip(): v for v in tense_modules[module_name].verbs}
             if infinitive in verbs:
                 exists_in_ivd = True
                 break
@@ -121,7 +124,7 @@ def check_verb_existence(infinitive, tense_modules):
     tve_modules = ['tve_present', 'tve_past', 'tve_pastpro', 'tve_future']
     for module_name in tve_modules:
         if hasattr(tense_modules[module_name], 'verbs'):
-            verbs = tense_modules[module_name].verbs
+            verbs = {v.lower().strip(): v for v in tense_modules[module_name].verbs}
             if infinitive in verbs:
                 exists_in_tve = True
                 break
@@ -129,7 +132,7 @@ def check_verb_existence(infinitive, tense_modules):
     # Check TVM verbs
     exists_in_tvm = False
     if hasattr(tense_modules['tvm_tense'], 'verbs'):
-        verbs = tense_modules['tvm_tense'].verbs
+        verbs = {v.lower().strip(): v for v in tense_modules['tvm_tense'].verbs}
         if infinitive in verbs:
             exists_in_tvm = True
 
@@ -138,11 +141,12 @@ def check_verb_existence(infinitive, tense_modules):
     tvm_tve_modules = ['tvm_tve_presentperf', 'tvm_tve_potential', 'tvm_tve_passive']
     for module_name in tvm_tve_modules:
         if hasattr(tense_modules[module_name], 'verbs'):
-            verbs = tense_modules[module_name].verbs
+            verbs = {v.lower().strip(): v for v in tense_modules[module_name].verbs}
             if infinitive in verbs:
                 exists_in_tvm_tve = True
                 break
     
+    logger.debug(f"Final result for {infinitive} - IVD: {exists_in_ivd}, TVE: {exists_in_tve}, TVM: {exists_in_tvm}, TVM/TVE: {exists_in_tvm_tve}")
     return exists_in_ivd, exists_in_tve, exists_in_tvm, exists_in_tvm_tve
 
 @app.route('/api/conjugate', methods=['GET'])
