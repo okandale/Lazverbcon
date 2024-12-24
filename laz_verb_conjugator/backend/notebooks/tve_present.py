@@ -578,7 +578,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 else:
                     root = root[:-1] + 'm'  # Ardeşen Exception root for non-S3 cases
 
-            print(f"root: {root}")
+
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/oǩo preverbs, we could check here: if preverb ends with "o") root[:-1 
             if applicative and causative:
                 if infinitive in (('oşu', 'dodvu', 'otku')):
@@ -653,7 +653,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif mood == 'optative':
                 root = root[:-2]
 
-
+            print(f"root: {root}")
             # Determine the suffix
             if subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('ms') and mood == 'optative':
                 suffix = 'ay' if region == "AŞ" else 'as'
@@ -666,6 +666,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     suffix = 'y' 
                 else:
                     suffix = 's'
+
             elif subject == 'S3_Singular' and obj in ['O2_Plural', 'O1_Plural'] and root.endswith('ms') and region == "AŞ":
                 suffix = 'man'
             elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O3_Plural', 'O2_Plural'] and root.endswith('ms'):
@@ -673,7 +674,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     suffix = 'an'
             elif subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('y') and mood == 'optative':
                 suffix = 'ay'
-            elif subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('y'):
+            elif subject == 'S3_Singular' and (obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] or obj is None) and root.endswith('y'):
                 suffix = ''
             elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
                 suffix = 'man' if (root.endswith('m') and region == "AŞ") else 'an'
