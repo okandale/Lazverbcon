@@ -604,7 +604,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 elif root.endswith('y'):
                     root = root[:-2] + 'ams'
                 elif root.endswith('irs'):
-                    root = root + ('aps' if region == "HO" else 'ams')
+                    root = root[:-1] + ('aps' if region == "HO" else 'ams')
             elif causative:
                 if root == ('çams'): #changed root for oç̌ǩomu/oşǩomu
                     root = root
