@@ -578,6 +578,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 else:
                     root = root[:-1] + 'm'  # Ardeşen Exception root for non-S3 cases
 
+            print(f"root: {root}")
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/oǩo preverbs, we could check here: if preverb ends with "o") root[:-1 
             if applicative and causative:
                 if infinitive in (('oşu', 'dodvu', 'otku')):
@@ -603,7 +604,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     root = root[:-2] + 'ams'
                 elif root.endswith('y'):
                     root = root[:-2] + 'ams'
-                elif root.endswith('irs'):
+                elif root.endswith('rs'):
                     root = root[:-1] + ('aps' if region == "HO" else 'ams')
             elif causative:
                 if root == ('çams'): #changed root for oç̌ǩomu/oşǩomu
