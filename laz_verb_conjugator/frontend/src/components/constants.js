@@ -41,7 +41,7 @@ export const setStoredLanguage = (language) => {
 
 export const translations = {
   tr: {
-    title: 'Fiil Çekimi',
+    title: 'Lazca Fiil Çekimleyici',
     infinitive: 'Mastar',
     subject: 'Özne',
     object: 'Nesne',
@@ -56,7 +56,7 @@ export const translations = {
     conjugate: 'Çek',
     reset: 'Sıfırla',
     results: 'Sonuçlar',
-    betaMessage: 'Hata görürseniz lütfen buradan görüşlerinizi iletin:',
+    betaMessage: 'Bazı çekimler dilbilgisel olarak doğru olabilir ancak yaygın olarak kullanılmaz. Emin değilseniz, topluluğunuz için doğru çekimi öğrenmek adına yaşlılarınıza danışın. Hata görürseniz lütfen buradan görüşlerinizi iletin:',
     feedbackLinkText: 'geri bildirim formu',
     feedbackTitle: 'Geri Bildirim Gönder',
     feedbackLabels: {
@@ -78,7 +78,7 @@ export const translations = {
   },
   // English translations
   en: {
-    title: 'Verb Conjugator',
+    title: 'Laz Verb Conjugator',
     infinitive: 'Infinitive',
     subject: 'Subject',
     object: 'Object',
@@ -93,7 +93,7 @@ export const translations = {
     conjugate: 'Conjugate',
     reset: 'Reset',
     results: 'Results',
-    betaMessage: 'If you spot a mistake, please submit your feedback using the',
+    betaMessage: 'Some conjugations may be grammatically correct but are not commonly used. If you are unsure, please consult your elders to obtain the correct conjugation for your community. If you spot a mistake, please submit your feedback using the',
     feedbackLinkText: 'feedback form',
     feedbackTitle: 'Submit Feedback',
     feedbackLabels: {
