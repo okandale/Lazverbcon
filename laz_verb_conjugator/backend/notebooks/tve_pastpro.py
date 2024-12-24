@@ -540,7 +540,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                     root = root[:-2] + 'ams'
                 elif root.endswith('y'):
                     root = root[:-2] + 'ams'
-                elif root.endswith('irs'):
+                elif root.endswith('rs'):
                     root = root[:-1] + ('aps' if region == "HO" else 'ams')                
             elif causative:
                 if root == ('çams'): #changed root for oç̌ǩomu/oşǩomu
