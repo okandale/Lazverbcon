@@ -264,39 +264,39 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
 
             suffix = suffixes[subject]
-            if obj:
-                if subject == 'S3_Singular' and obj == 'O3_Singular':
-                    suffix = ''
-                elif subject == 'S3_Singular' and obj == 'O3_Plural':
-                    if root.endswith('rs'):
-                        root = root[:-1]
-                    suffix = 'an'
-                elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
-                    if root.endswith(('en', 'rs')):
-                        root = root[:-2] if infinitive.endswith('rs') else root[:-1]
-                    suffix = 'rt'
-                elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular']:
-                    if root.endswith(('n', 'rs')):
-                        root = root[:-1]
-                    suffix = '' if infinitive.endswith('rs') else 'r'
-                elif subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural'] and obj in ('O1_Plural', 'O2_Plural'):
-                    if root.endswith(('n', 'rs')):
-                        root = root[:-2] if infinitive.endswith('rs') else root[:-1]
-                    suffix = 'rt'
-                elif subject in ['S1_Plural', 'S2_Plural'] and obj in ('O1_Singular', 'O2_Singular'):
-                    if root.endswith(('n', 'rs')):
-                        root = root[:-2] if infinitive.endswith('rs') else root[:-1]
-                    suffix = 'rt'
-                elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
-                    suffix = ''
-                elif subject in ['S1_Plural', 'S2_Plural', 'S3_Singular'] and obj in ('O3_Singular', 'O3_Plural'):
-                    if root.endswith('rs'):
-                        root = root[:-1]
-                    suffix = 'an'
-                elif subject == 'S3_Plural':
-                    if root.endswith('rs'):
-                        root = root[:-1]
-                    suffix = 'an'
+            print(f"root: {root}")
+            if subject == 'S3_Singular' and obj == 'O3_Singular':
+                suffix = ''
+            elif subject == 'S3_Singular' and obj == 'O3_Plural':
+                if root.endswith('rs'):
+                    root = root[:-1]
+                suffix = 'an'
+            elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
+                if root.endswith(('en', 'rs')):
+                    root = root[:-2] if infinitive.endswith('rs') else root[:-1]
+                suffix = 'rt'
+            elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular']:
+                if root.endswith(('n', 'rs')):
+                    root = root[:-1]
+                suffix = '' if infinitive.endswith('rs') else 'r'
+            elif subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural'] and obj in ('O1_Plural', 'O2_Plural'):
+                if root.endswith(('n', 'rs')):
+                    root = root[:-2] if infinitive.endswith('rs') else root[:-1]
+                suffix = 'rt'
+            elif subject in ['S1_Plural', 'S2_Plural'] and obj in ('O1_Singular', 'O2_Singular'):
+                if root.endswith(('n', 'rs')):
+                    root = root[:-2] if infinitive.endswith('rs') else root[:-1]
+                suffix = 'rt'
+            elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
+                suffix = ''
+            elif subject in ['S1_Plural', 'S2_Plural', 'S3_Singular'] and (obj in ('O3_Singular', 'O3_Plural') or obj is None):
+                if root.endswith('rs'):
+                    root = root[:-1]
+                suffix = 'an'
+            elif subject == 'S3_Plural':
+                if root.endswith('rs'):
+                    root = root[:-1]
+                suffix = 'an'
 
 
             # Conjugate the verb
