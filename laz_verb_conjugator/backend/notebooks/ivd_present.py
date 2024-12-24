@@ -265,7 +265,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             suffix = suffixes[subject]
             print(f"root: {root}")
-            if subject == 'S3_Singular' and obj == 'O3_Singular':
+            if subject == 'S3_Singular' and (obj == 'O3_Singular' or obj is None):
                 suffix = ''
             elif subject == 'S3_Singular' and obj == 'O3_Plural':
                 if root.endswith('rs'):
@@ -292,7 +292,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif subject in ['S1_Plural', 'S2_Plural', 'S3_Singular'] and (obj in ('O3_Singular', 'O3_Plural') or obj is None):
                 if root.endswith('rs'):
                     root = root[:-1]
-                suffix = 'an'
+                suffix = '' if root.endswith('an') else 'an'
             elif subject == 'S3_Plural':
                 if root.endswith('rs'):
                     root = root[:-1]
