@@ -56,7 +56,7 @@ export const translations = {
     conjugate: 'Çek',
     reset: 'Sıfırla',
     results: 'Sonuçlar',
-    betaMessage: 'Bazı çekimler dilbilgisel olarak doğru olabilir ancak yaygın olarak kullanılmaz. Emin değilseniz, topluluğunuz için doğru çekimi öğrenmek adına yaşlılarınıza danışın. Hata görürseniz lütfen buradan görüşlerinizi iletin:',
+    betaMessage: 'Bazı çekimler dilbilgisel olarak doğru olabilir ancak yaygın olarak kullanılmaz. Emin değilseniz, köyünüz için doğru çekimi öğrenmek adına büyüklerinize danışın. Hata görürseniz lütfen buradan görüşlerinizi iletin:',
     feedbackLinkText: 'geri bildirim formu',
     feedbackTitle: 'Geri Bildirim Gönder',
     feedbackLabels: {
