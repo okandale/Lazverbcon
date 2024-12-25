@@ -144,6 +144,21 @@ const VerbConjugator = () => {
         </p>
       </div>
 
+      <div className="text-center mt-6">
+        <p className="text-gray-700 text-sm italic">
+          {translations[language].thankYouNote.prefix}
+          <a 
+            href={translations[language].thankYouNote.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            {translations[language].thankYouNote.linkText}
+          </a>
+          {translations[language].thankYouNote.suffix}
+        </p>
+      </div>
+
       <FeedbackForm
         isVisible={isFeedbackVisible}
         onClose={() => setFeedbackVisible(false)}

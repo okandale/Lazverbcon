@@ -57,6 +57,12 @@ export const translations = {
     reset: 'Sıfırla',
     results: 'Sonuçlar',
     betaMessage: 'Bazı çekimler dilbilgisel olarak doğru olabilir ancak yaygın olarak kullanılmaz. Emin değilseniz, köyünüz için doğru çekimi öğrenmek adına büyüklerinize danışın. Hata görürseniz lütfen buradan görüşlerinizi iletin:',
+    thankYouNote: {
+      prefix: 'Bu projeye destek veren ',
+      linkText: 'Laz Enstitüsü',
+      suffix: ' için özel teşekkürler.',
+      url: 'https://www.lazenstitu.com/'
+    },
     feedbackLinkText: 'geri bildirim formu',
     feedbackTitle: 'Geri Bildirim Gönder',
     feedbackLabels: {
@@ -94,6 +100,12 @@ export const translations = {
     reset: 'Reset',
     results: 'Results',
     betaMessage: 'Some conjugations may be grammatically correct but are not commonly used. If you are unsure, please consult your elders to obtain the correct conjugation for your community. If you spot a mistake, please submit your feedback using the',
+    thankYouNote: {
+      prefix: 'Special thanks to the ',
+      linkText: 'Laz Institute',
+      suffix: ' for their support of this project.',
+      url: 'https://www.lazenstitu.com/'
+    },
     feedbackLinkText: 'feedback form',
     feedbackTitle: 'Submit Feedback',
     feedbackLabels: {
