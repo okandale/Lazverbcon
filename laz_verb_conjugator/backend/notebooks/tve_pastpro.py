@@ -24,8 +24,15 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
 
     
     # Check for invalid SxOx combinations
-    if (subject in ['S1_Singular', 'S1_Plural'] and obj in ['O1_Singular', 'O1_Plural']) and not applicative or \
-       (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']) and not applicative:
+    if applicative and (
+        (subject == 'S1_Singular' and obj == 'O1_Plural') or 
+        (subject == 'S2_Singular' and obj == 'O2_Plural') or
+        (subject == 'S1_Plural' and obj == 'O1_Singular') or
+        (subject == 'S2_Plural' and obj == 'O2_Singular')
+    ):
+        return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
+    elif (subject in ['S1_Singular', 'S1_Plural'] and obj in ['O1_Singular', 'O1_Plural'] and not applicative) or \
+        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural'] and not applicative):
         return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
     
     if applicative and obj is None:

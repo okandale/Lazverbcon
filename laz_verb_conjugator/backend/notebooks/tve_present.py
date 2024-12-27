@@ -23,10 +23,17 @@ preverbs_rules = get_preverbs_rules('tve_present')
 # Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
 def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False, mood=None):
     # Check for invalid SxOx combinations
-    if (subject in ['S1_Singular', 'S1_Plural'] and obj in ['O1_Singular', 'O1_Plural']) and not applicative or \
-       (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']) and not applicative:
+    if applicative and (
+        (subject == 'S1_Singular' and obj == 'O1_Plural') or 
+        (subject == 'S2_Singular' and obj == 'O2_Plural') or
+        (subject == 'S1_Plural' and obj == 'O1_Singular') or
+        (subject == 'S2_Plural' and obj == 'O2_Singular')
+    ):
         return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
-    
+    elif (subject in ['S1_Singular', 'S1_Plural'] and obj in ['O1_Singular', 'O1_Plural'] and not applicative) or \
+        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural'] and not applicative):
+        return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
+
     if applicative and obj is None:
         raise ValueError("Applicative requires an object to be specified.")
     if causative and obj is None:
