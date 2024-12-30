@@ -38,7 +38,7 @@ class ConjugationService:
         # More nuanced verb group determination
         if module_name.startswith('tve'):
             verb_group = "Ergative"
-        elif module_name.startswith('ivd') or (module_name.startswith('tvm_tve') and any(x in module_name for x in ['potential'])):
+        elif module_name.startswith('ivd') or (module_name.startswith('tvm_tve') and any(x in module_name for x in ['potential', 'presentperf'])):
             verb_group = "Dative"
         elif module_name == 'tvm_tense' or (module_name.startswith('tvm_tve') and any(x in module_name for x in ['passive'])):
             verb_group = "Nominative"

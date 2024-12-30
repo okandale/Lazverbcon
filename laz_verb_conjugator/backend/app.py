@@ -176,8 +176,10 @@ def check_verb_existence(infinitive, tense_modules):
 @app.route('/api/conjugate', methods=['GET'])
 def conjugate():
     request_params = dict(request.args)
-    infinitive = request_params.get('infinitive')
+    infinitive = request_params.get('infinitive', '').strip().lower()
+    request_params['infinitive'] = infinitive
     aspect = request_params.get('aspect')
+    tense = request_params.get('tense')
     
     if not infinitive:
         error_response = {"error": "Infinitive is required"}
@@ -198,8 +200,8 @@ def conjugate():
     # Check verb existence in all types
     exists_in_ivd, exists_in_tve, exists_in_tvm, exists_in_tvm_tve = check_verb_existence(infinitive, tense_modules)
     
-    # Handle special case modules (aspect)
-    if aspect and exists_in_tvm_tve:
+    # Handle aspect modules (only potential and passive)
+    if aspect and aspect in simplified_aspect_mapping and exists_in_tvm_tve:
         aspect_validator = ConjugationValidator(
             tense_modules, 
             {}, 
@@ -217,8 +219,8 @@ def conjugate():
                 log_request_response(request_params, results, '/api/conjugate')
                 return jsonify(results)
     
-    # Handle regular tense conjugations
-    if exists_in_ivd and not exists_in_tve and not exists_in_tvm and has_markers:
+    # Handle marker restrictions
+    if exists_in_ivd and not (exists_in_tve or exists_in_tvm_tve) and has_markers:
         error_response = {
             "error": "This verb belongs to a verb group that cannot take additional markers"
         }
@@ -227,64 +229,83 @@ def conjugate():
 
     results = {}
     
-    # Prepare mappings
-    ivd_mapping = {}
-    tve_mapping = {}
-    tvm_mapping = {}
-    
-    for tense, modules in simplified_tense_mapping.items():
-        if isinstance(modules, list):
-            ivd_modules = [m for m in modules if isinstance(m, str) and m.startswith('ivd_')]
-            tve_modules = [m for m in modules if isinstance(m, str) and m.startswith('tve_')]
-            tvm_modules = [m for m in modules if isinstance(m, tuple) or 
-                         (isinstance(m, str) and m.startswith('tvm_'))]
-            
-            if ivd_modules and exists_in_ivd and not has_markers:
-                ivd_mapping[tense] = ivd_modules
-            if tve_modules and exists_in_tve:
-                tve_mapping[tense] = tve_modules
-            if tvm_modules and exists_in_tvm:
-                tvm_mapping[tense] = tvm_modules
+    # Special handling for present perfect tense
+    if tense == 'presentperf':
+        validator = ConjugationValidator(
+            tense_modules, 
+            {'presentperf': ['tvm_tve_presentperf']},
+            {}
+        )
+        service = ConjugationService(
+            tense_modules, 
+            {'presentperf': ['tvm_tve_presentperf']},
+            {}
+        )
+        params, error = validator.validate_request(request_params)
+        if not error:
+            conjugations = service.conjugate(params)
+            if conjugations:
+                return jsonify(conjugations)
+    else:
+        # Regular tense handling with proper group separation
+        # Prepare mappings
+        ivd_mapping = {}
+        tve_mapping = {}
+        tvm_mapping = {}
+        
+        for tense, modules in simplified_tense_mapping.items():
+            if isinstance(modules, list):
+                ivd_modules = [m for m in modules if isinstance(m, str) and m.startswith('ivd_')]
+                tve_modules = [m for m in modules if isinstance(m, str) and m.startswith('tve_')]
+                tvm_modules = [m for m in modules if isinstance(m, tuple) or 
+                             (isinstance(m, str) and m.startswith('tvm_'))]
+                
+                if ivd_modules and exists_in_ivd and not has_markers:
+                    ivd_mapping[tense] = ivd_modules
+                if tve_modules and exists_in_tve:
+                    tve_mapping[tense] = tve_modules
+                if tvm_modules and exists_in_tvm:
+                    tvm_mapping[tense] = tvm_modules
 
-    # Process IVD conjugations
-    if exists_in_ivd and not has_markers:
-        ivd_validator = ConjugationValidator(tense_modules, ivd_mapping, {})
-        ivd_service = ConjugationService(tense_modules, ivd_mapping, {})
-        ivd_params, ivd_error = ivd_validator.validate_request(request_params)
-        if not ivd_error:
-            ivd_results = ivd_service.conjugate(ivd_params)
-            if ivd_results:
-                results.update(ivd_results)
+        # Process IVD conjugations
+        if exists_in_ivd and not has_markers:
+            ivd_validator = ConjugationValidator(tense_modules, ivd_mapping, {})
+            ivd_service = ConjugationService(tense_modules, ivd_mapping, {})
+            ivd_params, ivd_error = ivd_validator.validate_request(request_params)
+            if not ivd_error:
+                ivd_results = ivd_service.conjugate(ivd_params)
+                if ivd_results:
+                    results.update(ivd_results)
 
-    # Process TVE conjugations
-    if exists_in_tve:
-        tve_validator = ConjugationValidator(tense_modules, tve_mapping, {})
-        tve_service = ConjugationService(tense_modules, tve_mapping, {})
-        tve_params, tve_error = tve_validator.validate_request(request_params)
-        if not tve_error:
-            tve_results = tve_service.conjugate(tve_params)
-            if tve_results:
-                for region in tve_results:
-                    if region not in results:
-                        results[region] = {}
-                    results[region].update(tve_results[region])
+        # Process TVE conjugations
+        if exists_in_tve:
+            tve_validator = ConjugationValidator(tense_modules, tve_mapping, {})
+            tve_service = ConjugationService(tense_modules, tve_mapping, {})
+            tve_params, tve_error = tve_validator.validate_request(request_params)
+            if not tve_error:
+                tve_results = tve_service.conjugate(tve_params)
+                if tve_results:
+                    for region in tve_results:
+                        if region not in results:
+                            results[region] = {}
+                        results[region].update(tve_results[region])
 
-    # Process TVM conjugations
-    if exists_in_tvm:
-        tvm_validator = ConjugationValidator(tense_modules, tvm_mapping, {})
-        tvm_service = ConjugationService(tense_modules, tvm_mapping, {})
-        tvm_params, tvm_error = tvm_validator.validate_request(request_params)
-        if not tvm_error:
-            tvm_results = tvm_service.conjugate(tvm_params)
-            if tvm_results:
-                for region in tvm_results:
-                    if region not in results:
-                        results[region] = {}
-                    results[region].update(tvm_results[region])
+        # Process TVM conjugations
+        if exists_in_tvm:
+            tvm_validator = ConjugationValidator(tense_modules, tvm_mapping, {})
+            tvm_service = ConjugationService(tense_modules, tvm_mapping, {})
+            tvm_params, tvm_error = tvm_validator.validate_request(request_params)
+            if not tvm_error:
+                tvm_results = tvm_service.conjugate(tvm_params)
+                if tvm_results:
+                    for region in tvm_results:
+                        if region not in results:
+                            results[region] = {}
+                        results[region].update(tvm_results[region])
 
-    if results:
-        log_request_response(request_params, results, '/api/conjugate')
-        return jsonify(results)
+        if results:
+            log_request_response(request_params, results, '/api/conjugate')
+            return jsonify(results)
 
     error = {"error": f"Infinitive {infinitive} not found in any module."}
     log_request_response(request_params, error, '/api/conjugate')
