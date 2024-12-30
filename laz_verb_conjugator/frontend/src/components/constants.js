@@ -41,6 +41,7 @@ export const setStoredLanguage = (language) => {
 
 export const translations = {
   tr: {
+    // Original translations
     title: 'Lazca Fiil Çekimleyici',
     infinitive: 'Mastar',
     subject: 'Özne',
@@ -76,14 +77,68 @@ export const translations = {
     verbListLinkText: 'buraya tıklayın',
     feedbackLoadingMessage: 'Geri bildirim gönderiliyor, lütfen bekleyin...',
     feedbackDisclaimer: 'Google Chrome kullanan telefon kullanıcıları formu göndermekte zorluk yaşayabilir; lütfen başka bir tarayıcı kullanın veya Gizli Modu kullanın.',
-    // Search placeholder
     searchPlaceholder: 'Fiil ara...',
-    // Verb List translations
     backToConjugator: 'Fiil Çekicisine Geri Dön',
     verbsListTitle: 'Mevcut Fiiller',
+
+    // New translations for home and additional pages
+    homeTitle: 'Lazca Öğrenme Merkezi',
+    homeSubtitle: 'İnteraktif araçlar ve kaynaklarla Lazca öğrenin',
+    navigation: {
+      home: 'Ana Sayfa',
+      conjugator: 'Fiil Çekimi',
+      classes: 'Dersler',
+      about: 'Hakkında',
+      verbs: 'Fiiller'
+    },
+    conjugatorCard: {
+      title: 'Fiil Çekimleyici',
+      description: 'Lazca fiilleri tüm zaman ve kiplerde çekimleyin'
+    },
+    classesCard: {
+      title: 'Lazca Dersleri',
+      description: 'Deneyimli eğitmenlerle canlı çevrimiçi Lazca dersleri'
+    },
+    verbListCard: {
+      title: 'Fiil Listesi',
+      description: 'Kapsamlı Lazca fiil listesine göz atın'
+    },
+    patronCard: {
+      title: 'Patreon\'da Destekleyin',
+      description: 'Daha fazla Lazca öğrenme kaynağı oluşturmamıza yardımcı olun'
+    },
+    aboutTitle: 'Hakkımızda',
+    aboutContent: {
+      intro: 'Lazca Öğrenme Merkezi, Lazca öğrenmek isteyenlere yardımcı olmak için oluşturuldu. Araçlarımız, Lazcadaki karmaşık fiil çekim sistemini anlamanıza ve pratik yapmanıza olanak sağlar.',
+      growth: 'Basit bir fiil çekim aracı olarak başlayan projemiz, Lazca öğrenenler için kapsamlı bir kaynağa dönüştü.',
+      mission: 'Misyonumuz',
+      missionText: 'Amacımız, kaliteli araçlar ve kaynaklar sunarak Lazca öğrenmeyi daha erişilebilir ve keyifli hale getirmektir.'
+    },
+    classesTitle: 'Lazca Dersler',
+    classTypes: {
+      title: 'Mevcut Ders Türleri',
+      individual: {
+        title: 'Birebir Dersler',
+        description: 'Öğrenme stilinize ve hedeflerinize göre özelleştirilmiş eğitim',
+        features: [
+          'Esnek programlama',
+          'Özelleştirilmiş müfredat',
+          'Özel ihtiyaçlarınıza odaklanma'
+        ]
+      },
+      group: {
+        title: 'Grup Dersleri',
+        description: 'İnteraktif bir ortamda başkalarıyla birlikte öğrenin',
+        features: [
+          'Küçük grup boyutları (4-6 öğrenci)',
+          'Düzenli programlanmış oturumlar',
+          'Akranlarla konuşma pratiği'
+        ]
+      }
+    }
   },
-  // English translations
   en: {
+    // Original translations
     title: 'Laz Verb Conjugator',
     infinitive: 'Infinitive',
     subject: 'Subject',
@@ -122,7 +177,63 @@ export const translations = {
     searchPlaceholder: 'Search verbs...',
     backToConjugator: 'Back to Conjugator',
     verbsListTitle: 'Available Verbs',
-  },
+
+    // New translations for home and additional pages
+    homeTitle: 'Laz Language Learning Center',
+    homeSubtitle: 'Learn Laz with interactive tools and resources',
+    navigation: {
+      home: 'Home',
+      conjugator: 'Conjugator',
+      classes: 'Classes',
+      about: 'About',
+      verbs: 'Verbs'
+    },
+    conjugatorCard: {
+      title: 'Verb Conjugator',
+      description: 'Practice conjugating Laz verbs in all tenses and moods'
+    },
+    classesCard: {
+      title: 'Laz Classes',
+      description: 'Join live online Laz language classes with experienced tutors'
+    },
+    verbListCard: {
+      title: 'Verb List',
+      description: 'Browse our comprehensive list of Laz verbs'
+    },
+    patronCard: {
+      title: 'Support on Patreon',
+      description: 'Help us create more Laz language learning resources'
+    },
+    aboutTitle: 'About Us',
+    aboutContent: {
+      intro: 'The Laz Language Learning Center was created to help people learn Laz. Our tools make it easier to understand and practice the complex verb conjugation system in Laz.',
+      growth: 'What started as a simple conjugation tool has grown into a comprehensive resource for Laz language learners.',
+      mission: 'Our Mission',
+      missionText: 'We aim to make Laz language learning more accessible and enjoyable by providing high-quality tools and resources.'
+    },
+    classesTitle: 'Laz Classes',
+    classTypes: {
+      title: 'Available Class Types',
+      individual: {
+        title: 'One-on-One Lessons',
+        description: 'Personalized instruction tailored to your learning style and goals',
+        features: [
+          'Flexible scheduling',
+          'Customized curriculum',
+          'Focus on your specific needs'
+        ]
+      },
+      group: {
+        title: 'Group Classes',
+        description: 'Learn with others in an interactive environment',
+        features: [
+          'Small group sizes (4-6 students)',
+          'Regular scheduled sessions',
+          'Practice speaking with peers'
+        ]
+      }
+    }
+  }
 };
 
 export const defaultFormData = {
