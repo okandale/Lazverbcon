@@ -67,9 +67,9 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
                 'S1_Singular': 'u',
                 'S2_Singular': 'u',
                 'S3_Singular': 'u',
-                'S1_Plural': 'es',
-                'S2_Plural': 'es',
-                'S3_Plural': 'es'
+                'S1_Plural': 'ey' if region == "AŞ" else 'es',
+                'S2_Plural': 'ey' if region == "AŞ" else 'es',
+                'S3_Plural': 'ey' if region == "AŞ" else 'es'
             }
 
             # Extract the preverb from the infinitive if it exists
@@ -279,7 +279,7 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
                     suffix = 'it'
                 elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
                     suffix = 'u'
-                elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural', 'S3_Singular'] and obj in ('O3_Singular', 'O3_Plural'):
+                elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural', 'S3_Singular'] and (obj in ('O3_Singular', 'O3_Plural') or obj is None):
                     suffix = 'ey' if region in ('AŞ') else 'es'
                 else:
                     suffix = suffixes[subject]
