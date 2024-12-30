@@ -29,15 +29,14 @@ const Classes = () => {
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">{t.title}</h2>
         
-        <p className="text-gray-600 mb-6">
-          {t.startDate}
-        </p>
-        
         <div className="space-y-6">
           <div className="border-b pb-4">
             <h3 className="text-xl font-semibold text-gray-800 mb-2">
               {t.individual.title}
             </h3>
+            <div className="text-gray-700 mb-3 bg-blue-50 p-3 rounded whitespace-pre-line">
+              {t.individual.schedule}
+            </div>
             <p className="text-gray-600 mb-2">
               {t.individual.description}
             </p>
@@ -52,6 +51,9 @@ const Classes = () => {
             <h3 className="text-xl font-semibold text-gray-800 mb-2">
               {t.group.title}
             </h3>
+            <div className="text-gray-700 mb-3 bg-blue-50 p-3 rounded whitespace-pre-line">
+              {t.group.schedule}
+            </div>
             <p className="text-gray-600 mb-2">
               {t.group.description}
             </p>
