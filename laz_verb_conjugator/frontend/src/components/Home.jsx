@@ -67,7 +67,7 @@ const HomePage = () => {
         </Link>
 
         <a 
-          href="https://www.patreon.com/" 
+          href="https://buymeacoffee.com/" 
           target="_blank" 
           rel="noopener noreferrer"
           className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"

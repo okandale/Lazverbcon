@@ -29,6 +29,10 @@ const Classes = () => {
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">{t.title}</h2>
         
+        <p className="text-gray-600 mb-6">
+          {t.startDate}
+        </p>
+        
         <div className="space-y-6">
           <div className="border-b pb-4">
             <h3 className="text-xl font-semibold text-gray-800 mb-2">
@@ -56,6 +60,17 @@ const Classes = () => {
                 <li key={index}>{feature}</li>
               ))}
             </ul>
+          </div>
+
+          <div className="flex justify-center pt-4">
+            <a            
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeK3GLB2ucNw758KtkRvOXcKsbBhdFUM1aU7TPosO2pFpj2GQ/viewform?usp=header"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xl py-4 px-8 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+            >
+              {translations[language].signUpbutton}
+            </a>
           </div>
         </div>
       </div>

@@ -96,15 +96,15 @@ export const translations = {
       description: 'Lazca fiilleri tüm zaman ve kiplerde çekimleyin'
     },
     classesCard: {
-      title: 'Lazca Dersleri',
-      description: 'Deneyimli eğitmenlerle canlı çevrimiçi Lazca dersleri'
+      title: 'Lazca Atölyeler',
+      description: 'Diğer öğrencilerle birlikte canlı çevrimiçi Lazca gruplarına katılın.'
     },
     verbListCard: {
       title: 'Fiil Listesi',
       description: 'Kapsamlı Lazca fiil listesine göz atın'
     },
     patronCard: {
-      title: 'Patreon\'da Destekleyin',
+      title: 'Bizi Destekleyin',
       description: 'Daha fazla Lazca öğrenme kaynağı oluşturmamıza yardımcı olun'
     },
     aboutTitle: 'Hakkımızda',
@@ -114,25 +114,41 @@ export const translations = {
       mission: 'Misyonumuz',
       missionText: 'Amacımız, kaliteli araçlar ve kaynaklar sunarak Lazca öğrenmeyi daha erişilebilir ve keyifli hale getirmektir.'
     },
-    classesTitle: 'Lazca Dersler',
+    signUpbutton: 'Kayıt Ol',
+    classesTitle: 'Lazca Atölyeler',
     classTypes: {
-      title: 'Mevcut Ders Türleri',
+      title: 'Mevcut Atölyeler',
+      startDate: 'Sınıflar 30 Ocak\'ta başlayacak ve her hafta 20:00 - 21:00 saatleri arasında 12 hafta boyunca devam edecek. Talep edilirse daha sonra uzatılabilir.',
       individual: {
-        title: 'Birebir Dersler',
-        description: 'Öğrenme stilinize ve hedeflerinize göre özelleştirilmiş eğitim',
+        title: 'Başlangıç Seviye',
+        description: 'Bu seviyede öğrenciler, temel selamlaşmalar, soru sorma, kendini tanıtma, ve sayılar gibi basit konularla iletişim kurmayı öğrenir. Yönelme, iyelik ve ergatif fiil yapıları ile temel dilbilgisi becerilerini geliştirmeleri amaçlanmaktadır. Dil bilgisi çok sınırlı olan öğrenciler için idealdir. Bu atölyede şunları öğreneceksiniz: ',
         features: [
-          'Esnek programlama',
-          'Özelleştirilmiş müfredat',
-          'Özel ihtiyaçlarınıza odaklanma'
+          'Yönelme (datif) fiilleri',
+          'iyelik (-şi)',
+          'ergatif fiiller',
+          'çoğul biçimleri',
+          'temel sıfatlar',
+          'Sayılar',
+          'vücut bölümleri',
+          'aile terimleri',
+          'iyelik ekli basit cümleler'
         ]
       },
       group: {
-        title: 'Grup Dersleri',
-        description: 'İnteraktif bir ortamda başkalarıyla birlikte öğrenin',
+        title: 'Üst Başlangıç Seviye',
+        description: 'Bu seviyede öğrencilerin, geçmiş zaman, emir kipi ve şart-cümleleri kullanarak daha akıcı konuşmalar yapmaları, kıyafetler, yiyecekler, doğum günü ve coğrafya gibi konularda kendilerini ifade etmeleri hedeflenmektedir. Şehirde yön sorma ve hava durumu gibi günlük konularda daha rahat iletişim kurmaları beklenir. Bu atölyede şunları öğreneceksiniz:',
         features: [
-          'Küçük grup boyutları (4-6 öğrenci)',
-          'Düzenli programlanmış oturumlar',
-          'Akranlarla konuşma pratiği'
+          'Geçmiş zaman',
+          'Çoğul (tekrarlama)',
+          'Emir kipi',
+          'Şart-sonuç cümleleri',
+          'Ergatif fiillerin gelecek zamanı',
+          'Kıyafetler',
+          'Meyveler',
+          'Doğum günü terimleri',
+          'Coğrafya',
+          'Hava durumu',
+          'Şehirdeki binalar'
         ]
       }
     }
@@ -190,19 +206,19 @@ export const translations = {
     },
     conjugatorCard: {
       title: 'Verb Conjugator',
-      description: 'Practice conjugating Laz verbs in all tenses and moods'
+      description: 'Practice conjugating Laz verbs in all tenses and moods.'
     },
     classesCard: {
-      title: 'Laz Classes',
-      description: 'Join live online Laz language classes with experienced tutors'
+      title: 'Laz Workshops',
+      description: 'Join live online Laz language groups with other students.'
     },
     verbListCard: {
       title: 'Verb List',
-      description: 'Browse our comprehensive list of Laz verbs'
+      description: 'Browse our comprehensive list of Laz verbs.'
     },
     patronCard: {
-      title: 'Support on Patreon',
-      description: 'Help us create more Laz language learning resources'
+      title: 'Support Us',
+      description: 'Help us create more Laz language learning resources.'
     },
     aboutTitle: 'About Us',
     aboutContent: {
@@ -211,25 +227,42 @@ export const translations = {
       mission: 'Our Mission',
       missionText: 'We aim to make Laz language learning more accessible and enjoyable by providing high-quality tools and resources.'
     },
-    classesTitle: 'Laz Classes',
+    signUpbutton: 'Sign Up',
+    classesTitle: 'Laz Workshops',
     classTypes: {
-      title: 'Available Class Types',
+      title: 'Available Workshops',
+      startDate: 'Courses will begin on January 30th and will be held weekly from 8:00 PM to 9:00 PM (UTC+3, Istanbul Time) for 12 weeks. Extensions may be available upon request.',      
       individual: {
-        title: 'One-on-One Lessons',
-        description: 'Personalized instruction tailored to your learning style and goals',
+        title: 'Beginner Groups',
+        description: 'At this level, students learn to communicate on simple topics such as basic greetings, asking questions, introducing themselves, and numbers. The aim is to develop basic grammar skills with structures like dative, possessive, and ergative verb forms. Ideal for students who have very limited knowledge of the language. In this workshop, you will learn:',
         features: [
-          'Flexible scheduling',
-          'Customized curriculum',
-          'Focus on your specific needs'
+          'Dative verbs',
+          'Possessive (-şi)',
+          'Ergative verbs',
+          'Plural forms',
+          'Basic adjectives',
+          'Numbers',
+          'Body parts',
+          'Family terms',
+          'Simple sentences with possessive suffixes'
+          
         ]
       },
       group: {
-        title: 'Group Classes',
-        description: 'Learn with others in an interactive environment',
+        title: 'Upper Beginner Groups',
+        description: 'At this level, students are expected to hold more fluent conversations using past tense, imperative mood, and conditional sentences. The goal is to express themselves on topics such as clothes, food, birthdays, and geography. They are also expected to communicate more comfortably on daily topics like asking for directions in the city and the weather.',
         features: [
-          'Small group sizes (4-6 students)',
-          'Regular scheduled sessions',
-          'Practice speaking with peers'
+          'Past tense',
+          'Plural (repetition)',
+          'Imperative mood',
+          'Conditional-result sentences',
+          'Future tense of ergative verbs',
+          'Clothes',
+          'Fruits',
+          'Birthday terms',
+          'Geography',
+          'Weather',
+          'Buildings in the city'
         ]
       }
     }
