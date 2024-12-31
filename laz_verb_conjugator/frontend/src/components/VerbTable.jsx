@@ -18,7 +18,7 @@ const VerbTable = ({ verbs, language }) => {
   };
 
   const handleVerbClick = (verb) => {
-    navigate('/', { 
+    navigate('/conjugator', { 
       state: { 
         infinitive: verb['Laz Infinitive']
       }
