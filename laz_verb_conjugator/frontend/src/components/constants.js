@@ -99,6 +99,10 @@ export const translations = {
       title: 'Lazca Atölyeler',
       description: 'Diğer öğrencilerle birlikte canlı çevrimiçi Lazca gruplarına katılın.'
     },
+    keyboardCard: {
+      title: 'Lazca Klavye',
+      description: 'Lazca karakterleri nasıl yazacağınızı öğrenin'
+    },
     verbListCard: {
       title: 'Fiil Listesi',
       description: 'Kapsamlı Lazca fiil listesine göz atın'
@@ -118,6 +122,7 @@ export const translations = {
     classesTitle: 'Lazca Atölyeler',
     classTypes: {
       title: 'Mevcut Atölyeler',
+      teacherDescription: 'Modern Diller alanında Londra Üniversitesi Goldsmiths\'tan aldığım öğretmenlik diplomasıyla, Laz Enstitüsü\'nde onların öğrenci merkezli ve anlamlı ders metodolojilerini uyguladım. Yaklaşımım, miras öğrenenlere tehdit altındaki bir dili öğretmek için kültürel farkındalığı entegre eder ve mutlak başlangıç seviyesindeki öğrencilere bile etkili destek sağlar. Öğrenciler, oyunlu yöntemlerle dilbilgisi ve kelime dağarcığına tanıtılır ve öğrenme süreci boyunca aktif olarak katılmaları teşvik edilir.',
       individual: {
         title: 'Başlangıç Seviye',
         schedule: '30 Ocak\'tan itibaren - Her hafta Çarşamba 20:00 - 21:00 saatleri arasında 12 hafta boyunca',
@@ -213,6 +218,10 @@ export const translations = {
       title: 'Laz Workshops',
       description: 'Join live online Laz language groups with other students.'
     },
+    keyboardCard: {
+      title: 'Laz Keyboard',
+      description: 'Learn how to type Laz characters'
+    },
     verbListCard: {
       title: 'Verb List',
       description: 'Browse our comprehensive list of Laz verbs.'
@@ -232,6 +241,7 @@ export const translations = {
     classesTitle: 'Laz Workshops',
     classTypes: {
       title: 'Available Workshops',
+      teacherDescription: 'With a teaching degree in Modern Languages from Goldsmiths, University of London, I have applied their student-centered, meaningful lesson methodologies at the Laz Institute. My approach integrates cultural awareness to teach an endangered language to heritage learners, effectively supporting even absolute beginners. Students are introduced to grammar and vocabulary through playful methods and are encouraged to engage actively throughout the learning process.',
       individual: {
         title: 'Beginner Groups',
         schedule: 'Starting January 30th - Weekly classes from 4:00 PM to 5:00 PM (UTC+3, Istanbul Time) for 12 weeks',

@@ -29,6 +29,12 @@ const Classes = () => {
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">{t.title}</h2>
         
+        <div className="bg-gray-50 rounded-lg p-6 mb-6">
+          <p className="text-gray-700 leading-relaxed">
+            {t.teacherDescription}
+          </p>
+        </div>
+        
         <div className="space-y-6">
           <div className="border-b pb-4">
             <h3 className="text-xl font-bold text-gray-800 mb-2">

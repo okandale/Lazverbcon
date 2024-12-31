@@ -54,17 +54,19 @@ const HomePage = () => {
           </p>
         </Link>
 
-        <Link 
-          to="/verbs" 
+        <a 
+          href="https://docs.google.com/document/d/1Tl0z-AFTk9S2usQ-ZLIEnm_wM9-oo8zQR0y3oeX4ZRg/edit?usp=drive_link"
+          target="_blank"
+          rel="noopener noreferrer"
           className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
         >
           <h2 className="text-2xl font-bold text-gray-800 mb-3">
-            {t.verbListCard.title}
+            {t.keyboardCard.title}
           </h2>
           <p className="text-gray-600">
-            {t.verbListCard.description}
+            {t.keyboardCard.description}
           </p>
-        </Link>
+        </a>
 
         <a 
           href="https://buymeacoffee.com/lazuri.org" 
