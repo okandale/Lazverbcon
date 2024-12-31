@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Home } from 'lucide-react';
+import { Home, Clock } from 'lucide-react';
 import { translations, getStoredLanguage, setStoredLanguage } from './constants';
 import LanguageToggle from './ui/LanguageToggle';
 
@@ -31,45 +31,51 @@ const Classes = () => {
         
         <div className="space-y-6">
           <div className="border-b pb-4">
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+            <h3 className="text-xl font-bold text-gray-800 mb-2">
               {t.individual.title}
             </h3>
-            <div className="text-gray-700 mb-3 bg-blue-50 p-3 rounded whitespace-pre-line">
-              {t.individual.schedule}
+            <div className="flex items-center gap-2 mb-3">
+              <Clock className="w-5 h-5 text-gray-500 flex-shrink-0" />
+              <div className="bg-gray-100 p-3 rounded text-gray-700 w-full whitespace-pre-line font-medium">
+                {t.individual.schedule}
+              </div>
             </div>
             <p className="text-gray-600 mb-2">
               {t.individual.description}
             </p>
-            <ul className="list-disc list-inside text-gray-600 ml-4">
+            <ul className="list-disc list-inside text-gray-600 ml-4 space-y-1">
               {t.individual.features.map((feature, index) => (
-                <li key={index}>{feature}</li>
+                <li key={index} className="font-medium">{feature}</li>
               ))}
             </ul>
           </div>
 
           <div className="border-b pb-4">
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+            <h3 className="text-xl font-bold text-gray-800 mb-2">
               {t.group.title}
             </h3>
-            <div className="text-gray-700 mb-3 bg-blue-50 p-3 rounded whitespace-pre-line">
-              {t.group.schedule}
+            <div className="flex items-center gap-2 mb-3">
+              <Clock className="w-5 h-5 text-gray-500 flex-shrink-0" />
+              <div className="bg-gray-100 p-3 rounded text-gray-700 w-full whitespace-pre-line font-medium">
+                {t.group.schedule}
+              </div>
             </div>
             <p className="text-gray-600 mb-2">
               {t.group.description}
             </p>
-            <ul className="list-disc list-inside text-gray-600 ml-4">
+            <ul className="list-disc list-inside text-gray-600 ml-4 space-y-1">
               {t.group.features.map((feature, index) => (
-                <li key={index}>{feature}</li>
+                <li key={index} className="font-medium">{feature}</li>
               ))}
             </ul>
           </div>
 
           <div className="flex justify-center pt-4">
             <a            
-              href="https://docs.google.com/forms/d/e/1FAIpQLSeK3GLB2ucNw758KtkRvOXcKsbBhdFUM1aU7TPosO2pFpj2GQ/viewform?usp=header"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeK3GLB2ucNw758KtkRvOXcKsbBhdFUM1aU7TPosO2pFpj2GQ/viewform"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xl py-4 px-8 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xl py-4 px-8 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
             >
               {translations[language].signUpbutton}
             </a>
