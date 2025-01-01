@@ -80,95 +80,97 @@ const VerbConjugator = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      {/* Header section with language toggle */}
-      <div className="flex justify-between items-center mb-8 pt-2">
-        <Link to="/" className="text-gray-600 hover:text-gray-800">
-          <Home size={24} />
-        </Link>
-        <LanguageToggle language={language} onToggle={toggleLanguage} />
-      </div>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        style={{
-          top: '1rem',
-          right: '1rem',
-        }}
-      />
-      
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-        {translations[language].title}
-      </h1>
-
-      <div className="text-center mb-4">
-        <p className="text-gray-700 text-sm">
-          {translations[language].verbListMessage}{' '}
-          <Link to="/verbs" className="text-blue-500 hover:underline">
-            {translations[language].verbListLinkText}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">  
+      <div className="max-w-2xl mx-auto p-4">
+        {/* Header section with language toggle */}
+        <div className="flex justify-between items-center mb-8 pt-2">
+          <Link to="/" className="text-gray-600 hover:text-gray-800">
+            <Home size={24} />
           </Link>
-        </p>
-      </div>
+          <LanguageToggle language={language} onToggle={toggleLanguage} />
+        </div>
 
-      <form onSubmit={handleSubmit}>
-        <FormSection
-          language={language}
-          formData={formData}
-          setFormData={setFormData}
-          setResults={setResults}
-          onSubmit={handleSubmit}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          style={{
+            top: '1rem',
+            right: '1rem',
+          }}
         />
-      </form>
+        
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          {translations[language].title}
+        </h1>
 
-      <Results 
-        results={results}
-        language={language}
-        translations={translations}
-      />
-      
-      <div className="text-center mt-6">
-        <p className="text-gray-700 text-sm">
-          {translations[language].betaMessage}{' '}
-          <button
-            onClick={() => setFeedbackVisible(true)}
-            className="text-blue-500 hover:underline"
-          >
-            {translations[language].feedbackLinkText}
-          </button>
-          .
-        </p>
+        <div className="text-center mb-4">
+          <p className="text-gray-700 text-sm">
+            {translations[language].verbListMessage}{' '}
+            <Link to="/verbs" className="text-blue-500 hover:underline">
+              {translations[language].verbListLinkText}
+            </Link>
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          <FormSection
+            language={language}
+            formData={formData}
+            setFormData={setFormData}
+            setResults={setResults}
+            onSubmit={handleSubmit}
+          />
+        </form>
+
+        <Results 
+          results={results}
+          language={language}
+          translations={translations}
+        />
+        
+        <div className="text-center mt-6">
+          <p className="text-gray-700 text-sm">
+            {translations[language].betaMessage}{' '}
+            <button
+              onClick={() => setFeedbackVisible(true)}
+              className="text-blue-500 hover:underline"
+            >
+              {translations[language].feedbackLinkText}
+            </button>
+            .
+          </p>
+        </div>
+
+        <div className="text-center mt-6">
+          <p className="text-gray-700 text-sm italic">
+            {translations[language].thankYouNote.prefix}
+            <a 
+              href={translations[language].thankYouNote.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              {translations[language].thankYouNote.linkText}
+            </a>
+            {translations[language].thankYouNote.suffix}
+          </p>
+        </div>
+
+        <FeedbackForm
+          isVisible={isFeedbackVisible}
+          onClose={() => setFeedbackVisible(false)}
+          language={language}
+          translations={translations}
+        />
       </div>
-
-      <div className="text-center mt-6">
-        <p className="text-gray-700 text-sm italic">
-          {translations[language].thankYouNote.prefix}
-          <a 
-            href={translations[language].thankYouNote.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 hover:underline"
-          >
-            {translations[language].thankYouNote.linkText}
-          </a>
-          {translations[language].thankYouNote.suffix}
-        </p>
-      </div>
-
-      <FeedbackForm
-        isVisible={isFeedbackVisible}
-        onClose={() => setFeedbackVisible(false)}
-        language={language}
-        translations={translations}
-      />
     </div>
   );
 };
