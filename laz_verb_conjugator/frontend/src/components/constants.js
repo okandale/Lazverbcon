@@ -54,7 +54,7 @@ export const translations = {
     causative: 'Ettirgen',
     negImperative: 'Olumsuz Emir',
     optative: 'İstek Kipi',
-    conjugate: 'Çek',
+    conjugate: 'Çekimle',
     reset: 'Sıfırla',
     results: 'Sonuçlar',
     betaMessage: 'Bazı çekimler dilbilgisel olarak doğru olabilir ancak yaygın olarak kullanılmaz. Emin değilseniz, köyünüz için doğru çekimi öğrenmek adına büyüklerinize danışın. Hata görürseniz lütfen buradan görüşlerinizi iletin:',
