@@ -83,6 +83,11 @@ const HomePage = () => {
             </p>
           </a>
         </div>
+        <div className="text-center mt-6">
+          <p className="text-gray-700 text-sm">
+            {translations[language].info}{' '}
+          </p>
+        </div>
       </div>
     </div>
   );
