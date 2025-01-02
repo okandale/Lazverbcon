@@ -94,7 +94,7 @@ export const translations = {
     info: 'Herhangi bir sorunuz veya talebiniz için lütfen info@lazuri.org adresine e-posta gönderin.',
     conjugatorCard: {
       title: 'Fiil Çekimleyici',
-      description: 'Lazca fiilleri tüm zaman ve kiplerde çekimleyin'
+      description: 'Lazca fiilleri çoğu zaman ve kiplerde çekimleyin'
     },
     classesCard: {
       title: 'Lazca Atölyeler',
@@ -214,7 +214,7 @@ export const translations = {
     info: 'For any questions or inquiries, please email info@lazuri.org.',
     conjugatorCard: {
       title: 'Verb Conjugator',
-      description: 'Practice conjugating Laz verbs in all tenses and moods.'
+      description: 'Practice conjugating Laz verbs in most tenses and moods.'
     },
     classesCard: {
       title: 'Laz Workshops',
