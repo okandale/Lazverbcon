@@ -94,7 +94,7 @@ export const translations = {
     info:{
       prefix: 'Herhangi bir sorunuz veya talebiniz için lütfen',
       linkText: 'info@lazuri.org',
-      suffix: 'adresine e-posta gönderin.',
+      suffix: ' adresine e-posta gönderin.',
       url: 'info@lazuri.org',
     },  
     conjugatorCard: {
