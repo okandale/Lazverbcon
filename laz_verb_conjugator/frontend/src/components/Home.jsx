@@ -85,7 +85,14 @@ const HomePage = () => {
         </div>
         <div className="text-center mt-6">
           <p className="text-gray-700 text-sm">
-            {translations[language].info}{' '}
+            {t.info.prefix}{' '}
+            <a 
+              href={`mailto:${t.info.url}`}
+              className="text-blue-600 hover:text-blue-800 transition-colors"
+            >
+              {t.info.linkText}
+            </a>
+            {t.info.suffix}
           </p>
         </div>
       </div>
