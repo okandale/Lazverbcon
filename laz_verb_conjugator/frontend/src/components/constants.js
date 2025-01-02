@@ -124,6 +124,7 @@ export const translations = {
     classTypes: {
       title: 'Mevcut Atölyeler',
       teacherDescription: 'Modern Diller alanında Londra Üniversitesi Goldsmiths\'tan aldığım öğretmenlik diplomasıyla, Laz Enstitüsü\'nde onların öğrenci merkezli ve anlamlı ders metodolojilerini uyguladım. Yaklaşımım, miras öğrenenlere tehdit altındaki bir dili öğretmek için kültürel farkındalığı entegre eder ve mutlak başlangıç seviyesindeki öğrencilere bile etkili destek sağlar. Öğrenciler, oyunlu yöntemlerle dilbilgisi ve kelime dağarcığına tanıtılır ve öğrenme süreci boyunca aktif olarak katılmaları teşvik edilir. Herhangi bir sorunuz veya talebiniz için lütfen info@lazuri.org adresine e-posta gönderin.',
+      cost: 'Tüm atölyeler ücretsizdir.',
       individual: {
         title: 'Başlangıç Seviye',
         schedule: '30 Ocak\'tan itibaren - Her hafta Çarşamba 20:00 - 21:00 saatleri arasında 12 hafta boyunca',
@@ -244,6 +245,7 @@ export const translations = {
     classTypes: {
       title: 'Available Workshops',
       teacherDescription: 'With a teaching degree in Modern Languages from Goldsmiths, University of London, I have applied their student-centered, meaningful lesson methodologies at the Laz Institute. My approach integrates cultural awareness to teach an endangered language to heritage learners, effectively supporting even absolute beginners. Students are introduced to grammar and vocabulary through playful methods and are encouraged to engage actively throughout the learning process. For any questions or inquiries, please email info@lazuri.org.',
+      cost: 'All workshops are free of charge.',
       individual: {
         title: 'Beginner Groups',
         schedule: 'Starting January 30th - Weekly classes from 4:00 PM to 5:00 PM (UTC+3, Istanbul Time) for 12 weeks',
