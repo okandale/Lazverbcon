@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Home, Clock } from 'lucide-react';
+import { Home, Clock, DollarSign } from 'lucide-react';
 import { translations, getStoredLanguage, setStoredLanguage } from './constants';
 import LanguageToggle from './ui/LanguageToggle';
 
@@ -40,13 +40,20 @@ const Classes = () => {
             {t.title}
           </h2>
           
-        {/* Teacher Description */}
-        <div className="pb-4 mb-8 border-b border-gray-300">
-          <p className="text-gray-700 leading-relaxed italic">
-            {t.teacherDescription}
-          </p>
-        </div>
+          {/* Cost Information - New Addition */}
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 flex items-center">
+            <DollarSign className="w-6 h-6 text-blue-500 mr-3 flex-shrink-0" />
+            <p className="text-lg font-semibold text-blue-900">
+              {t.cost}
+            </p>
+          </div>
 
+          {/* Teacher Description */}
+          <div className="pb-4 mb-8 border-b border-gray-300">
+            <p className="text-gray-700 leading-relaxed italic">
+              {t.teacherDescription}
+            </p>
+          </div>
           
           {/* Class Types */}
           <div className="space-y-8">
