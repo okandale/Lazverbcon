@@ -91,7 +91,12 @@ export const translations = {
       about: 'Hakkında',
       verbs: 'Fiiller'
     },
-    info: 'Herhangi bir sorunuz veya talebiniz için lütfen info@lazuri.org adresine e-posta gönderin.',
+    info:{
+      prefix: 'Herhangi bir sorunuz veya talebiniz için lütfen',
+      linkText: 'info@lazuri.org',
+      suffix: 'adresine e-posta gönderin.',
+      url: 'info@lazuri.org',
+    },  
     conjugatorCard: {
       title: 'Fiil Çekimleyici',
       description: 'Lazca fiilleri çoğu zaman ve kiplerde çekimleyin'
@@ -214,7 +219,12 @@ export const translations = {
       about: 'About',
       verbs: 'Verbs'
     },
-    info: 'For any questions or inquiries, please email info@lazuri.org.',
+    info:{
+      prefix: 'For questions or inquiries, please email',
+      linkText: 'info@lazuri.org',
+      suffix: '.',
+      url: 'info@lazuri.org',
+    },
     conjugatorCard: {
       title: 'Verb Conjugator',
       description: 'Practice conjugating Laz verbs in most tenses and moods.'
@@ -246,7 +256,7 @@ export const translations = {
     classesTitle: 'Laz Workshops',
     classTypes: {
       title: 'Available Workshops',
-      teacherDescription: 'With a teaching degree in Modern Languages from Goldsmiths, University of London, I have applied their student-centered, meaningful lesson methodologies at the Laz Institute. My approach integrates cultural awareness to teach an endangered language to heritage learners, effectively supporting even absolute beginners. Students are introduced to grammar and vocabulary through playful methods and are encouraged to engage actively throughout the learning process. For any questions or inquiries, please email info@lazuri.org.',
+      teacherDescription: 'With a teaching degree in Modern Languages from Goldsmiths, University of London, I have applied their student-centered, meaningful lesson methodologies at the Laz Institute. My approach integrates cultural awareness to teach an endangered language to heritage learners, effectively supporting even absolute beginners. Students are introduced to grammar and vocabulary through playful methods and are encouraged to engage actively throughout the learning process. For questions or inquiries, please email info@lazuri.org.',
       cost: 'All workshops are free of charge.',
       individual: {
         title: 'Beginner Groups',
