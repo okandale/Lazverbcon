@@ -128,6 +128,7 @@ export const translations = {
       individual: {
         title: 'Başlangıç Seviye',
         schedule: '30 Ocak\'tan itibaren - Her hafta Çarşamba 20:00 - 21:00 saatleri arasında 12 hafta boyunca',
+        platform: 'Zoom',
         description: 'Bu seviyede öğrenciler, temel selamlaşmalar, soru sorma, kendini tanıtma, ve sayılar gibi basit konularla iletişim kurmayı öğrenir. Yönelme, iyelik ve ergatif fiil yapıları ile temel dilbilgisi becerilerini geliştirmeleri amaçlanmaktadır. Dil bilgisi çok sınırlı olan öğrenciler için idealdir. Bu atölyede şunları öğreneceksiniz: ',
         features: [
           'Yönelme (datif) fiilleri',
@@ -144,6 +145,7 @@ export const translations = {
       group: {
         title: 'Üst Başlangıç Seviye',
         schedule: '2 Şubat\'tan itibaren - Her hafta Pazar 17:00 - 18:00 saatleri arasında 12 hafta boyunca',
+        platform: 'Zoom',
         description: 'Bu seviyede öğrencilerin, geçmiş zaman, emir kipi ve şart-cümleleri kullanarak daha akıcı konuşmalar yapmaları, kıyafetler, yiyecekler, doğum günü ve coğrafya gibi konularda kendilerini ifade etmeleri hedeflenmektedir. Şehirde yön sorma ve hava durumu gibi günlük konularda daha rahat iletişim kurmaları beklenir. Bu atölyede şunları öğreneceksiniz:',
         features: [
           'Geçmiş zaman',
@@ -249,6 +251,7 @@ export const translations = {
       individual: {
         title: 'Beginner Groups',
         schedule: 'Starting January 30th - Weekly classes from 4:00 PM to 5:00 PM (UTC+3, Istanbul Time) for 12 weeks',
+        platform: 'Zoom',
         description: 'At this level, students learn to communicate on simple topics such as basic greetings, asking questions, introducing themselves, and numbers. The aim is to develop basic grammar skills with structures like dative, possessive, and ergative verb forms. Ideal for students who have very limited knowledge of the language. In this workshop, you will learn:',
         features: [
           'Dative verbs',
@@ -267,6 +270,7 @@ export const translations = {
         title: 'Upper Beginner Groups',
         description: 'At this level, students are expected to hold more fluent conversations using past tense, imperative mood, and conditional sentences. The goal is to express themselves on topics such as clothes, food, birthdays, and geography. They are also expected to communicate more comfortably on daily topics like asking for directions in the city and the weather.',
         schedule: 'Starting February 2nd Sunday from 5:00 PM - 6:00 PM, for 12 weeks.',
+        platform: 'Zoom',
         features: [
           'Past tense',
           'Plural (repetition)',

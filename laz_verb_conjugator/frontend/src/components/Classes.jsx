@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Home, Clock, DollarSign } from 'lucide-react';
+import { Home, Clock, DollarSign, Video } from 'lucide-react';
 import { translations, getStoredLanguage, setStoredLanguage } from './constants';
 import LanguageToggle from './ui/LanguageToggle';
 
@@ -40,7 +40,7 @@ const Classes = () => {
             {t.title}
           </h2>
           
-          {/* Cost Information - New Addition */}
+          {/* Cost Information */}
           <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 flex items-center">
             <DollarSign className="w-6 h-6 text-blue-500 mr-3 flex-shrink-0" />
             <p className="text-lg font-semibold text-blue-900">
@@ -63,10 +63,18 @@ const Classes = () => {
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
                 {t.individual.title}
               </h3>
-              <div className="flex items-center gap-2 mb-3">
-                <Clock className="w-5 h-5 text-gray-500 flex-shrink-0" />
-                <div className="bg-gray-100 p-3 rounded text-gray-700 w-full whitespace-pre-line font-medium">
-                  {t.individual.schedule}
+              <div className="space-y-2 mb-3">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                  <div className="bg-gray-100 p-3 rounded text-gray-700 w-full whitespace-pre-line font-medium">
+                    {t.individual.schedule}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Video className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                  <div className="bg-gray-100 p-3 rounded text-gray-700 w-full font-medium">
+                    {t.individual.platform}
+                  </div>
                 </div>
               </div>
               <p className="text-gray-600 mb-2">
@@ -84,10 +92,18 @@ const Classes = () => {
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
                 {t.group.title}
               </h3>
-              <div className="flex items-center gap-2 mb-3">
-                <Clock className="w-5 h-5 text-gray-500 flex-shrink-0" />
-                <div className="bg-gray-100 p-3 rounded text-gray-700 w-full whitespace-pre-line font-medium">
-                  {t.group.schedule}
+              <div className="space-y-2 mb-3">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                  <div className="bg-gray-100 p-3 rounded text-gray-700 w-full whitespace-pre-line font-medium">
+                    {t.group.schedule}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Video className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                  <div className="bg-gray-100 p-3 rounded text-gray-700 w-full font-medium">
+                    {t.group.platform}
+                  </div>
                 </div>
               </div>
               <p className="text-gray-600 mb-2">
