@@ -132,7 +132,7 @@ export const translations = {
       cost: 'Tüm atölyeler ücretsizdir.',
       individual: {
         title: 'Başlangıç Seviye',
-        schedule: '30 Ocak\'tan itibaren - Her hafta Çarşamba 20:00 - 21:00 saatleri arasında 12 hafta boyunca',
+        schedule: '29 Ocak\'tan itibaren - Her hafta Çarşamba 20:00 - 21:00 saatleri arasında 12 hafta boyunca',
         platform: 'Zoom',
         description: 'Bu seviyede öğrenciler, temel selamlaşmalar, soru sorma, kendini tanıtma, ve sayılar gibi basit konularla iletişim kurmayı öğrenir. Yönelme, iyelik ve ergatif fiil yapıları ile temel dilbilgisi becerilerini geliştirmeleri amaçlanmaktadır. Dil bilgisi çok sınırlı olan öğrenciler için idealdir. Bu atölyede şunları öğreneceksiniz: ',
         features: [
@@ -260,7 +260,7 @@ export const translations = {
       cost: 'All workshops are free of charge.',
       individual: {
         title: 'Beginner Groups',
-        schedule: 'Starting January 30th - Weekly classes from 8:00 PM to 9:00 PM (UTC+3, Istanbul Time) for 12 weeks',
+        schedule: 'Starting January 29th - Weekly classes from 8:00 PM to 9:00 PM (UTC+3, Istanbul Time) for 12 weeks',
         platform: 'Zoom',
         description: 'At this level, students learn to communicate on simple topics such as basic greetings, asking questions, introducing themselves, and numbers. The aim is to develop basic grammar skills with structures like dative, possessive, and ergative verb forms. Ideal for students who have very limited knowledge of the language. In this workshop, you will learn:',
         features: [
