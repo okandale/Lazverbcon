@@ -260,7 +260,7 @@ export const translations = {
       cost: 'All workshops are free of charge.',
       individual: {
         title: 'Beginner Groups',
-        schedule: 'Starting January 30th - Weekly classes from 4:00 PM to 5:00 PM (UTC+3, Istanbul Time) for 12 weeks',
+        schedule: 'Starting January 30th - Weekly classes from 8:00 PM to 9:00 PM (UTC+3, Istanbul Time) for 12 weeks',
         platform: 'Zoom',
         description: 'At this level, students learn to communicate on simple topics such as basic greetings, asking questions, introducing themselves, and numbers. The aim is to develop basic grammar skills with structures like dative, possessive, and ergative verb forms. Ideal for students who have very limited knowledge of the language. In this workshop, you will learn:',
         features: [
