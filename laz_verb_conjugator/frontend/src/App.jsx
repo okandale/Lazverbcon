@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/conjugator" element={<VerbConjugator />} />
         <Route path="/verbs" element={<VerbList />} />
-        <Route path="/classes" element={<Classes />} />
+        <Route path="/events" element={<Classes />} />
         <Route path="/about" element={<About />} />
       </Routes>
     </Router>

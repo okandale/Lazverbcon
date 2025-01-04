@@ -44,7 +44,7 @@ const HomePage = () => {
           </Link>
 
           <Link 
-            to="/classes" 
+            to="/events" 
             className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
           >
             <h2 className="text-2xl font-bold text-gray-800 mb-3">
