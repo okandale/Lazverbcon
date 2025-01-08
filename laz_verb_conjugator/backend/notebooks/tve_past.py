@@ -601,7 +601,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 prefix = ''
                 final_root = '' if region in ('AŞ', 'PZ') else 'v' if region in "FA" else 'qv'
             elif infinitive in ('oxenu', 'oxvenu') and subject in ('S3_Singular', 'S3_Plural') and not applicative and not causative:
-                prefix = 'q'
+                prefix = 'q' if region == 'HO' else ''
                 final_root = '' if region in ('AŞ', 'PZ') else 'v' if region in "HO" else 'v'
 
             # Remove the first letter of final_root if it is the same as the last letter of prefix
