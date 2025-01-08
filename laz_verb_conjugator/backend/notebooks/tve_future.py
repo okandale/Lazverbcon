@@ -589,20 +589,16 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             # Determine the final root to use
             final_root = root[:-1] if root.endswith('s') else root
             
-            if infinitive == 'oxenu' and subject in ('S1_Singular', 'S1_Plural') and not applicative and not causative: # oxenu future tense exception
+            if infinitive in (('oxenu', 'oxvenu')) and subject in ('S1_Singular', 'S1_Plural') and not applicative and not causative: # oxenu future tense exception
                 prefix = 'p̌'
                 final_root = ''
-            elif infinitive == 'oxenu' and subject in ('S2_Singular', 'S2_Plural') and not applicative and not causative:
+            elif infinitive in (('oxenu', 'oxvenu')) and subject in ('S2_Singular', 'S2_Plural') and not applicative and not causative:
                 prefix = 'q' if region == "HO" else ''
-                final_root = '' if region in ('AŞ', 'PZ') else 'v'
-
-            elif infinitive == 'oxenu' and subject in ('S3_Plural') and region == "HO" and not applicative and not causative:
-                prefix = 'q'
-                final_root = 'van'
-            
-            elif infinitive == 'oxenu' and subject in ('S3_Singular', 'S3_Plural') and not applicative and not causative:
+                final_root = 'v' if region in ('HO') else ''
+           
+            elif infinitive in (('oxenu', 'oxvenu')) and subject in ('S3_Singular', 'S3_Plural') and not applicative and not causative:
                 prefix = 'q' if region == "HO" else ''
-                final_root = '' if region in ('AŞ', 'PZ') else 'va' if region == "HO" else 'v'
+                final_root = 'v' if region in ('HO') else ''
 
             # Remove the first letter of final_root if it is the same as the last letter of prefix
             if prefix and final_root and prefix[-1] == final_root[0]:
