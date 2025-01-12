@@ -40,9 +40,9 @@ def get_suffixes(tense, region):
             'S1_Singular': 'u',
             'S2_Singular': 'u',
             'S3_Singular': 'u',
-            'S1_Plural': 'es',
-            'S2_Plural': 'es',
-            'S3_Plural': 'es'
+            'S1_Plural': 'ey' if region == "AŞ" else 'es',
+            'S2_Plural': 'ey' if region == "AŞ" else 'es',
+            'S3_Plural': 'ey' if region == "AŞ" else 'es'
         }
     elif tense == 'pastpro':
         suffixes = {
