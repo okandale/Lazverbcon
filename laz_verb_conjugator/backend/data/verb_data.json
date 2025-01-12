@@ -8,7 +8,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to be idle",
     "Turkish Verb": "avare kalmak",
     "": null
   },
@@ -419,7 +419,20 @@
     "Laz Infinitive": "doskidu",
     "Category": "TVM",
     "Laz 3rd Person Singular Present": "doskidur",
-    "Region": "AŞ, PZ, FA, HO",
+    "Region": "FA, HO",
+    "Laz 3rd Person Singular Present Alternative 1": null,
+    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present Alternative 2": null,
+    "Region Alternative 2": null,
+    "English Translation": "to stay",
+    "Turkish Verb": "kalmak",
+    "": null
+  },
+  {
+    "Laz Infinitive": "dosǩudu",
+    "Category": "TVM",
+    "Laz 3rd Person Singular Present": "dosǩudun",
+    "Region": "AŞ, PZ",
     "Laz 3rd Person Singular Present Alternative 1": null,
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
@@ -1815,7 +1828,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to boil",
     "Turkish Verb": "haşlamak, pişmek",
     "": null
   },
@@ -1828,7 +1841,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to be boiled",
     "Turkish Verb": "haşlanmak",
     "": null
   },
@@ -1875,13 +1888,13 @@
     "Laz Infinitive": "ogzalu",
     "Category": "TVM",
     "Laz 3rd Person Singular Present": "igzals",
-    "Region": "HO",
+    "Region": "PZ, AŞ, FA, HO",
     "Laz 3rd Person Singular Present Alternative 1": null,
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
-    "Turkish Verb": "yurumek",
+    "English Translation": "to walk",
+    "Turkish Verb": "yürümek",
     "": null
   },
   {
@@ -2335,7 +2348,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to hurry",
     "Turkish Verb": "acele etmek",
     "": null
   },
@@ -2465,7 +2478,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to clean laundry",
     "Turkish Verb": "çamaşır yıkamak",
     "": null
   },
@@ -2608,8 +2621,8 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
-    "Turkish Verb": "1.silkelemek 2. hafifçe dovmek",
+    "English Translation": "to shake off, to beat lightly",
+    "Turkish Verb": "1.silkelemek 2. hafifçe dövmek",
     "": null
   },
   {
@@ -2621,7 +2634,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to fast",
     "Turkish Verb": "oruç tutmak",
     "": null
   },
@@ -2699,7 +2712,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to be thirsty",
     "Turkish Verb": "susamak",
     "": null
   },
@@ -2790,8 +2803,8 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
-    "Turkish Verb": "vurarak oldurmek",
+    "English Translation": "to kill by shooting",
+    "Turkish Verb": "vurarak öldürmek",
     "": null
   },
   {
@@ -2915,7 +2928,20 @@
     "Laz Infinitive": "oskidu",
     "Category": "TVM",
     "Laz 3rd Person Singular Present": "skidun",
-    "Region": "AŞ, PZ, FA, HO",
+    "Region": "FA, HO",
+    "Laz 3rd Person Singular Present Alternative 1": null,
+    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present Alternative 2": null,
+    "Region Alternative 2": null,
+    "English Translation": "to live",
+    "Turkish Verb": "yaşamak",
+    "": null
+  },
+  {
+    "Laz Infinitive": "osǩudu",
+    "Category": "TVM",
+    "Laz 3rd Person Singular Present": "sǩudun",
+    "Region": "AŞ, PZ",
     "Laz 3rd Person Singular Present Alternative 1": null,
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
@@ -2933,7 +2959,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to drown",
     "Turkish Verb": "boğulmak",
     "": null
   },
@@ -2985,7 +3011,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to get wet",
     "Turkish Verb": "ıslanmak",
     "": null
   },
@@ -3024,7 +3050,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to slip",
     "Turkish Verb": "kaymak",
     "": null
   },
@@ -3050,7 +3076,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to rest",
     "Turkish Verb": "dinlenmek",
     "": null
   },
@@ -3063,7 +3089,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to line up",
     "Turkish Verb": "sıraya dizmek",
     "": null
   },
@@ -3115,7 +3141,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to contaminate",
     "Turkish Verb": "bulaştırmak",
     "": null
   },
@@ -3141,7 +3167,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to carry",
     "Turkish Verb": "taşımak",
     "": null
   },
@@ -3232,7 +3258,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to waive",
     "Turkish Verb": "el sallamak",
     "": null
   },
@@ -3271,7 +3297,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to sow",
     "Turkish Verb": "tohum ekmek",
     "": null
   },
@@ -3349,7 +3375,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to age (female)",
     "Turkish Verb": "kadının yaşlanması",
     "": null
   },
@@ -3362,7 +3388,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to be happy",
     "Turkish Verb": "sevinmek",
     "": null
   },
@@ -3414,7 +3440,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to dry",
     "Turkish Verb": "kurumak",
     "": null
   },
@@ -3567,11 +3593,11 @@
     "Laz 3rd Person Singular Present": "žirups",
     "Region": "HO",
     "Laz 3rd Person Singular Present Alternative 1": "žirems",
-    "Region Alternative 1": "PZ, AŞ, FA",
-    "Laz 3rd Person Singular Present Alternative 2": null,
-    "Region Alternative 2": null,
-    "English Translation": null,
-    "Turkish Verb": "gormek",
+    "Region Alternative 1": "PZ, AŞ",
+    "Laz 3rd Person Singular Present Alternative 2": "žirums",
+    "Region Alternative 2": "FA",
+    "English Translation": "to see",
+    "Turkish Verb": "görmek",
     "": null
   },
   {
@@ -3583,8 +3609,8 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
-    "Turkish Verb": "gormek",
+    "English Translation": "to see",
+    "Turkish Verb": "görmek",
     "": null
   },
   {
@@ -3623,20 +3649,7 @@
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
     "English Translation": "to kill",
-    "Turkish Verb": "oldurmek",
-    "": null
-  },
-  {
-    "Laz Infinitive": "oǯamu",
-    "Category": "TVE",
-    "Laz 3rd Person Singular Present": "ǯamups",
-    "Region": "HO",
-    "Laz 3rd Person Singular Present Alternative 1": null,
-    "Region Alternative 1": null,
-    "Laz 3rd Person Singular Present Alternative 2": null,
-    "Region Alternative 2": null,
-    "English Translation": null,
-    "Turkish Verb": "oldurmek",
+    "Turkish Verb": "öldürmek",
     "": null
   },
   {
@@ -3661,7 +3674,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to water",
     "Turkish Verb": "sulamak",
     "": null
   },
@@ -3687,8 +3700,8 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
-    "Turkish Verb": "sokmek",
+    "English Translation": "to insert",
+    "Turkish Verb": "sokmak",
     "": null
   },
   {
@@ -3791,7 +3804,7 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
+    "English Translation": "to weed out",
     "Turkish Verb": "ayıklamak",
     "": null
   },
