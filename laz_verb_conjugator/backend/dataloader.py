@@ -74,9 +74,11 @@ def load_tve_verbs():
                 present_forms.append(row[key])
         
         # Check for prefixes in any word of the form
-        if any(form and check_prefix_in_words(form, 'co') for form in present_forms):
+        if any(form and (check_prefix_in_words(form, 'co') or check_prefix_in_words(form, 'cu'))
+                for form in present_forms):
             co_verbs.append(infinitive)
-        if any(form and check_prefix_in_words(form, 'gyo') for form in present_forms):
+        if any(form and (check_prefix_in_words(form, 'gyo') or check_prefix_in_words(form, 'gyu'))
+                for form in present_forms):
             gyo_verbs.append(infinitive)
         if any(form and (check_prefix_in_words(form, 'no') or check_prefix_in_words(form, 'nu')) 
                for form in present_forms):
