@@ -194,9 +194,23 @@ def conjugate():
         log_request_response(request_params, error_response, '/api/conjugate')
         return jsonify(error_response), 400
 
+
     has_markers = any(request_params.get(marker) == 'true' 
                      for marker in ['applicative', 'causative', 'optative'])
-    
+
+    # Special check for "gexvamu" or "cexvamu"
+    if infinitive in ('gexvamu', 'cexvamu'):
+        # We specifically want at least one of 'applicative' or 'causative' to be true
+        has_applicative = (request_params.get('applicative') == 'true')
+        has_causative   = (request_params.get('causative') == 'true')
+        
+        if not (has_applicative or has_causative):
+            error_response = {
+                "error": "This verb requires a marker (applicative or causative)/bu fiile uygulamalı veya ettirgen belirteci gerekir."
+            }
+            log_request_response(request_params, error_response, '/api/conjugate')
+            return jsonify(error_response), 400
+
     # Check verb existence in all types
     exists_in_ivd, exists_in_tve, exists_in_tvm, exists_in_tvm_tve = check_verb_existence(infinitive, tense_modules)
     
