@@ -180,7 +180,11 @@ def conjugate():
     request_params['infinitive'] = infinitive
     aspect = request_params.get('aspect')
     tense = request_params.get('tense')
-    
+
+    # Make sure you define them up front
+    has_applicative = (request_params.get('applicative') == 'true')
+    has_causative   = (request_params.get('causative') == 'true')    
+
     if not infinitive:
         error_response = {"error": "Infinitive is required"}
         log_request_response(request_params, error_response, '/api/conjugate')
@@ -198,6 +202,14 @@ def conjugate():
     has_markers = any(request_params.get(marker) == 'true' 
                      for marker in ['applicative', 'causative', 'optative'])
 
+    # 3) Extract object (obj) and convert empty or "None" -> real None
+    obj = request_params.get('obj')
+    if obj in ('', 'None'):
+        obj = None
+    # We can store that back into request_params if you want consistency
+    request_params['obj'] = obj
+
+
     # Special check for "gexvamu" or "cexvamu"
     if infinitive in ('gexvamu', 'cexvamu'):
         # We specifically want at least one of 'applicative' or 'causative' to be true
@@ -206,14 +218,27 @@ def conjugate():
         
         if not (has_applicative or has_causative):
             error_response = {
-                "error": "This verb requires a marker (applicative or causative)/bu fiile uygulamalı veya ettirgen belirteci gerekir."
+                "error": "This verb requires a marker (applicative or causative)/bu fiile uygulamalı veya ettirgen belirteci gerekiyor."
             }
             log_request_response(request_params, error_response, '/api/conjugate')
             return jsonify(error_response), 400
 
+
+
+
     # Check verb existence in all types
     exists_in_ivd, exists_in_tve, exists_in_tvm, exists_in_tvm_tve = check_verb_existence(infinitive, tense_modules)
-    
+
+    # 6. Now do the direct object checks for Applicative / Causative
+    if exists_in_tve and (has_applicative or has_causative):
+        if has_applicative and not obj:
+            error_response = {"error": "Applicative requires an object to be specified."}
+            return jsonify(error_response), 400
+
+        if has_causative and not obj:
+            error_response = {"error": "Causative requires an object to be specified."}
+            return jsonify(error_response), 400
+
     # Handle aspect modules (only potential and passive)
     if aspect and aspect in simplified_aspect_mapping and exists_in_tvm_tve:
         aspect_validator = ConjugationValidator(
