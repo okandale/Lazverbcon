@@ -198,6 +198,14 @@ def conjugate():
     has_markers = any(request_params.get(marker) == 'true' 
                      for marker in ['applicative', 'causative', 'optative'])
 
+    # 3) Extract object (obj) and convert empty or "None" -> real None
+    obj = request_params.get('obj')
+    if obj in ('', 'None'):
+        obj = None
+    # We can store that back into request_params if you want consistency
+    request_params['obj'] = obj
+
+
     # Special check for "gexvamu" or "cexvamu"
     if infinitive in ('gexvamu', 'cexvamu'):
         # We specifically want at least one of 'applicative' or 'causative' to be true
@@ -210,6 +218,16 @@ def conjugate():
             }
             log_request_response(request_params, error_response, '/api/conjugate')
             return jsonify(error_response), 400
+
+    # 6. Now do the direct object checks for Applicative / Causative
+    if has_applicative and not obj:
+        error_response = {"error": "Applicative requires an object to be specified."}
+        return jsonify(error_response), 400
+
+    if has_causative and not obj:
+        error_response = {"error": "Causative requires an object to be specified."}
+        return jsonify(error_response), 400
+
 
     # Check verb existence in all types
     exists_in_ivd, exists_in_tve, exists_in_tvm, exists_in_tvm_tve = check_verb_existence(infinitive, tense_modules)
