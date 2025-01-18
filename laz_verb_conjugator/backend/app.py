@@ -210,8 +210,8 @@ def conjugate():
     request_params['obj'] = obj
 
 
-    # Special check for "gexvamu" or "cexvamu"
-    if infinitive in ('gexvamu', 'cexvamu'):
+    # Special check for "gexvamu" or "cexvamu"; add any verb that requires an applicative/causative to this block
+    if infinitive in ('gexvamu', 'cexvamu') and aspect is None:
         # We specifically want at least one of 'applicative' or 'causative' to be true
         has_applicative = (request_params.get('applicative') == 'true')
         has_causative   = (request_params.get('causative') == 'true')
