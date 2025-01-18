@@ -232,11 +232,11 @@ def conjugate():
     # 6. Now do the direct object checks for Applicative / Causative
     if exists_in_tve and (has_applicative or has_causative):
         if has_applicative and not obj:
-            error_response = {"error": "Applicative requires an object to be specified."}
+            error_response = {"error": "Applicative requires an object to be specified. / Uygulamalı belirteç bir nesnenin belirtilmesini gerektirir."}
             return jsonify(error_response), 400
 
         if has_causative and not obj:
-            error_response = {"error": "Causative requires an object to be specified."}
+            error_response = {"error": "Causative requires an object to be specified. / Ettirgen belirteç bir nesnenin belirtilmesini gerektirir"}
             return jsonify(error_response), 400
 
     # Handle aspect modules (only potential and passive)
