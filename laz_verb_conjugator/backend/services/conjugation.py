@@ -9,14 +9,42 @@ class ConjugationService:
     def conjugate(self, params):
         """Main entry point for conjugation processing."""
         conjugations = None
+        
+        # Check if it's a TVM verb
+        is_tvm_verb = False
+        for module_key, module in self.tense_modules.items():
+            if module_key == 'tvm_tense':
+                if hasattr(module, 'verbs') and params['infinitive'] in module.verbs:
+                    is_tvm_verb = True
+                    # If it's a TVM verb and there's an object, raise error
+                    if params['obj']:
+                        raise ValueError("This verb belongs to a verb group that cannot take an object / Bu fiil grubu nesne alamaz.")
+                    break
+
         if params['neg_imperative']:
-            conjugations = self.process_negative_imperative(
-                params['infinitive'], params['subject'], params['obj'],
-                params['applicative'], params['causative'], params['region_filter'])
+            if is_tvm_verb:
+                # For TVM verbs, use tvm_tense with present tense
+                conjugations = self.process_tvm_imperative(
+                    params['infinitive'], params['subject'], params['obj'],
+                    params['applicative'], params['causative'], params['region_filter'],
+                    tense='present', is_negative=True)
+            else:
+                # For TVE verbs, use existing process
+                conjugations = self.process_negative_imperative(
+                    params['infinitive'], params['subject'], params['obj'],
+                    params['applicative'], params['causative'], params['region_filter'])
         elif params['imperative']:
-            conjugations = self.process_imperative(
-                params['infinitive'], params['subject'], params['obj'],
-                params['applicative'], params['causative'], params['region_filter'])
+            if is_tvm_verb:
+                # For TVM verbs, use tvm_tense with past tense
+                conjugations = self.process_tvm_imperative(
+                    params['infinitive'], params['subject'], params['obj'],
+                    params['applicative'], params['causative'], params['region_filter'],
+                    tense='past', is_negative=False)
+            else:
+                # For TVE verbs, use existing process
+                conjugations = self.process_imperative(
+                    params['infinitive'], params['subject'], params['obj'],
+                    params['applicative'], params['causative'], params['region_filter'])
         elif params['aspect']:
             conjugations = self.process_aspect_conjugation(
                 params['infinitive'], params['subject'], params['obj'],
@@ -29,7 +57,7 @@ class ConjugationService:
                 params['optative'], params['region_filter'])
 
         return conjugations
-        
+
     def format_conjugations(self, conjugations, module):
         """Format conjugations for response with verb group information."""
         formatted = {}
@@ -164,6 +192,40 @@ class ConjugationService:
         neg_imperatives = module.extract_neg_imperatives(all_conjugations, subjects)
         return self.format_conjugations(neg_imperatives, module)
 
+    def process_tvm_imperative(self, infinitive, subject, obj, applicative, causative, 
+                             region_filter, tense, is_negative):
+        """Process TVM imperative conjugations using tvm_tense module."""
+        module = self.tense_modules.get('tvm_tense')
+        if not module or not hasattr(module, 'verbs') or infinitive not in module.verbs:
+            return None
+
+        subjects = ['S2_Singular', 'S2_Plural'] if subject == 'all' else [subject]
+        objects = self.ordered_objects if obj == 'all' else [obj] if obj else [None]
+        all_conjugations = {}
+
+        for subj in subjects:
+            for obj_item in objects:
+                result = self._call_conjugation_method(
+                    module, infinitive, [subj], obj_item, tense,
+                    applicative, causative
+                )
+                
+                for region, forms in result.items():
+                    if region_filter and region not in region_filter.split(','):
+                        continue
+                    if region not in all_conjugations:
+                        all_conjugations[region] = set()
+                    for form in forms:
+                        # Add 'mot' prefix for negative imperatives
+                        if is_negative:
+                            neg_prefix = "mo" if region in ("HO", "AŞ") else "mot"
+                            modified_form = (form[0], form[1], f"{neg_prefix} {form[2]}")
+                            all_conjugations[region].add(modified_form)
+                        else:
+                            all_conjugations[region].add(form)
+
+        return self.format_conjugations(all_conjugations, module)
+
     def process_aspect_conjugation(self, infinitive, subject, obj, aspect, tense,
                                  applicative, causative, optative, region_filter):
         """Process aspect-based conjugations."""
@@ -177,7 +239,7 @@ class ConjugationService:
                 continue
 
             mood = 'optative' if optative and 'tve' in actual_aspect else None
-            subjects = self.ordered_subjects if subject == 'all' else [subject]
+            subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural'] if subject == 'all' else [subject]
             objects = self.ordered_objects if obj == 'all' else [obj] if obj else [None]
 
             try:
@@ -226,7 +288,7 @@ class ConjugationService:
                 continue
 
             try:
-                subjects = self.ordered_subjects if subject == 'all' else [subject]
+                subjects = ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S1_Plural', 'S2_Plural', 'S3_Plural'] if subject == 'all' else [subject]
                 objects = self.ordered_objects if obj == 'all' else [obj] if obj else [None]
 
                 for subj in subjects:
