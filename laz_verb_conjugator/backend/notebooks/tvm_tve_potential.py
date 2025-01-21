@@ -105,6 +105,8 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
 
             suffixes = get_suffixes(tense, region)
 
+            if root == 'oxtimu':
+                root = 'olu'
             if root == 'geçamu':
                 root = 'geçu'
 
