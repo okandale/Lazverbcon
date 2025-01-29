@@ -249,7 +249,6 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
 
 
             suffix = suffixes[subject]
-            print(f"root: {root}")
             if root.endswith('en'):
                 root = root[:-1]            
             if root.endswith('s'):
