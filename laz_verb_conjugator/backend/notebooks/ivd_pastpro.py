@@ -63,12 +63,12 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
             first_word = first_word_infinitive
         
             suffixes = {
-                'S1_Singular': 't̆u' if root.endswith('rs') else 'rt̆u',
-                'S2_Singular': 't̆u' if root.endswith('rs') else 'rt̆u',
-                'S3_Singular': 't̆u' if root.endswith('rs') else 'rt̆u',
-                'S1_Plural': 't̆es' if root.endswith('rs') else 'rt̆es',
-                'S2_Plural': 't̆es' if root.endswith('rs') else 'rt̆es',
-                'S3_Plural': 't̆es' if root.endswith('rs') else 'rt̆es'
+                'S1_Singular': 't̆u' if root.endswith(('rs', 'ns', 'n')) else 'rt̆u',
+                'S2_Singular': 't̆u' if root.endswith(('rs', 'ns', 'n')) else 'rt̆u',
+                'S3_Singular': 't̆u' if root.endswith(('rs', 'ns', 'n')) else 'rt̆u',
+                'S1_Plural': 't̆es' if root.endswith(('rs', 'ns', 'n')) else 'rt̆es',
+                'S2_Plural': 't̆es' if root.endswith(('rs', 'ns', 'n')) else 'rt̆es',
+                'S3_Plural': 't̆es' if root.endswith(('rs', 'ns', 'n')) else 'rt̆es'
             }
 
             # Extract the preverb from the infinitive if it exists
@@ -249,6 +249,7 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
 
 
             suffix = suffixes[subject]
+            print(f"root: {root}")
             if root.endswith('en'):
                 root = root[:-1]            
             if root.endswith('s'):
@@ -259,20 +260,20 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
                 if root.endswith('en'):
                     root = root[:-1]
                 if subject == 'S3_Singular' and obj == 'O3_Singular':
-                    suffix = 't̆u' if root.endswith('r') else 'rt̆u'
+                    suffix = 't̆u' if root.endswith(('r', 'ns', 'n')) else 'rt̆u'
                 elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
-                    suffix = 't̆it' if root.endswith('r') else 'rt̆it'
+                    suffix = 't̆it' if root.endswith(('r', 'ns', 'n')) else 'rt̆it'
                 elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular']:
-                    suffix = 't̆i' if root.endswith('r') else 'rt̆i'
+                    suffix = 't̆i' if root.endswith(('r', 'ns', 'n')) else 'rt̆i'
                 elif subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural', 'S3_Plural'] and obj in ('O1_Plural', 'O2_Plural'):
-                    suffix = 't̆it' if root.endswith('rs') else 'rt̆it'
+                    suffix = 't̆it' if root.endswith(('rs', 'ns', 'n')) else 'rt̆it'
                 elif subject in ['S1_Plural', 'S2_Plural'] and obj in ('O1_Singular', 'O2_Singular'):
 
-                    suffix = 't̆it' if root.endswith('r') else 'rt̆it'
+                    suffix = 't̆it' if root.endswith(('r', 'ns', 'n')) else 'rt̆it'
                 elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
-                    suffix = 't̆u' if root.endswith('r') else 'rt̆u'
+                    suffix = 't̆u' if root.endswith(('r', 'ns', 'n')) else 'rt̆u'
                 elif subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and obj in ('O3_Singular', 'O3_Plural'):
-                    suffix = 't̆es' if root.endswith('r') else 'rt̆es'
+                    suffix = 't̆es' if root.endswith(('r', 'ns', 'n')) else 'rt̆es'
 
                 final_root = root
 
