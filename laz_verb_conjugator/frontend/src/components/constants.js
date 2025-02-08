@@ -117,7 +117,30 @@ export const translations = {
       title: 'Bizi Destekleyin',
       description: 'Daha fazla Lazca öğrenme kaynağı oluşturmamıza yardımcı olun'
     },
-    aboutTitle: 'Hakkımızda',
+    resourceCard: {
+      title: 'Ek kaynaklar',
+      description: 'Lazca öğrenmek için fazla kaynaklar'
+    },
+    resourceContent: {
+      dictionariesTitle: 'Sözlükler',
+      lazInstituteDictionary: {
+        title: 'Laz Enstitüsü Sözlüğü',
+        description: 'Ana lehçeleri ve örnek cümlelerle birlikte ses örnekleri içeren kapsamlı bir sözlük.',
+        linkText: 'Laz Enstitüsü Sözlüğünün Sayfası',
+      },
+      lazcaXyzDictionary: {
+        title: 'Lazca.xyz Sözlüğü',
+        description: 'Japon dilbilimci Goichi Kojima\'nın araştırmalarına dayanan, Lazca kelimeler içeren bir sözlük. Sözlük, Erdinç Hoşver tarafından oluşturulan sitede barındırılmaktadır.',        linkText: 'Lazca.xyz Sözlüğünün Sayfası',
+      },
+      generalInformationTitle: 'Genel Bilgiler',
+      lazInstitute: {
+        title: 'Laz Enstitüsü',
+        description: 'Enstitünün ana sayfası, kültürel makalelerden kapsamlı kelime listelerine ve eğitici YouTube videolarına kadar birçok kaynağa ulaşabilirsiniz.',
+        linkText: 'Laz Enstitüsünün Sayfası',
+      },
+      callToAction: 'Ek kaynaklar eklemek isterseniz, lütfen bana ulaşın:',
+    },
+    aboutTitle: 'Benim Hakkımda',
     aboutContent: {
       intro: 'Lazca Öğrenme Merkezi, Lazca öğrenmek isteyenlere yardımcı olmak için oluşturuldu. Araçlarımız, Lazcadaki karmaşık fiil çekim sistemini anlamanıza ve pratik yapmanıza olanak sağlar.',
       growth: 'Basit bir fiil çekim aracı olarak başlayan projemiz, Lazca öğrenenler için kapsamlı bir kaynağa dönüştü.',
@@ -245,7 +268,31 @@ export const translations = {
       title: 'Support Us',
       description: 'Help us create more Laz language learning resources.'
     },
-    aboutTitle: 'About Us',
+    resourceCard: {
+      title: 'Additional Resources',
+      description: 'Find additional resources for learning Laz'
+    },
+    resourceContent: {
+      dictionariesTitle: 'Dictionaries',
+      lazInstituteDictionary: {
+        title: 'The Laz Institute\'s Dictionary',
+        description: 'A comprehensive dictionary containing major dialects, audio samples, and example sentences.',
+        linkText: 'Visit the Laz Institute Dictionary',
+      },
+      lazcaXyzDictionary: {
+        title: 'Lazca.xyz Dictionary',
+        description: 'A dictionary containing Laz words based on the research of Japanese linguist Goichi Kojima. The dictionary is hosted on a website created by Erdinç Hoşver.',
+        linkText: 'Visit Lazca.xyz Dictionary',
+      },
+      generalInformationTitle: 'General Information',
+      lazInstitute: {
+        title: 'The Laz Institute',
+        description: 'The institute\'s home page, leading to many additional resources ranging from cultural articles to comprehensive vocabulary lists and educational YouTube videos.',
+        linkText: 'Visit the Laz Institute',
+      },
+      callToAction: 'If you would like to suggest additional resources, please reach out to me at:',
+    },
+    aboutTitle: 'About Me',
     aboutContent: {
       intro: 'The Laz Language Learning Center was created to help people learn Laz. Our tools make it easier to understand and practice the complex verb conjugation system in Laz.',
       growth: 'What started as a simple conjugation tool has grown into a comprehensive resource for Laz language learners.',
