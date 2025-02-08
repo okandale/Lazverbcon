@@ -82,7 +82,20 @@ const HomePage = () => {
               {t.patronCard.description}
             </p>
           </a>
+
+          <Link 
+            to="/resources" 
+            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+          >
+            <h2 className="text-2xl font-bold text-gray-800 mb-3">
+              {t.resourceCard.title}
+            </h2>
+            <p className="text-gray-600">
+              {t.resourceCard.description}
+            </p>
+          </Link>
         </div>
+
         <div className="text-center mt-6">
           <p className="text-gray-700 text-sm">
             {t.info.prefix}{' '}

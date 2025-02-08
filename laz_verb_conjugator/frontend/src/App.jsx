@@ -4,6 +4,8 @@ import VerbList from './components/VerbList';
 import Classes from './components/Classes';
 import About from './components/About';
 import HomePage from './components/Home';
+import Resources from './components/Resources';
+
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
         <Route path="/verbs" element={<VerbList />} />
         <Route path="/events" element={<Classes />} />
         <Route path="/about" element={<About />} />
+        <Route path="/resources" element={<Resources />} />
       </Routes>
     </Router>
   );
