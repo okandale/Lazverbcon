@@ -290,11 +290,11 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
                 suffix = ''
             elif subject in ['S1_Plural', 'S2_Plural', 'S3_Singular'] and (obj in ('O3_Singular', 'O3_Plural') or obj is None):
-                if root.endswith('rs'):
+                if root.endswith('rs') or infinitive == 'coxons':
                     root = root[:-1]
-                suffix = '' if root.endswith('an') else 'an'
+                suffix = '' if root.endswith('an') else 's' if infinitive == 'coxons' and subject == 'S3_Singular' else 'an'
             elif subject == 'S3_Plural':
-                if root.endswith('rs'):
+                if root.endswith('rs') or infinitive == 'coxons':
                     root = root[:-1]
                 suffix = 'an'
 

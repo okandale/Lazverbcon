@@ -457,19 +457,19 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
             elif infinitive in ('oxtimu', 'olva') and subject in ('S3_Singular', 'S3_Plural') and tense in ('past', 'future', 'optative') and not applicative and not causative:
                 final_root = 'id'
             elif infinitive == "ren" and subject in ('S1_Singular') and tense == 'present':
-                if region == "FA":
-                    prefix = "b"
+                if region in ("FA", "HO"):
+                    prefix = "b" if region == "FA" else "v"
                 final_root = 'ore'
                 suffix = ''
             elif infinitive == "ren" and subject in ('S2_Singular') and tense == 'present':
-                final_root = "(o)rer" if region == "AŞ" else "(o)re"
+                final_root = "(o)re"
                 suffix = ''
             elif infinitive == "ren" and subject in ('S3_Singular') and tense == 'present':
                 final_root = 'on' if region in ('PZ', 'AŞ') else "(o)ren"
                 suffix = ''
             elif infinitive == "ren" and subject in ('S1_Plural') and tense == 'present':
-                if region == "FA":
-                    prefix = "b"
+                if region in ("FA", "HO"):
+                    prefix = "b" if region == "FA" else "v"
                 final_root = 'ore'
                 suffix = 'rtu' if region == "AŞ" else 't'
             elif infinitive == "ren" and subject in ('S2_Plural') and tense == 'present':
@@ -481,8 +481,8 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                     
 
             if infinitive == "ren" and tense in ('past', 'future'):
-                if region == "FA" and subject in ('S1_Singular', 'S1_Plural'):
-                    prefix = "b"
+                if region in ("FA", "HO") and subject in ('S1_Singular', 'S1_Plural'):
+                    prefix = "b" if region == "FA" else "v"
                 final_root = 'ort̆'
                 
             # Remove the first letter of final_root if it is the same as the last letter of prefix
