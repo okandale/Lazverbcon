@@ -1548,7 +1548,7 @@
   },
   {
     "Laz Infinitive": "oceru",
-    "Category": "TVM",
+    "Category": "TVE",
     "Laz 3rd Person Singular Present": "icers",
     "Region": "HO",
     "Laz 3rd Person Singular Present Alternative 1": null,
@@ -1561,7 +1561,7 @@
   },
   {
     "Laz Infinitive": "oçilu",
-    "Category": "TVM",
+    "Category": "TVE",
     "Laz 3rd Person Singular Present": "içilers",
     "Region": "HO",
     "Laz 3rd Person Singular Present Alternative 1": null,
@@ -2948,6 +2948,19 @@
     "Region Alternative 2": null,
     "English Translation": "to live",
     "Turkish Verb": "yaşamak",
+    "": null
+  },
+  {
+    "Laz Infinitive": "oşǩunu",
+    "Category": "IVD",
+    "Laz 3rd Person Singular Present": "uşǩun",
+    "Region": "AŞ, PZ",
+    "Laz 3rd Person Singular Present Alternative 1": null,
+    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present Alternative 2": null,
+    "Region Alternative 2": null,
+    "English Translation": "to know",
+    "Turkish Verb": "bilmek",
     "": null
   },
   {
