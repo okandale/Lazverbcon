@@ -369,7 +369,7 @@ def get_personal_pronouns(region, mode):
         })
     elif mode in ['ivd_present', 'ivd_future', 'ivd_past', 'ivd_pastpro', 'tvm_tense', 'tvm_tve_potential', 'tvm_tve_presentperf']:
         pronouns.update({
-            'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else ('çkin' if mode == 'tvm_tve_potential' else 'çki'),
+            'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else ('çkin' if mode == 'tvm_tve_potential' else 'çkin'),
             'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
             'O1_Plural': 'çku',
             'O2_Plural': 'tkva'
@@ -377,7 +377,7 @@ def get_personal_pronouns(region, mode):
     else:  # tve modes
         if mode == 'tve_pastpro':
             pronouns.update({
-                'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çki',
+                'S1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
                 'S2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
                 'O1_Plural': 'çku',
                 'O2_Plural': 'tkva'
