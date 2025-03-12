@@ -1560,6 +1560,19 @@
     "": null
   },
   {
+    "Laz Infinitive": "ocginu",
+    "Category": "TVE",
+    "Laz 3rd Person Singular Present": "ocginams",
+    "Region": "FA",
+    "Laz 3rd Person Singular Present Alternative 1": "ocginaps",
+    "Region Alternative 1": "HO",
+    "Laz 3rd Person Singular Present Alternative 2": null,
+    "Region Alternative 2": null,
+    "English Translation": "to win",
+    "Turkish Verb": "yenmek",
+    "": null
+  },
+  {
     "Laz Infinitive": "oçilu",
     "Category": "TVE",
     "Laz 3rd Person Singular Present": "içilers",
@@ -1934,6 +1947,19 @@
     "Region Alternative 2": null,
     "English Translation": "to fly",
     "Turkish Verb": "uçmak",
+    "": null
+  },
+  {
+    "Laz Infinitive": "ojginu",
+    "Category": "TVE",
+    "Laz 3rd Person Singular Present": "ojginams",
+    "Region": "PZ, AŞ",
+    "Laz 3rd Person Singular Present Alternative 1": null,
+    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present Alternative 2": null,
+    "Region Alternative 2": null,
+    "English Translation": "to win",
+    "Turkish Verb": "yenmek",
     "": null
   },
   {
