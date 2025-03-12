@@ -608,11 +608,11 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                 final_root = ''
             elif infinitive in (('oxenu', 'oxvenu')) and subject in ('S2_Singular', 'S2_Plural') and not applicative and not causative:
                 prefix = 'q' if region == "HO" else ''
-                final_root = 'v' if region in ('HO') else ''
+                final_root = 'v' if region in ('HO', 'FA') else ''
            
             elif infinitive in (('oxenu', 'oxvenu')) and subject in ('S3_Singular', 'S3_Plural') and not applicative and not causative:
                 prefix = 'q' if region == "HO" else ''
-                final_root = 'v' if region in ('HO') else ''
+                final_root = 'v' if region in ('HO', 'FA') else ''
 
             # Remove the first letter of final_root if it is the same as the last letter of prefix
             if prefix and final_root and prefix[-1] == final_root[0]:
