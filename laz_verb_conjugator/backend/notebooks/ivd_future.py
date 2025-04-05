@@ -2,11 +2,13 @@ from utils import (
     process_compound_verb,
     get_first_letter,
     get_first_word,
-    handle_special_case_u,
-    handle_special_case_gy,
     handle_special_case_coz,
+    handle_special_case_gy,
+    handle_special_case_u,
     get_personal_pronouns,
     get_preverbs_rules,
+    get_phonetic_rules,
+    adjust_prefix,
     ivd_subject_markers as subject_markers,
     subjects,
     objects
@@ -53,7 +55,8 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
         for region in regions_for_form:
             region = region.strip()
             personal_pronouns = get_personal_pronouns(region, mode='ivd_future')
-            
+            phonetic_rules_v, phonetic_rules_g = get_phonetic_rules(region)
+
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
             first_word = get_first_word(third_person)  # Get the first word for compound verbs
@@ -206,7 +209,8 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
                 if subject in ['S1_Singular', 'S1_Plural']:
                     prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
-                    prefix = preverb + 'g'
+                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                    prefix = preverb + adjusted_prefix
                 else:
                     prefix = preverb
 
@@ -263,12 +267,12 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
 
             suffix = suffixes[subject]
             if root.endswith('en'):
-                root = root[:-2]            
+                root = root[:-2]
             if root.endswith('s'):
-                root = root[:-1] 
+                root = root[:-1] + 'd' if infinitive.endswith('ndu') else root[:-1]            
             if obj:
                 if root.endswith('s'):
-                    root = root[:-1] 
+                    root = root[:-1] + 'd' if infinitive.endswith('ndu') else root[:-1] 
                 if root.endswith('en'):
                     root = root[:-2]
                 if subject == 'S3_Singular' and obj == 'O3_Singular':
