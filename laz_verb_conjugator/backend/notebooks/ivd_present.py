@@ -7,6 +7,8 @@ from utils import (
     handle_special_case_u,
     get_personal_pronouns,
     get_preverbs_rules,
+    get_phonetic_rules,
+    adjust_prefix,
     ivd_subject_markers as subject_markers,
     subjects,
     objects
@@ -51,6 +53,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
         for region in regions_for_form:
             region = region.strip()
             personal_pronouns = get_personal_pronouns(region, 'ivd_present')
+            phonetic_rules_v, phonetic_rules_g = get_phonetic_rules(region)
             
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
@@ -153,7 +156,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 elif subject in ['S1_Singular', 'S1_Plural']:
                     prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
-                    prefix = preverb + 'g'
+                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                    prefix = preverb + adjusted_prefix
                 else:
                     prefix = preverb[:-1]
 
@@ -191,6 +195,19 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     prefix = 'ceg'
                 else:
                     prefix = 'c'
+
+            elif preverb == 'mo':
+                if subject in ('S3_Singular', 'S3_Plural') and obj in ('O1_Singular', 'O1_Plural'):
+                    adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
+                    prefix = preverb + adjusted_prefix
+                elif subject in ('S2_Singular', 'S2_Plural'):
+                    adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                    prefix = preverb + adjusted_prefix
+                elif subject in ('S1_Singular', 'S1_Plural') and obj in ('O3_Singular', 'O3_Plural'):
+                    adjusted_prefix = 'm'
+                    prefix = preverb + adjusted_prefix
+                else:
+                    prefix = preverb + subject_markers[subject]
 
             elif preverb:
                 if root.startswith('ca'):
@@ -268,33 +285,45 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             if subject == 'S3_Singular' and (obj == 'O3_Singular' or obj is None):
                 suffix = ''
             elif subject == 'S3_Singular' and obj == 'O3_Plural':
-                if root.endswith('rs'):
+                if root.endswith(('rs', 'ns')):
                     root = root[:-1]
                 suffix = 'an'
             elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
                 if root.endswith(('en', 'rs')):
                     root = root[:-2] if infinitive.endswith('rs') else root[:-1]
                 suffix = 'rt'
+                if root.endswith('ns'):
+                    root = root[:-1]
+                suffix = ''
             elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular']:
                 if root.endswith(('n', 'rs')):
                     root = root[:-1]
                 suffix = '' if infinitive.endswith('rs') else 'r'
+                if root.endswith('ns'):
+                    root = root[:-1]
+                suffix = ''
             elif subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural'] and obj in ('O1_Plural', 'O2_Plural'):
                 if root.endswith(('n', 'rs')):
                     root = root[:-2] if infinitive.endswith('rs') else root[:-1]
                 suffix = 'rt'
+                if root.endswith('ns'):
+                    root = root[:-1]
+                suffix = 't'
             elif subject in ['S1_Plural', 'S2_Plural'] and obj in ('O1_Singular', 'O2_Singular'):
                 if root.endswith(('n', 'rs')):
                     root = root[:-2] if infinitive.endswith('rs') else root[:-1]
                 suffix = 'rt'
+                if root.endswith('ns'):
+                    root = root[:-1]
+                suffix = 't'
             elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
                 suffix = ''
             elif subject in ['S1_Plural', 'S2_Plural', 'S3_Singular'] and (obj in ('O3_Singular', 'O3_Plural') or obj is None):
-                if root.endswith('rs') or infinitive == 'coxons':
+                if root.endswith('rs') or root.endswith('ns'):
                     root = root[:-1]
                 suffix = '' if root.endswith('an') else 's' if infinitive == 'coxons' and subject == 'S3_Singular' else 'an'
             elif subject == 'S3_Plural':
-                if root.endswith('rs') or infinitive == 'coxons':
+                if root.endswith('rs') or root.endswith('ns'):
                     root = root[:-1]
                 suffix = 'an'
 
