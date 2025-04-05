@@ -793,7 +793,7 @@
     "": null
   },
   {
-    "Laz Infinitive": "golusumu",
+    "Laz Infinitive": "golusu",
     "Category": "TVE",
     "Laz 3rd Person Singular Present": "golusumers",
     "Region": "FA, HO",
@@ -801,8 +801,8 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": "to care",
-    "Turkish Verb": "ilgilenmek",
+    "English Translation": "to not care",
+    "Turkish Verb": "umursamamak",
     "": null
   },
   {
@@ -1802,8 +1802,8 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": null,
-    "Turkish Verb": "goz kırpmak",
+    "English Translation": "to wink",
+    "Turkish Verb": "göz kırpmak",
     "": null
   },
   {

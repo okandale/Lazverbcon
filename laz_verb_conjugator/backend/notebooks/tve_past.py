@@ -584,8 +584,8 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
 
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/oǩo preverbs, we could check here: if preverb ends with "o") root[:-1
             if applicative and causative:
-                if infinitive in (('oşu', 'dodvu', 'otku', 'golusumu')):
-                    root = root[:-5] + 'vap' if infinitive in ('golusumu') else root[:-3] + 'vap'
+                if infinitive in (('oşu', 'dodvu', 'otku', 'golusu')):
+                    root = root[:-5] + 'vap' if infinitive in ('golusu') else root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'
                 elif root.endswith('umers') or root.endswith('amers'):
@@ -593,15 +593,15 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 elif root.endswith('rs'):
                     root = root[:-1] + 'ap'
             elif applicative:
-                if root in (('işums', 'işups', 'idums', 'itkums', 'itkups')) or infinitive in ('golusumu'):
-                    root = root[:-5] + 'v' if infinitive in ('golusumu') else root[:-3] + 'vap'
+                if root in (('işums', 'işups', 'idums', 'itkums', 'itkups')) or infinitive in ('golusu'):
+                    root = root[:-5] + 'v' if infinitive in ('golusu') else root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3]
             elif causative:
                 if root == 'digurams':
                     root = root
-                elif root in (('oşums', 'oşups', 'odums', 'otkums', 'otkups')) or infinitive in ('golusumu'):
-                    root = root[:-5] + 'v' if infinitive in ('golusumu') else root[:-3] + 'vap'
+                elif root in (('oşums', 'oşups', 'odums', 'otkums', 'otkups')) or infinitive in ('golusu'):
+                    root = root[:-5] + 'v' if infinitive in ('golusu') else root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'
                 elif root.endswith('umers') or root.endswith('amers'):
