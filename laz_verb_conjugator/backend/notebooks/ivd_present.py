@@ -291,15 +291,15 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 suffix = ''
             elif subject == 'S3_Singular' and obj == 'O3_Plural':
                 if root.endswith(('rs', 'ns')):
-                    root = root[:-1]
-                suffix = 'an'
+                    root = root
+                suffix = ''
             elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
                 if root.endswith(('en', 'rs')):
                     root = root[:-2] if infinitive.endswith('rs') else root[:-1]
                 suffix = 'rt'
                 if root.endswith('ns'):
                     root = root[:-1]
-                suffix = ''
+                suffix = 't'
             elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular']:
                 if root.endswith(('n', 'rs')):
                     root = root[:-1]
@@ -307,7 +307,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 if root.endswith('ns'):
                     root = root[:-1]
                 suffix = ''
-            elif subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural'] and obj in ('O1_Plural', 'O2_Plural'):
+            elif subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural', 'S3_Plural'] and obj in ('O1_Plural', 'O2_Plural'):
                 if root.endswith(('n', 'rs')):
                     root = root[:-2] if infinitive.endswith('rs') else root[:-1]
                 suffix = 'rt'
