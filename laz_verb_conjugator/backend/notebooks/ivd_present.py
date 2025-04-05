@@ -198,7 +198,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             elif preverb == 'mo':
                 if subject in ('S3_Singular', 'S3_Plural') and obj in ('O1_Singular', 'O1_Plural'):
-                    adjusted_prefix = 'v' if region in ('PZ', 'AŞ', 'HO') else 'b'
+                    adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
                     prefix = preverb + adjusted_prefix
                 elif subject in ('S2_Singular', 'S2_Plural'):
                     adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
@@ -221,6 +221,11 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     prefix = preverb + 'm'
                 elif subject in ['S2_Singular', 'S2_Plural']:
                     prefix = preverb + 'g'
+
+                elif subject in ('S3_Singular', 'S3_Plural'):
+                    if obj in ('O1_Singular', 'O1_Plural'):
+                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
+                        prefix = preverb + adjusted_prefix                    
                 else:
                     prefix = preverb
             # Additional prefix adjustments based on subject and object
