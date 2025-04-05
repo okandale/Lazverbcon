@@ -211,6 +211,40 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                         prefix = 'k'
 
                 # Special handling for "ceç̌alu"
+                elif preverb == 'gol':
+                    if root.endswith('ams'):
+                        if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O3_Singular', 'O3_Plural'] and marker:
+                            if applicative and causative:
+                                root = root
+                            if applicative:
+                                root = root
+                            elif causative:
+                                root = root
+                            else:
+                                root = 'o' + root  # Remove only one character if there's a marker
+                        else:
+                            root = root
+                            preverb = preverb
+                    else:
+                        if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
+                            root = root
+                        else:
+                            root = root
+                    first_letter = get_first_letter(root)
+                    if obj in ['O2_Singular', 'O2_Plural'] and not subject in ['S2_Singular', 'S2_Plural']:
+                        adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                        prefix = preverb + 'o' + adjusted_prefix
+                    elif subject in ['S1_Singular', 'S1_Plural']:
+                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
+                        prefix = preverb + 'o' + adjusted_prefix
+                    elif obj in ['O1_Singular', 'O1_Plural'] and not subject in ['S1_Singular', 'S1_Plural']:
+                        prefix = preverb + 'o' + 'm'
+                    elif marker_type == 'causative':
+                        prefix = preverb 
+                    else:
+                        prefix = preverb
+
+                # Special handling for "ceç̌alu"
                 elif preverb == 'gelo':
                     if root.endswith('ams'):
                         if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O3_Singular', 'O3_Plural'] and marker:
@@ -473,7 +507,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                     else:
                         prefix = preverb
 
-                # Special handling for "go"
+                # Special handling for ""go""
 
                 else:
                     # Adjust the prefix based on the first letter for phonetic rules
@@ -542,8 +576,8 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/oǩo preverbs, we could check here: if preverb ends with "o") root[:-1
             if applicative and causative:
-                if infinitive in (('oşu', 'dodvu', 'otku')):
-                    root = root[:-3] + 'vap'
+                if infinitive in (('oşu', 'dodvu', 'otku', 'golusumu')):
+                    root = root[:-5] + 'vap' if infinitive in ('golusumu') else root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'
                 elif root.endswith('umers') or root.endswith('amers'):
@@ -553,8 +587,8 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                 elif root.endswith('y'):
                     root = root[:-2] + 'ap'
             elif applicative:
-                if root in (('işums', 'işups', 'idums', 'itkums', 'itkups')):
-                    root = root[:-3] + 'v'
+                if root in (('işums', 'işups', 'idums', 'itkums', 'itkups')) or infinitive in ('golusumu'):
+                    root = root[:-5] + 'v' if infinitive in ('golusumu') else root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3]
                 elif root.endswith('y'):
@@ -562,8 +596,8 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             elif causative:
                 if root == 'digurams':
                     root = root
-                elif root in (('oşums', 'oşups', 'odums', 'otkums', 'otkups')):
-                    root = root[:-3] + 'vap'
+                elif root in (('oşums', 'oşups', 'odums', 'otkums', 'otkups')) or infinitive in ('golusumu'):
+                    root = root[:-5] + 'v' if infinitive in ('golusumu') else root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'
                 elif root.endswith('umers') or root.endswith('amers'):
@@ -579,7 +613,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                     root = root[:-3]
                 elif root.endswith('y'):
                     root = root[:-2]
-                elif root.endswith(('umers', 'amers')) and root == 'dumers':
+                elif root.endswith(('umers', 'amers')):
                     root = root[:-5] + 'v'
                 else:
                     root = root
