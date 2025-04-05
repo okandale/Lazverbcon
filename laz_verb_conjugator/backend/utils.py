@@ -430,6 +430,6 @@ def get_personal_pronouns(region, mode):
     elif mode == 'tve_pastpro':
         pronouns['O3_Plural'] = 'hentepes'
     else:
-        pronouns['O3_Plural'] = 'hentepes' if region == "FA" else 'hinis' if region == 'PZ' else 'hini' if region == 'AŞ' else 'entepes'
+        pronouns['O3_Plural'] = 'hentepe' if region == "FA" else 'hini' if region == 'PZ' else 'hini' if region == 'AŞ' else 'entepe'
 
     return pronouns
