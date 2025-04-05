@@ -211,7 +211,41 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                     prefix = 'ko' + prefix
                     if subject in ['O3_Singular', 'O3_Plural']:
                         prefix = 'k'
-                
+
+                # Special handling for "ceç̌alu"
+                elif preverb == 'gol':
+                    if root.endswith('ams'):
+                        if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O3_Singular', 'O3_Plural'] and marker:
+                            if applicative and causative:
+                                root = root
+                            if applicative:
+                                root = root
+                            elif causative:
+                                root = root
+                            else:
+                                root = 'o' + root  # Remove only one character if there's a marker
+                        else:
+                            root = root
+                            preverb = preverb
+                    else:
+                        if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
+                            root = root
+                        else:
+                            root = root
+                    first_letter = get_first_letter(root)
+                    if obj in ['O2_Singular', 'O2_Plural'] and not subject in ['S2_Singular', 'S2_Plural']:
+                        adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                        prefix = preverb + 'o' + adjusted_prefix
+                    elif subject in ['S1_Singular', 'S1_Plural']:
+                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
+                        prefix = preverb + 'o' + adjusted_prefix
+                    elif obj in ['O1_Singular', 'O1_Plural'] and not subject in ['S1_Singular', 'S1_Plural']:
+                        prefix = preverb + 'o' + 'm'
+                    elif marker_type == 'causative':
+                        prefix = preverb 
+                    else:
+                        prefix = preverb
+
                 # Special handling for "ceç̌alu"
                 elif preverb == 'gelo':
                     if root.endswith('ams'):
