@@ -215,6 +215,8 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
                     if obj in ('O1_Singular', 'O1_Plural'):
                         adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
                         prefix = preverb + adjusted_prefix
+                    else:
+                        prefix = preverb
                 else:
                     prefix = preverb
 
