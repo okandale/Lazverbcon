@@ -1,0 +1,175 @@
+[33maf5a427[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m changed infinitive of golusu, added correct translation
+[33m641a8f2[m Merge branch 'dev'
+[33m01e9d15[m[33m ([m[1;31morigin/dev[m[33m)[m added 'gol' preverb and golusumu
+[33ma56b998[m Merge branch 'dev'
+[33mba46a04[m added preverb to S3 PL forms dative
+[33m97ea88c[m Merge branch 'dev'
+[33mcdd1cd3[m removed s from O3
+[33m679b21f[m Merge branch 'dev'
+[33m268442f[m correct O3_Plural for HO
+[33mcbc4d0a[m Merge branch 'dev'
+[33m623d7af[m fixed plural form of S3Ox
+[33mab7fedc[m Merge branch 'dev'
+[33m3fe1b9f[m corrected S3O1 combinations
+[33m7e78eeb[m Merge branch 'dev'
+[33m0cd7d94[m added phonetic rule g to dative verbs, amended moǯondu verb group and conjugation handling for roots ending in 's'
+[33mbda8840[m Merge branch 'dev'
+[33m9c5533a[m fixed co_verbs, added onǩanu
+[33m529d315[m Merge branch 'dev'
+[33m5f4cdb2[m added op̌içvu alternatives
+[33md92c972[m Merge branch 'dev'
+[33m7f73490[m updated fast
+[33m6eeac0b[m Merge branch 'dev'
+[33m6fb11f6[m to fast changed to TVE
+[33mc54d6a8[m Merge branch 'dev'
+[33m9126070[m fixed oxenu future for FA
+[33m08272a0[m Merge branch 'dev'
+[33me80712a[m added ojginu and ocginu
+[33mc0b463a[m Merge branch 'dev'
+[33md9f0c97[m correct turkish translation of uqoun
+[33m6d38f46[m Merge branch 'dev'
+[33m7fbf368[m added oxažiru
+[33medf80db[m added 'to sneeze'
+[33m738b8a4[m Merge branch 'dev'
+[33m1be91ab[m added oşǩunu
+[33m43869a5[m Merge branch 'dev'
+[33m393c46c[m added oşǩunu to table
+[33mc6116e3[m Merge branch 'dev'
+[33macac957[m correct ren conjugations across multiple rejgions, fixed coxons present tense conjugation plural.
+[33m2694414[m Merge branch 'dev'
+[33mc13d793[m correct verb group for certain verbs
+[33m23c1ca8[m Merge branch 'homepage'
+[33me98cfe1[m[33m ([m[1;31morigin/homepage[m[33m)[m updated website, added toggle for events and added 'additional resources' page
+[33m2563071[m Merge branch 'dev'
+[33mfe9c30a[m 2nd attempt
+[33m413db5e[m Merge branch 'dev'
+[33m12ec2cb[m corrected ivd 'to be named' verbs in past perfect
+[33m134c86b[m Merge branch 'dev'
+[33m5118e6e[m added olva to oxtimu exception for potential form
+[33m5cf475a[m Merge branch 'dev'
+[33mc780acd[m changed oxtimu potential form to 'olu'
+[33mc1ca198[m Merge branch 'dev'
+[33mdc10991[m readded tvm imperatives
+[33m27d944f[m removed duplicate consonants at frond of tvm verbs
+[33mbb341fd[m Merge branch 'dev'
+[33m542fdf8[m error message in turkish
+[33m83867a2[m Merge branch 'dev'
+[33m4e3cc72[m added new condition to gexvamu/cexvamu to allow aspect based conjugation
+[33m173f6f7[m Merge branch 'dev'
+[33m3181cb0[m removed duplicate qoropu (wrong infinitive)
+[33me12b83a[m Merge branch 'dev'
+[33m26854b9[m error handling more precise now
+[33mbb6ae40[m new error message
+[33m87b8aaa[m Merge branch 'dev'
+[33m281bca4[m Merge branch 'dev' of https://github.com/okandale/Lazverbcon into dev
+[33mfba0176[m fixed HO ǩai doǯonu, added more regions to oxop̌u, added gexvamu and cexvamu along with new applicative/causative rules for gyo_ and co_ verbs, added qoropu
+[33ma57d694[m Merge branch 'dev'
+[33m7008224[m corrected ogzalu
+[33m60e1622[m Merge branch 'dev'
+[33m7faa352[m tve ogzalu
+[33m9d02031[m Merge branch 'dev'
+[33m8b9997f[m added a lot of new words
+[33m5ab1f71[m tried adding ožiru
+[33m6e8b5d6[m Merge branch 'dev'
+[33mafbe040[m tve future fix for oropu, correct ot̆rağodu infinitive
+[33m45c4238[m Merge branch 'dev'
+[33mfd13859[m fixed past tense potential for ardeşen
+[33m348e9bb[m Merge branch 'dev'
+[33m11fe7dc[m added new regionz for ožiru to frontend
+[33m57279fe[m Merge branch 'dev'
+[33m653036d[m added PZ FA and AŞ to ožiru
+[33mbe3d457[m Merge branch 'dev'
+[33m0f3fed9[m fixed ox(v)enu No Obj future and past tense
+[33mb420145[m Merge branch 'homepage'
+[33me50eaeb[m[33m ([m[1;32mhomepage[m[33m)[m changed /classes to /events
+[33mf5ff70f[m Merge branch 'homepage'
+[33m1d00d3b[m correct start date
+[33m4346e3a[m Merge branch 'homepage'
+[33m1008a60[m correct time english page
+[33m4b49f05[m Merge branch 'homepage'
+[33mc3373eb[m typo fix
+[33me97c8cc[m Merge branch 'homepage'
+[33md6c3280[m hyperlinked email
+[33maaaa639[m Merge branch 'homepage'
+[33mc2f6f52[m added platform
+[33m8cb976c[m Merge branch 'homepage'
+[33m0e74cfe[m added disclaimer
+[33mbd41414[m Merge branch 'homepage'
+[33m6cefb04[m rephrasing of home page
+[33m06766fe[m Merge branch 'homepage'
+[33m017f5e4[m added email address
+[33mfbd134a[m Merge branch 'dev'
+[33m2272de2[m changed memgvapu to IVD instead of TVM based on conjugation logic.
+[33md1c69cb[m çekimle update
+[33m6de1568[m cekimle instead of cek
+[33mfe7ac15[m Merge branch 'homepage'
+[33m63f0330[m changed bg colour
+[33mf94f1ef[m Merge branch 'homepage'
+[33macbddbb[m changed home, added teacher description to classes
+[33mfe6585a[m Merge branch 'homepage'
+[33mdab7659[m changed layout and added links
+[33m9f3f84f[m updated the classes page
+[33md8c1395[m refined the pages a bit and added content
+[33mfef88ce[m remove home link from homepage
+[33m6aa0f52[m homepage
+[33mb873558[m AŞ IVD past tense for O3 Plural
+[33mf4c7224[m updated word list (added oxmaru)
+[33mf6721d0[m added oxmaru
+[33mf5c651c[m fixed present perf for tve
+[33m75438ac[m applicative SG and PL N/A addition
+[33m734d91c[m Laz Institute Credits
+[33maa341a1[m fixed optative for exceptional verbs
+[33m2108f81[m quick Ardeşen rule fix
+[33m985a98e[m same for pastpro
+[33mf725ae9[m fixed applicative ending 'rs'
+[33m0953342[m fix local dev url
+[33m48d6d88[m small rs fix
+[33md4307ec[m ir ending vers applicative fix
+[33m7234c94[m turkish translation fix
+[33m1f44b5e[m Merge branch 'dev'
+[33m9a72cb4[m fixed ivd present tense 'an' ending S3O3
+[33me1e3cba[m Merge branch 'dev'
+[33mc79e6b5[m updated frontend language and added disclaimer.
+[33ma9b92d4[m Merge branch 'dev'
+[33m89a6ea2[m fixed ivd present tens plural ending in s
+[33m76d4bda[m Merge branch 'dev'
+[33mb0f97a3[m readded case and extra space discrepencies during input
+[33md05ec3a[m Merge branch 'dev'
+[33m7e12ea9[m fixed gemgaru, exception
+[33m9a9ff50[m Merge branch 'dev'
+[33m54bb04d[m fixed 'go' gv rule for potential form
+[33m775401c[m added verb categories
+[33m3148c25[m separation of verb groups
+[33md49e78c[m Merge branch 'dev'
+[33m4cd266e[m fixed preverb rules for mo in ivd and tve
+[33m1e12ceb[m Merge branch 'dev'
+[33me4c05a3[m remove redundant vowel for mo preverbs
+[33m91a77ae[m fixed gyo verbs in tvm
+[33m3808f07[m Merge branch 'dev'
+[33m7f6bedd[m added error messages for ivd with marker only
+[33m277b901[m Merge branch 'dev'
+[33m550c1ff[m skips ivd when tve and ivd are the same but marker selected, wrong error message for ivd only though
+[33mab556cd[m removed one of the meǩoru lines, added 'no' rules to tvm
+[33m41415bb[m Merge branch 'dev'
+[33m984a1c6[m fixed cabgars conjugations
+[33m764ba44[m Merge branch 'dev'
+[33mf039477[m fixed phonetic rules for pastpro
+[33me46cdd0[m fixed gelo preverb for tvm tenses
+[33m457a93a[m Merge branch 'dev'
+[33m5ae52d0[m added preverb 'gelo' rules
+[33m1a77466[m added preverb gelo
+[33m2e26e8c[m removed 'otanu' duplicate
+[33mea62926[m present perfect preverb and subject marker clash fix
+[33m36e3a2d[m fixed 'do' preverb clashing with 'dolo'
+[33m08b8288[m do fix potential form
+[33m531c1f7[m corrected "do" preverb rule for potential form
+[33mb13845c[m Merge branch 'dev'
+[33me2de399[m fixed dodumu error for root starting with 'du' (i.e. duşinams vs doDUms)
+[33m8ecb369[m created a read me file for future amendments
+[33m52be074[m added applicative to reflective conjugations
+[33mb56fe1a[m added oşǩomu to marker exception
+[33ma2a14cd[m Merge branch 'dev'
+[33m94a9b34[m added ǩoǩo preverb
+[33mfa0c537[m Merge branch 'dev'
+[33mccf76e1[m fixed preverb definition alignment issue for 'mo'
+[33m2b2285a[m 
