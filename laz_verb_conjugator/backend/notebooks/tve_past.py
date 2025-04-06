@@ -114,7 +114,17 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
 
             if infinitive in ('oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
                 root = 'xvenums'
-            
+
+
+            if infinitive in ('oxenu'):  # marker case for oxenu
+                root = 'xenams'
+            if infinitive in ('oxvenu'):  # marker case for oxenu
+                root = 'xvenams'
+            if infinitive in ('oç̌ǩomu'):
+                root = 'ç̌ǩomums'
+            if infinitive in ('oşǩomu'):
+                root = 'şǩomums'
+
             # Handle special case for verbs starting with 'i' or 'o'
             root = handle_marker(main_infinitive, root, marker, subject, obj)
             adjusted_prefix = ''
@@ -132,6 +142,8 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 handled_gontzku = True  # Set the flag
 
             if not handled_gontzku:
+
+
 
 
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':

@@ -114,7 +114,18 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
 
             if infinitive in ('oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
                 root = 'xvenums'
-            
+
+
+
+            if infinitive in ('oxenu'):  # marker case for oxenu
+                root = 'xenams'
+            if infinitive in ('oxvenu'):  # marker case for oxenu
+                root = 'xvenams'
+            if infinitive in ('oç̌ǩomu'):
+                root = 'ç̌ǩomums'
+            if infinitive in ('oşǩomu'):
+                root = 'şǩomums'
+
             # Handle special case for verbs starting with 'i' or 'o'
             root = handle_marker(main_infinitive, root, marker, subject, obj)
 
