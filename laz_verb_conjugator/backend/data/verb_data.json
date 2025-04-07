@@ -1348,7 +1348,7 @@
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
     "English Translation": "to rest",
-    "Turkish Verb": "dinlemek",
+    "Turkish Verb": "dinlenmek",
     "": null
   },
   {
@@ -2925,6 +2925,19 @@
     "": null
   },
   {
+    "Laz Infinitive": "osiminu",
+    "Category": "TVE",
+    "Laz 3rd Person Singular Present": "isimins",
+    "Region": "HO",
+    "Laz 3rd Person Singular Present Alternative 1": null,
+    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present Alternative 2": null,
+    "Region Alternative 2": null,
+    "English Translation": "to listen",
+    "Turkish Verb": "dinlemek",
+    "": null
+  },
+  {
     "Laz Infinitive": "osinapu",
     "Category": "TVE",
     "Laz 3rd Person Singular Present": "isinapams",
@@ -3000,6 +3013,19 @@
     "Region Alternative 2": null,
     "English Translation": "to live",
     "Turkish Verb": "yaşamak",
+    "": null
+  },
+  {
+    "Laz Infinitive": "oşǩinu",
+    "Category": "TVE",
+    "Laz 3rd Person Singular Present": "işǩinams",
+    "Region": "AŞ, PZ",
+    "Laz 3rd Person Singular Present Alternative 1": null,
+    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present Alternative 2": null,
+    "Region Alternative 2": null,
+    "English Translation": "to listen",
+    "Turkish Verb": "dinlemek",
     "": null
   },
   {
@@ -3325,6 +3351,19 @@
     "Region Alternative 2": null,
     "English Translation": "to carry",
     "Turkish Verb": "taşımak",
+    "": null
+  },
+  {
+    "Laz Infinitive": "oucu",
+    "Category": "TVE",
+    "Laz 3rd Person Singular Present": "iucams",
+    "Region": "FA",
+    "Laz 3rd Person Singular Present Alternative 1": null,
+    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present Alternative 2": null,
+    "Region Alternative 2": null,
+    "English Translation": "to listen",
+    "Turkish Verb": "dinlemek",
     "": null
   },
   {
