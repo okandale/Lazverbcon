@@ -3,6 +3,7 @@ import pandas as pd
 import json
 from pathlib import Path
 from datetime import datetime
+from backend.data.convert import csv_to_json
 
 def convert_csv_to_js(input_csv_path, output_js_path):
     """
@@ -104,3 +105,9 @@ if __name__ == "__main__":
     output_path.parent.mkdir(parents=True, exist_ok=True)
     
     convert_csv_to_js(input_path, output_path)
+    
+    # Now, call convert
+    base_path = Path(__file__).parent / ".." / "data"
+    input_file = base_path / "Test Verb Present tense.csv"
+    output_file = base_path / "verb_data.json"
+    csv_to_json(input_file, output_file)
