@@ -11,7 +11,7 @@ export const specialCharacters = ['ç̌', 't̆', 'ž', 'ǩ', 'ʒ', 'ǯ', 'p̌'];
 export const regionNames = {
   'AŞ': 'Ardeşen (Art̆aşeni)',
   'PZ': 'Pazar (Atina)',
-  'FA': 'Fındıklı/Arhavi (Viǯe/Arǩabi)',
+  'FA': 'Fındıklı/Arhavi (Viǯe/Arkabi)',
   'HO': 'Hopa (Xopa)',
   'FI': 'Fındıklı (Viǯe)',
   'AR': 'Arhavi (Arǩabi)',
