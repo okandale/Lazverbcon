@@ -120,7 +120,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Specific case: preverb modifications based on subject
 
-
+            print(f"root: {root}")
+            print(f"preverb: {preverb}")
             if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
             if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and preverb not in 'me':
@@ -210,10 +211,10 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     prefix = preverb + subject_markers[subject]
 
             elif preverb:
-                if root.startswith('ca'):
+                if root.startswith(('ca', 'adgi')):
                     if subject in ('S3_Singular', 'S3_Plural'):
                         preverb = 'c'
-                    root = root[1:]
+                    root = root if infinitive == 'ceginu' else root[1:]  # exception for ceginu present tense, 3rd person in particular (swallows 'c' if not used)
                 if root.startswith(('ma', 'mu')):
                     root = root if subject in ('S3_Singular', 'S3_Plural') else root[1:]
                     preverb = '' if subject in ('S3_Singular', 'S3_Plural') else preverb
