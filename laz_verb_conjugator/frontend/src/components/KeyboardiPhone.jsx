@@ -1,28 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import AndroidVideoOverlay from './AndroidVideoOverlay';
 
-const KeyboardiPhone = () => {
-  const [showVideo, setShowVideo] = useState(false);
-  const videoUrl = "https://drive.google.com/file/d/199oEZqlYxm7T35TIX1u8YeahrQGmksae/preview";
+const KeyboardAndr = () => {
+  const youtubeVideoId = "1qBHDq9_TlJchSv1ICSBtT6wZBzoEGkhp";
+  const youtubeLink = `https://www.youtube.com/watch?v=${youtubeVideoId}`;
 
   return (
     <div className="max-w-4xl mx-auto p-6 prose">
-      {showVideo && <AndroidVideoOverlay videoUrl={videoUrl} onClose={() => setShowVideo(false)} />}
-      
       <h1 className="text-3xl font-bold">iPhone için Lazca Klavye Kurulumu</h1>
       
-      <div className="mb-8 p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition cursor-pointer"
-           onClick={() => setShowVideo(true)}>
-        <div className="flex items-center text-blue-600 font-medium">
+      <div className="mb-8 p-4 bg-blue-50 rounded-lg">
+        <a href={youtubeLink} 
+           className="flex items-center text-blue-600 font-medium hover:underline"
+           target="_blank"
+           rel="noopener noreferrer">
           <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
             <path d="M6.3 2.841A1.5 1.5 0 004 4.11v11.78a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
           </svg>
-          Video rehberi için buraya tıklayın
-        </div>
-        <p className="mt-2 text-sm">Tıklamadan önce 1. Adımdaki linke tıklayıp uygulamayı indiriniz.</p>
+          Video rehberi için YouTube'da izleyin
+        </a>
       </div>
-
+      
       <ol className="list-decimal pl-6 space-y-8">
         {/* Step 1 */}
         <li className="pl-2">
