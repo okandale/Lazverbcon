@@ -120,8 +120,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
             # Specific case: preverb modifications based on subject
 
-            print(f"root: {root}")
-            print(f"preverb: {preverb}")
             if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
             if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and preverb not in 'me':
@@ -287,7 +285,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
 
             suffix = suffixes[subject]
-            print(f"root: {root}")
             if subject == 'S3_Singular' and (obj == 'O3_Singular' or obj is None):
                 suffix = ''
             elif subject == 'S3_Singular' and obj == 'O3_Plural':
