@@ -149,10 +149,9 @@ const KeyboardWin = () => {
         <Link to="/keyboard" className="text-blue-600 font-medium">
           ← Klavye Rehberine Dön
         </Link>
-        <a href="https://docs.google.com/document/d/1JLY4qcwJR4nA5wuZYJCBwIhxntavC5X4A_IL94IosCM/edit?usp=sharing" 
-           className="text-blue-600 font-medium">
+        <Link to="/keyboard/computer" className="text-blue-600 font-medium">
           Lazca Klavye Kullanım Kılavuzu →
-        </a>
+        </Link>
       </div>
     </div>
   );

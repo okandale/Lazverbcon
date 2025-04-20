@@ -1,23 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const KeyboardAndr = () => {
-  const youtubeVideoId = "1qBHDq9_TlJchSv1ICSBtT6wZBzoEGkhp";
-  const youtubeLink = `https://www.youtube.com/watch?v=${youtubeVideoId}`;
+const KeyboardiPhone = () => {
+  // YouTube link placeholder - replace with actual link later
+  const youtubeLink = "#"; // Replace this with your YouTube link
 
   return (
     <div className="max-w-4xl mx-auto p-6 prose">
       <h1 className="text-3xl font-bold">iPhone için Lazca Klavye Kurulumu</h1>
       
-      <div className="mb-8 p-4 bg-blue-50 rounded-lg">
-        <a href={youtubeLink} 
-           className="flex items-center text-blue-600 font-medium hover:underline"
-           target="_blank"
-           rel="noopener noreferrer">
+      <div className="mb-8 p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+        <a 
+          href={youtubeLink} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center text-blue-600 font-medium"
+        >
           <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
             <path d="M6.3 2.841A1.5 1.5 0 004 4.11v11.78a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
           </svg>
-          Video rehberi için YouTube'da izleyin
+          Video rehberi için buraya tıklayın (YouTube)
         </a>
       </div>
       
@@ -262,12 +264,9 @@ const KeyboardAndr = () => {
         <Link to="/keyboard" className="text-blue-600 font-medium">
           ← Klavye Rehberine Dön
         </Link>
-        <a href="https://docs.google.com/document/d/1Tl0z-AFTk9S2usQ-ZLIEnm_wM9-oo8zQR0y3oeX4ZRg/edit#heading=h.vmno25izkhpx" 
-           className="text-blue-600 font-medium"
-           target="_blank"
-           rel="noopener noreferrer">
+        <Link to="/keyboard/phone" className="text-blue-600 font-medium">
           Lazca Klavye Kullanım Kılavuzu →
-        </a>
+        </Link>
       </div>
     </div>
   );

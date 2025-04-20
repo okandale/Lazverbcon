@@ -77,9 +77,6 @@ const KeyboardMobile = () => {
         <Link to="/keyboard" className="text-blue-600 font-medium">
           ← Klavye Rehberine Dön
         </Link>
-        <Link to="/keyboard/android" className="text-blue-600 font-medium">
-          Android Kurulum Rehberi →
-        </Link>
       </div>
     </div>
   );
