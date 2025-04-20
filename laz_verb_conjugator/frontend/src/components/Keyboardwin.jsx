@@ -6,10 +6,6 @@ const KeyboardWin = () => {
     <div className="max-w-4xl mx-auto p-6 prose">
       <h1 className="text-3xl font-bold">Windows için Lazca Klavye Kurulumu</h1>
       
-      <div className="mb-8 p-4 bg-blue-50 rounded-lg">
-        <a href="#" className="text-blue-600 font-medium">📹 Video rehberi için buraya tıklayın</a>
-      </div>
-
       <ol className="list-decimal pl-6 space-y-8">
         {/* Step 1 */}
         <li className="pl-2">
