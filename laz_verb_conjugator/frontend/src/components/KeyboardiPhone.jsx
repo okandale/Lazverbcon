@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import AndroidVideoOverlay from './AndroidVideoOverlay';
 
 const KeyboardiPhone = () => {
-  const [showVideo, setShowVideo] = useState(false);
-  const videoUrl = "https://drive.google.com/file/d/199oEZqlYxm7T35TIX1u8YeahrQGmksae/preview";
+  // YouTube link placeholder - replace with actual link later
+  const youtubeLink = "#"; // Replace this with your YouTube link
 
   return (
     <div className="max-w-4xl mx-auto p-6 prose">
-      {showVideo && <AndroidVideoOverlay videoUrl={videoUrl} onClose={() => setShowVideo(false)} />}
-      
       <h1 className="text-3xl font-bold">iPhone için Lazca Klavye Kurulumu</h1>
       
-      <div className="mb-8 p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition cursor-pointer"
-           onClick={() => setShowVideo(true)}>
-        <div className="flex items-center text-blue-600 font-medium">
+      <div className="mb-8 p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+        <a 
+          href={youtubeLink} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center text-blue-600 font-medium"
+        >
           <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
             <path d="M6.3 2.841A1.5 1.5 0 004 4.11v11.78a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
           </svg>
-          Video rehberi için buraya tıklayın
-        </div>
-        <p className="mt-2 text-sm">Tıklamadan önce 1. Adımdaki linke tıklayıp uygulamayı indiriniz.</p>
+          Video rehberi için buraya tıklayın (YouTube)
+        </a>
       </div>
 
       <ol className="list-decimal pl-6 space-y-8">
@@ -264,12 +264,9 @@ const KeyboardiPhone = () => {
         <Link to="/keyboard" className="text-blue-600 font-medium">
           ← Klavye Rehberine Dön
         </Link>
-        <a href="https://docs.google.com/document/d/1Tl0z-AFTk9S2usQ-ZLIEnm_wM9-oo8zQR0y3oeX4ZRg/edit#heading=h.vmno25izkhpx" 
-           className="text-blue-600 font-medium"
-           target="_blank"
-           rel="noopener noreferrer">
+        <Link to="/keyboard/phone" className="text-blue-600 font-medium">
           Lazca Klavye Kullanım Kılavuzu →
-        </a>
+        </Link>
       </div>
     </div>
   );
