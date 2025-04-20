@@ -157,13 +157,13 @@ const KeyboardMAC = () => {
         </div>
       </div>
 
-      <div className="mt-8 p-4 bg-blue-50 rounded-lg flex justify-between">
+      <div className="mt-12 p-4 bg-blue-50 rounded-lg flex justify-between">
         <Link to="/keyboard" className="text-blue-600 font-medium">
           ← Klavye Rehberine Dön
         </Link>
-        <a href="#" className="text-blue-600 font-medium">
-          Video Rehberi İzle →
-        </a>
+        <Link to="/keyboard/computer" className="text-blue-600 font-medium">
+          Lazca Klavye Kullanım Kılavuzu →
+        </Link>
       </div>
     </div>
   );

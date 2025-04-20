@@ -81,9 +81,6 @@ const KeyboardPC = () => {
         <Link to="/keyboard" className="text-blue-600 font-medium">
           ← Klavye Rehberine Dönünüz
         </Link>
-        <a href="#" className="text-blue-600 font-medium">
-          Video Rehberini İzleyiniz →
-        </a>
       </div>
     </div>
   );
