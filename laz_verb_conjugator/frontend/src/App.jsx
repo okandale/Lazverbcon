@@ -9,6 +9,7 @@ import Keyboard from './components/Keyboard';
 import KeyboardWin from './components/Keyboardwin';       
 import KeyboardPC from './components/KeyboardPC';
 import KeyboardMAC from './components/KeyboardMAC';
+import KeyboardAndr from './components/KeyboardAndr';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/keyboard/windows" element={<KeyboardWin />} />
         <Route path="/keyboard/computer" element={<KeyboardPC />} />
         <Route path="/keyboard/mac" element={<KeyboardMAC />} />
+        <Route path="/keyboard/android" element={<KeyboardAndr />} />
       </Routes>
     </Router>
   );

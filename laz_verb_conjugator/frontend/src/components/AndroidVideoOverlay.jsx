@@ -1,7 +1,6 @@
-// WinVideoOverlay.jsx
 import React from 'react';
 
-const WinVideoOverlay = ({ videoUrl, onClose }) => {
+const AndroidVideoOverlay = ({ videoUrl, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
       <div className="relative w-full max-w-4xl">
@@ -20,7 +19,7 @@ const WinVideoOverlay = ({ videoUrl, onClose }) => {
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              title="Windows için Lazca Klavye Kurulum Rehberi"
+              title="Android için Lazca Klavye Kurulum Rehberi"
             ></iframe>
           ) : (
             <div className="bg-gray-800 text-white p-8 text-center rounded-lg">
@@ -33,4 +32,4 @@ const WinVideoOverlay = ({ videoUrl, onClose }) => {
   );
 };
 
-export default WinVideoOverlay;
+export default AndroidVideoOverlay;
