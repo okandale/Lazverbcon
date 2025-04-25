@@ -108,9 +108,14 @@ def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicati
                 prefix = preverb + subject_markers[subject]
             elif preverb == "ce" and subject in ['S3_Singular', 'S3_Plural']:
                 prefix = "c" + subject_markers[subject]
-            elif preverb in ('gama', 'gam'):
+            elif infinitive in ('gamaçamu'):
                 root = 'ç'
                 preverb = 'gam' if subject in ('S3_Singular', 'S3_Plural') else 'gamo'
+                prefix = preverb + subject_markers[subject]
+            elif (infinitive.startswith('gama') and not root.startswith('gama') and 
+                (subject in ['S1_Singular', 'S1_Plural'] or 
+                obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'])):
+                preverb = 'gama'
                 prefix = preverb + subject_markers[subject]
             elif preverb == 'go' and subject in ('S3_Singular', 'S3_Plural'):
                 prefix = "gv" + subject_markers[subject] if region in ('HO') else "g" + subject_markers[subject]

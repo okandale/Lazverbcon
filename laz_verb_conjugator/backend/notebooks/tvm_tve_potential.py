@@ -158,16 +158,21 @@ def conjugate_potential_form(infinitive, tense, subject=None, obj=None, applicat
             first_letter = get_first_letter(root)
 
             
-
+            print(F"root: {root}")
             if preverb == "me" and subject_markers[subject].startswith(('a', 'e', 'i', 'o', 'u')):
                 preverb = "n"
                 prefix = preverb + subject_markers[subject]
-            elif preverb in ('gama', 'gam'):
+            elif infinitive in 'gamaçamu':
                 root = 'ç'
                 if region in ('PZ', 'AŞ'):
                     preverb = 'gam' if subject in ('S3_Singular', 'S3_Plural') else 'gamo'
                 else:
                     preverb = 'gam' if subject in ('S3_Singular', 'S3_Plural') else 'gama'
+                prefix = preverb + subject_markers[subject]
+            elif (infinitive.startswith('gama') and not root.startswith('gama') and 
+                (subject in ['S1_Singular', 'S1_Plural'] or 
+                obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'])):
+                preverb = 'gama'
                 prefix = preverb + subject_markers[subject]
             elif preverb in ['do', 'd'] and subject_markers[subject].startswith(('a','e','i','o','u')):
                 prefix = "dv" + subject_markers[subject] if region in ('HO', 'PZ', 'AŞ') else "d" + subject_markers[subject]

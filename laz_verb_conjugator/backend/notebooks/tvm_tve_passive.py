@@ -193,10 +193,15 @@ def conjugate_passive_form(infinitive, tense, subject=None, obj=None, applicativ
                 else:
                     preverb = 'me'
                     
-            elif preverb in ('gama', 'gam'):
+            elif infinitive in ('gamaçamu'):
                 root = 'iç'
                 preverb = 'gam' if subject in ('S3_Singular', 'S3_Plural') else 'gamo'
                 prefix = preverb + subject_markers[subject]
+            elif (infinitive.startswith('gama') and not root.startswith('gama') and 
+                (subject in ['S1_Singular', 'S1_Plural'] or 
+                obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'])):
+                preverb = 'gama'
+                prefix = preverb + subject_markers[subject]            
             elif preverb == 'go' and root.startswith(('a','e','i','o','u')) and subject not in ('S1_Singular', 'S1_Plural'):
                 prefix = "gv" + subject_markers[subject] if region in ('PZ', 'AŞ') else "gu" + subject_markers[subject] if region in 'HO' else "g" + subject_markers[subject]
             elif preverb:

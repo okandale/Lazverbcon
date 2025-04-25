@@ -577,10 +577,15 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
                 else:
                     # Adjust the prefix based on the first letter for phonetic rules
-                    if preverb:
+                    if preverb or infinitive.startswith('gama'):    # add more preverbs here perhaps
                         preverb_form = preverbs_rules.get(preverb, preverb)
                         if isinstance(preverb_form, dict):
                             preverb_form = preverb_form.get(subject, preverb)
+                        if (infinitive.startswith('gama') and not root.startswith('gama') and 
+                            (subject in ['S1_Singular', 'S1_Plural'] or 
+                            obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'])):
+                            preverb = 'gama'
+                            preverb_form = 'gama'
                         if obj in ['O2_Singular', 'O2_Plural'] and not subject in ['S2_Singular', 'S2_Plural']:
                             if root.startswith('n'):
                                 root = root[1:]  # Remove the initial 'n'
