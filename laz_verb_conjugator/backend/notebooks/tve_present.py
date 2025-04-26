@@ -154,7 +154,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
                     preverb = preverb[:-1] + 'y' if preverb == 'ge' else preverb[:-1] # added for 'geçamu' as it would omit the 'y' in (no S1) O3 conjugations. 
 
-                print (F"root {original_root}")
                 if preverb == 'mo' or infinitive.startswith('mo'):
                     if root.startswith(('mu', 'imu', 'umu', 'omu')):
                         if root.startswith(('mu', 'imu', 'umu', 'omu')):
@@ -456,7 +455,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
                 # Special handling for "ceç̌alu"
                 elif preverb == 'ce' or infinitive.startswith('ce'):
-                    print(F"infinitive {infinitive}")
                     if infinitive in co_verbs or root.startswith(('icu', 'ocu', 'ucu')):
                         if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural' 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
                             if root.startswith(('icu', 'ucu', 'ocu')):
