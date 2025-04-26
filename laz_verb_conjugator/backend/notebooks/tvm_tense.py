@@ -214,6 +214,7 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
             if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
                 preverb = preverb[:-1]
             # Special handling for "me"
+            print(F"preverb: {preverb}")
             prefix = ''
             if preverb == 'me' or (use_optional_preverb and not preverb):
                 if root.startswith('no'):
@@ -366,12 +367,18 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                     prefix = 'oǩo'
                 else:
                     prefix = 'oǩo'
-
             # Special handling for "go"
             else:
                 # Adjust the prefix based on the first letter for phonetic rules
+                print(F"root: {root}")
                 if preverb:
-                    if preverb == 'gama':
+                    if preverb == 'mo' and root.startswith('ma'):
+                        if subject in ['S1_Singular', 'S1_Plural']:
+                            root = root[1:]
+                        else:
+                            root = root
+                            preverb = ''
+                    elif preverb == 'gama':
                         if subject in ('S1_Singular', 'S1_Plural'):
                             preverb = 'gama'
                             root = root[3:]
