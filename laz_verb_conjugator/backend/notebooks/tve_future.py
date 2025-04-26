@@ -58,7 +58,7 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
             region = region.strip()
             personal_pronouns = get_personal_pronouns(region, 'tve_future')
             phonetic_rules_v, phonetic_rules_g = get_phonetic_rules(region)
-            
+            original_root = process_compound_verb(third_person)  # Store the original root before any modifications             
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
             first_word = get_first_word(third_person)  # Get the first word for compound verbs
@@ -178,8 +178,12 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                     else:
                         prefix = ''
 
-                    if preverb.endswith('o') and root.startswith(('a', 'e', 'i', 'o', 'u' )) and prefix in (''):
-                        preverb = preverb[:1]
+                    if (infinitive.startswith('mo') and 
+                        (not original_root.startswith(('mo', 'mu')) or 
+                        (original_root.startswith('mu') and 
+                        subject in ('S3_Singular', 'S3_Plural') and 
+                        obj is None))):
+                        preverb = preverb[:1]  # Remove the 'o' from preverb
 
                 if preverb == 'me' or (use_optional_preverb and not preverb):
                     if infinitive in no_verbs:

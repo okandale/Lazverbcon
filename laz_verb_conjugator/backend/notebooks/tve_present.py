@@ -52,13 +52,16 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
     # Initialize region_conjugations
     region_conjugations = {region: [] for region in regions_list}
 
+
+
     # Process each third-person form and its associated regions
     for third_person, region_str in third_person_forms:
         regions_for_form = region_str.split(',')
         for region in regions_for_form:
             region = region.strip()
             phonetic_rules_v, phonetic_rules_g = get_phonetic_rules(region)
-            
+
+            original_root = process_compound_verb(third_person)  # Store the original root before any modifications            
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
             first_word = get_first_word(third_person)  # Get the first word for compound verbs
@@ -151,7 +154,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
                     preverb = preverb[:-1] + 'y' if preverb == 'ge' else preverb[:-1] # added for 'geçamu' as it would omit the 'y' in (no S1) O3 conjugations. 
 
-
+                print (F"root {original_root}")
                 if preverb == 'mo' or infinitive.startswith('mo'):
                     if root.startswith(('mu', 'imu', 'umu', 'omu')):
                         if root.startswith(('mu', 'imu', 'umu', 'omu')):
@@ -179,8 +182,12 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         prefix = 'mom'
                     else:
                         prefix = ''
-                    if preverb.endswith('o') and root.startswith(('a', 'e', 'i', 'o', 'u' )) and prefix in (''):
-                        preverb = preverb[:1]
+                    if (infinitive.startswith('mo') and 
+                        (not original_root.startswith(('mo', 'mu')) or 
+                        (original_root.startswith('mu') and 
+                        subject in ('S3_Singular', 'S3_Plural') and 
+                        obj is None))):
+                        preverb = preverb[:1]  # Remove the 'o' from preverb
 
 
                 # Special handling for "me"
@@ -577,7 +584,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
                 else:
                     # Adjust the prefix based on the first letter for phonetic rules
-                    if preverb or infinitive.startswith('gama'):    # add more preverbs here perhaps
+                    if preverb:
                         preverb_form = preverbs_rules.get(preverb, preverb)
                         if isinstance(preverb_form, dict):
                             preverb_form = preverb_form.get(subject, preverb)

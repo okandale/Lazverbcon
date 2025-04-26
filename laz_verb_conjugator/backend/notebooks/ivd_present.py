@@ -195,7 +195,9 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 else:
                     prefix = 'c'
 
-            elif preverb == 'mo':
+            elif preverb == 'mo' or infinitive.startswith("mo"):
+                if root.startswith('m') and subject not in (('S3_Singular', 'S3_Plural')):
+                    root = root[1:]
                 if subject in ('S3_Singular', 'S3_Plural') and obj in ('O1_Singular', 'O1_Plural'):
                     adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
                     prefix = preverb + adjusted_prefix
@@ -206,7 +208,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     adjusted_prefix = 'm'
                     prefix = preverb + adjusted_prefix
                 else:
-                    prefix = preverb + subject_markers[subject]
+                    prefix = preverb[2:] + subject_markers[subject] if root.startswith('m') else preverb + subject_markers[subject]
 
             elif preverb:
                 if root.startswith(('ca', 'adgi')):
@@ -299,12 +301,13 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     root = root[:-1]
                 suffix = 't'
             elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular']:
+                print(F"root: {root}")
                 if root.endswith(('n', 'rs')):
                     root = root[:-1]
-                suffix = '' if infinitive.endswith('rs') else 'r'
+                    suffix = '' if infinitive.endswith('rs') else 'r'
                 if root.endswith('ns'):
                     root = root[:-1]
-                suffix = ''
+                    suffix = ''
             elif subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural', 'S3_Plural'] and obj in ('O1_Plural', 'O2_Plural'):
                 if root.endswith(('n', 'rs')):
                     root = root[:-2] if infinitive.endswith('rs') else root[:-1]
