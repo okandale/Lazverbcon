@@ -668,7 +668,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             final_root = root[:-1] if root.endswith('s') else root
             
             if infinitive in ('oxenu', 'oxvenu') and subject in ('S1_Singular', 'S1_Plural') and not applicative and not causative: # oxenu past tense exception
-                prefix = 'p̌'
+                prefix = '(do)p̌'
                 final_root = 'qv' if region in "HO" else ''
             elif infinitive in ('oxenu', 'oxvenu') and subject in ('S2_Singular', 'S2_Plural') and not applicative and not causative:
                 prefix = ''
@@ -684,9 +684,9 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             # Conjugate the verb
             conjugated_verb = f"{prefix}{final_root}{suffix}"
             if conjugated_verb == 'p̌qvi':
-                conjugated_verb = 'p̌qvi (p̌i)'
+                conjugated_verb = '(do)p̌qvi (dop̌i)'
             if conjugated_verb == 'p̌qvit':
-                conjugated_verb = 'p̌qvit (p̌it)'
+                conjugated_verb = '(do)p̌qvit (dop̌it)'
             region_conjugations[region].append((subject, obj, f"{first_word} {conjugated_verb}".strip()))
 
     return region_conjugations
