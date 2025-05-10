@@ -160,7 +160,7 @@ def conjugate_past(infinitive, subject, obj=None, applicative=False, causative=F
                     prefix = preverb[:-1]
 
             elif preverb == 'go':
-                if subject in ('S3_Singular', 'S3_Plural') and not obj:
+                if subject in ('S3_Singular', 'S3_Plural') and (not obj or obj in ('O2_Singular', 'O2_Plural', 'O3_Singular', 'O3_Plural')):
                     preverb = ''
                 else:
                     root = root[2:] if region in ('PZ', 'AŞ', 'HO') else root[1:]
