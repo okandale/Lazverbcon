@@ -819,6 +819,19 @@
     "": null
   },
   {
+    "Laz Infinitive": "goǩuʒxu",
+    "Category": "TVM",
+    "Laz 3rd Person Singular Present": "goǩuʒxun",
+    "Region": "PZ, AŞ, FA, HO",
+    "Laz 3rd Person Singular Present Alternative 1": null,
+    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present Alternative 2": null,
+    "Region Alternative 2": null,
+    "English Translation": "to wake up",
+    "Turkish Verb": "uyanmak",
+    "": null
+  },
+  {
     "Laz Infinitive": "golusu",
     "Category": "TVE",
     "Laz 3rd Person Singular Present": "golusumers",
@@ -1484,13 +1497,13 @@
   {
     "Laz Infinitive": "obonu",
     "Category": "TVE",
-    "Laz 3rd Person Singular Present": "bonups",
+    "Laz 3rd Person Singular Present": "ibonaps",
     "Region": "HO",
-    "Laz 3rd Person Singular Present Alternative 1": null,
-    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present Alternative 1": "ibonams",
+    "Region Alternative 1": "PZ, AŞ, FA",
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": "to burn oneself",
+    "English Translation": "to clean (a body part)",
     "Turkish Verb": "vucudun bir bolumunu veya tamamını yıkamak",
     "": null
   },
