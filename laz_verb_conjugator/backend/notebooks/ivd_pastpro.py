@@ -202,10 +202,11 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
                     prefix = preverb + subject_markers[subject]
 
             elif preverb:
+                print(F"root: {root}")
                 if root.startswith('ca'):
                     if subject in ('S3_Singular', 'S3_Plural'):
                         preverb = 'c'
-                    root = root[1:]
+                    root = root if subject in ('S3_Singular', 'S3_Plural') else root[1:]                
                 if root.startswith(('ma', 'mu')):
                     root = root if subject in ('S3_Singular', 'S3_Plural') else root[1:]
                     preverb = '' if subject in ('S3_Singular', 'S3_Plural') else preverb

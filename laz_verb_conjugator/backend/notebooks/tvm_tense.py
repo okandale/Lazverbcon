@@ -296,6 +296,12 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                         root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root[2:]  # Remove only one character if there's a marker
                     else:
                         root = root[1:]
+                elif root.startswith('ca'):
+                    if subject in ['S1_Singular', 'S1_Plural']:
+                        root = root[1:]
+                    else:
+                        root = root
+                        preverb = ''
                 else:
                     if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
                         root = root

@@ -119,7 +119,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 prefix = subject_markers[subject]
 
             # Specific case: preverb modifications based on subject
-
             if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and preverb == 'e':
                 preverb = 'ey' if region == 'PZ' else 'y'
             if preverb.endswith(('a','e','i','o','u')) and root.startswith(('a','e','i','o','u')) and preverb not in 'me':
@@ -210,11 +209,15 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 else:
                     prefix = preverb[2:] + subject_markers[subject] if root.startswith('m') else preverb + subject_markers[subject]
 
+
             elif preverb:
+                print(F"root: {root}")
                 if root.startswith(('ca', 'adgi')):
                     if subject in ('S3_Singular', 'S3_Plural'):
                         preverb = 'c'
-                    root = root if infinitive == 'ceginu' else root[1:]  # exception for ceginu present tense, 3rd person in particular (swallows 'c' if not used)
+                    root = root if infinitive == 'cedginu' else root[1:]  # exception for ceginu present tense, 3rd person in particular (swallows 'c' if not used)
+                    if subject in ('S1_Singular', 'S2_Singular', 'S1_Pural', 'S2_Plural'):
+                        root = root[1:]
                 if root.startswith(('ma', 'mu')):
                     root = root if subject in ('S3_Singular', 'S3_Plural') else root[1:]
                     preverb = '' if subject in ('S3_Singular', 'S3_Plural') else preverb
@@ -301,7 +304,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     root = root[:-1]
                 suffix = 't'
             elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular']:
-                print(F"root: {root}")
                 if root.endswith(('n', 'rs')):
                     root = root[:-1]
                     suffix = '' if infinitive.endswith('rs') else 'r'

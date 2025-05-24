@@ -583,12 +583,16 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 else:
                     # Adjust the prefix based on the first letter for phonetic rules
                     if preverb:
+                        print(f"root: {root}")
                         preverb_form = preverbs_rules.get(preverb, preverb)
                         if isinstance(preverb_form, dict):
                             preverb_form = preverb_form.get(subject, preverb)
-                        if (infinitive.startswith('gama') and not root.startswith('gama') and 
+                        elif (preverb in 'gama' or infinitive.startswith(('gama', 'igama')) and not root.startswith('gama') and 
                             (subject in ['S1_Singular', 'S1_Plural'] or 
                             obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'])):
+                            root = root[1:] if original_root.startswith('gamaça') else root
+                            if marker:
+                                root = marker + root[1:]                          
                             preverb = 'gama'
                             preverb_form = 'gama'
                         if obj in ['O2_Singular', 'O2_Plural'] and not subject in ['S2_Singular', 'S2_Plural']:
@@ -606,7 +610,9 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                                 root = root[1:]
                             prefix = preverb + 'm'
                         elif subject in ['S1_Singular', 'S1_Plural']:
+                            first_letter = get_first_letter(root)
                             adjusted_prefix = adjust_prefix(preverb_form, first_letter, phonetic_rules_v)
+                            print(f"first letter: {first_letter}")
                             if root.startswith('n'):
                                 root = root[1:]
                             prefix = preverb + adjusted_prefix
