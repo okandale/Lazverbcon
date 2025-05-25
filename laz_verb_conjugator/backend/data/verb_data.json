@@ -850,7 +850,7 @@
     "Laz 3rd Person Singular Present": "ganç̌elen",
     "Region": "FA",
     "Laz 3rd Person Singular Present Alternative 1": "gvanç̌elen",
-    "Region Alternative 1": "PZ, AŞ, HO",
+    "Region Alternative 1": "HO",
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
     "English Translation": "to miss someone",
@@ -2116,6 +2116,19 @@
     "Region Alternative 2": null,
     "English Translation": "to save (money)",
     "Turkish Verb": "biriktirmek",
+    "": null
+  },
+  {
+    "Laz Infinitive": "oǩomandu",
+    "Category": "IVD",
+    "Laz 3rd Person Singular Present": "aǩomanden",
+    "Region": "PZ, AŞ",
+    "Laz 3rd Person Singular Present Alternative 1": null,
+    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present Alternative 2": null,
+    "Region Alternative 2": null,
+    "English Translation": "to miss someone",
+    "Turkish Verb": "özlemek",
     "": null
   },
   {

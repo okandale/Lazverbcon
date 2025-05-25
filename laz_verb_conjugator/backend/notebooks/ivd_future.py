@@ -77,7 +77,8 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
 
             # Extract the preverb from the infinitive if it exists
             preverb = ''
-            if main_infinitive != 'oǩoreʒxu':
+            preverb_exceptions = {'oǩomandu'}
+            if main_infinitive not in preverb_exceptions:
                 for pv_group in preverbs_rules.keys():
                     if isinstance(pv_group, tuple):
                         for pv in pv_group:
