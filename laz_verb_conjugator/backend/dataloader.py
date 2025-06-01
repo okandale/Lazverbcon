@@ -80,7 +80,7 @@ def load_tve_verbs():
         if any(form and (check_prefix_in_words(form, 'gyo') or check_prefix_in_words(form, 'gyu'))
                 for form in present_forms):
             gyo_verbs.append(infinitive)
-        if any(form and (check_prefix_in_words(form, 'no') or check_prefix_in_words(form, 'nu')) 
+        if any(form and (check_prefix_in_words(form, 'no') or check_prefix_in_words(form, 'nu') or check_prefix_in_words(form, 'n')) 
                for form in present_forms):
             no_verbs.append(infinitive)       
         region_data = []
@@ -144,7 +144,7 @@ def load_tvm_tense():
             co_verbs.append(infinitive)
         if any(form and check_prefix_in_words(form, 'gyo') for form in present_forms):
             gyo_verbs.append(infinitive)
-        if any(form and (check_prefix_in_words(form, 'no') or check_prefix_in_words(form, 'nu')) 
+        if any(form and (check_prefix_in_words(form, 'no') or check_prefix_in_words(form, 'nu') or check_prefix_in_words(form, 'n')) 
                for form in present_forms):
             no_verbs.append(infinitive)       
         region_data = []
