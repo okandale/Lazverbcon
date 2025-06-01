@@ -610,7 +610,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
 
             # Handle applicative marker and specific suffix replacement - if we have to remove the causative "o" for oxo/oǩo preverbs, we could check here: if preverb ends with "o") root[:-1
             if applicative and causative:
-                if infinitive in (('oşu', 'dodvu', 'otku', 'golusu')):
+                if infinitive in (('oşu', 'dodvu', 'otku', 'golusu', 'meşǩvu')):
                     root = root[:-5] + 'vap' if infinitive in ('golusu') else root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'
@@ -619,14 +619,14 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 elif root.endswith('rs'):
                     root = root[:-1] + 'ap'
             elif applicative:
-                if root in (('işums', 'işups', 'idums', 'itkums', 'itkups')) or infinitive in ('golusu'):
+                if root in (('işums', 'işups', 'idums', 'itkums', 'itkups')) or infinitive in (('golusu', 'meşǩvu')):
                     root = root[:-5] + 'v' if infinitive in ('golusu') else root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3]
             elif causative:
                 if root == 'digurams':
                     root = root
-                elif root in (('oşums', 'oşups', 'odums', 'otkums', 'otkups')) or infinitive in ('golusu'):
+                elif root in (('oşums', 'oşups', 'odums', 'otkums', 'otkups')) or infinitive in (('golusu', 'meşǩvu')):
                     root = root[:-5] + 'v' if infinitive in ('golusu') else root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
                     root = root[:-3] + 'ap'
@@ -636,7 +636,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                     root = root[:-1] + 'ap'
 
             else:
-                if root in ('şums', 'şups', 'dums', 'tkums', 'tkups'):  # remove "am/um/ups" endings from root
+                if root in (('şums', 'şups', 'dums', 'tkums', 'tkups')) or infinitive in ('meşǩvu'):  # remove "am/um/ups" endings from root, use infinitives for preverbs
                     root = root[:-3] + 'v'
                     if  subject == 'S3_Singular':
                         root = root[:-1]
