@@ -585,10 +585,12 @@ def conjugate_future(infinitive, subject=None, obj=None, applicative=False, caus
                             prefix = 'm' + prefix
                         elif subject in ['S1_Singular', 'S1_Plural']:
                             first_letter = get_first_letter(root)
+                            preverb_form = preverb
                             adjusted_prefix = adjust_prefix(preverb_form, first_letter, phonetic_rules_v)
                             if root.startswith('n'):
                                 root = root[1:]
                             prefix = adjusted_prefix
+
 
             # Handle the Ardeşen rule
             if third_person.endswith('y'):
