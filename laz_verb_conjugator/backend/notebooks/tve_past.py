@@ -146,7 +146,8 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
 
 
 
-
+                print(f"root: {root}")
+                print(f"preverb: {preverb}")
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                     preverb = 'ey' if region == 'PZ' else 'y'
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
@@ -374,6 +375,41 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                         prefix = ''
                     else:
                         prefix = preverb if subject in ('S1_Singular', 'S1_Plural') or obj in ('O2_Singular', 'O2_Plural') else preverb[:1] if infinitive in gyo_verbs else preverb
+
+
+                elif preverb in ('ela', 'el'):
+                        if (preverb in 'ela' or infinitive.startswith(('ela', 'uela', 'iela', 'oel')) and not root.startswith('ela') and 
+                            (subject in ['S1_Singular', 'S1_Plural'] or 
+                            obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'])) or (obj in ['O3_Singular', 'O3_Plural'] and marker):
+                            if marker:
+                                root = marker + root[4:] if marker in ("u", "o") else marker + root[2:]
+                                print(f"root: {root}")                          
+                            preverb = 'ela'
+                            preverb_form = 'el'
+                            root = root if marker in ("u", "o") else root[2:]
+                        if obj in ['O2_Singular', 'O2_Plural'] and not subject in ['S2_Singular', 'S2_Plural']:
+                            if root.startswith('n'):
+                                root = root[1:]  # Remove the initial 'n'
+                                first_letter = get_first_letter(root)
+                                adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                                prefix = preverb + 'n' + adjusted_prefix  # Add 'n' back before the adjusted prefix
+                            else:
+                                first_letter = get_first_letter(root)
+                                adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                                prefix = preverb + adjusted_prefix
+                        elif obj in ['O1_Singular', 'O1_Plural'] and not subject in ['S1_Singular', 'S1_Plural']:
+                            if root.startswith('n'):
+                                root = root[1:]
+                            prefix = preverb + 'm'
+                        elif subject in ['S1_Singular', 'S1_Plural']:
+                            first_letter = get_first_letter(root)
+                            adjusted_prefix = adjust_prefix(preverb_form, first_letter, phonetic_rules_v)
+                            print(f"first letter: {first_letter}")
+                            if root.startswith('n'):
+                                root = root[1:]
+                            prefix = preverb + adjusted_prefix
+                        else:
+                            prefix = preverb_form
 
                 # Special handling for "ceç̌alu"
                 elif preverb == 'cel':

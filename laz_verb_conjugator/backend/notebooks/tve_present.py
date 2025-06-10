@@ -148,7 +148,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             if not handled_gontzku:
 
                 
-
+ 
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                     preverb = 'ey' if region == 'PZ' else 'y'
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
@@ -384,38 +384,39 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
 
                 # Special handling for "ceç̌alu"
-                elif preverb == 'ela':
-                    if infinitive in ('elaşinu'):
-                        if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O3_Singular', 'O3_Plural'] and marker:
-                            if applicative and causative:
-                                root = 'i' + root[2:]
-                            if applicative:
-                                root = marker + root[2:] if obj in ('O3_Singular', 'O3_Plural') else marker + root[2:]
-                            elif causative:
-                                root = 'o' + root[2:]
+                elif preverb in ('ela', 'el'):
+                        if (preverb in 'ela' or infinitive.startswith(('ela', 'uela', 'iela', 'oel')) and not root.startswith('ela') and 
+                            (subject in ['S1_Singular', 'S1_Plural'] or 
+                            obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'])) or (obj in ['O3_Singular', 'O3_Plural'] and marker):
+                            if marker:
+                                root = marker + root[4:] if marker in ("u", "o") else marker + root[2:]
+                                print(f"root: {root}")                          
+                            preverb = 'ela'
+                            preverb_form = 'el'
+                            root = root if marker in ("u", "o") else root[2:]
+                        if obj in ['O2_Singular', 'O2_Plural'] and not subject in ['S2_Singular', 'S2_Plural']:
+                            if root.startswith('n'):
+                                root = root[1:]  # Remove the initial 'n'
+                                first_letter = get_first_letter(root)
+                                adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                                prefix = preverb + 'n' + adjusted_prefix  # Add 'n' back before the adjusted prefix
                             else:
-                                root = root[2:]  # Remove only one character if there's a marker
+                                first_letter = get_first_letter(root)
+                                adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
+                                prefix = preverb + adjusted_prefix
+                        elif obj in ['O1_Singular', 'O1_Plural'] and not subject in ['S1_Singular', 'S1_Plural']:
+                            if root.startswith('n'):
+                                root = root[1:]
+                            prefix = preverb + 'm'
+                        elif subject in ['S1_Singular', 'S1_Plural']:
+                            first_letter = get_first_letter(root)
+                            adjusted_prefix = adjust_prefix(preverb_form, first_letter, phonetic_rules_v)
+                            print(f"first letter: {first_letter}")
+                            if root.startswith('n'):
+                                root = root[1:]
+                            prefix = preverb + adjusted_prefix
                         else:
-                            root = root[1:]
-                            preverb = preverb
-                    else:
-                        if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
-                            root = root
-                        else:
-                            root = root[2:]
-                    first_letter = get_first_letter(root)
-                    if obj in ['O2_Singular', 'O2_Plural'] and not subject in ['S2_Singular', 'S2_Plural']:
-                        adjusted_prefix = adjust_prefix('g', first_letter, phonetic_rules_g)
-                        prefix = preverb + adjusted_prefix
-                    elif subject in ['S1_Singular', 'S1_Plural']:
-                        adjusted_prefix = adjust_prefix('v', first_letter, phonetic_rules_v)
-                        prefix = preverb + adjusted_prefix
-                    elif obj in ['O1_Singular', 'O1_Plural'] and not subject in ['S1_Singular', 'S1_Plural']:
-                        prefix = preverb + 'm'
-                    elif marker_type == 'causative':
-                        prefix = preverb 
-                    else:
-                        prefix = preverb[:2]
+                            prefix = preverb_form
 
 
                 # Special handling for "ceç̌alu"
@@ -583,7 +584,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 else:
                     # Adjust the prefix based on the first letter for phonetic rules
                     if preverb:
-                        print(f"root: {root}")
                         preverb_form = preverbs_rules.get(preverb, preverb)
                         if isinstance(preverb_form, dict):
                             preverb_form = preverb_form.get(subject, preverb)
