@@ -38,5 +38,18 @@ start the flask server by running the command:
 python app.py
 ```
 
-After running the command, you can access the application at localhost:5000
+After running the command, head to the `frontend` folder to run the frontend:
 
+```bash
+cd ..
+cd frontend
+npm run dev
+
+[…]
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://10.255.255.254:5173/
+  ➜  Network: http://172.19.113.104:5173/
+[…]
+```
+
+You are now ready to explore the conjugator on http://localhost:5173/.
