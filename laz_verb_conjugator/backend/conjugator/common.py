@@ -1,3 +1,4 @@
+import re
 from enum import Enum, IntFlag, auto
 
 
@@ -123,6 +124,28 @@ PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER = {
     "ǩ": ["ç̌", "ǩ", "q", "ǯ", "t̆"],
 }
 
+VERB_PREFIXES = [
+    "gelo",
+    "ge",
+    "e",
+    "ce",
+    "dolo",
+    "do",
+    "oxo",
+    "me",
+    "gol",
+    "go",
+    "oǩo",
+    "gam",
+    "mola",
+    "ye",
+    "mo",
+    "ǩoǩo",
+]
+VERB_PREFIX_REGEX = (
+    r"^(" + "|".join(sorted(VERB_PREFIXES, key=len, reverse=True)) + r")"
+)
+
 
 def extract_initial_cluster(verb_form: str) -> str:
     """Extracts the initial consonant cluster from a verb form.
@@ -143,3 +166,11 @@ def extract_initial_cluster(verb_form: str) -> str:
     elif verb_form.startswith("gyoç̌ǩams"):
         return verb_form[2:]
     return verb_form[0]
+
+
+def extract_prefix(infinitive_form):
+    matches = re.match(VERB_PREFIX_REGEX, infinitive_form)
+    if matches is not None:
+        return matches.group(1)
+    else:
+        return None

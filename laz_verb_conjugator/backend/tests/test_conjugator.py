@@ -22,13 +22,37 @@ expected_forms = {
         Person.FIRST_PERSON_PLURAL: "putxit",
         Person.SECOND_PERSON_PLURAL: "putxit",
         Person.THIRD_PERSON_PLURAL: "putxes",  # or skidey depending on dialect
+    }
+}
+
+prefixed_forms = {
+    NominativeVerb(infinitive="doskidu", present_third="doskidun"): {
+        Person.FIRST_PERSON_SINGULAR: "dopskidi",
+        Person.SECOND_PERSON_SINGULAR: "doskidi",
+        Person.THIRD_PERSON_SINGULAR: "doskidu",
+        Person.FIRST_PERSON_PLURAL: "dopskidit",
+        Person.SECOND_PERSON_PLURAL: "doskidit",
+        Person.THIRD_PERSON_PLURAL: "doskides",  # or skidey depending on dialect
     },
 }
 
 @pytest.mark.parametrize("verb,conjugations", expected_forms.items())
 def test_conjugate_nominative_past_tense_all_persons(verb, conjugations):
-    
-    
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_subject(person)
+            .set_region(Region.ARDESEN)
+            .set_tense(Tense.PAST)
+            .build()
+        )
+        result = conjugator.conjugate_nominative_verb(verb)
+        assert result == conjugation, \
+            f"Expected {conjugation} but got {result} for {person}"
+
+
+@pytest.mark.parametrize("verb,conjugations", prefixed_forms.items())
+def test_conjugate_prefix_verbs_past_tense(verb, conjugations):
     for person, conjugation in conjugations.items():
         conjugator = (
             ConjugatorBuilder()

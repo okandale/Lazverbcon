@@ -1,9 +1,6 @@
-from .common import (
-    PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
-    PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER,
-    Person,
-    extract_initial_cluster,
-)
+from .common import (PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
+                     PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER, Person,
+                     extract_initial_cluster)
 
 
 class Conjugator:
@@ -12,29 +9,31 @@ class Conjugator:
         self.region = region
         self.object = object
 
-    def apply_prothesis(self, inflected_stem):
-        """Apply a prothetic consonant to the inflected stem if required.
+    def apply_epenthetic_segment(self, inflected_stem):
+        """
+        Apply an epenthetic segment to the inflected stem if required.
 
-        This method inserts a consonant at the beginning of the verb form
-        according to phonological rules specific to the grammatical person and region.
-        The phenomenon is known as *prothesis*, and is used in Laz to ease pronunciation,
-        especially in first and second person conjugations.
+        This method inserts a consonantal segment at the beginning of the verb form
+        according to phonological and morphological rules specific to the grammatical
+        person and dialectal region.
 
-        The inserted consonant (e.g., 'p', 'v', 'b', 'm', etc.) depends on the initial
-        consonant cluster of the verb stem and may vary across dialectal regions.
+        The inserted segment—commonly referred to as an *epenthetic segment*—serves to
+        ease articulation or mark person agreement in certain Laz verb conjugations.
+        It is typically inserted in first and second person forms when the stem
+        begins with specific consonant clusters or vowels.
 
         Example:
-            'skidu' → 'pskidu' (with 'p' as the prothetic consonant)
-            'isinapam' → 'visinapam' (for vowel-initial stems)
+            'skidu' → 'pskidu' (with 'p' as the epenthetic segment)
+            'isinapam' → 'visinapam' (vowel-initial stem, epenthetic 'v')
 
         Args:
-            inflected_stem (str): The already-inflected verb stem, before any prothesis.
+            inflected_stem (str): The already-inflected verb stem, before any epenthetic insertion.
 
         Returns:
-            str: The verb form with the appropriate prothetic consonant, if applicable.
-                Returns the original stem if no prothesis rule matches.
+            str: The verb form with the appropriate epenthetic segment, if applicable.
+                Returns the original stem if no rule matches.
         """
-        prothetic_consonants_by_cluster = (
+        epenthetic_segments_by_cluster = (
             PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION[
                 self.region
             ]
@@ -42,19 +41,14 @@ class Conjugator:
             else PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER
         )
 
-        # Prefixes are a dictionary of lists of clusters. Loop to seek
-        # our cluster.
         initial_cluster = extract_initial_cluster(inflected_stem)
         for (
-            prothesis,
+            epenthetic_segment,
             initial_clusters,
-        ) in prothetic_consonants_by_cluster.items():
+        ) in epenthetic_segments_by_cluster.items():
             if initial_cluster in initial_clusters:
-                # We have found the initial cluster referring to our prothesis,
-                # so we apply the prothesis if it differs from the initial
-                # cluster.
                 return (
-                    f"{prothesis}{inflected_stem}"
-                    if prothesis != initial_cluster
+                    f"{epenthetic_segment}{inflected_stem}"
+                    if epenthetic_segment != initial_cluster
                     else inflected_stem
                 )
