@@ -9,6 +9,15 @@ from services.conjugation import ConjugationService
 from config.webhook_config import WebhookConfig
 from services.webhook import WebhookService, WebhookError, SignatureVerificationError, WebhookDisabledError
 
+from flask_jwt_extended import JWTManager
+
+from .admin import admin
+from .verbs import verbs
+
+from . import db  # Should fail if the database is not set.
+
+# Set up the login manager (for the admin part)
+
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -32,7 +41,21 @@ req_res_handler.setFormatter(formatter)
 req_res_logger.addHandler(req_res_handler)
 
 app = Flask(__name__)
-app.debug = False
+app.config["JWT_SECRET_KEY"] = "super-secret"
+
+# Register blueprints
+app.register_blueprint(
+    admin, url_prefix="/api/admin"
+)
+
+app.register_blueprint(
+    verbs, url_prefix="/api/verbs"
+)
+
+# Useful for admin authentication.
+jwt = JWTManager(app)
+
+app.debug = True
 
 # Enable CORS with specific configuration
 CORS(app, resources={
@@ -43,7 +66,7 @@ CORS(app, resources={
             "https://lazverbcon.pages.dev",
             "http://localhost:5173",
         ],
-        "methods": ["GET", "OPTIONS"],
+        "methods": ["GET", "POST", "OPTIONS"],
         "allow_headers": ["Content-Type"]
     }
 })
