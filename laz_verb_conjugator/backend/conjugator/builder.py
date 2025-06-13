@@ -1,44 +1,48 @@
-from .common import Mood
+from .common import Mood, Person, Region, Tense
 from .errors import ConjugatorError
+from .imperative_conjugator import ImperativeConjugator
+from .past_conjugator import PastConjugator
+
 
 class ConjugatorBuilder:
     def __init__(self):
-        self.verb = None
         self.subject = None
         self.object = None
         self.tense = None
         self.aspect = None
-        self.moods = None
+        self.moods = Mood.NONE
         self.region = None
     
     def build(self):
-        pass
-    
-    
-    def set_region(self, region):
+        if self.moods == Mood.IMPERATIVE:
+            return ImperativeConjugator(self.subject)
+        elif self.tense == Tense.PAST:
+            return PastConjugator(
+                subject=self.subject,
+                region=self.region,
+                object=self.object
+            )
+
+        raise ConjugatorError("Could not build the conjugator.")
+
+    def set_region(self, region: Region):
         if self.region is not None:
             raise ConjugatorError("The region is already defined.")
         self.region = region
         return self
-    
-    def set_verb(self, verb):
-        if self.verb is not None:
-            raise ConjugatorError("The verb is already defined.")
-        self.verb = verb
-        return self
-    
-    def set_subject(self, subject):
+
+    def set_subject(self, subject: Person) -> "ConjugatorBuilder":
         if self.subject is not None:
             raise ConjugatorError("The subject is already defined.")
         self.subject = subject
         return self
-    
+
     def set_object(self, object):
         if self.object is not None:
             raise ConjugatorError("The object is already defined.")
         self.object = object
         return self
-    
+
     def set_tense(self, tense):
         if self.tense is not None:
             raise ConjugatorError("The tense is already defined")
@@ -66,6 +70,11 @@ class ConjugatorBuilder:
             raise ConjugatorError(
                 "The imperative and negative imperative moods "
                 "are mutually exclusive"
+            )
+            
+        if mood in (Mood.IMPERATIVE, Mood.NEGATIVE_IMPERATIVE) and self.subject not in (Person.SECOND_PERSON_PLURAL, Person.SECOND_PERSON_SINGULAR):
+            raise ConjugatorError(
+                "You must set either 2nd person of singular/plural to use the (negative) imperative mood."
             )
         
         if mood == Mood.CAUSATIVE and self.object is None:
