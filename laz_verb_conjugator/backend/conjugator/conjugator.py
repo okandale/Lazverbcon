@@ -1,6 +1,9 @@
-from .common import (PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
-                     PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER, Person,
-                     extract_initial_cluster)
+from .common import (
+    PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
+    PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER,
+    Person,
+    extract_initial_cluster,
+)
 
 
 class Conjugator:
@@ -48,5 +51,10 @@ class Conjugator:
         ) in prothetic_consonants_by_cluster.items():
             if initial_cluster in initial_clusters:
                 # We have found the initial cluster referring to our prothesis,
-                # so we apply the prothesis and return the result.
-                return f"{prothesis}{inflected_stem}"
+                # so we apply the prothesis if it differs from the initial
+                # cluster.
+                return (
+                    f"{prothesis}{inflected_stem}"
+                    if prothesis != initial_cluster
+                    else inflected_stem
+                )
