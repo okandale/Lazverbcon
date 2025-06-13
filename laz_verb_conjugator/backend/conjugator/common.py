@@ -1,5 +1,6 @@
 from enum import Enum, IntFlag, auto
 
+
 class Mood(IntFlag):
     NONE = 0
     APPLICATIVE = 1
@@ -18,20 +19,34 @@ class Person(Enum):
     THIRD_PERSON_PLURAL = auto()
 
     def is_singular(self):
-        return self.value >= Person.FIRST_PERSON_SINGULAR and self.value <= Person.THIRD_PERSON_SINGULAR
+        return (
+            self.value >= Person.FIRST_PERSON_SINGULAR
+            and self.value <= Person.THIRD_PERSON_SINGULAR
+        )
 
     def is_plural(self):
-        return self.value >= Person.FIRST_PERSON_PLURAL and self.value <= Person.THIRD_PERSON_PLURAL
+        return (
+            self.value >= Person.FIRST_PERSON_PLURAL
+            and self.value <= Person.THIRD_PERSON_PLURAL
+        )
 
     def is_first_person(self):
-        return self in (Person.FIRST_PERSON_SINGULAR, Person.FIRST_PERSON_PLURAL)
-    
-    def is_second_person(self):
-        return self in (Person.SECOND_PERSON_SINGULAR, Person.SECOND_PERSON_PLURAL)
-    
-    def is_third_person(self):
-        return self in (Person.THIRD_PERSON_SINGULAR, Person.THIRD_PERSON_PLURAL)
+        return self in (
+            Person.FIRST_PERSON_SINGULAR,
+            Person.FIRST_PERSON_PLURAL,
+        )
 
+    def is_second_person(self):
+        return self in (
+            Person.SECOND_PERSON_SINGULAR,
+            Person.SECOND_PERSON_PLURAL,
+        )
+
+    def is_third_person(self):
+        return self in (
+            Person.THIRD_PERSON_SINGULAR,
+            Person.THIRD_PERSON_PLURAL,
+        )
 
 
 class Tense(Enum):
@@ -40,7 +55,6 @@ class Tense(Enum):
     FUTURE = auto()
     PRESENT_PREFECT = auto()
     PAST_PROGRESSIVE = auto()
-
 
 
 def check_flags(flags):
@@ -57,41 +71,56 @@ class Region(Enum):
     HOPA = auto()
     PAZAR = auto()
 
+
 PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION = {
     Region.FINDIKLI_ARHAVI: {
-        'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h', 'p'],
-        'b': ['a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ',],
-        'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-        'm': ['n']
+        "p": ["t", "k", "ʒ", "ç", "f", "s", "ş", "x", "h", "p"],
+        "b": [
+            "a",
+            "e",
+            "i",
+            "o",
+            "u",
+            "d",
+            "g",
+            "ž",
+            "c",
+            "v",
+            "z",
+            "j",
+            "ğ",
+        ],
+        "p̌": ["ç̌", "ǩ", "q", "ǯ", "t̆"],
+        "m": ["n"],
     },
     Region.ARDESEN: {
-        'v': ['a', 'e', 'i', 'o', 'u'],
-        'p': ['p', 't', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-        'b': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-        'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-        'm': ['n']
+        "v": ["a", "e", "i", "o", "u"],
+        "p": ["p", "t", "k", "ʒ", "ç", "f", "s", "ş", "x", "h"],
+        "b": ["d", "g", "ž", "c", "v", "z", "j", "ğ"],
+        "p̌": ["ç̌", "ǩ", "q", "ǯ", "t̆"],
+        "m": ["n"],
     },
     Region.HOPA: {
-        'v': ['a', 'e', 'i', 'o', 'u'],
-        'p': ['p', 't', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-        'b': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-        'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-        'm': ['n']
+        "v": ["a", "e", "i", "o", "u"],
+        "p": ["p", "t", "k", "ʒ", "ç", "f", "s", "ş", "x", "h"],
+        "b": ["d", "g", "ž", "c", "v", "z", "j", "ğ"],
+        "p̌": ["ç̌", "ǩ", "q", "ǯ", "t̆"],
+        "m": ["n"],
     },
     Region.PAZAR: {
-        'v': ['a', 'e', 'i', 'o', 'u'],
-        'p': ['p', 't', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-        'b': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-        'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-        'm': ['n']
-    }
+        "v": ["a", "e", "i", "o", "u"],
+        "p": ["p", "t", "k", "ʒ", "ç", "f", "s", "ş", "x", "h"],
+        "b": ["d", "g", "ž", "c", "v", "z", "j", "ğ"],
+        "p̌": ["ç̌", "ǩ", "q", "ǯ", "t̆"],
+        "m": ["n"],
+    },
 }
 
 PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER = {
-    'g': ['a', 'e', 'i', 'o', 'u'],
-    'k': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
-    'g': ['d', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
-    'ǩ': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆']
+    "g": ["a", "e", "i", "o", "u"],
+    "k": ["t", "k", "ʒ", "ç", "f", "s", "ş", "x", "h"],
+    "g": ["d", "g", "ž", "c", "v", "z", "j", "ğ"],
+    "ǩ": ["ç̌", "ǩ", "q", "ǯ", "t̆"],
 }
 
 
@@ -106,11 +135,11 @@ def extract_initial_cluster(verb_form: str) -> str:
         verb_form (str): A verb form or root.
 
     Returns:
-        str: The initial consonant or consonant cluster to be used 
+        str: The initial consonant or consonant cluster to be used
             in morphological rules.
     """
-    if len(verb_form) > 1 and verb_form[:2] in ['t̆', 'ç̌', 'ǩ', 'p̌', 'ǯ']:
+    if len(verb_form) > 1 and verb_form[:2] in ["t̆", "ç̌", "ǩ", "p̌", "ǯ"]:
         return verb_form[:2]
-    elif verb_form.startswith('gyoç̌ǩams'):
+    elif verb_form.startswith("gyoç̌ǩams"):
         return verb_form[2:]
     return verb_form[0]

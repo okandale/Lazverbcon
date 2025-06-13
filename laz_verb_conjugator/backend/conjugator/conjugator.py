@@ -1,9 +1,6 @@
-from .common import (
-    PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
-    PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER,
-    Person,
-    extract_initial_cluster
-)
+from .common import (PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
+                     PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER, Person,
+                     extract_initial_cluster)
 
 
 class Conjugator:
@@ -33,19 +30,23 @@ class Conjugator:
         Returns:
             str: The verb form with the appropriate prothetic consonant, if applicable.
                 Returns the original stem if no prothesis rule matches.
-    """
+        """
         prothetic_consonants_by_cluster = (
-            PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION[self.region] \
-            if self.subject.is_first_person() \
+            PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION[
+                self.region
+            ]
+            if self.subject.is_first_person()
             else PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER
         )
-        
+
         # Prefixes are a dictionary of lists of clusters. Loop to seek
         # our cluster.
         initial_cluster = extract_initial_cluster(inflected_stem)
-        for prothesis, initial_clusters in prothetic_consonants_by_cluster.items():
+        for (
+            prothesis,
+            initial_clusters,
+        ) in prothetic_consonants_by_cluster.items():
             if initial_cluster in initial_clusters:
                 # We have found the initial cluster referring to our prothesis,
                 # so we apply the prothesis and return the result.
                 return f"{prothesis}{inflected_stem}"
-        

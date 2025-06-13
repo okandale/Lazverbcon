@@ -1,7 +1,7 @@
 class Conjugator:
-    
+
     def __init__(self, verb, region, subject, tense, modes, object):
-        
+
         self.verb = verb
         self.region = region
         self.subject = subject
@@ -14,6 +14,6 @@ class Conjugator:
 
 
 class ImperativeConjugator(Conjugator):
-    
+
     def conjugate(self):
         pass
