@@ -164,6 +164,7 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
             preverb_exceptions = {'gonǯǩu'}  # Ensure this set is defined appropriately, add additionally to 256
 
             # Check if the infinitive is NOT in the exception list before extracting preverbs
+            breakpoint()
             if infinitive not in preverb_exceptions:
                 for pv_group in preverbs_rules.keys():
                     if isinstance(pv_group, tuple):
@@ -240,9 +241,6 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                     preverb = 'n'
                 else:
                     preverb = 'me'
-
-            
-            breakpoint()
 
             if use_optional_preverb and not preverb:
                 prefix = 'ko' + prefix
@@ -414,7 +412,6 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                             root = root[1:]
                         prefix = 'm' + prefix
                     elif subject in ['S1_Singular', 'S1_Plural']:
-                        breakpoint()
                         adjusted_prefix = adjust_prefix(prefix, first_letter, phonetic_rules_v)
                         if root.startswith('n'):
                             root = root[1:]

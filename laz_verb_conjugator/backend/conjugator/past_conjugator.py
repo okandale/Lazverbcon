@@ -1,14 +1,40 @@
-from .common import Person, extract_prefix
+from .common import Person, extract_prefix, Region
 from .conjugator import Conjugator
 from .verbs import Verb
 
-SUFFIXES = {
-    Person.FIRST_PERSON_SINGULAR: "i",
-    Person.SECOND_PERSON_SINGULAR: "i",
-    Person.THIRD_PERSON_SINGULAR: "u",
-    Person.FIRST_PERSON_PLURAL: "it",
-    Person.SECOND_PERSON_PLURAL: "it",
-    Person.THIRD_PERSON_PLURAL: "es",  # XXX: can be "ey" sometimes given the region.
+PAST_TENSE_SUFFIXES = {
+    Region.ARDESEN: {
+        Person.FIRST_PERSON_SINGULAR: "i",
+        Person.SECOND_PERSON_SINGULAR: "i",
+        Person.THIRD_PERSON_SINGULAR: "u",
+        Person.FIRST_PERSON_PLURAL: "it",
+        Person.SECOND_PERSON_PLURAL: "it",
+        Person.THIRD_PERSON_PLURAL: "ey",
+    },
+    Region.PAZAR: {
+        Person.FIRST_PERSON_SINGULAR: "i",
+        Person.SECOND_PERSON_SINGULAR: "i",
+        Person.THIRD_PERSON_SINGULAR: "u",
+        Person.FIRST_PERSON_PLURAL: "it",
+        Person.SECOND_PERSON_PLURAL: "it",
+        Person.THIRD_PERSON_PLURAL: "es",
+    },
+    Region.FINDIKLI_ARHAVI: {
+        Person.FIRST_PERSON_SINGULAR: "i",
+        Person.SECOND_PERSON_SINGULAR: "i",
+        Person.THIRD_PERSON_SINGULAR: "u",
+        Person.FIRST_PERSON_PLURAL: "it",
+        Person.SECOND_PERSON_PLURAL: "it",
+        Person.THIRD_PERSON_PLURAL: "es",
+    },
+    Region.HOPA: {
+        Person.FIRST_PERSON_SINGULAR: "i",
+        Person.SECOND_PERSON_SINGULAR: "i",
+        Person.THIRD_PERSON_SINGULAR: "u",
+        Person.FIRST_PERSON_PLURAL: "it",
+        Person.SECOND_PERSON_PLURAL: "it",
+        Person.THIRD_PERSON_PLURAL: "es",
+    }
 }
 
 
@@ -33,7 +59,7 @@ class PastConjugator(Conjugator):
         )
 
         # Start actual conjugation.
-        conjugation = f"{stem}{SUFFIXES[self.subject]}"
+        conjugation = f"{stem}{PAST_TENSE_SUFFIXES[self.region][self.subject]}"
         if self.subject.is_first_person():
             conjugation = self.apply_epenthetic_segment(conjugation)
 

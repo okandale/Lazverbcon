@@ -15,9 +15,10 @@ class Verb:
             moods (e.g., 'skidun').
     """
 
-    def __init__(self, infinitive, present_third):
+    def __init__(self, infinitive, present_third, region):
         self.infinitive = infinitive
         self.present_third = present_third
+        self.region = region
 
 
 class ErgativeVerb(Verb):

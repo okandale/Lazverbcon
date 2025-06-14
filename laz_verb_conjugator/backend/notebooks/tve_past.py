@@ -91,12 +91,10 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                     if preverb:
                         break
             # GR: I stopped at that time of the analysis.
-            breakpoint()
+            # breakpoint()
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
 
-
-                
             # Remove the preverb from the third-person form if it exists
             if preverb and root.startswith(preverb):
                 root = root[len(preverb):]
