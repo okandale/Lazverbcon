@@ -69,7 +69,7 @@ prefixed_forms = {
 
 mutated_prefix_past_tense = {
     (
-        Region.ARDESEN,
+        Region.HOPA,
         NominativeVerb(infinitive="dobadu", present_third="dibaden"),
     ): {
         Person.FIRST_PERSON_SINGULAR: "dovibadi",
@@ -77,7 +77,7 @@ mutated_prefix_past_tense = {
         Person.THIRD_PERSON_SINGULAR: "dibadu",
         Person.FIRST_PERSON_PLURAL: "dovibadit",
         Person.SECOND_PERSON_PLURAL: "dibadit",
-        Person.THIRD_PERSON_PLURAL: "dibadey",
+        Person.THIRD_PERSON_PLURAL: "dibades",
     }
 }
 
