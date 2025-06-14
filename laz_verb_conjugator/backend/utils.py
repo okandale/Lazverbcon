@@ -75,7 +75,7 @@ def get_phonetic_rules(region: str, is_tvm: bool = False) -> tuple:
                 'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
                 'b': ['a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
                 'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-                'm': ['b', 'n']
+                'm': ['b', 'n', 'm']
             }
         else:
             phonetic_rules_v = {
@@ -83,7 +83,7 @@ def get_phonetic_rules(region: str, is_tvm: bool = False) -> tuple:
                 'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
                 'b': ['b', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
                 'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-                'm': ['n']
+                'm': ['n', 'm']
             }
         
         phonetic_rules_g = {
