@@ -4,6 +4,12 @@ const BASE_URL = import.meta.env.PROD
 
 export const API_URLS = {
   conjugate: `${BASE_URL}/api/conjugate`,
+  verbs: {
+    list: `${BASE_URL}/api/verbs/list`
+  },
+  admin: {
+    auth: `${BASE_URL}/api/admin/auth`
+  }
 };
 
 export const specialCharacters = ['ç̌', 't̆', 'ž', 'ǩ', 'ʒ', 'ǯ', 'p̌'];

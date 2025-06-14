@@ -120,6 +120,7 @@ def get_suffixes(tense, region):
 
 def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False, causative=False, use_optional_preverb=False):
     # Check for invalid SxOx combinations
+    breakpoint()
     if (subject in ['S1_Singular', 'S1_Plural'] and obj in ['O1_Singular', 'O1_Plural']) or \
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
         return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
@@ -241,12 +242,12 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                     preverb = 'me'
 
             
+            breakpoint()
 
             if use_optional_preverb and not preverb:
                 prefix = 'ko' + prefix
                 if subject in ['O3_Singular', 'O3_Plural']:
                     prefix = 'k'
-            
             # Special handling for "do"
             elif preverb == 'do':
                 if root.startswith("di"): # Changed to 'di' from 'digurams', 'diguraps' to see if it's a general rule
@@ -413,6 +414,7 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                             root = root[1:]
                         prefix = 'm' + prefix
                     elif subject in ['S1_Singular', 'S1_Plural']:
+                        breakpoint()
                         adjusted_prefix = adjust_prefix(prefix, first_letter, phonetic_rules_v)
                         if root.startswith('n'):
                             root = root[1:]

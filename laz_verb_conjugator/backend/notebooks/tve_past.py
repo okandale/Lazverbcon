@@ -90,7 +90,8 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                         preverb = pv_group
                     if preverb:
                         break
-                
+            # GR: I stopped at that time of the analysis.
+            breakpoint()
             # Process the compound root to get the main part
             root = process_compound_verb(third_person)
 
