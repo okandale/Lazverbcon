@@ -15,10 +15,9 @@ class Verb:
             moods (e.g., 'skidun').
     """
 
-    def __init__(self, infinitive, present_third, region):
+    def __init__(self, infinitive, present_third):
         self.infinitive = infinitive
         self.present_third = present_third
-        self.region = region
 
 
 class ErgativeVerb(Verb):
@@ -28,7 +27,7 @@ class ErgativeVerb(Verb):
     def __str__(self):
         return (
             f'<ErgativeVerb infinitive="{self.infinitive}" '
-            f'third_person_form="{self.third_person_form}">'
+            f'present_third="{self.present_third}">'
         )
 
 
@@ -39,7 +38,7 @@ class NominativeVerb(Verb):
     def __str__(self):
         return (
             f'<NominativeVerb infinitive="{self.infinitive}" '
-            f'third_person_form="{self.third_person_form}">'
+            f'present_third="{self.present_third}">'
         )
 
 
@@ -50,5 +49,5 @@ class DativeVerb(Verb):
     def __str__(self):
         return (
             f'<DativeVerb infinitive="{self.infinitive}" '
-            f'third_person_form="{self.third_person_form}">'
+            f'present_third="{self.present_third}">'
         )
