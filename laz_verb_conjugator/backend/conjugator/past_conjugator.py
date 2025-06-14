@@ -34,8 +34,17 @@ PAST_TENSE_SUFFIXES = {
         Person.FIRST_PERSON_PLURAL: "it",
         Person.SECOND_PERSON_PLURAL: "it",
         Person.THIRD_PERSON_PLURAL: "es",
-    }
+    },
 }
+
+PREVERB_HANDLERS = {}
+
+
+def handle_preverb(preverb):
+    def wrapper(func):
+        PREVERB_HANDLERS[preverb] = func
+
+    return wrapper
 
 
 class PastConjugator(Conjugator):
@@ -46,12 +55,21 @@ class PastConjugator(Conjugator):
     def conjugate_nominative_verb(self, verb: Verb) -> str:
         # Extract a potential verb prefix.
         prefix = extract_prefix(verb.infinitive)
+        if prefix in PREVERB_HANDLERS:
+            return PREVERB_HANDLERS[prefix](self, verb, prefix)
+        else:
+            return self.handle_default_nominative_verb(verb, prefix)
 
-        # Extract the "extended stem" (stem + potential prefix, if any)
+    def conjugate_dative_verb(self, verb):
+        pass
+
+    def handle_default_nominative_verb(self, verb, prefix):
+        # Extract the "extended stem" (potential prefix + stem, if any)
         # from the present third form.
         extended_stem = verb.present_third[:-2]
 
         # If the extended stem contains the prefix, remove it: get the stem.
+        # breakpoint()
         stem = (
             extended_stem[len(prefix) :]
             if prefix is not None
@@ -68,5 +86,25 @@ class PastConjugator(Conjugator):
             conjugation = f"{prefix}{conjugation}"
         return conjugation
 
-    def conjugate_dative_verb(self, verb):
-        pass
+
+@handle_preverb("do")
+def handle_do_prefix(conjugator: Conjugator, verb: Verb, prefix):
+    extended_stem = verb.present_third[:-2]
+    if verb.present_third.startswith("di"):
+        if conjugator.subject.is_first_person():
+            # Remove the first "d" before applying the epenthetic segment.
+            stem = extended_stem[1:]
+            conjugation = conjugator.apply_epenthetic_segment(
+                stem
+                + PAST_TENSE_SUFFIXES[conjugator.region][conjugator.subject]
+            )
+            return f"do{conjugation}"
+        else:
+            stem = extended_stem
+            conjugation = (
+                stem
+                + PAST_TENSE_SUFFIXES[conjugator.region][conjugator.subject]
+            )
+        return conjugation
+    else:
+        return conjugator.handle_default_nominative_verb(verb, prefix)
