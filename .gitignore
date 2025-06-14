@@ -120,14 +120,11 @@ __pypackages__/
 celerybeat-schedule
 celerybeat.pid
 
-*.sqlite3
-
 # SageMath parsed files
 *.sage.py
 
 # Environments
 .env
-.env.local
 .venv
 env/
 venv/
