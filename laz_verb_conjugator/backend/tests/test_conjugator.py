@@ -40,6 +40,17 @@ expected_forms = {
         Person.SECOND_PERSON_PLURAL: "putxit",
         Person.THIRD_PERSON_PLURAL: "putxes",
     },
+    (
+        Region.PAZAR,
+        NominativeVerb(infinitive="cexunu", present_third="cexedun"),
+    ): {
+        Person.FIRST_PERSON_SINGULAR: "cepxedi",
+        Person.SECOND_PERSON_SINGULAR: "cexedi",
+        Person.THIRD_PERSON_SINGULAR: "cexedu",
+        Person.FIRST_PERSON_PLURAL: "cepxedit",
+        Person.SECOND_PERSON_PLURAL: "cexedit",
+        Person.THIRD_PERSON_PLURAL: "cexedes",
+    }
 }
 
 prefixed_forms = {
@@ -133,6 +144,35 @@ def test_conjugate_mutated_prefix_past_tense(region_and_verb, conjugations):
             .set_subject(person)
             .set_region(region)
             .set_tense(Tense.PAST)
+            .build()
+        )
+        result = conjugator.conjugate_nominative_verb(verb)
+        assert (
+            result == conjugation
+        ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
+
+
+future_tense_fixtures = {
+    (Region.ARDESEN, NominativeVerb(infinitive="oskidu", present_third="skidun")): {
+        Person.FIRST_PERSON_SINGULAR: "pskidare",
+        Person.FIRST_PERSON_SINGULAR: "skidare",
+        Person.FIRST_PERSON_SINGULAR: "skidasen",
+        Person.FIRST_PERSON_SINGULAR: "pskidaten",
+        Person.FIRST_PERSON_SINGULAR: "skidaten",
+        Person.FIRST_PERSON_SINGULAR: "skidanen",
+        
+    }
+}
+
+@pytest.mark.parametrize("region_and_verb,conjugations", future_tense_fixtures.items())
+def test_conjugate_nominative_future_tense(region_and_verb, conjugations):
+    region, verb = region_and_verb
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_subject(person)
+            .set_region(region)
+            .set_tense(Tense.FUTURE)
             .build()
         )
         result = conjugator.conjugate_nominative_verb(verb)

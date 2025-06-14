@@ -1,4 +1,4 @@
-from .common import Person, extract_prefix, Region
+from .common import Person, Region, extract_prefix
 from .conjugator import Conjugator
 from .verbs import Verb
 

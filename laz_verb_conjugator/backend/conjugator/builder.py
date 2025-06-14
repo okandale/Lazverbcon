@@ -1,5 +1,6 @@
 from .common import Mood, Person, Region, Tense
 from .errors import ConjugatorError
+from .future_conjugator import FutureConjugator
 from .imperative_conjugator import ImperativeConjugator
 from .past_conjugator import PastConjugator
 
@@ -18,6 +19,10 @@ class ConjugatorBuilder:
             return ImperativeConjugator(self.subject)
         elif self.tense == Tense.PAST:
             return PastConjugator(
+                subject=self.subject, region=self.region, object=self.object
+            )
+        elif self.tense == Tense.FUTURE:
+            return FutureConjugator(
                 subject=self.subject, region=self.region, object=self.object
             )
 
