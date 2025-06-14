@@ -94,17 +94,6 @@ const HomePage = () => {
               {t.resourceCard.description}
             </p>
           </Link>
-
-          <Link to="/v2/verbs"
-          className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
-          >
-            <h2 className="text-2xl font-bold text-gray-800 mb-3">
-              Verb Conjugator (V2, Beta)
-            </h2>
-            <p className="text-gray-600">
-              {t.conjugatorCard.description}
-            </p>
-          </Link>
         </div>
 
         <div className="text-center mt-6">
