@@ -57,51 +57,60 @@ def handle_preverb(preverb):
     return wrapper
 
 
-
 class PresentPerfectConjugator(Conjugator):
     def conjugate_nominative_verb(self, verb: Verb) -> str:
-        
+
         prefix = extract_prefix(verb.infinitive)
         if prefix in PREVERB_HANDLERS:
-            return PREVERB_HANDLERS[prefix](
-                self, verb, prefix
-            )
+            return PREVERB_HANDLERS[prefix](self, verb, prefix)
         else:
             return self.conjugate_default_nominative_verb(verb, prefix)
 
     def conjugate_default_nominative_verb(self, verb: Verb, prefix) -> str:
         stem = extract_root(verb.infinitive, 1, 1)
-        conjugation = SUBJECT_MARKERS[self.subject] + stem + \
-            PRESENT_PERFECT_SUFFIXES[self.region][self.subject]
+        conjugation = (
+            SUBJECT_MARKERS[self.subject]
+            + stem
+            + PRESENT_PERFECT_SUFFIXES[self.region][self.subject]
+        )
         if prefix:
             return prefix + conjugation
         else:
             return conjugation
-        
+
 
 @handle_preverb("do")
 def handle_do_prefix(
-    conjugator: Conjugator,
+    conjugator: PresentPerfectConjugator,
     verb: Verb,
     prefix,
 ):
     if verb.present_third.startswith("di"):
-        if conjugator.subject.is_first_person() or conjugator.subject.is_second_person():
+        if (
+            conjugator.subject.is_first_person()
+            or conjugator.subject.is_second_person()
+        ):
             # Remove the first "do" before applying the subject marker.
             stem = extract_root(verb.infinitive, 2, 1)
-            conjugation = SUBJECT_MARKERS[conjugator.subject] + stem + \
-                PRESENT_PERFECT_SUFFIXES[conjugator.region][conjugator.subject]
+            conjugation = (
+                SUBJECT_MARKERS[conjugator.subject]
+                + stem
+                + PRESENT_PERFECT_SUFFIXES[conjugator.region][
+                    conjugator.subject
+                ]
+            )
             return f"do{conjugation}"
         else:
-            # Remove the prefix completely.
-            breakpoint()
+            # Remove the prefix completely. Add "d" later, followed by the
+            # Subject marker prefix.
             extended_stem = extract_root(verb.present_third, 2, 2)
             stem = extended_stem
             conjugation = (
-                stem + PRESENT_PERFECT_SUFFIXES[
-                    conjugator.region
-                ][conjugator.subject]
+                stem
+                + PRESENT_PERFECT_SUFFIXES[conjugator.region][
+                    conjugator.subject
+                ]
             )
-        return conjugation
+        return f"d{SUBJECT_MARKERS[conjugator.subject]}{conjugation}"
     else:
         return conjugator.conjugate_default_nominative_verb(verb, prefix)

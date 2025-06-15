@@ -178,16 +178,17 @@ def extract_prefix(infinitive_form: str):
     else:
         return None
 
+
 def extract_root(word, start, end):
     """Extract the root of *word*.
-    
+
     Remove *start* letters at the beginning and *end* letters at the end.
-    
+
     Examples:
         - radicalize("oskidu", 1, 1) -> "skid".
-    
+
     Returns:
         - str: the stem
-        
+
     """
     return word[start:-end]

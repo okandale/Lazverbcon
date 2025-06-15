@@ -31,7 +31,7 @@ class Conjugator:
         prefix: str,
         suffixes: SuffixTable,
         starting_len=0,
-        ending_len=0
+        ending_len=0,
     ):
         extended_stem = verb.present_third[starting_len:-ending_len]
 
@@ -50,22 +50,21 @@ class Conjugator:
         return conjugation
 
     def conjugate_nominative_verb(
-        self, verb: Verb, suffix_table: SuffixTable,
-        starting_len=0, ending_len=0
+        self,
+        verb: Verb,
+        suffix_table: SuffixTable,
+        starting_len=0,
+        ending_len=0,
     ) -> str:
         # Extract a potential verb prefix.
         prefix = extract_prefix(verb.infinitive)
         if prefix in PREVERB_HANDLERS:
             return PREVERB_HANDLERS[prefix](
-                self, verb, prefix, suffix_table, ending_len
+                self, verb, prefix, suffix_table, starting_len, ending_len
             )
         else:
             return self._conjugate(
-                verb,
-                prefix,
-                suffix_table,
-                starting_len,
-                ending_len
+                verb, prefix, suffix_table, starting_len, ending_len
             )
 
     def apply_epenthetic_segment(self, inflected_stem):
@@ -143,5 +142,5 @@ def handle_do_prefix(
             prefix,
             suffix_table,
             starting_len=starting_len,
-            ending_len=ending_len
+            ending_len=ending_len,
         )
