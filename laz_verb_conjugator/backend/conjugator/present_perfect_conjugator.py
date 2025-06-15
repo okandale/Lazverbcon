@@ -85,32 +85,21 @@ def handle_do_prefix(
     verb: Verb,
     prefix,
 ):
+    
     if verb.present_third.startswith("di"):
-        if (
-            conjugator.subject.is_first_person()
-            or conjugator.subject.is_second_person()
-        ):
-            # Remove the first "do" before applying the subject marker.
-            stem = extract_root(verb.infinitive, 2, 1)
-            conjugation = (
-                SUBJECT_MARKERS[conjugator.subject]
-                + stem
-                + PRESENT_PERFECT_SUFFIXES[conjugator.region][
-                    conjugator.subject
-                ]
-            )
-            return f"do{conjugation}"
+        subject_marker = SUBJECT_MARKERS[conjugator.subject]
+        # Remove the first "do" before applying the subject marker.
+        stem = extract_root(verb.infinitive, 2, 1)
+        conjugation = (
+            subject_marker
+            + stem
+            + PRESENT_PERFECT_SUFFIXES[conjugator.region][
+                conjugator.subject
+            ]
+        )
+        if prefix[:-1] in "aeiou" or subject_marker[0] in "aeiou":
+            return f"d{conjugation}"
         else:
-            # Remove the prefix completely. Add "d" later, followed by the
-            # Subject marker prefix.
-            extended_stem = extract_root(verb.present_third, 2, 2)
-            stem = extended_stem
-            conjugation = (
-                stem
-                + PRESENT_PERFECT_SUFFIXES[conjugator.region][
-                    conjugator.subject
-                ]
-            )
-        return f"d{SUBJECT_MARKERS[conjugator.subject]}{conjugation}"
+            return f"do{conjugation}"
     else:
         return conjugator.conjugate_default_nominative_verb(verb, prefix)
