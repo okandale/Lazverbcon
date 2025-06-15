@@ -20,15 +20,20 @@ def handle_preverb(preverb):
 
 
 class Conjugator:
-    def __init__(self, subject: Person, region, object: Person = None):
-        self.subject = subject
-        self.region = region
-        self.object = object
+    def __init__(self, subject: Person, region: Region, object: Person = None):
+        self.subject: Person = subject
+        self.region: Region = region
+        self.object: Person = object
 
     def _conjugate(
-        self, verb: Verb, prefix: str, suffixes: SuffixTable, ending_len
+        self,
+        verb: Verb,
+        prefix: str,
+        suffixes: SuffixTable,
+        starting_len=0,
+        ending_len=0
     ):
-        extended_stem = verb.present_third[:-ending_len]
+        extended_stem = verb.present_third[starting_len:-ending_len]
 
         stem = (
             extended_stem[len(prefix) :]
@@ -45,7 +50,8 @@ class Conjugator:
         return conjugation
 
     def conjugate_nominative_verb(
-        self, verb: Verb, suffix_table: SuffixTable, ending_len
+        self, verb: Verb, suffix_table: SuffixTable,
+        starting_len=0, ending_len=0
     ) -> str:
         # Extract a potential verb prefix.
         prefix = extract_prefix(verb.infinitive)
@@ -54,7 +60,13 @@ class Conjugator:
                 self, verb, prefix, suffix_table, ending_len
             )
         else:
-            return self._conjugate(verb, prefix, suffix_table, ending_len)
+            return self._conjugate(
+                verb,
+                prefix,
+                suffix_table,
+                starting_len,
+                ending_len
+            )
 
     def apply_epenthetic_segment(self, inflected_stem):
         """
@@ -107,9 +119,10 @@ def handle_do_prefix(
     verb: Verb,
     prefix,
     suffix_table: SuffixTable,
+    starting_len,
     ending_len,
 ):
-    extended_stem = verb.present_third[:-ending_len]
+    extended_stem = verb.present_third[starting_len:-ending_len]
     if verb.present_third.startswith("di"):
         if conjugator.subject.is_first_person():
             # Remove the first "d" before applying the epenthetic segment.
@@ -125,4 +138,10 @@ def handle_do_prefix(
             )
         return conjugation
     else:
-        return conjugator._conjugate(verb, prefix, suffix_table, ending_len)
+        return conjugator._conjugate(
+            verb,
+            prefix,
+            suffix_table,
+            starting_len=starting_len,
+            ending_len=ending_len
+        )

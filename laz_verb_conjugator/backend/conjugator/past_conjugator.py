@@ -37,6 +37,15 @@ PAST_TENSE_SUFFIXES = {
     },
 }
 
+SUBJECT_MARKERS = {
+    Person.FIRST_PERSON_SINGULAR: "ma",
+    Person.SECOND_PERSON_SINGULAR: "ga",
+    Person.THIRD_PERSON_SINGULAR: "a",
+    Person.FIRST_PERSON_PLURAL: "ma",
+    Person.SECOND_PERSON_PLURAL: "ga",
+    Person.THIRD_PERSON_PLURAL: "a",
+}
+
 
 class PastConjugator(Conjugator):
 

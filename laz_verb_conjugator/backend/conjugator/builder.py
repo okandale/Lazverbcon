@@ -1,3 +1,4 @@
+from .present_perfect_conjugator import PresentPerfectConjugator
 from .past_progressive_conjugator import PastProgressiveConjugator
 from .common import Mood, Person, Region, Tense
 from .errors import ConjugatorError
@@ -33,6 +34,10 @@ class ConjugatorBuilder:
             )
         elif self.tense == Tense.PAST_PROGRESSIVE:
             return PastProgressiveConjugator(
+                subject=self.subject, region=self.region, object=self.object
+            )
+        elif self.tense == Tense.PRESENT_PREFECT:
+            return PresentPerfectConjugator(
                 subject=self.subject, region=self.region, object=self.object
             )
 

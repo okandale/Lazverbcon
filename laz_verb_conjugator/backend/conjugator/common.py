@@ -171,9 +171,23 @@ def extract_initial_cluster(verb_form: str) -> str:
     return verb_form[0]
 
 
-def extract_prefix(infinitive_form):
+def extract_prefix(infinitive_form: str):
     matches = re.match(VERB_PREFIX_REGEX, infinitive_form)
     if matches is not None:
         return matches.group(1)
     else:
         return None
+
+def extract_root(word, start, end):
+    """Extract the root of *word*.
+    
+    Remove *start* letters at the beginning and *end* letters at the end.
+    
+    Examples:
+        - radicalize("oskidu", 1, 1) -> "skid".
+    
+    Returns:
+        - str: the stem
+        
+    """
+    return word[start:-end]

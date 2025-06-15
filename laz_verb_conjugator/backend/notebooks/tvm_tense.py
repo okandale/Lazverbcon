@@ -164,7 +164,6 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
             preverb_exceptions = {'gonǯǩu'}  # Ensure this set is defined appropriately, add additionally to 256
 
             # Check if the infinitive is NOT in the exception list before extracting preverbs
-            breakpoint()
             if infinitive not in preverb_exceptions:
                 for pv_group in preverbs_rules.keys():
                     if isinstance(pv_group, tuple):
@@ -218,6 +217,7 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
             # Special handling for "me"
             print(F"preverb: {preverb}")
             prefix = ''
+            # breakpoint()
             if preverb == 'me' or (use_optional_preverb and not preverb):
                 if root.startswith('no'):
                     if subject in ('S1_Singular', 'S1_Plural'):
@@ -460,6 +460,7 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                 suffix = suffixes[subject]
 
             # Determine the final root to use
+            breakpoint()
             final_root = root[:-1] if root.endswith('s') else root
             
             if infinitive in ('oxtimu', 'olva') and subject in ('S1_Singular', 'S1_Plural') and tense in ('past', 'future', 'optative') and not applicative and not causative: # oxtimu tense exception
