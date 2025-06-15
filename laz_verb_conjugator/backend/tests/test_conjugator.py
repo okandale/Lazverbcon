@@ -228,3 +228,40 @@ def test_conjugate_nominative_present_tense(region_and_verb, conjugations):
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
 
+
+past_progressive_tense_fixtures = {
+    (Region.FINDIKLI_ARHAVI, NominativeVerb(infinitive="oskidu", present_third="skidun")): {
+        Person.FIRST_PERSON_SINGULAR: "pskidurt̆i",
+        Person.SECOND_PERSON_SINGULAR: "skidurt̆i",
+        Person.THIRD_PERSON_SINGULAR: "skidurt̆u",
+        Person.FIRST_PERSON_PLURAL: "pskidurt̆it",
+        Person.SECOND_PERSON_PLURAL: "skidurt̆it",
+        Person.THIRD_PERSON_PLURAL: "skidut̆es",
+    },
+    (
+        Region.ARDESEN,
+        NominativeVerb(infinitive="dobadu", present_third="dibaden"),
+    ): {
+        Person.FIRST_PERSON_SINGULAR: "dovibadert̆i",
+        Person.SECOND_PERSON_SINGULAR: "dibadert̆i",
+        Person.THIRD_PERSON_SINGULAR: "dibadert̆u",
+        Person.FIRST_PERSON_PLURAL: "dovibadert̆it",
+        Person.SECOND_PERSON_PLURAL: "dibadert̆it",
+        Person.THIRD_PERSON_PLURAL: "dibadert̆ey",
+    },
+}
+@pytest.mark.parametrize("region_and_verb,conjugations", past_progressive_tense_fixtures.items())
+def test_conjugate_nominative_past_progressive_tense(region_and_verb, conjugations):
+    region, verb = region_and_verb
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_subject(person)
+            .set_region(region)
+            .set_tense(Tense.PAST_PROGRESSIVE)
+            .build()
+        )
+        result = conjugator.conjugate_nominative_verb(verb)
+        assert (
+            result == conjugation
+        ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
