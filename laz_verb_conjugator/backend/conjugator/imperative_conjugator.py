@@ -1,14 +1,13 @@
-class ImperativeConjugator:
+from .errors import ConjugatorError
+from .common import Person, Region
+from .past_conjugator import PastConjugator
 
-    def __init__(self, subject, object):
-        self.subject = subject
-        self.object = object
 
-    def conjugate_ergative_verb(self, verb):
-        pass
+class ImperativeConjugator(PastConjugator):
 
-    def conjugate_nominative_verb(self, verb):
-        pass
-
-    def conjugate_dative_verb(self, verb):
-        pass
+    def __init__(self, subject: Person, region: Region, object: Person = None):
+        if not subject.is_second_person():
+            raise ConjugatorError(
+                "The Imperative mood only works for the second person."
+            )
+        super().__init__(subject, region, object)

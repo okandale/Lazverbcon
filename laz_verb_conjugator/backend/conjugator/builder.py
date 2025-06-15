@@ -19,7 +19,9 @@ class ConjugatorBuilder:
 
     def build(self):
         if self.moods == Mood.IMPERATIVE:
-            return ImperativeConjugator(self.subject)
+            return ImperativeConjugator(
+                subject=self.subject, region=self.region, object=self.object
+            )
         elif self.tense == Tense.PAST:
             return PastConjugator(
                 subject=self.subject, region=self.region, object=self.object

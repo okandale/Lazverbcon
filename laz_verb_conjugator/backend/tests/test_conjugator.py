@@ -2,7 +2,7 @@ import pytest
 
 from backend.conjugator.builder import ConjugatorBuilder
 from backend.conjugator.verbs import NominativeVerb
-from backend.conjugator.common import Person, Tense, Region
+from backend.conjugator.common import Mood, Person, Tense, Region
 
 
 # Expected full conjugated forms
@@ -303,4 +303,26 @@ def test_conjugate_nominative_past_progressive_tense(region_and_verb, conjugatio
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
-     
+
+
+imperative_mood_fixtures = {
+    (Region.ARDESEN, NominativeVerb(infinitive="oskidu", present_third="skidun")): {
+        Person.SECOND_PERSON_SINGULAR: "skidi",
+        Person.SECOND_PERSON_PLURAL: "skidit",
+    },
+}
+@pytest.mark.parametrize("region_and_verb,conjugations", imperative_mood_fixtures.items())
+def test_imperative_mood(region_and_verb, conjugations):
+    region, verb = region_and_verb
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_subject(person)
+            .set_region(region)
+            .add_mood(Mood.IMPERATIVE)
+            .build()
+        )
+        result = conjugator.conjugate_nominative_verb(verb)
+        assert (
+            result == conjugation
+        ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
