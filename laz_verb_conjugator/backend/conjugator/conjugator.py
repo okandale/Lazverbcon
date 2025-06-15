@@ -1,7 +1,12 @@
-from .common import (PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
-                     PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER, Person,
-                     Region, SuffixTable, extract_initial_cluster,
-                     extract_prefix)
+from .common import (
+    PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
+    PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER,
+    Person,
+    Region,
+    SuffixTable,
+    extract_initial_cluster,
+    extract_prefix,
+)
 from .verbs import Verb
 
 PREVERB_HANDLERS = {}

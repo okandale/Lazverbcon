@@ -37,15 +37,6 @@ PAST_TENSE_SUFFIXES = {
     },
 }
 
-PREVERB_HANDLERS = {}
-
-
-def handle_preverb(preverb):
-    def wrapper(func):
-        PREVERB_HANDLERS[preverb] = func
-
-    return wrapper
-
 
 class PastConjugator(Conjugator):
 

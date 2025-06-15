@@ -1,3 +1,4 @@
+from .past_progressive_conjugator import PastProgressiveConjugator
 from .common import Mood, Person, Region, Tense
 from .errors import ConjugatorError
 from .future_conjugator import FutureConjugator
@@ -28,6 +29,10 @@ class ConjugatorBuilder:
             )
         elif self.tense == Tense.PRESENT:
             return PresentConjugator(
+                subject=self.subject, region=self.region, object=self.object
+            )
+        elif self.tense == Tense.PAST_PROGRESSIVE:
+            return PastProgressiveConjugator(
                 subject=self.subject, region=self.region, object=self.object
             )
 
