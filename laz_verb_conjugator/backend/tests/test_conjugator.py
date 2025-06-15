@@ -155,13 +155,23 @@ def test_conjugate_mutated_prefix_past_tense(region_and_verb, conjugations):
 future_tense_fixtures = {
     (Region.ARDESEN, NominativeVerb(infinitive="oskidu", present_third="skidun")): {
         Person.FIRST_PERSON_SINGULAR: "pskidare",
-        Person.FIRST_PERSON_SINGULAR: "skidare",
-        Person.FIRST_PERSON_SINGULAR: "skidasen",
-        Person.FIRST_PERSON_SINGULAR: "pskidaten",
-        Person.FIRST_PERSON_SINGULAR: "skidaten",
-        Person.FIRST_PERSON_SINGULAR: "skidanen",
-        
-    }
+        Person.SECOND_PERSON_SINGULAR: "skidare",
+        Person.THIRD_PERSON_SINGULAR: "skidasen",
+        Person.FIRST_PERSON_PLURAL: "pskidaten",
+        Person.SECOND_PERSON_PLURAL: "skidaten",
+        Person.THIRD_PERSON_PLURAL: "skidanen",
+    },
+    (
+        Region.ARDESEN,
+        NominativeVerb(infinitive="dobadu", present_third="dibaden"),
+    ): {
+        Person.FIRST_PERSON_SINGULAR: "dovibadare",
+        Person.SECOND_PERSON_SINGULAR: "dibadare",
+        Person.THIRD_PERSON_SINGULAR: "dibadasen",
+        Person.FIRST_PERSON_PLURAL: "dovibadaten",
+        Person.SECOND_PERSON_PLURAL: "dibadaten",
+        Person.THIRD_PERSON_PLURAL: "dibadanen",
+    },
 }
 
 @pytest.mark.parametrize("region_and_verb,conjugations", future_tense_fixtures.items())
@@ -179,3 +189,42 @@ def test_conjugate_nominative_future_tense(region_and_verb, conjugations):
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
+
+
+present_tense_fixtures = {
+    (Region.FINDIKLI_ARHAVI, NominativeVerb(infinitive="oskidu", present_third="skidun")): {
+        Person.FIRST_PERSON_SINGULAR: "pskidur",
+        Person.SECOND_PERSON_SINGULAR: "skidur",
+        Person.THIRD_PERSON_SINGULAR: "skidun",
+        Person.FIRST_PERSON_PLURAL: "pskidurt",
+        Person.SECOND_PERSON_PLURAL: "skidurt",
+        Person.THIRD_PERSON_PLURAL: "skidunan",
+    },
+    (
+        Region.ARDESEN,
+        NominativeVerb(infinitive="dobadu", present_third="dibaden"),
+    ): {
+        Person.FIRST_PERSON_SINGULAR: "dovibader",
+        Person.SECOND_PERSON_SINGULAR: "dibader",
+        Person.THIRD_PERSON_SINGULAR: "dibaden",
+        Person.FIRST_PERSON_PLURAL: "dovibadert",
+        Person.SECOND_PERSON_PLURAL: "dibadert",
+        Person.THIRD_PERSON_PLURAL: "dibadenan",
+    },
+}
+@pytest.mark.parametrize("region_and_verb,conjugations", present_tense_fixtures.items())
+def test_conjugate_nominative_present_tense(region_and_verb, conjugations):
+    region, verb = region_and_verb
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_subject(person)
+            .set_region(region)
+            .set_tense(Tense.PRESENT)
+            .build()
+        )
+        result = conjugator.conjugate_nominative_verb(verb)
+        assert (
+            result == conjugation
+        ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
+
