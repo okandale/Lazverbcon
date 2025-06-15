@@ -3,6 +3,7 @@ from .errors import ConjugatorError
 from .future_conjugator import FutureConjugator
 from .imperative_conjugator import ImperativeConjugator
 from .past_conjugator import PastConjugator
+from .present_conjugator import PresentConjugator
 
 
 class ConjugatorBuilder:
@@ -23,6 +24,10 @@ class ConjugatorBuilder:
             )
         elif self.tense == Tense.FUTURE:
             return FutureConjugator(
+                subject=self.subject, region=self.region, object=self.object
+            )
+        elif self.tense == Tense.PRESENT:
+            return PresentConjugator(
                 subject=self.subject, region=self.region, object=self.object
             )
 

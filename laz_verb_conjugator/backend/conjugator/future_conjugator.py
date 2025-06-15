@@ -1,4 +1,4 @@
-from .common import Person, Region
+from .common import Person, Region, extract_prefix
 from .conjugator import Conjugator
 from .verbs import Verb
 
@@ -37,6 +37,9 @@ FUTURE_TENSE_SUFFIXES = {
     },
 }
 
+
 class FutureConjugator(Conjugator):
     def conjugate_nominative_verb(self, verb: Verb) -> str:
-        pass
+        return super().conjugate_nominative_verb(
+            verb, FUTURE_TENSE_SUFFIXES, ending_len=2
+        )

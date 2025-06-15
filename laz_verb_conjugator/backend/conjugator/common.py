@@ -1,5 +1,6 @@
 import re
 from enum import Enum, IntFlag, auto
+from typing import TypeAlias
 
 
 class Mood(IntFlag):
@@ -145,6 +146,8 @@ VERB_PREFIXES = [
 VERB_PREFIX_REGEX = (
     r"^(" + "|".join(sorted(VERB_PREFIXES, key=len, reverse=True)) + r")"
 )
+
+SuffixTable: TypeAlias = dict[Region, dict[Person, str]]
 
 
 def extract_initial_cluster(verb_form: str) -> str:
