@@ -1,9 +1,8 @@
 import pytest
 
 from backend.conjugator.builder import ConjugatorBuilder
+from backend.conjugator.common import Aspect, Mood, Person, Region, Tense
 from backend.conjugator.verbs import NominativeVerb
-from backend.conjugator.common import Aspect, Mood, Person, Tense, Region
-
 
 # Expected full conjugated forms
 expected_forms = {
@@ -436,18 +435,18 @@ past_passive_fixtures = {
         Region.FINDIKLI_ARHAVI,
         NominativeVerb(infinitive="oskidu", present_third="skidun"),
     ): {
-        Person.FIRST_PERSON_SINGULAR: "maskidu",
-        Person.SECOND_PERSON_SINGULAR: "gaskidu",
-        Person.THIRD_PERSON_SINGULAR: "askidu",
-        Person.FIRST_PERSON_PLURAL: "maskides",
-        Person.SECOND_PERSON_PLURAL: "gaskides",
-        Person.THIRD_PERSON_PLURAL: "askides",
+        Person.FIRST_PERSON_SINGULAR: "biskidi",
+        Person.SECOND_PERSON_SINGULAR: "iskidi",
+        Person.THIRD_PERSON_SINGULAR: "iskidu",
+        Person.FIRST_PERSON_PLURAL: "biskidit",
+        Person.SECOND_PERSON_PLURAL: "iskidit",
+        Person.THIRD_PERSON_PLURAL: "iskides",
     },
 }
 
 
 @pytest.mark.parametrize(
-    "region_and_verb,conjugations", past_potential_fixtures.items()
+    "region_and_verb,conjugations", past_passive_fixtures.items()
 )
 def test_past_potential(region_and_verb, conjugations):
     region, verb = region_and_verb
@@ -457,7 +456,7 @@ def test_past_potential(region_and_verb, conjugations):
             .set_subject(person)
             .set_region(region)
             .set_tense(Tense.PAST)
-            .set_aspect(Aspect.POTENTIAL)
+            .set_aspect(Aspect.PASSIVE)
             .build()
         )
         result = conjugator.conjugate_nominative_verb(verb)
