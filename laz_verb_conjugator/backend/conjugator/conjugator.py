@@ -71,17 +71,17 @@ class Conjugator:
                 verb, prefix, suffix_table, starting_len, ending_len
             )
     
-    def conjugate_nominative_verb(self, _) -> str:
+    def conjugate_nominative_verb(self, _: Verb) -> str:
         raise NotImplementedError(
             "Please call this method from a concrete conjugator."
         )
     
-    def conjugate_ergative_verb(self, _) -> str:
+    def conjugate_ergative_verb(self, _: Verb) -> str:
         raise NotImplementedError(
             "Please call this method from a concrete conjugator."
         )
 
-    def conjugate_dative_verb(self, _) -> str:
+    def conjugate_dative_verb(self, _: Verb) -> str:
         raise NotImplementedError(
             "Please call this method from a concrete conjugator."
         )
