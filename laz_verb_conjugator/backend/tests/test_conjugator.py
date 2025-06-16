@@ -510,6 +510,17 @@ dative_present_fixtures = {
         Person.SECOND_PLURAL: "giçkinan",
         Person.THIRD_PLURAL: "uçkinan",
     },
+    (
+        Region.HOPA,
+        DativeVerb(infinitive="coxons", present_third="coxons"),
+    ): {
+        Person.FIRST_SINGULAR: "mcoxons",
+        Person.SECOND_SINGULAR: "gcoxons",
+        Person.THIRD_SINGULAR: "coxons",
+        Person.FIRST_PLURAL: "mcoxonan",
+        Person.SECOND_PLURAL: "gcoxonan",
+        Person.THIRD_PLURAL: "coxonan",
+    },
 }
 
 
