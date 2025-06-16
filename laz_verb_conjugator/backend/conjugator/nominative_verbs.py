@@ -5,10 +5,21 @@ if TYPE_CHECKING:
 
 from backend.conjugator.verbs import Verb
 
-from .common import Person, Region, SuffixTable, extract_prefix
+from .common import (Person, Region, RegionSuffixTable, SuffixTable,
+                     extract_prefix)
 
 
 class ConjugateNominativeVerbMixin:
+    def conjugate_nominative_verb_region_wise(
+        self: "Conjugator",
+        verb: Verb,
+        region_suffix_table: RegionSuffixTable,
+        ending_len: int,
+    ):
+        return ConjugateNominativeVerbMixin.conjugate_nominative_verb(
+            self, verb, region_suffix_table[self.region], ending_len
+        )
+
     def conjugate_nominative_verb(
         self: "Conjugator",
         verb: Verb,
@@ -22,7 +33,7 @@ class ConjugateNominativeVerbMixin:
             if prefix is not None
             else extended_stem
         )
-        conjugation = f"{stem}{suffix_table[self.region][self.subject]}"
+        conjugation = f"{stem}{suffix_table[self.subject]}"
         if self.subject.is_first_person():
             conjugation = self.apply_epenthetic_segment(conjugation)
 

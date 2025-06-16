@@ -58,8 +58,13 @@ class PastConjugator(Conjugator, ConjugateNominativeVerbMixin):
         pass
 
     def conjugate_default_nominative_verb(self, verb: Verb) -> str:
-        return ConjugateNominativeVerbMixin.conjugate_nominative_verb(
-            self, verb, suffix_table=PAST_TENSE_SUFFIXES, ending_len=2
+        return (
+            ConjugateNominativeVerbMixin.conjugate_nominative_verb_region_wise(
+                self,
+                verb,
+                region_suffix_table=PAST_TENSE_SUFFIXES,
+                ending_len=2,
+            )
         )
 
     def conjugate_dative_verb(self, verb):

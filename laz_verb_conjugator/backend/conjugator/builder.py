@@ -1,8 +1,10 @@
 from .common import Aspect, Mood, Person, Region, Tense
+from .conjugator import Conjugator
 from .errors import ConjugatorError
 from .future_conjugator import FutureConjugator
 from .imperative_conjugator import ImperativeConjugator
 from .negative_imperative_conjugator import NegativeImperativeConjugator
+from .optative_conjugator import OptativeConjugator
 from .passive_conjugator import PassiveConjugator
 from .past_conjugator import PastConjugator
 from .past_progressive_conjugator import PastProgressiveConjugator
@@ -21,6 +23,7 @@ class ConjugatorBuilder:
     MOOD_CONJUGATORS = {
         Mood.IMPERATIVE: ImperativeConjugator,
         Mood.NEGATIVE_IMPERATIVE: NegativeImperativeConjugator,
+        Mood.OPTATIVE: OptativeConjugator,
     }
 
     TENSE_CONJUGATORS = {
@@ -39,7 +42,7 @@ class ConjugatorBuilder:
         self.moods = Mood.NONE
         self.region = None
 
-    def build(self):
+    def build(self) -> Conjugator:
         if self.aspect in self.ASPECT_CONJUGATORS:
             return self.ASPECT_CONJUGATORS[self.aspect](
                 subject=self.subject,

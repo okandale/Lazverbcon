@@ -183,7 +183,8 @@ DATIVE_SUBJECT_MARKERS = {
 }
 
 
-SuffixTable: TypeAlias = dict[Region, dict[Person, str]]
+RegionSuffixTable: TypeAlias = dict[Region, dict[Person, str]]
+SuffixTable: TypeAlias = dict[Person, str]
 PotentialSuffixTable: TypeAlias = dict[Tense, dict[Region, dict[Person, str]]]
 PassiveSuffixTable: TypeAlias = PotentialSuffixTable
 

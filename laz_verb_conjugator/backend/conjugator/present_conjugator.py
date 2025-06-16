@@ -70,8 +70,13 @@ class PresentConjugator(Conjugator, ConjugateNominativeVerbMixin):
     ]
 
     def conjugate_default_nominative_verb(self, verb: Verb) -> str:
-        return ConjugateNominativeVerbMixin.conjugate_nominative_verb(
-            self, verb, suffix_table=PRESENT_TENSE_SUFFIXES, ending_len=1
+        return (
+            ConjugateNominativeVerbMixin.conjugate_nominative_verb_region_wise(
+                self,
+                verb,
+                region_suffix_table=PRESENT_TENSE_SUFFIXES,
+                ending_len=1,
+            )
         )
 
     def conjugate_default_dative_verb(self, verb: Verb) -> str:

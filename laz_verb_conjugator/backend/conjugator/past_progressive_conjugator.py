@@ -54,7 +54,7 @@ class PastProgressiveConjugator(Conjugator, ConjugateNominativeVerbMixin):
         return ConjugateNominativeVerbMixin.conjugate_nominative_verb(
             self,
             verb,
-            suffix_table=PAST_PROGRESSIVE_TENSE_SUFFIXES,
+            region_suffix_table=PAST_PROGRESSIVE_TENSE_SUFFIXES,
             ending_len=2,
         )
 

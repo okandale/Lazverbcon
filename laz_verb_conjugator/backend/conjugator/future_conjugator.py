@@ -47,6 +47,11 @@ class FutureConjugator(Conjugator, ConjugateNominativeVerbMixin):
     ]
 
     def conjugate_default_nominative_verb(self, verb: Verb) -> str:
-        return ConjugateNominativeVerbMixin.conjugate_nominative_verb(
-            self, verb, suffix_table=FUTURE_TENSE_SUFFIXES, ending_len=2
+        return (
+            ConjugateNominativeVerbMixin.conjugate_nominative_verb_region_wise(
+                self,
+                verb,
+                region_suffix_table=FUTURE_TENSE_SUFFIXES,
+                ending_len=2,
+            )
         )

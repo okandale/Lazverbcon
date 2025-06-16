@@ -1,3 +1,4 @@
+from backend.conjugator.conjugator import Conjugator
 import pytest
 
 from backend.conjugator.builder import ConjugatorBuilder
@@ -535,6 +536,51 @@ def test_past_potential(region_and_verb, conjugations):
             .set_subject(person)
             .set_region(region)
             .set_tense(Tense.PRESENT)
+            .build()
+        )
+        result = conjugator.conjugate(verb)
+        assert (
+            result == conjugation
+        ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
+
+
+
+optative_mood_fixtures = {
+    (
+        Region.ARDESEN,
+        NominativeVerb(infinitive="dobadu", present_third="dibaden"),
+    ): {
+        Person.FIRST_SINGULAR: "dovibada",
+        Person.SECOND_SINGULAR: "dibada",
+        Person.THIRD_SINGULAR: "dibadas",
+        Person.FIRST_PLURAL: "dovibadat",
+        Person.SECOND_PLURAL: "dibadat",
+        Person.THIRD_PLURAL: "dibadan",
+    },
+    (
+        Region.ARDESEN,
+        NominativeVerb(infinitive="oskidu", present_third="skidun"),
+    ): {
+        Person.FIRST_SINGULAR: "pskida",
+        Person.SECOND_SINGULAR: "skida",
+        Person.THIRD_SINGULAR: "skidas",
+        Person.FIRST_PLURAL: "pskidat",
+        Person.SECOND_PLURAL: "skidat",
+        Person.THIRD_PLURAL: "skidan",
+    },
+}
+
+@pytest.mark.parametrize(
+    "region_and_verb,conjugations", optative_mood_fixtures.items()
+)
+def test_optative(region_and_verb, conjugations):
+    region, verb = region_and_verb
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_subject(person)
+            .set_region(region)
+            .add_mood(Mood.OPTATIVE)
             .build()
         )
         result = conjugator.conjugate(verb)
