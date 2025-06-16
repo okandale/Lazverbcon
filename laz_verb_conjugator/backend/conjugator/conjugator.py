@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Callable
 
 from .verb_rules import VerbRule
 from .common import (
@@ -90,13 +90,28 @@ class Conjugator:
             "Please call this method from a concrete conjugator."
         )
 
+    def apply_rule_or_fallback(
+        self, verb: Verb, rules: List[Verb], fallback: Callable
+    ):
+        for rule in rules:
+            if rule.matches(self, verb):
+                return rule.apply(self, verb)
+        return fallback(verb)
+
+    def conjugate_nominative_verb(self, verb: Verb) -> str:
+        return self.apply_rule_or_fallback(
+            verb, self.NOMINATIVE_RULES, self.conjugate_default_nominative_verb
+        )
+
     def conjugate_dative_verb(self, verb: Verb) -> str:
-        for rule in self.DATIVE_RULES:
-            if rule.matches(verb, self.subject):
-                return rule.apply(
-                    verb, self.subject, DATIVE_SUFFIXES, DATIVE_SUBJECT_MARKERS
-                )
-        return self.conjugate_default_dative_verb(verb)
+        return self.apply_rule_or_fallback(
+            verb, self.DATIVE_RULES, self.conjugate_default_dative_verb
+        )
+
+    def conjugate_default_nominative_verb(self, verb: Verb):
+        raise NotImplementedError(
+            "Please call this method from a concrete conjugator."
+        )
 
     def conjugate_default_dative_verb(self, verb: Verb):
         raise NotImplementedError(

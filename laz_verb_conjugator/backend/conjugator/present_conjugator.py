@@ -1,4 +1,4 @@
-from .verb_rules import NsEndingRule, UStartingRule
+from .verb_rules import DoPreverbPresent, NsEndingRule, UStartingRule
 from .common import Person, Region, extract_root
 from .conjugator import Conjugator
 from .verbs import Verb
@@ -59,12 +59,22 @@ DATIVE_SUBJECT_MARKERS = {
 
 class PresentConjugator(Conjugator):
 
-    DATIVE_RULES = [NsEndingRule(), UStartingRule()]
+    DATIVE_RULES = [
+        NsEndingRule(DATIVE_SUBJECT_MARKERS, DATIVE_SUFFIXES),
+        UStartingRule(DATIVE_SUBJECT_MARKERS, DATIVE_SUFFIXES),
+    ]
+
+    NOMINATIVE_RULES = [
+        DoPreverbPresent(markers=None, suffixes=PRESENT_TENSE_SUFFIXES)
+    ]
 
     def conjugate_nominative_verb(self, verb: Verb) -> str:
         return super()._conjugate_nominative_verb(
             verb, PRESENT_TENSE_SUFFIXES, ending_len=1
         )
+
+    def conjugate_default_nominative_verb(self, verb: Verb) -> str:
+        pass
 
     def conjugate_default_dative_verb(self, verb: Verb) -> str:
         return (
