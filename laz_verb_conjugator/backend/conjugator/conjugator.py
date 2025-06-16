@@ -1,10 +1,8 @@
 from typing import Callable, List
 
-from .common import (DATIVE_SUBJECT_MARKERS, DATIVE_SUFFIXES,
-                     PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
+from .common import (PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
                      PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER, Person,
-                     Region, SuffixTable, extract_initial_cluster,
-                     extract_prefix)
+                     Region, extract_initial_cluster)
 from .verb_rules import VerbRule
 from .verbs import Verb
 
@@ -31,48 +29,6 @@ class Conjugator:
 
     def conjugate(self, verb: Verb):
         return verb.accept_conjugator(self)
-
-    def _conjugate(
-        self,
-        verb: Verb,
-        prefix: str,
-        suffixes: SuffixTable,
-        starting_len=0,
-        ending_len=0,
-    ):
-        extended_stem = verb.present_third[starting_len:-ending_len]
-
-        stem = (
-            extended_stem[len(prefix) :]
-            if prefix is not None
-            else extended_stem
-        )
-        conjugation = f"{stem}{suffixes[self.region][self.subject]}"
-        if self.subject.is_first_person():
-            conjugation = self.apply_epenthetic_segment(conjugation)
-
-        # Put back the prefix if it exists.
-        if prefix is not None:
-            conjugation = f"{prefix}{conjugation}"
-        return conjugation
-
-    def _conjugate_nominative_verb(
-        self,
-        verb: Verb,
-        suffix_table: SuffixTable,
-        starting_len=0,
-        ending_len=0,
-    ) -> str:
-        # Extract a potential verb prefix.
-        prefix = extract_prefix(verb.infinitive)
-        if prefix in PREVERB_HANDLERS:
-            return PREVERB_HANDLERS[prefix](
-                self, verb, prefix, suffix_table, starting_len, ending_len
-            )
-        else:
-            return self._conjugate(
-                verb, prefix, suffix_table, starting_len, ending_len
-            )
 
     def conjugate_nominative_verb(self, _: Verb) -> str:
         raise NotImplementedError(
@@ -155,37 +111,3 @@ class Conjugator:
                     if epenthetic_segment != initial_cluster
                     else inflected_stem
                 )
-
-
-@handle_preverb("do")
-def handle_do_prefix(
-    conjugator: Conjugator,
-    verb: Verb,
-    prefix,
-    suffix_table: SuffixTable,
-    starting_len,
-    ending_len,
-):
-    extended_stem = verb.present_third[starting_len:-ending_len]
-    if verb.present_third.startswith("di"):
-        if conjugator.subject.is_first_person():
-            # Remove the first "d" before applying the epenthetic segment.
-            stem = extended_stem[1:]
-            conjugation = conjugator.apply_epenthetic_segment(
-                stem + suffix_table[conjugator.region][conjugator.subject]
-            )
-            return f"do{conjugation}"
-        else:
-            stem = extended_stem
-            conjugation = (
-                stem + suffix_table[conjugator.region][conjugator.subject]
-            )
-        return conjugation
-    else:
-        return conjugator._conjugate(
-            verb,
-            prefix,
-            suffix_table,
-            starting_len=starting_len,
-            ending_len=ending_len,
-        )
