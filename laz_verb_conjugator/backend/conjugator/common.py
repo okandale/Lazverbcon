@@ -19,41 +19,41 @@ class Aspect(Enum):
 
 
 class Person(Enum):
-    FIRST_PERSON_SINGULAR = auto()
-    SECOND_PERSON_SINGULAR = auto()
-    THIRD_PERSON_SINGULAR = auto()
-    FIRST_PERSON_PLURAL = auto()
-    SECOND_PERSON_PLURAL = auto()
-    THIRD_PERSON_PLURAL = auto()
+    FIRST_SINGULAR = auto()
+    SECOND_SINGULAR = auto()
+    THIRD_SINGULAR = auto()
+    FIRST_PLURAL = auto()
+    SECOND_PLURAL = auto()
+    THIRD_PLURAL = auto()
 
     def is_singular(self):
         return (
-            self.value >= Person.FIRST_PERSON_SINGULAR
-            and self.value <= Person.THIRD_PERSON_SINGULAR
+            self.value >= Person.FIRST_SINGULAR
+            and self.value <= Person.THIRD_SINGULAR
         )
 
     def is_plural(self):
         return (
-            self.value >= Person.FIRST_PERSON_PLURAL
-            and self.value <= Person.THIRD_PERSON_PLURAL
+            self.value >= Person.FIRST_PLURAL
+            and self.value <= Person.THIRD_PLURAL
         )
 
     def is_first_person(self):
         return self in (
-            Person.FIRST_PERSON_SINGULAR,
-            Person.FIRST_PERSON_PLURAL,
+            Person.FIRST_SINGULAR,
+            Person.FIRST_PLURAL,
         )
 
     def is_second_person(self):
         return self in (
-            Person.SECOND_PERSON_SINGULAR,
-            Person.SECOND_PERSON_PLURAL,
+            Person.SECOND_SINGULAR,
+            Person.SECOND_PLURAL,
         )
 
     def is_third_person(self):
         return self in (
-            Person.THIRD_PERSON_SINGULAR,
-            Person.THIRD_PERSON_PLURAL,
+            Person.THIRD_SINGULAR,
+            Person.THIRD_PLURAL,
         )
 
 
@@ -154,12 +154,12 @@ VERB_PREFIX_REGEX = (
 )
 
 POTENTIAL_SUBJECT_MARKERS = {
-    Person.FIRST_PERSON_SINGULAR: "ma",
-    Person.SECOND_PERSON_SINGULAR: "ga",
-    Person.THIRD_PERSON_SINGULAR: "a",
-    Person.FIRST_PERSON_PLURAL: "ma",
-    Person.SECOND_PERSON_PLURAL: "ga",
-    Person.THIRD_PERSON_PLURAL: "a",
+    Person.FIRST_SINGULAR: "ma",
+    Person.SECOND_SINGULAR: "ga",
+    Person.THIRD_SINGULAR: "a",
+    Person.FIRST_PLURAL: "ma",
+    Person.SECOND_PLURAL: "ga",
+    Person.THIRD_PLURAL: "a",
 }
 
 SuffixTable: TypeAlias = dict[Region, dict[Person, str]]

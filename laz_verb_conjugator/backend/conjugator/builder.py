@@ -127,8 +127,8 @@ class ConjugatorBuilder:
             Mood.IMPERATIVE,
             Mood.NEGATIVE_IMPERATIVE,
         ) and self.subject not in (
-            Person.SECOND_PERSON_PLURAL,
-            Person.SECOND_PERSON_SINGULAR,
+            Person.SECOND_PLURAL,
+            Person.SECOND_SINGULAR,
         ):
             raise ConjugatorError(
                 "You must set either 2nd person of singular/plural to use the (negative) imperative mood."
