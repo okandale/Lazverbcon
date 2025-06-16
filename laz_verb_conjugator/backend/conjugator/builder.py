@@ -1,3 +1,4 @@
+from .negative_imperative_conjugator import NegativeImperativeConjugator
 from .present_perfect_conjugator import PresentPerfectConjugator
 from .past_progressive_conjugator import PastProgressiveConjugator
 from .common import Mood, Person, Region, Tense
@@ -20,6 +21,10 @@ class ConjugatorBuilder:
     def build(self):
         if self.moods == Mood.IMPERATIVE:
             return ImperativeConjugator(
+                subject=self.subject, region=self.region, object=self.object
+            )
+        elif self.moods == Mood.NEGATIVE_IMPERATIVE:
+            return NegativeImperativeConjugator(
                 subject=self.subject, region=self.region, object=self.object
             )
         elif self.tense == Tense.PAST:

@@ -326,3 +326,26 @@ def test_imperative_mood(region_and_verb, conjugations):
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
+        
+
+negative_imperative_mood_fixtures = {
+    (Region.HOPA, NominativeVerb(infinitive="oskidu", present_third="skidun")): {
+        Person.SECOND_PERSON_SINGULAR: "mo skidur",
+        Person.SECOND_PERSON_PLURAL: "mo skidurt",
+    },
+}
+@pytest.mark.parametrize("region_and_verb,conjugations", negative_imperative_mood_fixtures.items())
+def test_negative_imperative_mood(region_and_verb, conjugations):
+    region, verb = region_and_verb
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_subject(person)
+            .set_region(region)
+            .add_mood(Mood.NEGATIVE_IMPERATIVE)
+            .build()
+        )
+        result = conjugator.conjugate_nominative_verb(verb)
+        assert (
+            result == conjugation
+        ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
