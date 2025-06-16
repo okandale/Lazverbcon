@@ -1,3 +1,9 @@
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from .conjugator import Conjugator
+
+
 class Verb:
     """Represents a Laz verb with its base forms.
 
@@ -18,11 +24,16 @@ class Verb:
     def __init__(self, infinitive: str, present_third: str):
         self.infinitive: str = infinitive
         self.present_third: str = present_third
+        
+    def accept_conjugator(self, _) -> str:
+        raise NotImplementedError(
+            "Please call this function from a concrete verb."
+        )
 
 
 class ErgativeVerb(Verb):
-    def accept_imperative_conjugator(self, imperative_visitor):
-        imperative_visitor.conjugate_ergative_verb(self)
+    def accept_conjugator(self, conjugator: "Conjugator") -> str:
+        return conjugator.conjugate_ergative_verb(self)
 
     def __str__(self):
         return (
@@ -32,8 +43,8 @@ class ErgativeVerb(Verb):
 
 
 class NominativeVerb(Verb):
-    def accept_imperative_conjugator(self, imperative_visitor):
-        imperative_visitor.conjugate_nominative_verb(self)
+    def accept_conjugator(self, conjugator: "Conjugator") -> str:
+        return conjugator.conjugate_nominative_verb(self)
 
     def __str__(self):
         return (
@@ -43,8 +54,8 @@ class NominativeVerb(Verb):
 
 
 class DativeVerb(Verb):
-    def accept_dative_conjugator(self, dative_conjugator):
-        dative_conjugator.conjugate_dative_verb(self)
+    def accept_conjugator(self, conjugator: "Conjugator"):
+        return conjugator.conjugate_dative_verb(self)
 
     def __str__(self):
         return (

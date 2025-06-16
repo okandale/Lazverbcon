@@ -40,6 +40,6 @@ FUTURE_TENSE_SUFFIXES = {
 
 class FutureConjugator(Conjugator):
     def conjugate_nominative_verb(self, verb: Verb) -> str:
-        return super().conjugate_nominative_verb(
+        return super()._conjugate_nominative_verb(
             verb, FUTURE_TENSE_SUFFIXES, ending_len=2
         )

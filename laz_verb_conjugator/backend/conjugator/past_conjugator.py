@@ -55,7 +55,7 @@ class PastConjugator(Conjugator):
 
     def conjugate_nominative_verb(self, verb: Verb) -> str:
         # Extract a potential verb prefix.
-        return super().conjugate_nominative_verb(
+        return super()._conjugate_nominative_verb(
             verb, PAST_TENSE_SUFFIXES, ending_len=2
         )
 

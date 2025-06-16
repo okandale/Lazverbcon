@@ -40,6 +40,6 @@ PRESENT_TENSE_SUFFIXES = {
 
 class PresentConjugator(Conjugator):
     def conjugate_nominative_verb(self, verb: Verb) -> str:
-        return super().conjugate_nominative_verb(
+        return super()._conjugate_nominative_verb(
             verb, PRESENT_TENSE_SUFFIXES, ending_len=1
         )

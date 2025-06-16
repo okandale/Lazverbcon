@@ -25,6 +25,10 @@ class Conjugator:
         self.region: Region = region
         self.object: Person = object
 
+
+    def conjugate(self, verb: Verb):
+        return verb.accept_conjugator(self)
+
     def _conjugate(
         self,
         verb: Verb,
@@ -49,7 +53,7 @@ class Conjugator:
             conjugation = f"{prefix}{conjugation}"
         return conjugation
 
-    def conjugate_nominative_verb(
+    def _conjugate_nominative_verb(
         self,
         verb: Verb,
         suffix_table: SuffixTable,
@@ -66,6 +70,21 @@ class Conjugator:
             return self._conjugate(
                 verb, prefix, suffix_table, starting_len, ending_len
             )
+    
+    def conjugate_nominative_verb(self, _) -> str:
+        raise NotImplementedError(
+            "Please call this method from a concrete conjugator."
+        )
+    
+    def conjugate_ergative_verb(self, _) -> str:
+        raise NotImplementedError(
+            "Please call this method from a concrete conjugator."
+        )
+
+    def conjugate_dative_verb(self, _) -> str:
+        raise NotImplementedError(
+            "Please call this method from a concrete conjugator."
+        )
 
     def apply_epenthetic_segment(self, inflected_stem):
         """
