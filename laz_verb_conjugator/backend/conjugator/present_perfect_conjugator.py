@@ -1,5 +1,6 @@
 from .common import Person, Region, SuffixTable, extract_prefix, extract_root
 from .conjugator import Conjugator
+from .verb_rules import VerbRuleWithSuffixes
 from .verbs import Verb
 
 PRESENT_PERFECT_SUFFIXES: SuffixTable = {
@@ -57,36 +58,13 @@ def handle_preverb(preverb):
     return wrapper
 
 
-class PresentPerfectConjugator(Conjugator):
-    def conjugate_nominative_verb(self, verb: Verb) -> str:
-
+class PresentPerfectDoPreverbRule(VerbRuleWithSuffixes):
+    def matches(self, conjugator: "Conjugator", verb: Verb):
         prefix = extract_prefix(verb.infinitive)
-        if prefix in PREVERB_HANDLERS:
-            return PREVERB_HANDLERS[prefix](self, verb, prefix)
-        else:
-            return self.conjugate_default_nominative_verb(verb, prefix)
+        return prefix == "do" and verb.present_third.startswith("di")
 
-    def conjugate_default_nominative_verb(self, verb: Verb, prefix) -> str:
-        stem = extract_root(verb.infinitive, 1, 1)
-        conjugation = (
-            SUBJECT_MARKERS[self.subject]
-            + stem
-            + PRESENT_PERFECT_SUFFIXES[self.region][self.subject]
-        )
-        if prefix:
-            return prefix + conjugation
-        else:
-            return conjugation
-
-
-@handle_preverb("do")
-def handle_do_prefix(
-    conjugator: PresentPerfectConjugator,
-    verb: Verb,
-    prefix,
-):
-
-    if verb.present_third.startswith("di"):
+    def apply(self, conjugator: "Conjugator", verb: Verb):
+        prefix = extract_prefix(verb.infinitive)
         subject_marker = SUBJECT_MARKERS[conjugator.subject]
         # Remove the first "do" before applying the subject marker.
         stem = extract_root(verb.infinitive, 2, 1)
@@ -99,5 +77,23 @@ def handle_do_prefix(
             return f"d{conjugation}"
         else:
             return f"do{conjugation}"
-    else:
-        return conjugator.conjugate_default_nominative_verb(verb, prefix)
+
+
+class PresentPerfectConjugator(Conjugator):
+
+    NOMINATIVE_RULES = [
+        PresentPerfectDoPreverbRule(suffixes=PRESENT_PERFECT_SUFFIXES)
+    ]
+
+    def conjugate_default_nominative_verb(self, verb: Verb) -> str:
+        prefix = extract_prefix(verb.infinitive)
+        stem = extract_root(verb.infinitive, 1, 1)
+        conjugation = (
+            SUBJECT_MARKERS[self.subject]
+            + stem
+            + PRESENT_PERFECT_SUFFIXES[self.region][self.subject]
+        )
+        if prefix:
+            return prefix + conjugation
+        else:
+            return conjugation

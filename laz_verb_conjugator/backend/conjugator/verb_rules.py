@@ -19,18 +19,18 @@ class VerbRule:
         )
 
 
-class RuleWithSuffixes(VerbRule):
+class VerbRuleWithSuffixes(VerbRule):
     def __init__(self, suffixes):
         self.suffixes = suffixes
 
 
-class RuleWithMarkersAndSuffixes(VerbRule):
+class VerbRuleWithMarkersAndSuffixes(VerbRule):
     def __init__(self, markers, suffixes):
         self.markers = markers
         self.suffixes = suffixes
 
 
-class NsEndingRule(RuleWithMarkersAndSuffixes):
+class NsEndingRule(VerbRuleWithMarkersAndSuffixes):
 
     def matches(self, conjugator: "Conjugator", verb: Verb):
         return verb.present_third.endswith("ns")
@@ -48,7 +48,7 @@ class NsEndingRule(RuleWithMarkersAndSuffixes):
         )
 
 
-class UStartingRule(RuleWithMarkersAndSuffixes):
+class UStartingRule(VerbRuleWithMarkersAndSuffixes):
 
     def matches(self, conjugator: "Conjugator", verb: Verb):
         return (
@@ -65,7 +65,7 @@ class UStartingRule(RuleWithMarkersAndSuffixes):
         )
 
 
-class DoPreverb(RuleWithSuffixes):
+class DoPreverb(VerbRuleWithSuffixes):
 
     def __init__(self, ending_len: int, suffixes):
         self.ending_len = ending_len
