@@ -1,5 +1,5 @@
-from .errors import ConjugatorError
 from .common import Person, Region
+from .errors import ConjugatorError
 from .present_conjugator import PresentConjugator
 
 NEGATIVE_IMPERATIVE_PREFIXES = {
@@ -20,9 +20,9 @@ class NegativeImperativeConjugator(PresentConjugator):
             )
         super().__init__(subject, region, object)
 
-    def conjugate_nominative_verb(self, verb):
+    def conjugate_default_nominative_verb(self, verb):
         return (
             NEGATIVE_IMPERATIVE_PREFIXES[self.region]
             + " "
-            + super().conjugate_nominative_verb(verb)
+            + super().conjugate_default_nominative_verb(verb)
         )

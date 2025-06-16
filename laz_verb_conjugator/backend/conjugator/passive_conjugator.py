@@ -1,14 +1,7 @@
+from .common import (PassiveSuffixTable, Person, Region, Tense, extract_prefix,
+                     extract_root)
 from .conjugator import Conjugator
-from .common import (
-    PassiveSuffixTable,
-    Person,
-    Region,
-    Tense,
-    extract_prefix,
-    extract_root,
-)
 from .verbs import Verb
-
 
 SUFFIXES: PassiveSuffixTable = {
     Tense.PAST: {

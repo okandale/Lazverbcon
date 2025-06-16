@@ -1,5 +1,7 @@
 from .common import Person, Region, extract_prefix
 from .conjugator import Conjugator
+from .nominative_verbs import ConjugateNominativeVerbMixin
+from .verb_rules import DoPreverb
 from .verbs import Verb
 
 FUTURE_TENSE_SUFFIXES = {
@@ -38,8 +40,13 @@ FUTURE_TENSE_SUFFIXES = {
 }
 
 
-class FutureConjugator(Conjugator):
-    def conjugate_nominative_verb(self, verb: Verb) -> str:
-        return super()._conjugate_nominative_verb(
-            verb, FUTURE_TENSE_SUFFIXES, ending_len=2
+class FutureConjugator(Conjugator, ConjugateNominativeVerbMixin):
+
+    NOMINATIVE_RULES = [
+        DoPreverb(ending_len=2, suffixes=FUTURE_TENSE_SUFFIXES)
+    ]
+
+    def conjugate_default_nominative_verb(self, verb: Verb) -> str:
+        return ConjugateNominativeVerbMixin.conjugate_nominative_verb(
+            self, verb, suffix_table=FUTURE_TENSE_SUFFIXES, ending_len=2
         )

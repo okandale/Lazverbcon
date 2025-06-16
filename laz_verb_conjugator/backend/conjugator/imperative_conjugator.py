@@ -1,5 +1,5 @@
-from .errors import ConjugatorError
 from .common import Person, Region
+from .errors import ConjugatorError
 from .past_conjugator import PastConjugator
 
 

@@ -1,14 +1,14 @@
-from .passive_conjugator import PassiveConjugator
-from .potential_conjugator import PotentialConjugator
-from .negative_imperative_conjugator import NegativeImperativeConjugator
-from .present_perfect_conjugator import PresentPerfectConjugator
-from .past_progressive_conjugator import PastProgressiveConjugator
 from .common import Aspect, Mood, Person, Region, Tense
 from .errors import ConjugatorError
 from .future_conjugator import FutureConjugator
 from .imperative_conjugator import ImperativeConjugator
+from .negative_imperative_conjugator import NegativeImperativeConjugator
+from .passive_conjugator import PassiveConjugator
 from .past_conjugator import PastConjugator
+from .past_progressive_conjugator import PastProgressiveConjugator
+from .potential_conjugator import PotentialConjugator
 from .present_conjugator import PresentConjugator
+from .present_perfect_conjugator import PresentPerfectConjugator
 
 
 class ConjugatorBuilder:

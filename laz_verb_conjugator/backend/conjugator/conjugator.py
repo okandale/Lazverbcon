@@ -1,17 +1,11 @@
-from typing import List, Callable
+from typing import Callable, List
 
+from .common import (DATIVE_SUBJECT_MARKERS, DATIVE_SUFFIXES,
+                     PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
+                     PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER, Person,
+                     Region, SuffixTable, extract_initial_cluster,
+                     extract_prefix)
 from .verb_rules import VerbRule
-from .common import (
-    DATIVE_SUFFIXES,
-    PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
-    PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER,
-    DATIVE_SUBJECT_MARKERS,
-    Person,
-    Region,
-    SuffixTable,
-    extract_initial_cluster,
-    extract_prefix,
-)
 from .verbs import Verb
 
 PREVERB_HANDLERS = {}

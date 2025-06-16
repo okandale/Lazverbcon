@@ -1,7 +1,7 @@
+from typing import TYPE_CHECKING
+
 from .common import Person, extract_prefix
 from .verbs import Verb
-
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .conjugator import Conjugator
@@ -17,6 +17,11 @@ class VerbRule:
         raise NotImplementedError(
             "Please call this method from a concrete rule."
         )
+
+
+class RuleWithSuffixes(VerbRule):
+    def __init__(self, suffixes):
+        self.suffixes = suffixes
 
 
 class RuleWithMarkersAndSuffixes(VerbRule):
@@ -60,19 +65,24 @@ class UStartingRule(RuleWithMarkersAndSuffixes):
         )
 
 
-class DoPreverbPresent(RuleWithMarkersAndSuffixes):
+class DoPreverb(RuleWithSuffixes):
+
+    def __init__(self, ending_len: int, suffixes):
+        self.ending_len = ending_len
+        super().__init__(suffixes)
+
     def matches(self, conjugator: "Conjugator", verb: Verb):
         prefix = extract_prefix(verb.infinitive)
         return prefix == "do" and verb.present_third.startswith("di")
 
     def apply(self, conjugator: "Conjugator", verb: Verb):
-        extended_stem = verb.present_third[:-1]
+        extended_stem = verb.present_third[: -self.ending_len]
         if conjugator.subject.is_first_person():
             stem = extended_stem[1:]
             conjugation = conjugator.apply_epenthetic_segment(
                 stem + self.suffixes[conjugator.region][conjugator.subject]
             )
-            conjugation = "do{conjugation}"
+            conjugation = f"do{conjugation}"
         else:
             stem = extended_stem
             conjugation = (

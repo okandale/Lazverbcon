@@ -1,6 +1,6 @@
-from .verbs import Verb
 from .common import Person, Region, SuffixTable, extract_prefix, extract_root
 from .conjugator import Conjugator
+from .verbs import Verb
 
 PRESENT_PERFECT_SUFFIXES: SuffixTable = {
     Region.ARDESEN: {

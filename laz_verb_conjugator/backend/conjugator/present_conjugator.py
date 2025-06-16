@@ -1,6 +1,7 @@
-from .verb_rules import DoPreverbPresent, NsEndingRule, UStartingRule
-from .common import Person, Region, extract_root
+from .common import Person, Region, extract_prefix, extract_root
 from .conjugator import Conjugator
+from .nominative_verbs import ConjugateNominativeVerbMixin
+from .verb_rules import DoPreverb, NsEndingRule, UStartingRule
 from .verbs import Verb
 
 PRESENT_TENSE_SUFFIXES = {
@@ -57,7 +58,7 @@ DATIVE_SUBJECT_MARKERS = {
 }
 
 
-class PresentConjugator(Conjugator):
+class PresentConjugator(Conjugator, ConjugateNominativeVerbMixin):
 
     DATIVE_RULES = [
         NsEndingRule(DATIVE_SUBJECT_MARKERS, DATIVE_SUFFIXES),
@@ -65,16 +66,13 @@ class PresentConjugator(Conjugator):
     ]
 
     NOMINATIVE_RULES = [
-        DoPreverbPresent(markers=None, suffixes=PRESENT_TENSE_SUFFIXES)
+        DoPreverb(ending_len=1, suffixes=PRESENT_TENSE_SUFFIXES)
     ]
 
-    def conjugate_nominative_verb(self, verb: Verb) -> str:
-        return super()._conjugate_nominative_verb(
-            verb, PRESENT_TENSE_SUFFIXES, ending_len=1
-        )
-
     def conjugate_default_nominative_verb(self, verb: Verb) -> str:
-        pass
+        return ConjugateNominativeVerbMixin.conjugate_nominative_verb(
+            self, verb, suffix_table=PRESENT_TENSE_SUFFIXES, ending_len=1
+        )
 
     def conjugate_default_dative_verb(self, verb: Verb) -> str:
         return (

@@ -1,5 +1,7 @@
 from .common import Person, Region, SuffixTable, extract_prefix
 from .conjugator import Conjugator
+from .nominative_verbs import ConjugateNominativeVerbMixin
+from .verb_rules import DoPreverb
 from .verbs import Verb
 
 PAST_TENSE_SUFFIXES: SuffixTable = {
@@ -48,15 +50,16 @@ SUBJECT_MARKERS = {
 }
 
 
-class PastConjugator(Conjugator):
+class PastConjugator(Conjugator, ConjugateNominativeVerbMixin):
+
+    NOMINATIVE_RULES = [DoPreverb(ending_len=2, suffixes=PAST_TENSE_SUFFIXES)]
 
     def conjugate_ergative_verb(self, verb):
         pass
 
-    def conjugate_nominative_verb(self, verb: Verb) -> str:
-        # Extract a potential verb prefix.
-        return super()._conjugate_nominative_verb(
-            verb, PAST_TENSE_SUFFIXES, ending_len=2
+    def conjugate_default_nominative_verb(self, verb: Verb) -> str:
+        return ConjugateNominativeVerbMixin.conjugate_nominative_verb(
+            self, verb, suffix_table=PAST_TENSE_SUFFIXES, ending_len=2
         )
 
     def conjugate_dative_verb(self, verb):
