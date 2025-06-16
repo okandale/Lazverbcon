@@ -12,6 +12,25 @@ from .present_perfect_conjugator import PresentPerfectConjugator
 
 
 class ConjugatorBuilder:
+
+    ASPECT_CONJUGATORS = {
+        Aspect.POTENTIAL: PotentialConjugator,
+        Aspect.PASSIVE: PassiveConjugator,
+    }
+
+    MOOD_CONJUGATORS = {
+        Mood.IMPERATIVE: ImperativeConjugator,
+        Mood.NEGATIVE_IMPERATIVE: NegativeImperativeConjugator,
+    }
+
+    TENSE_CONJUGATORS = {
+        Tense.PRESENT: PresentConjugator,
+        Tense.PAST: PastConjugator,
+        Tense.FUTURE: FutureConjugator,
+        Tense.PAST_PROGRESSIVE: PastProgressiveConjugator,
+        Tense.PRESENT_PREFECT: PresentPerfectConjugator,
+    }
+
     def __init__(self):
         self.subject = None
         self.object = None
@@ -21,49 +40,23 @@ class ConjugatorBuilder:
         self.region = None
 
     def build(self):
-        if self.aspect == Aspect.POTENTIAL:
-            return PotentialConjugator(
+        if self.aspect in self.ASPECT_CONJUGATORS:
+            return self.ASPECT_CONJUGATORS[self.aspect](
                 subject=self.subject,
                 region=self.region,
                 object=self.object,
                 tense=self.tense,
             )
-        elif self.aspect == Aspect.PASSIVE:
-            return PassiveConjugator(
+        elif self.moods in self.MOOD_CONJUGATORS:
+            return self.MOOD_CONJUGATORS[self.moods](
                 subject=self.subject,
                 region=self.region,
                 object=self.object,
-                tense=self.tense,
             )
-        if self.moods == Mood.IMPERATIVE:
-            return ImperativeConjugator(
+        elif self.tense in self.TENSE_CONJUGATORS:
+            return self.TENSE_CONJUGATORS[self.tense](
                 subject=self.subject, region=self.region, object=self.object
             )
-        elif self.moods == Mood.NEGATIVE_IMPERATIVE:
-            return NegativeImperativeConjugator(
-                subject=self.subject, region=self.region, object=self.object
-            )
-        elif self.tense == Tense.PAST:
-            return PastConjugator(
-                subject=self.subject, region=self.region, object=self.object
-            )
-        elif self.tense == Tense.FUTURE:
-            return FutureConjugator(
-                subject=self.subject, region=self.region, object=self.object
-            )
-        elif self.tense == Tense.PRESENT:
-            return PresentConjugator(
-                subject=self.subject, region=self.region, object=self.object
-            )
-        elif self.tense == Tense.PAST_PROGRESSIVE:
-            return PastProgressiveConjugator(
-                subject=self.subject, region=self.region, object=self.object
-            )
-        elif self.tense == Tense.PRESENT_PREFECT:
-            return PresentPerfectConjugator(
-                subject=self.subject, region=self.region, object=self.object
-            )
-
         raise ConjugatorError("Could not build the conjugator.")
 
     def set_region(self, region: Region):
