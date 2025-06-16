@@ -1,7 +1,9 @@
+from .passive_conjugator import PassiveConjugator
+from .potential_conjugator import PotentialConjugator
 from .negative_imperative_conjugator import NegativeImperativeConjugator
 from .present_perfect_conjugator import PresentPerfectConjugator
 from .past_progressive_conjugator import PastProgressiveConjugator
-from .common import Mood, Person, Region, Tense
+from .common import Aspect, Mood, Person, Region, Tense
 from .errors import ConjugatorError
 from .future_conjugator import FutureConjugator
 from .imperative_conjugator import ImperativeConjugator
@@ -19,6 +21,20 @@ class ConjugatorBuilder:
         self.region = None
 
     def build(self):
+        if self.aspect == Aspect.POTENTIAL:
+            return PotentialConjugator(
+                subject=self.subject,
+                region=self.region,
+                object=self.object,
+                tense=self.tense,
+            )
+        elif self.aspect == Aspect.PASSIVE:
+            return PassiveConjugator(
+                subject=self.subject,
+                region=self.region,
+                object=self.object,
+                tense=self.tense,
+            )
         if self.moods == Mood.IMPERATIVE:
             return ImperativeConjugator(
                 subject=self.subject, region=self.region, object=self.object

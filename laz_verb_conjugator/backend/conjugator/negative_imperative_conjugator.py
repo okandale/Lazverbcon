@@ -6,8 +6,9 @@ NEGATIVE_IMPERATIVE_PREFIXES = {
     Region.ARDESEN: "mo",
     Region.FINDIKLI_ARHAVI: "mot",
     Region.HOPA: "mo",
-    Region.PAZAR: "mot"
+    Region.PAZAR: "mot",
 }
+
 
 class NegativeImperativeConjugator(PresentConjugator):
 
@@ -18,9 +19,10 @@ class NegativeImperativeConjugator(PresentConjugator):
                 "for the second person."
             )
         super().__init__(subject, region, object)
-    
+
     def conjugate_nominative_verb(self, verb):
         return (
-            NEGATIVE_IMPERATIVE_PREFIXES[self.region] +
-            " " + super().conjugate_nominative_verb(verb)
+            NEGATIVE_IMPERATIVE_PREFIXES[self.region]
+            + " "
+            + super().conjugate_nominative_verb(verb)
         )

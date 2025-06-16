@@ -1,8 +1,8 @@
-from .common import Person, Region, extract_prefix
+from .common import Person, Region, SuffixTable, extract_prefix
 from .conjugator import Conjugator
 from .verbs import Verb
 
-PAST_TENSE_SUFFIXES = {
+PAST_TENSE_SUFFIXES: SuffixTable = {
     Region.ARDESEN: {
         Person.FIRST_PERSON_SINGULAR: "i",
         Person.SECOND_PERSON_SINGULAR: "i",
@@ -36,6 +36,7 @@ PAST_TENSE_SUFFIXES = {
         Person.THIRD_PERSON_PLURAL: "es",
     },
 }
+
 
 SUBJECT_MARKERS = {
     Person.FIRST_PERSON_SINGULAR: "ma",

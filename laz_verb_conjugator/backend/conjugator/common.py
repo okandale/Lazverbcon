@@ -12,6 +12,12 @@ class Mood(IntFlag):
     NEGATIVE_IMPERATIVE = 16
 
 
+class Aspect(Enum):
+    NONE = auto()
+    POTENTIAL = auto()
+    PASSIVE = auto()
+
+
 class Person(Enum):
     FIRST_PERSON_SINGULAR = auto()
     SECOND_PERSON_SINGULAR = auto()
@@ -147,7 +153,18 @@ VERB_PREFIX_REGEX = (
     r"^(" + "|".join(sorted(VERB_PREFIXES, key=len, reverse=True)) + r")"
 )
 
+POTENTIAL_SUBJECT_MARKERS = {
+    Person.FIRST_PERSON_SINGULAR: "ma",
+    Person.SECOND_PERSON_SINGULAR: "ga",
+    Person.THIRD_PERSON_SINGULAR: "a",
+    Person.FIRST_PERSON_PLURAL: "ma",
+    Person.SECOND_PERSON_PLURAL: "ga",
+    Person.THIRD_PERSON_PLURAL: "a",
+}
+
 SuffixTable: TypeAlias = dict[Region, dict[Person, str]]
+PotentialSuffixTable: TypeAlias = dict[Tense, dict[Region, dict[Person, str]]]
+PassiveSuffixTable: TypeAlias = PotentialSuffixTable
 
 
 def extract_initial_cluster(verb_form: str) -> str:

@@ -85,7 +85,7 @@ def handle_do_prefix(
     verb: Verb,
     prefix,
 ):
-    
+
     if verb.present_third.startswith("di"):
         subject_marker = SUBJECT_MARKERS[conjugator.subject]
         # Remove the first "do" before applying the subject marker.
@@ -93,9 +93,7 @@ def handle_do_prefix(
         conjugation = (
             subject_marker
             + stem
-            + PRESENT_PERFECT_SUFFIXES[conjugator.region][
-                conjugator.subject
-            ]
+            + PRESENT_PERFECT_SUFFIXES[conjugator.region][conjugator.subject]
         )
         if prefix[:-1] in "aeiou" or subject_marker[0] in "aeiou":
             return f"d{conjugation}"
