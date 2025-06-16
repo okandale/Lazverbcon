@@ -477,13 +477,45 @@ dative_present_fixtures = {
         Person.SECOND_PERSON_PLURAL: "gaoropenan",
         Person.THIRD_PERSON_PLURAL: "aoropenan",
     },
+    (
+        Region.ARDESEN,
+        DativeVerb(infinitive="omşkorinu", present_third="amşkorinen"),
+    ): {
+        Person.FIRST_PERSON_SINGULAR: "mamşkorinen",
+        Person.SECOND_PERSON_SINGULAR: "gamşkorinen",
+        Person.THIRD_PERSON_SINGULAR: "amşkorinen",
+        Person.FIRST_PERSON_PLURAL: "mamşkorinenan",
+        Person.SECOND_PERSON_PLURAL: "gamşkorinenan",
+        Person.THIRD_PERSON_PLURAL: "amşkorinenan",
+    },
+    (
+        Region.PAZAR,
+        DativeVerb(infinitive="olimbu", present_third="alimben"),
+    ): {
+        Person.FIRST_PERSON_SINGULAR: "malimben",
+        Person.SECOND_PERSON_SINGULAR: "galimben",
+        Person.THIRD_PERSON_SINGULAR: "alimben",
+        Person.FIRST_PERSON_PLURAL: "malimbenan",
+        Person.SECOND_PERSON_PLURAL: "galimbenan",
+        Person.THIRD_PERSON_PLURAL: "alimbenan",
+    },
+    (
+        Region.FINDIKLI_ARHAVI,
+        DativeVerb(infinitive="oçkinu", present_third="uçkin"),
+    ): {
+        Person.FIRST_PERSON_SINGULAR: "miçkin",
+        Person.SECOND_PERSON_SINGULAR: "giçkin",
+        Person.THIRD_PERSON_SINGULAR: "uçkin",
+        Person.FIRST_PERSON_PLURAL: "miçkinan",
+        Person.SECOND_PERSON_PLURAL: "giçkinan",
+        Person.THIRD_PERSON_PLURAL: "uçkinan",
+    },
 }
 
 
 @pytest.mark.parametrize(
     "region_and_verb,conjugations", dative_present_fixtures.items()
 )
-@pytest.mark.skip(reason="Being refactored")
 def test_past_potential(region_and_verb, conjugations):
     region, verb = region_and_verb
     for person, conjugation in conjugations.items():
@@ -498,3 +530,7 @@ def test_past_potential(region_and_verb, conjugations):
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
+
+
+# XXX: do Oropu, omşkorinu, olimbu
+# XXX: Oçkinu, Then preverbs, then coxons/uğun/uyonun (verbs with no infinitive), then gyožin
