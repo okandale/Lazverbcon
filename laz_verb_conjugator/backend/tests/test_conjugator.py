@@ -2,7 +2,7 @@ import pytest
 
 from backend.conjugator.builder import ConjugatorBuilder
 from backend.conjugator.common import Aspect, Mood, Person, Region, Tense
-from backend.conjugator.verbs import NominativeVerb
+from backend.conjugator.verbs import DativeVerb, NominativeVerb
 
 # Expected full conjugated forms
 expected_forms = {
@@ -107,7 +107,7 @@ def test_conjugate_nominative_past_tense_all_persons(
             .set_tense(Tense.PAST)
             .build()
         )
-        result = conjugator.conjugate_nominative_verb(verb)
+        result = conjugator.conjugate(verb)
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
@@ -126,7 +126,7 @@ def test_conjugate_prefix_verbs_past_tense(region_and_verb, conjugations):
             .set_tense(Tense.PAST)
             .build()
         )
-        result = conjugator.conjugate_nominative_verb(verb)
+        result = conjugator.conjugate(verb)
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
@@ -145,7 +145,7 @@ def test_conjugate_mutated_prefix_past_tense(region_and_verb, conjugations):
             .set_tense(Tense.PAST)
             .build()
         )
-        result = conjugator.conjugate_nominative_verb(verb)
+        result = conjugator.conjugate(verb)
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
@@ -190,7 +190,7 @@ def test_conjugate_nominative_future_tense(region_and_verb, conjugations):
             .set_tense(Tense.FUTURE)
             .build()
         )
-        result = conjugator.conjugate_nominative_verb(verb)
+        result = conjugator.conjugate(verb)
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
@@ -235,7 +235,7 @@ def test_conjugate_nominative_present_tense(region_and_verb, conjugations):
             .set_tense(Tense.PRESENT)
             .build()
         )
-        result = conjugator.conjugate_nominative_verb(verb)
+        result = conjugator.conjugate(verb)
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
@@ -282,7 +282,7 @@ def test_conjugate_nominative_past_progressive_tense(
             .set_tense(Tense.PAST_PROGRESSIVE)
             .build()
         )
-        result = conjugator.conjugate_nominative_verb(verb)
+        result = conjugator.conjugate(verb)
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
@@ -329,7 +329,7 @@ def test_conjugate_nominative_past_progressive_tense(
             .set_tense(Tense.PRESENT_PREFECT)
             .build()
         )
-        result = conjugator.conjugate_nominative_verb(verb)
+        result = conjugator.conjugate(verb)
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
@@ -359,7 +359,7 @@ def test_imperative_mood(region_and_verb, conjugations):
             .add_mood(Mood.IMPERATIVE)
             .build()
         )
-        result = conjugator.conjugate_nominative_verb(verb)
+        result = conjugator.conjugate(verb)
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
@@ -389,7 +389,7 @@ def test_negative_imperative_mood(region_and_verb, conjugations):
             .add_mood(Mood.NEGATIVE_IMPERATIVE)
             .build()
         )
-        result = conjugator.conjugate_nominative_verb(verb)
+        result = conjugator.conjugate(verb)
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
@@ -424,7 +424,7 @@ def test_past_potential(region_and_verb, conjugations):
             .set_aspect(Aspect.POTENTIAL)
             .build()
         )
-        result = conjugator.conjugate_nominative_verb(verb)
+        result = conjugator.conjugate(verb)
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
@@ -459,7 +459,42 @@ def test_past_potential(region_and_verb, conjugations):
             .set_aspect(Aspect.PASSIVE)
             .build()
         )
-        result = conjugator.conjugate_nominative_verb(verb)
+        result = conjugator.conjugate(verb)
+        assert (
+            result == conjugation
+        ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
+
+
+dative_present_fixtures = {
+    (
+        Region.ARDESEN,
+        DativeVerb(infinitive="oropu", present_third="aoropen"),
+    ): {
+        Person.FIRST_PERSON_SINGULAR: "maoropen",
+        Person.SECOND_PERSON_SINGULAR: "gaoropen",
+        Person.THIRD_PERSON_SINGULAR: "aoropen",
+        Person.FIRST_PERSON_PLURAL: "maoropenan",
+        Person.SECOND_PERSON_PLURAL: "gaoropenan",
+        Person.THIRD_PERSON_PLURAL: "aoropenan",
+    },
+}
+
+
+@pytest.mark.parametrize(
+    "region_and_verb,conjugations", dative_present_fixtures.items()
+)
+@pytest.mark.skip(reason="Being refactored")
+def test_past_potential(region_and_verb, conjugations):
+    region, verb = region_and_verb
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_subject(person)
+            .set_region(region)
+            .set_tense(Tense.PRESENT)
+            .build()
+        )
+        result = conjugator.conjugate(verb)
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
