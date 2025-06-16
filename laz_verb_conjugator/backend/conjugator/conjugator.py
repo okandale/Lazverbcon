@@ -41,7 +41,7 @@ class Conjugator:
         )
 
     def apply_rule_or_fallback(
-        self, verb: Verb, rules: List[Verb], fallback: Callable
+        self, verb: Verb, rules: List[VerbRule], fallback: Callable
     ):
         for rule in rules:
             if rule.matches(self, verb):
