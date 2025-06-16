@@ -27,15 +27,17 @@ class Person(Enum):
     THIRD_PLURAL = auto()
 
     def is_singular(self):
-        return (
-            self.value >= Person.FIRST_SINGULAR
-            and self.value <= Person.THIRD_SINGULAR
+        return self in (
+            Person.FIRST_SINGULAR,
+            Person.SECOND_SINGULAR,
+            Person.THIRD_SINGULAR,
         )
 
     def is_plural(self):
-        return (
-            self.value >= Person.FIRST_PLURAL
-            and self.value <= Person.THIRD_PLURAL
+        return self in (
+            Person.FIRST_PLURAL,
+            Person.SECOND_PLURAL,
+            Person.THIRD_PLURAL,
         )
 
     def is_first_person(self):
@@ -161,6 +163,25 @@ POTENTIAL_SUBJECT_MARKERS = {
     Person.SECOND_PLURAL: "ga",
     Person.THIRD_PLURAL: "a",
 }
+
+DATIVE_SUFFIXES = {
+    Person.FIRST_SINGULAR: "",
+    Person.SECOND_SINGULAR: "",
+    Person.THIRD_SINGULAR: "",
+    Person.FIRST_PLURAL: "an",
+    Person.SECOND_PLURAL: "an",
+    Person.THIRD_PLURAL: "an",
+}
+
+DATIVE_SUBJECT_MARKERS = {
+    Person.FIRST_SINGULAR: "m",
+    Person.SECOND_SINGULAR: "g",
+    Person.THIRD_SINGULAR: "",
+    Person.FIRST_PLURAL: "m",
+    Person.SECOND_PLURAL: "g",
+    Person.THIRD_PLURAL: "",
+}
+
 
 SuffixTable: TypeAlias = dict[Region, dict[Person, str]]
 PotentialSuffixTable: TypeAlias = dict[Tense, dict[Region, dict[Person, str]]]

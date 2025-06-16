@@ -1,6 +1,11 @@
+from typing import List
+
+from .verb_rules import VerbRule
 from .common import (
+    DATIVE_SUFFIXES,
     PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
     PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER,
+    DATIVE_SUBJECT_MARKERS,
     Person,
     Region,
     SuffixTable,
@@ -20,11 +25,15 @@ def handle_preverb(preverb):
 
 
 class Conjugator:
+
+    NOMINATIVE_RULES: List[VerbRule] = []
+    DATIVE_RULES: List[VerbRule] = []
+    ERGATIVE_RULES: List[VerbRule] = []
+
     def __init__(self, subject: Person, region: Region, object: Person = None):
         self.subject: Person = subject
         self.region: Region = region
         self.object: Person = object
-
 
     def conjugate(self, verb: Verb):
         return verb.accept_conjugator(self)
@@ -70,18 +79,26 @@ class Conjugator:
             return self._conjugate(
                 verb, prefix, suffix_table, starting_len, ending_len
             )
-    
+
     def conjugate_nominative_verb(self, _: Verb) -> str:
         raise NotImplementedError(
             "Please call this method from a concrete conjugator."
         )
-    
+
     def conjugate_ergative_verb(self, _: Verb) -> str:
         raise NotImplementedError(
             "Please call this method from a concrete conjugator."
         )
 
-    def conjugate_dative_verb(self, _: Verb) -> str:
+    def conjugate_dative_verb(self, verb: Verb) -> str:
+        for rule in self.DATIVE_RULES:
+            if rule.matches(verb, self.subject):
+                return rule.apply(
+                    verb, self.subject, DATIVE_SUFFIXES, DATIVE_SUBJECT_MARKERS
+                )
+        return self.conjugate_default_dative_verb(verb)
+
+    def conjugate_default_dative_verb(self, verb: Verb):
         raise NotImplementedError(
             "Please call this method from a concrete conjugator."
         )

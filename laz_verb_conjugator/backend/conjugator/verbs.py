@@ -1,5 +1,5 @@
-
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from .conjugator import Conjugator
 
@@ -24,7 +24,7 @@ class Verb:
     def __init__(self, infinitive: str, present_third: str):
         self.infinitive: str = infinitive
         self.present_third: str = present_third
-        
+
     def accept_conjugator(self, _) -> str:
         raise NotImplementedError(
             "Please call this function from a concrete verb."

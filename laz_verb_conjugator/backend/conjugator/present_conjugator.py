@@ -1,3 +1,4 @@
+from .verb_rules import NsEndingRule, UStartingRule
 from .common import Person, Region, extract_root
 from .conjugator import Conjugator
 from .verbs import Verb
@@ -57,19 +58,17 @@ DATIVE_SUBJECT_MARKERS = {
 
 
 class PresentConjugator(Conjugator):
+
+    DATIVE_RULES = [NsEndingRule(), UStartingRule()]
+
     def conjugate_nominative_verb(self, verb: Verb) -> str:
         return super()._conjugate_nominative_verb(
             verb, PRESENT_TENSE_SUFFIXES, ending_len=1
         )
 
-    def conjugate_dative_verb(self, verb: Verb) -> str:
-        if (verb.present_third.startswith("u")
-                and not self.subject.is_third_person()
-        ):
-            stem = f"i{verb.present_third[1:]}"
-        else:
-            stem = verb.present_third
+    def conjugate_default_dative_verb(self, verb: Verb) -> str:
         return (
-            DATIVE_SUBJECT_MARKERS[self.subject] +
-            stem + DATIVE_SUFFIXES[self.subject]
+            DATIVE_SUBJECT_MARKERS[self.subject]
+            + verb.present_third
+            + DATIVE_SUFFIXES[self.subject]
         )
