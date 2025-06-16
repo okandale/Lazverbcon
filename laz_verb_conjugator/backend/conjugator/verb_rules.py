@@ -100,9 +100,5 @@ class DoPreverbOptative(DoPreverb):
     def __init__(self, ending_len: int, suffixes):
         super().__init__(ending_len, suffixes)
 
-    def matches(self, conjugator: "Conjugator", verb: Verb):
-        prefix = extract_prefix(verb.infinitive)
-        return prefix == "do" and verb.present_third.startswith("di")
-
     def apply(self, conjugator: "Conjugator", verb: Verb):
         return self._apply_with_suffix_table(conjugator, verb, self.suffixes)
