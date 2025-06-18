@@ -102,7 +102,7 @@ const VerbDetails = () => {
                   </td>
                 </tr>
               </table>
-              <button>Conjugate Present Form</button>
+              <button className="flex-1 min-w-32 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-150 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed mt-5">Conjugate Present Form</button>
             </div>
           )}
         </div>
