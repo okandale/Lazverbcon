@@ -9,7 +9,8 @@ export const API_URLS = {
   conjugate: `${BASE_URL}/api/conjugate`,
   verbs: {
     list: `${BASE_URL}/api/verbs/list`,
-    getDetails: `${BASE_URL}/api/verbs/get`
+    getDetails: `${BASE_URL}/api/verbs/get`,
+    conjugate: `${BASE_URL}/api/verbs/conjugate`
   },
   admin: {
     auth: `${BASE_URL}/api/admin/auth`
@@ -380,7 +381,7 @@ export const verbTypeColors = {
 };
 
 export const regionColors = {
-  "AŞ": "purple",
+  "AS": "purple",
   "FA": "red",
   "HO": "teal",
   "PZ": "brown"

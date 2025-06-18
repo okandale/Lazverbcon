@@ -21,6 +21,9 @@ const VerbDetails = () => {
   const [language, setLanguage] = useState(getStoredLanguage());
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
   const [verbDetails, setVerbDetails] = useState(null);
+
+  const [isLoadingConjugations, setIsLoadingConjugations] = useState(false);
+  const [conjugations, setConjugations] = useState(null);
   const toggleLanguage = () => {
     const newLanguage = language === "en" ? "tr" : "en";
     setLanguage(newLanguage);
@@ -37,7 +40,6 @@ const VerbDetails = () => {
           `${API_URLS.verbs.getDetails}/${verbID}/${verbType}`
         );
         const data = await response.json();
-        console.dir(data);
         setVerbDetails(data);
       } catch (error) {
         console.dir(error);
@@ -46,9 +48,32 @@ const VerbDetails = () => {
       }
     };
 
-    console.log("Fetching verb details for", verbID, verbType);
     fetchVerbDetails();
   }, [verbID, verbType]);
+
+  const conjugateVerb = async () => {
+    try {
+      setIsLoadingConjugations(true);
+      const response = await fetch(`${API_URLS.verbs.conjugate}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          verb_id: verbID,
+          verb_type: verbType,
+          regions: ["FA", "HO", "PZ", "AS"],
+          tense: "present",
+        }),
+      });
+      const data = await response.json();
+      setConjugations(data["conjugations"]);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoadingConjugations(false);
+    }
+  };
 
   return (
     <>
@@ -65,6 +90,11 @@ const VerbDetails = () => {
           <h1 className="text-3xl font-bold mb-6 text-center">
             {translations[language].verbDetailsTitle}
           </h1>
+
+          <div class="bg-orange-100 border border-orange-400 text-orange-700 px-4 py-3 rounded mb-5 text-center" role="alert">
+            <span class="block sm:inline">Please bear in mind that this conjugator version may output inaccurate results.</span>
+          </div>
+
           {isLoadingDetails && (
             <Stack spacing={1}>
               <div className="flex justify-center items-center">
@@ -102,7 +132,28 @@ const VerbDetails = () => {
                   </td>
                 </tr>
               </table>
-              <button className="flex-1 min-w-32 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-150 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed mt-5">Conjugate Present Form</button>
+              <button
+                onClick={conjugateVerb}
+                className="flex-1 min-w-32 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-150 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed mt-5"
+              >
+                Conjugate Present Form
+              </button>
+            </div>
+          )}
+          {!isLoadingConjugations && conjugations !== null && (
+            <div className="grid grid-cols-2 gap-2">
+              {Object.entries(conjugations).map(
+                ([region, regionConjugations]) => (
+                  <div className="bg-white p-2" key={region}>
+                    <h2>{region}</h2>
+                    <ul>
+                      {regionConjugations.map((result) => (
+                        <li>{result}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )
+              )}
             </div>
           )}
         </div>

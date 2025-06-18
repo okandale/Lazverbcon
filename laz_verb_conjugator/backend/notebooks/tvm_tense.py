@@ -120,7 +120,6 @@ def get_suffixes(tense, region):
 
 def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False, causative=False, use_optional_preverb=False):
     # Check for invalid SxOx combinations
-    breakpoint()
     if (subject in ['S1_Singular', 'S1_Plural'] and obj in ['O1_Singular', 'O1_Plural']) or \
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
         return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
@@ -217,7 +216,6 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
             # Special handling for "me"
             print(F"preverb: {preverb}")
             prefix = ''
-            # breakpoint()
             if preverb == 'me' or (use_optional_preverb and not preverb):
                 if root.startswith('no'):
                     if subject in ('S1_Singular', 'S1_Plural'):
@@ -460,7 +458,6 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                 suffix = suffixes[subject]
 
             # Determine the final root to use
-            breakpoint()
             final_root = root[:-1] if root.endswith('s') else root
             
             if infinitive in ('oxtimu', 'olva') and subject in ('S1_Singular', 'S1_Plural') and tense in ('past', 'future', 'optative') and not applicative and not causative: # oxtimu tense exception
