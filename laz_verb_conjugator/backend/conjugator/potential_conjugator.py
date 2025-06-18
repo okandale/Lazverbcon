@@ -1,11 +1,5 @@
-from .common import (
-    Person,
-    PotentialSuffixTable,
-    Region,
-    Tense,
-    extract_prefix,
-    extract_root,
-)
+from .common import (Person, PotentialSuffixTable, Region, Tense,
+                     extract_prefix, extract_root)
 from .conjugator import Conjugator
 from .verbs import Verb
 

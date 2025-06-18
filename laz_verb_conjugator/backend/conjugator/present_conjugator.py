@@ -1,13 +1,9 @@
-from .ergative_verbs import ConjugateErgativeVerbMixin
 from .common import Person, Region, extract_prefix, extract_root
 from .conjugator import Conjugator
+from .ergative_verbs import ConjugateErgativeVerbMixin
 from .nominative_verbs import ConjugateNominativeVerbMixin
-from .verb_rules import (
-    DoPreverb,
-    NsEndingRule,
-    SubjectObjectNsOrRsEndingRule,
-    UStartingRule,
-)
+from .verb_rules import (DoPreverb, NsEndingRule,
+                         SubjectObjectNsOrRsEndingRule, UStartingRule)
 from .verbs import Verb
 
 PRESENT_TENSE_SUFFIXES = {
