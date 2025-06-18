@@ -11,7 +11,7 @@ from .db import get_db
 verbs = Blueprint("verbs", __name__)
 
 REGIONS = {
-    "AŞ": Region.ARDESEN,
+    "AS": Region.ARDESEN,
     "HO": Region.HOPA,
     "FA": Region.FINDIKLI_ARHAVI,
     "PZ": Region.PAZAR,
@@ -28,7 +28,7 @@ VERB_TYPES = {
 
 def _build_verb_with_region(
     region, verb_type, infinitive_form, verb_root
-) -> Tuple[str, Verb]:
+) -> Tuple[Region, Verb]:
     return region, VERB_TYPES[verb_type](
         infinitive=infinitive_form, present_third=verb_root
     )

@@ -9,7 +9,7 @@ CREATE TABLE region(
 );
 
 INSERT INTO region VALUES
-    ('AŞ', 'Ardeşen'),
+    ('AS', 'Ardeşen'),
     ('FA', 'Findıklı-Arhavi'),
     ('HO', 'Hopa'),
     ('PZ', 'Pazar')
