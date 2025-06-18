@@ -21,5 +21,6 @@ CREATE TABLE region_verb(
     verb_type TEXT NOT NULL CHECK (verb_type in ("ERGATIVE", "DATIVE", "NOMINATIVE")),
     verb_root TEXT,
     english_translation TEXT,
-    turkish_verb TEXT
+    turkish_verb TEXT,
+    PRIMARY KEY (verb_id, region_code)
 );

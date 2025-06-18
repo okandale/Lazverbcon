@@ -40,3 +40,15 @@
 .read-the-docs {
   color: #888;
 }
+
+.verb-ergative {
+  color:	#1976D2;
+}
+
+.verb-dative {
+  color: #388E3C;
+}
+
+.verb-nominative {
+  color: #F57C00;
+}

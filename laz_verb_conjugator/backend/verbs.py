@@ -47,8 +47,9 @@ def list_verbs():
     
     # Pick the next 20 results.
     cursor.execute(
-        "SELECT DISTINCT V.infinitive_form, RV.verb_root, "
-        "RV.english_translation, RV.turkish_verb FROM verb V, region_verb RV "
+        "SELECT DISTINCT V.verb_id, V.infinitive_form, RV.verb_root, "
+        "RV.english_translation, RV.turkish_verb, "
+        "LOWER(RV.verb_type) as verb_type FROM verb V, region_verb RV "
         "WHERE "
         "(V.infinitive_form LIKE ? "
         "OR RV.english_translation LIKE ?"
@@ -65,3 +66,41 @@ def list_verbs():
         "page": page,
         "pages": page_count
     })
+
+@verbs.route("/get/<int:verb_id>/<string:verb_type>")
+def get_verb(verb_id, verb_type):
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute(
+        """
+        SELECT V.verb_id AS verb_id,
+        V.infinitive_form AS infinitive_form,
+        R.name as region_name,
+        RV.region_code AS region_code,
+        RV.verb_type AS verb_type,
+        RV.verb_root AS verb_root,
+        RV.english_translation AS english_translation,
+        RV.turkish_verb As turkish_verb
+        FROM
+            verb V,
+            region_verb RV,
+            REGION R
+        WHERE
+            V.verb_id = ? AND
+            LOWER(RV.verb_type) = ? AND
+            V.verb_id = RV.verb_id AND
+            RV.region_code = R.code
+        """,
+        (verb_id, verb_type)
+    )
+    rows = cursor.fetchall()
+    if rows:
+        results = [dict(row) for row in rows]
+        infinitive_form = results[0]["infinitive_form"]
+        return jsonify({
+            "verb_id": verb_id,
+            "infinitive_form": infinitive_form,
+            "results": results
+        })
+    else:
+        abort(400)

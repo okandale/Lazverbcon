@@ -1,3 +1,6 @@
+import { Terminal } from "lucide-react";
+import { redirect } from "react-router-dom";
+
 const BASE_URL = import.meta.env.PROD 
   ? 'https://api.lazuri.org'
   : 'http://127.0.0.1:5000';
@@ -5,7 +8,8 @@ const BASE_URL = import.meta.env.PROD
 export const API_URLS = {
   conjugate: `${BASE_URL}/api/conjugate`,
   verbs: {
-    list: `${BASE_URL}/api/verbs/list`
+    list: `${BASE_URL}/api/verbs/list`,
+    getDetails: `${BASE_URL}/api/verbs/get`
   },
   admin: {
     auth: `${BASE_URL}/api/admin/auth`
@@ -86,6 +90,7 @@ export const translations = {
     searchPlaceholder: 'Fiil ara...',
     backToConjugator: 'Fiil Çekicisine Geri Dön',
     verbsListTitle: 'Mevcut Fiiller',
+    verbDetailsTitle: 'Fiilin detayları',
 
     // New translations for home and additional pages
     homeTitle: 'Lazca Öğrenme Merkezi',
@@ -237,6 +242,7 @@ export const translations = {
     searchPlaceholder: 'Search verbs...',
     backToConjugator: 'Back to Conjugator',
     verbsListTitle: 'Available Verbs',
+    verbDetailsTitle: 'Verb Details',
 
     // New translations for home and additional pages
     homeTitle: 'Laz Language Learning Center',
@@ -365,3 +371,17 @@ export const defaultFormData = {
   neg_imperative: false,
   regions: [],
 };
+
+
+export const verbTypeColors = {
+  ergative: "blue",
+  nominative: "orange",
+  dative: "green"
+};
+
+export const regionColors = {
+  "AŞ": "purple",
+  "FA": "red",
+  "HO": "teal",
+  "PZ": "brown"
+}

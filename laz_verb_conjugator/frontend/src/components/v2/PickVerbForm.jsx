@@ -10,13 +10,12 @@ import {
 } from "../constants";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import Chip from "@mui/material/Chip";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../ui/Pagination";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 const PickVerbForm = () => {
-
   const navigate = useNavigate();
 
   const [language, setLanguage] = useState(getStoredLanguage());
@@ -40,21 +39,21 @@ const PickVerbForm = () => {
   };
 
   const handleVerbClick = (verb) => {
-    navigate('/conjugator', { 
-      state: { 
-        infinitive: verb["infinitive_form"]
-      }
-    });
+    console.dir(verb);
+    navigate(`/v2/verb/${verb["verb_id"]}/${verb["verb_type"]}`);
   };
 
   const fetchVerbsList = async () => {
     setIsLoadingVerbs(true);
-    const response = await fetch(`${API_URLS.verbs.list}?page=${page}&pattern=${searchTerm}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${API_URLS.verbs.list}?page=${page}&pattern=${searchTerm}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const data = await response.json();
     setVerbs(data.results);
     setVerbCount(data.count);
@@ -75,15 +74,23 @@ const PickVerbForm = () => {
     en: {
       laz: "Laz Infinitive",
       presentBase: "Present Base",
+      verbType: "Verb Type",
       turkish: "Turkish Verb",
       english: "English",
     },
     tr: {
       laz: "Lazuri",
-      presentBase: "Gövde",
+      presentBase: "3. şahıs",
+      verbType: "Fiil türü",
       turkish: "Türkçe",
       english: "İngilizce",
     },
+  };
+
+  const verbTypeColors = {
+    ergative: "blue",
+    nominative: "orange",
+    dative: "green",
   };
 
   return (
@@ -145,6 +152,9 @@ const PickVerbForm = () => {
                     {columnTitles[language].presentBase}
                   </th>
                   <th className="py-2 px-4 border-b">
+                    {columnTitles[language].verbType}
+                  </th>
+                  <th className="py-2 px-4 border-b">
                     {columnTitles[language].turkish}
                   </th>
                   <th className="py-2 px-4 border-b">
@@ -158,12 +168,17 @@ const PickVerbForm = () => {
                     <tr
                       key={verb}
                       onClick={() => handleVerbClick(verb)}
-                      className="hover:bg-blue-50 cursor-pointer transition-colors duration-150">
+                      className="hover:bg-blue-50 cursor-pointer transition-colors duration-150"
+                    >
                       <td className="border px-4 py-2">
                         {verb["infinitive_form"]}
                       </td>
-                      <td className="border px-4 py-2">
-                        {verb["verb_root"]}
+                      <td className="border px-4 py-2">{verb["verb_root"]}</td>
+                      <td className="border px-4 py-2 text-center">
+                        <Chip
+                          label={verb["verb_type"]}
+                          color={verbTypeColors[verb["verb_type"]]}
+                        />
                       </td>
                       <td className="border px-4 py-2">
                         {verb["turkish_verb"]}
