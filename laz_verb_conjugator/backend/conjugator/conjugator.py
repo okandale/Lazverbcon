@@ -1,8 +1,12 @@
 from typing import Callable, List
 
-from .common import (PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
-                     PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER, Person,
-                     Region, extract_initial_cluster)
+from .common import (
+    PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
+    PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER,
+    Person,
+    Region,
+    extract_initial_cluster,
+)
 from .verb_rules import VerbRule
 from .verbs import Verb
 
@@ -30,16 +34,6 @@ class Conjugator:
     def conjugate(self, verb: Verb):
         return verb.accept_conjugator(self)
 
-    def conjugate_nominative_verb(self, _: Verb) -> str:
-        raise NotImplementedError(
-            "Please call this method from a concrete conjugator."
-        )
-
-    def conjugate_ergative_verb(self, _: Verb) -> str:
-        raise NotImplementedError(
-            "Please call this method from a concrete conjugator."
-        )
-
     def apply_rule_or_fallback(
         self, verb: Verb, rules: List[VerbRule], fallback: Callable
     ):
@@ -58,12 +52,22 @@ class Conjugator:
             verb, self.DATIVE_RULES, self.conjugate_default_dative_verb
         )
 
+    def conjugate_ergative_verb(self, verb: Verb) -> str:
+        return self.apply_rule_or_fallback(
+            verb, self.ERGATIVE_RULES, self.conjugate_default_ergative_verb
+        )
+
     def conjugate_default_nominative_verb(self, verb: Verb):
         raise NotImplementedError(
             "Please call this method from a concrete conjugator."
         )
 
     def conjugate_default_dative_verb(self, verb: Verb):
+        raise NotImplementedError(
+            "Please call this method from a concrete conjugator."
+        )
+
+    def conjugate_default_ergative_verb(self, verb: Verb):
         raise NotImplementedError(
             "Please call this method from a concrete conjugator."
         )

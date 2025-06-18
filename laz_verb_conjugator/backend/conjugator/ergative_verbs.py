@@ -14,18 +14,8 @@ from .common import (
 )
 
 
-class ConjugateNominativeVerbMixin:
-    def conjugate_nominative_verb_region_wise(
-        self: "Conjugator",
-        verb: Verb,
-        region_suffix_table: RegionSuffixTable,
-        ending_len: int,
-    ):
-        return ConjugateNominativeVerbMixin.conjugate_nominative_verb(
-            self, verb, region_suffix_table[self.region], ending_len
-        )
-
-    def conjugate_nominative_verb(
+class ConjugateErgativeVerbMixin:
+    def conjugate_ergative_verb(
         self: "Conjugator",
         verb: Verb,
         suffix_table: SuffixTable,

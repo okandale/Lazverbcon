@@ -1,5 +1,11 @@
-from .common import (PassiveSuffixTable, Person, Region, Tense, extract_prefix,
-                     extract_root)
+from .common import (
+    PassiveSuffixTable,
+    Person,
+    Region,
+    Tense,
+    extract_prefix,
+    extract_root,
+)
 from .conjugator import Conjugator
 from .verbs import Verb
 

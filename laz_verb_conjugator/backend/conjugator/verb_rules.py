@@ -30,6 +30,11 @@ class VerbRuleWithSuffixes(VerbRule):
         self.suffixes = suffixes
 
 
+class VerbRuleWithMarkers(VerbRule):
+    def __init__(self, markers):
+        self.markers = markers
+
+
 class NsEndingRule(VerbRuleWithMarkersAndSuffixes):
 
     def matches(self, conjugator: "Conjugator", verb: Verb):
@@ -102,3 +107,34 @@ class DoPreverbOptative(DoPreverb):
 
     def apply(self, conjugator: "Conjugator", verb: Verb):
         return self._apply_with_suffix_table(conjugator, verb, self.suffixes)
+
+
+class SubjectObjectNsOrRsEndingRule(VerbRuleWithMarkersAndSuffixes):
+    VALID_SUBJECTS = {
+        Person.FIRST_SINGULAR,
+        Person.SECOND_SINGULAR,
+        Person.FIRST_PLURAL,
+        Person.THIRD_SINGULAR,
+        Person.THIRD_PLURAL,
+    }
+
+    VALID_OBJECTS = {Person.FIRST_SINGULAR, Person.SECOND_SINGULAR}
+
+    def matches(self, conjugator: "Conjugator", verb: Verb) -> bool:
+        return (
+            conjugator.subject in self.VALID_SUBJECTS
+            and conjugator.object in self.VALID_OBJECTS
+            and verb.present_third.endswith(("n", "rs", "ns"))
+        )
+
+    def apply(self, conjugator: "Conjugator", verb: Verb) -> str:
+        stem = verb.present_third
+        if verb.present_third.endswith("ns"):
+            stem = stem[:-1]
+        elif verb.present_third.endswith(("n", "rs")):
+            stem = stem[:-1]
+        return (
+            self.markers[conjugator.subject]
+            + stem
+            + self.suffixes[conjugator.subject]
+        )
