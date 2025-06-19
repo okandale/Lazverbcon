@@ -133,6 +133,22 @@ export const translations = {
       title: 'Ek kaynaklar',
       description: 'Lazca öğrenmek için fazla kaynaklar'
     },
+    keyboardCard: {
+      title: 'Lazca Klavye',
+      description: 'Lazca karakterleri nasıl yazacağınızı öğrenin'
+    },
+    keyboardContent: {
+      howToDownload: 'Klavyeyi nasıl indirebilirim?',
+      howToUse: 'Klavyeyi nasıl kullanabilirim?',
+      platforms: {
+        windows: 'Windows için',
+        mac: 'Mac için',
+        android: 'Android telefon için',
+        iphone: 'iPhone telefon için',
+        computer: 'Bilgisayar için (Windows ve Mac)',
+        phone: 'Telefon için (Android ve iPhone)'
+      },
+    },
     resourceContent: {
       dictionariesTitle: 'Sözlükler',
       lazInstituteDictionary: {
@@ -284,6 +300,18 @@ export const translations = {
     resourceCard: {
       title: 'Additional Resources',
       description: 'Find additional resources for learning Laz'
+    },
+    keyboardContent: {
+      howToDownload: 'How to download the keyboard?',
+      howToUse: 'How to use the keyboard?',
+      platforms: {
+        windows: 'For Windows',
+        mac: 'For Mac',
+        android: 'For Android phones',
+        iphone: 'For iPhones',
+        computer: 'For computers (Windows and Mac)',
+        phone: 'For phones (Android and iPhone)'
+      }
     },
     resourceContent: {
       dictionariesTitle: 'Dictionaries',

@@ -75,7 +75,7 @@ def get_phonetic_rules(region: str, is_tvm: bool = False) -> tuple:
                 'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
                 'b': ['a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
                 'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-                'm': ['b', 'n']
+                'm': ['b', 'n', 'm']
             }
         else:
             phonetic_rules_v = {
@@ -83,7 +83,7 @@ def get_phonetic_rules(region: str, is_tvm: bool = False) -> tuple:
                 'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
                 'b': ['b', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
                 'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-                'm': ['n']
+                'm': ['n', 'm']
             }
         
         phonetic_rules_g = {
@@ -99,7 +99,7 @@ def get_phonetic_rules(region: str, is_tvm: bool = False) -> tuple:
                 'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
                 'b': ['l', 'a', 'e', 'i', 'o', 'u', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
                 'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-                'm': ['b', 'n']
+                'm': ['b', 'n', 'm']
             }
         else:
             phonetic_rules_v = {
@@ -107,7 +107,7 @@ def get_phonetic_rules(region: str, is_tvm: bool = False) -> tuple:
                 'p': ['t', 'k', 'ʒ', 'ç', 'f', 's', 'ş', 'x', 'h'],
                 'b': ['b', 'l', 'd', 'g', 'ž', 'c', 'v', 'z', 'j', 'ğ'],
                 'p̌': ['ç̌', 'ǩ', 'q', 'ǯ', 't̆'],
-                'm': ['n']
+                'm': ['n', 'm']
             }
 
         phonetic_rules_g = {
@@ -296,7 +296,7 @@ def get_preverbs_rules(mode):
         }
     elif mode in ['tve_past', 'tve_pastpro']:
         return {
-            ('gelo', 'ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me','gol', 'go', 'oǩo', 'gam', 'mola', 'ye', 'mo', 'ǩoǩo'): {
+            ('gelo', 'ge', 'ela', 'el', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me','gol', 'go', 'oǩo', 'gam', 'mola', 'ye', 'mo', 'ǩoǩo'): {
                 'S1_Singular': 'v',
                 'S2_Singular': '',
                 'S3_Singular': '',
@@ -307,7 +307,7 @@ def get_preverbs_rules(mode):
         }
     elif mode in ['tve_future']:
         return {
-            ('gelo', 'ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'gol', 'go', 'oǩo', 'gam', 'mo', 'ye', 'cele', 'mola', 'mo', 'ǩoǩo'): {
+            ('gelo', 'ge', 'ela', 'el' 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'gol', 'go', 'oǩo', 'gam', 'mo', 'ye', 'cele', 'mola', 'mo', 'ǩoǩo'): {
                 'S1_Singular': 'v',
                 'S2_Singular': '',
                 'S3_Singular': '',
@@ -318,7 +318,7 @@ def get_preverbs_rules(mode):
         }
     elif mode in ['tve_present']:
         return {
-            ('gelo', 'ge', 'e', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'gol', 'go', 'oǩo', 'gam', 'mola', 'ye', 'gela', 'ela', 'ceǩo', 'eǩo', 'ama', 'mo', 'ǩoǩo'): {
+            ('gelo', 'ge', 'cel', 'ce', 'dolo', 'do', 'oxo', 'me', 'gol', 'go', 'oǩo', 'gam', 'mola', 'ye', 'gela', 'ela', 'e', 'ceǩo', 'eǩo', 'ama', 'mo', 'ǩoǩo'): {
                 'S1_Singular': 'v',
                 'S2_Singular': '',
                 'S3_Singular': '',
@@ -340,7 +340,7 @@ def get_preverbs_rules(mode):
         }
     elif mode in ['tvm_tve_passive', 'tvm_tve_potential', 'tvm_tve_presentperf']:
         return {
-            ('gelo', 'ge', 'e', 'cele', 'ce', 'dolo', 'do', 'oxo', 'me', 'gol', 'go', 'oǩo', 'gama', 'mola', 'mo', 'ye', 'ǩoǩo'): {
+            ('gelo', 'ge', 'ela', 'e', 'cele', 'ce', 'dolo', 'do', 'oxo', 'me', 'gol', 'go', 'oǩo', 'gama', 'mola', 'mo', 'ye', 'ǩoǩo'): {
                 'S1_Singular': 'v',
                 'S2_Singular': '',
                 'S3_Singular': '',
