@@ -240,13 +240,10 @@ def conjugate_verb(infinitive, tense, subject=None, obj=None, applicative=False,
                 else:
                     preverb = 'me'
 
-            
-
             if use_optional_preverb and not preverb:
                 prefix = 'ko' + prefix
                 if subject in ['O3_Singular', 'O3_Plural']:
                     prefix = 'k'
-            
             # Special handling for "do"
             elif preverb == 'do':
                 if root.startswith("di"): # Changed to 'di' from 'digurams', 'diguraps' to see if it's a general rule
