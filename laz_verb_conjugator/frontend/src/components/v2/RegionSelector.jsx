@@ -5,7 +5,7 @@ import {
     regionColors
 } from "../constants";
 
-const RegionSelector = ({initialSelectedRegions}) => {
+const RegionSelector = ({initialSelectedRegions, onSelectedRegionsUpdate}) => {
 
   const [selectedRegions, setSelectedRegions] = useState(initialSelectedRegions);
 
