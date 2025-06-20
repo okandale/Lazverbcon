@@ -1,5 +1,5 @@
 CREATE TABLE verb(
-    verb_id INT PRIMARY KEY,
+    verb_id INTEGER PRIMARY KEY AUTOINCREMENT,
     infinitive_form VARCHAR(255)
 );
 
@@ -17,7 +17,7 @@ INSERT INTO region VALUES
 
 CREATE TABLE region_verb(
     region_code TEXT NOT NULL,
-    verb_id INT NOT NULL,
+    verb_id INTEGER NOT NULL,
     verb_type TEXT NOT NULL CHECK (verb_type in ("ERGATIVE", "DATIVE", "NOMINATIVE")),
     verb_root TEXT,
     english_translation TEXT,

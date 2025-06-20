@@ -36,6 +36,7 @@ const RegionSelector = ({initialSelectedRegions, onSelectedRegionsUpdate}) => {
         newSet.add(regionCode);
     }
     setSelectedRegions(newSet);
+    onSelectedRegionsUpdate(newSet);
   }
 
   return (

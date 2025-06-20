@@ -13,7 +13,8 @@ export const API_URLS = {
     conjugate: `${BASE_URL}/api/verbs/conjugate`
   },
   admin: {
-    auth: `${BASE_URL}/api/admin/auth`
+    auth: `${BASE_URL}/api/admin/auth`,
+    addVerb: `${BASE_URL}/api/admin/add-verb`
   }
 };
 
