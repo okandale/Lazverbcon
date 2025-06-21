@@ -3,7 +3,8 @@ from .conjugator import Conjugator
 from .ergative_verbs import ConjugateErgativeVerbMixin
 from .nominative_verbs import ConjugateNominativeVerbMixin
 from .rules.applicative import (ApplicativePresentFirstPersonObject,
-                                ApplicativePresentSecondPersonObject)
+                                ApplicativePresentSecondPersonObject,
+                                ApplicativePresentThirdPersonObject)
 from .rules.common import (DoPreverb, NsEndingRule,
                            SubjectObjectNsOrRsEndingRule, UStartingRule)
 from .verbs import Verb
@@ -104,6 +105,9 @@ class PresentConjugator(
             suffixes=PRESENT_ERGATIVE_SUFFIXES
         ),
         ApplicativePresentSecondPersonObject(
+            suffixes=PRESENT_ERGATIVE_SUFFIXES
+        ),
+        ApplicativePresentThirdPersonObject(
             suffixes=PRESENT_ERGATIVE_SUFFIXES
         ),
     ]

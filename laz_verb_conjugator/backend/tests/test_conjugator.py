@@ -1,8 +1,8 @@
-from backend.conjugator.conjugator import Conjugator
 import pytest
 
 from backend.conjugator.builder import ConjugatorBuilder
 from backend.conjugator.common import Aspect, Mood, Person, Region, Tense
+from backend.conjugator.conjugator import Conjugator
 from backend.conjugator.verbs import DativeVerb, ErgativeVerb, NominativeVerb
 
 # Expected full conjugated forms
@@ -660,6 +660,7 @@ def test_ergative(region_and_verb, conjugations):
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
 
+
 ergative_applicative_fixtures = {
     (
         Region.ARDESEN,
@@ -672,29 +673,48 @@ ergative_applicative_fixtures = {
         Person.THIRD_PLURAL: "gisinapaman",
     },
 }
+
+
 @pytest.mark.parametrize(
     "region,object,verb,conjugations",
     [
-        (Region.ARDESEN,
-        Person.SECOND_SINGULAR,
-        ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
-        {
-        Person.FIRST_SINGULAR: "gisinapam",
-        Person.SECOND_SINGULAR: "isinapam",
-        Person.THIRD_SINGULAR: "gisinapay",
-        Person.FIRST_PLURAL: "gisinapamt",
-        Person.THIRD_PLURAL: "gisinapaman",
-        }),
-        (Region.ARDESEN,
-        Person.FIRST_SINGULAR,
-        ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
-        {
-        Person.FIRST_SINGULAR: "visinapam",
-        Person.SECOND_SINGULAR: "misinapam",
-        Person.THIRD_SINGULAR: "misinapay",
-        Person.SECOND_PLURAL: "misinapamt",
-        Person.THIRD_PLURAL: "misinapaman",
-        }),
+        (
+            Region.ARDESEN,
+            Person.SECOND_SINGULAR,
+            ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+            {
+                Person.FIRST_SINGULAR: "gisinapam",
+                Person.SECOND_SINGULAR: "isinapam",
+                Person.THIRD_SINGULAR: "gisinapay",
+                Person.FIRST_PLURAL: "gisinapamt",
+                Person.THIRD_PLURAL: "gisinapaman",
+            },
+        ),
+        (
+            Region.ARDESEN,
+            Person.FIRST_SINGULAR,
+            ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+            {
+                Person.FIRST_SINGULAR: "visinapam",
+                Person.SECOND_SINGULAR: "misinapam",
+                Person.THIRD_SINGULAR: "misinapay",
+                Person.SECOND_PLURAL: "misinapamt",
+                Person.THIRD_PLURAL: "misinapaman",
+            },
+        ),
+        (
+            Region.ARDESEN,
+            Person.THIRD_SINGULAR,
+            ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+            {
+                Person.FIRST_SINGULAR: "vusinapam",
+                Person.SECOND_SINGULAR: "usinapam",
+                Person.THIRD_SINGULAR: "usinapay",
+                Person.FIRST_PLURAL: "vusinapamt",
+                Person.SECOND_PLURAL: "usinapamt",
+                Person.THIRD_PLURAL: "usinapaman",
+            },
+        ),
     ],
 )
 def test_ergative_applicative(region, object, verb, conjugations):
