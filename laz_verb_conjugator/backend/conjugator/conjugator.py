@@ -103,8 +103,10 @@ class Conjugator:
             epenthetic_segments_by_cluster = PROTHETIC_CONSONANTS_NO_OBJECT[
                 self.region
             ]
-        elif self.object.is_first_person():
-            return "m"
+        elif (
+            self.object.is_first_person() and not self.object.is_first_person()
+        ):
+            return f"m{inflected_stem}"
         elif self.object.is_second_person():
             epenthetic_segments_by_cluster = (
                 PROTHETIC_CONSONANTS_SECOND_PERSON_OBJECT[self.region]

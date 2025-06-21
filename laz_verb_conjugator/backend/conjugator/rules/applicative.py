@@ -23,7 +23,8 @@ class ApplicativePresentFirstPersonObject(VerbRuleWithSuffixes):
             if prefix is not None
             else extended_stem
         )
-        conjugation = f"{stem}{self.suffixes[self.subject]}"
+        conjugation = f"{stem}{self.suffixes[conjugator.subject]}"
+
         if conjugator.subject.is_first_person():
             conjugation = conjugator.apply_epenthetic_segment(conjugation)
         else:
@@ -31,7 +32,7 @@ class ApplicativePresentFirstPersonObject(VerbRuleWithSuffixes):
         # Put back the prefix if it exists.
         if prefix is not None:
             conjugation = f"{prefix}{conjugation}"
-        
+
         # Special case for Ardeşen and third person.
         if (
             conjugator.region == Region.ARDESEN

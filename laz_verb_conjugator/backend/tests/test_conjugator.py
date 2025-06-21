@@ -633,7 +633,7 @@ ergative_fixtures = {
     ): {
         Person.FIRST_SINGULAR: "visinapam",
         Person.SECOND_SINGULAR: "isinapam",
-        Person.THIRD_SINGULAR: "isinapams",
+        Person.THIRD_SINGULAR: "isinapay",
         Person.FIRST_PLURAL: "visinapamt",
         Person.SECOND_PLURAL: "isinapamt",
         Person.THIRD_PLURAL: "isinapaman",
@@ -653,10 +653,62 @@ def test_ergative(region_and_verb, conjugations):
             .set_subject(person)
             .set_region(region)
             .set_tense(Tense.PRESENT)
-            .set_object(Person.SECOND_SINGULAR)
             .build()
         )
         result = conjugator.conjugate(verb)
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
+
+ergative_applicative_fixtures = {
+    (
+        Region.ARDESEN,
+        ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+    ): {
+        Person.FIRST_SINGULAR: "gisinapam",
+        Person.SECOND_SINGULAR: "isinapam",
+        Person.THIRD_SINGULAR: "gisinapay",
+        Person.FIRST_PLURAL: "gisinapamt",
+        Person.THIRD_PLURAL: "gisinapaman",
+    },
+}
+@pytest.mark.parametrize(
+    "region,object,verb,conjugations",
+    [
+        (Region.ARDESEN,
+        Person.SECOND_SINGULAR,
+        ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+        {
+        Person.FIRST_SINGULAR: "gisinapam",
+        Person.SECOND_SINGULAR: "isinapam",
+        Person.THIRD_SINGULAR: "gisinapay",
+        Person.FIRST_PLURAL: "gisinapamt",
+        Person.THIRD_PLURAL: "gisinapaman",
+        }),
+        (Region.ARDESEN,
+        Person.FIRST_SINGULAR,
+        ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+        {
+        Person.FIRST_SINGULAR: "visinapam",
+        Person.SECOND_SINGULAR: "misinapam",
+        Person.THIRD_SINGULAR: "misinapay",
+        Person.SECOND_PLURAL: "misinapamt",
+        Person.THIRD_PLURAL: "misinapaman",
+        }),
+    ],
+)
+def test_ergative_applicative(region, object, verb, conjugations):
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_subject(person)
+            .set_region(region)
+            .set_tense(Tense.PRESENT)
+            .set_object(object)
+            .add_mood(Mood.APPLICATIVE)
+            .build()
+        )
+        result = conjugator.conjugate(verb)
+        assert (
+            result == conjugation
+        ), f"Expected {conjugation} but got {result} for verb {verb}, object {object}, subject {person} and {region}"
