@@ -1,7 +1,7 @@
 from .common import Person, Region, extract_prefix
 from .conjugator import Conjugator
 from .nominative_verbs import ConjugateNominativeVerbMixin
-from .verb_rules import DoPreverb
+from .rules.common import DoPreverb
 from .verbs import Verb
 
 FUTURE_TENSE_SUFFIXES = {

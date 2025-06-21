@@ -1,7 +1,7 @@
 from .common import Person, Region, SuffixTable, extract_prefix
 from .conjugator import Conjugator
 from .nominative_verbs import ConjugateNominativeVerbMixin
-from .verb_rules import DoPreverbOptative
+from .rules.common import DoPreverbOptative
 from .verbs import Verb
 
 OPTATIVE_SUFFIXES = {

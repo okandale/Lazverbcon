@@ -12,6 +12,13 @@ from .potential_conjugator import PotentialConjugator
 from .present_conjugator import PresentConjugator
 from .present_perfect_conjugator import PresentPerfectConjugator
 
+INCOMPATIBLE_APPLICATIVES = {
+    Person.FIRST_SINGULAR: Person.FIRST_PLURAL,
+    Person.SECOND_SINGULAR: Person.SECOND_PLURAL,
+    Person.FIRST_PLURAL: Person.FIRST_SINGULAR,
+    Person.SECOND_PLURAL: Person.SECOND_SINGULAR,
+}
+
 
 class ConjugatorBuilder:
 
@@ -42,13 +49,42 @@ class ConjugatorBuilder:
         self.moods = Mood.NONE
         self.region = None
 
+    def are_applicatives_incompatible(self):
+        return (
+            INCOMPATIBLE_APPLICATIVES[self.subject] == self.object
+            if self.subject in INCOMPATIBLE_APPLICATIVES
+            else False
+        )
+
     def build(self) -> Conjugator:
+
+        if (
+            Mood.APPLICATIVE in self.moods
+            and self.are_applicatives_incompatible()
+        ):
+            raise ConjugatorError(
+                f"{self.subject} and {self.object} "
+                "are not compatible in applicative mode."
+            )
+
+        if Mood.APPLICATIVE in self.moods and self.object is None:
+            raise ConjugatorError(f"Applicative mood requires an object.")
+
+        elif (
+            self.subject == self.object and Mood.APPLICATIVE not in self.moods
+        ):
+            raise ConjugatorError(
+                "You cannot have the same person for "
+                "the subject and the object."
+            )
+
         if self.aspect in self.ASPECT_CONJUGATORS:
             return self.ASPECT_CONJUGATORS[self.aspect](
                 subject=self.subject,
                 region=self.region,
                 object=self.object,
                 tense=self.tense,
+                moods=self.moods,
             )
         elif self.moods in self.MOOD_CONJUGATORS:
             return self.MOOD_CONJUGATORS[self.moods](
@@ -58,7 +94,10 @@ class ConjugatorBuilder:
             )
         elif self.tense in self.TENSE_CONJUGATORS:
             return self.TENSE_CONJUGATORS[self.tense](
-                subject=self.subject, region=self.region, object=self.object
+                subject=self.subject,
+                region=self.region,
+                object=self.object,
+                moods=self.moods,
             )
         raise ConjugatorError("Could not build the conjugator.")
 

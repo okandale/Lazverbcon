@@ -2,8 +2,10 @@ from .common import Person, Region, extract_prefix, extract_root
 from .conjugator import Conjugator
 from .ergative_verbs import ConjugateErgativeVerbMixin
 from .nominative_verbs import ConjugateNominativeVerbMixin
-from .verb_rules import (DoPreverb, NsEndingRule,
-                         SubjectObjectNsOrRsEndingRule, UStartingRule)
+from .rules.applicative import (ApplicativePresentFirstPersonObject,
+                                ApplicativePresentSecondPersonObject)
+from .rules.common import (DoPreverb, NsEndingRule,
+                           SubjectObjectNsOrRsEndingRule, UStartingRule)
 from .verbs import Verb
 
 PRESENT_TENSE_SUFFIXES = {
@@ -75,6 +77,8 @@ PRESENT_ERGATIVE_SUFFIXES = {
     Person.THIRD_PLURAL: "an",
 }
 
+APPLICATIVE_SUFFIXES = {()}
+
 
 class PresentConjugator(
     Conjugator, ConjugateNominativeVerbMixin, ConjugateErgativeVerbMixin
@@ -95,6 +99,15 @@ class PresentConjugator(
         DoPreverb(ending_len=1, suffixes=PRESENT_TENSE_SUFFIXES)
     ]
 
+    ERGATIVE_RULES = [
+        ApplicativePresentFirstPersonObject(
+            suffixes=PRESENT_ERGATIVE_SUFFIXES
+        ),
+        ApplicativePresentSecondPersonObject(
+            suffixes=PRESENT_ERGATIVE_SUFFIXES
+        ),
+    ]
+
     def conjugate_default_nominative_verb(self, verb: Verb) -> str:
         return (
             ConjugateNominativeVerbMixin.conjugate_nominative_verb_region_wise(
@@ -113,9 +126,18 @@ class PresentConjugator(
         )
 
     def conjugate_default_ergative_verb(self, verb: Verb) -> str:
-        return ConjugateErgativeVerbMixin.conjugate_ergative_verb(
+        conjugation = ConjugateErgativeVerbMixin.conjugate_ergative_verb(
             self,
             verb,
             suffix_table=PRESENT_ERGATIVE_SUFFIXES,
             ending_len=1,
         )
+
+        # Special case for Ardeşen and third person.
+        if (
+            self.region == Region.ARDESEN
+            and self.subject == Person.THIRD_SINGULAR
+        ):
+            # Replace the suffix.
+            conjugation = f"{conjugation[:-2]}y"
+        return conjugation

@@ -82,7 +82,7 @@ class Region(Enum):
     PAZAR = auto()
 
 
-PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION = {
+PROTHETIC_CONSONANTS_NO_OBJECT = {
     Region.FINDIKLI_ARHAVI: {
         "p": ["t", "k", "ʒ", "ç", "f", "s", "ş", "x", "h", "p"],
         "b": [
@@ -126,7 +126,50 @@ PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION = {
     },
 }
 
-PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER = {
+PROTHETIC_CONSONANTS_SECOND_PERSON_OBJECT = {
+    Region.FINDIKLI_ARHAVI: {
+        "k": ["t", "k", "ʒ", "ç", "f", "s", "ş", "x", "h", "p"],
+        "g": [
+            "a",
+            "e",
+            "i",
+            "o",
+            "u",
+            "d",
+            "g",
+            "ž",
+            "c",
+            "v",
+            "z",
+            "j",
+            "ğ",
+        ],
+        "ǩ": ["ç̌", "ǩ", "q", "ǯ", "t̆"],
+        "m": ["n"],
+    },
+    Region.ARDESEN: {
+        "g": ["a", "e", "i", "o", "u"],
+        "k": ["p", "t", "k", "ʒ", "ç", "f", "s", "ş", "x", "h"],
+        "ǩ": ["ç̌", "ǩ", "q", "ǯ", "t̆"],
+        "m": ["n"],
+    },
+    Region.HOPA: {
+        "g": ["a", "e", "i", "o", "u"],
+        "k": ["p", "t", "k", "ʒ", "ç", "f", "s", "ş", "x", "h"],
+        "g": ["d", "g", "ž", "c", "v", "z", "j", "ğ"],
+        "ǩ": ["ç̌", "ǩ", "q", "ǯ", "t̆"],
+        "m": ["n"],
+    },
+    Region.PAZAR: {
+        "g": ["a", "e", "i", "o", "u"],
+        "k": ["p", "t", "k", "ʒ", "ç", "f", "s", "ş", "x", "h"],
+        "g": ["d", "g", "ž", "c", "v", "z", "j", "ğ"],
+        "ǩ": ["ç̌", "ǩ", "q", "ǯ", "t̆"],
+        "m": ["n"],
+    },
+}
+
+PROTHETIC_CONSONANTS_SECOND_PERSON = {
     "g": ["a", "e", "i", "o", "u"],
     "k": ["t", "k", "ʒ", "ç", "f", "s", "ş", "x", "h"],
     "g": ["d", "g", "ž", "c", "v", "z", "j", "ğ"],

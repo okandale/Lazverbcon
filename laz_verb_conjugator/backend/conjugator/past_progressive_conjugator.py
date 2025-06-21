@@ -1,8 +1,7 @@
-from backend.conjugator.verb_rules import DoPreverb
-
 from .common import Person, Region
 from .conjugator import Conjugator
 from .nominative_verbs import ConjugateNominativeVerbMixin
+from .rules.common import DoPreverb
 from .verbs import Verb
 
 PAST_PROGRESSIVE_TENSE_SUFFIXES = {

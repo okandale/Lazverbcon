@@ -1,10 +1,10 @@
 from typing import TYPE_CHECKING
 
-from .common import Person, extract_prefix
-from .verbs import Verb
+from ..common import Person, extract_prefix
+from ..verbs import Verb
 
 if TYPE_CHECKING:
-    from .conjugator import Conjugator
+    from ..conjugator import Conjugator
 
 
 class VerbRule:

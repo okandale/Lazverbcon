@@ -24,9 +24,8 @@ class ConjugateErgativeVerbMixin:
             else extended_stem
         )
         conjugation = f"{stem}{suffix_table[self.subject]}"
-        if self.subject.is_first_person():
+        if self.subject.is_first_person() or self.object is not None:
             conjugation = self.apply_epenthetic_segment(conjugation)
-
         # Put back the prefix if it exists.
         if prefix is not None:
             conjugation = f"{prefix}{conjugation}"

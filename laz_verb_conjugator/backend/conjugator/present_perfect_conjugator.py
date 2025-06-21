@@ -1,6 +1,6 @@
 from .common import Person, Region, SuffixTable, extract_prefix, extract_root
 from .conjugator import Conjugator
-from .verb_rules import VerbRuleWithSuffixes
+from .rules.common import VerbRuleWithSuffixes
 from .verbs import Verb
 
 PRESENT_PERFECT_SUFFIXES: SuffixTable = {

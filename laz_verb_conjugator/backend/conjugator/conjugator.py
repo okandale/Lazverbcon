@@ -1,9 +1,9 @@
 from typing import Callable, List
 
-from .common import (PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
-                     PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER, Person,
+from .common import (PROTHETIC_CONSONANTS_NO_OBJECT,
+                     PROTHETIC_CONSONANTS_SECOND_PERSON_OBJECT, Mood, Person,
                      Region, extract_initial_cluster)
-from .verb_rules import VerbRule
+from .rules.common import VerbRule
 from .verbs import Verb
 
 PREVERB_HANDLERS = {}
@@ -22,10 +22,17 @@ class Conjugator:
     DATIVE_RULES: List[VerbRule] = []
     ERGATIVE_RULES: List[VerbRule] = []
 
-    def __init__(self, subject: Person, region: Region, object: Person = None):
+    def __init__(
+        self,
+        subject: Person,
+        region: Region,
+        object: Person = None,
+        moods: Mood = Mood.NONE,
+    ):
         self.subject: Person = subject
         self.region: Region = region
         self.object: Person = object
+        self.moods: Mood = moods
 
     def conjugate(self, verb: Verb):
         return verb.accept_conjugator(self)
@@ -92,13 +99,20 @@ class Conjugator:
             str: The verb form with the appropriate epenthetic segment, if applicable.
                 Returns the original stem if no rule matches.
         """
-        epenthetic_segments_by_cluster = (
-            PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION[
+        if self.object is None:
+            epenthetic_segments_by_cluster = PROTHETIC_CONSONANTS_NO_OBJECT[
                 self.region
             ]
-            if self.subject.is_first_person()
-            else PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER
-        )
+        elif self.object.is_first_person():
+            return "m"
+        elif self.object.is_second_person():
+            epenthetic_segments_by_cluster = (
+                PROTHETIC_CONSONANTS_SECOND_PERSON_OBJECT[self.region]
+            )
+        else:
+            epenthetic_segments_by_cluster = PROTHETIC_CONSONANTS_NO_OBJECT[
+                self.region
+            ]
 
         initial_cluster = extract_initial_cluster(inflected_stem)
         for (
