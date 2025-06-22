@@ -1,4 +1,4 @@
-from .common import Person, Region, SuffixTable, extract_prefix
+from .common import Person, Region, SuffixTable, extract_preverb
 from .conjugator import Conjugator
 from .nominative_verbs import ConjugateNominativeVerbMixin
 from .rules.common import DoPreverbOptative

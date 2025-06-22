@@ -253,7 +253,7 @@ def extract_initial_cluster(verb_form: str) -> str:
     return verb_form[0]
 
 
-def extract_prefix(infinitive_form: str):
+def extract_preverb(infinitive_form: str) -> str | None:
     matches = re.match(VERB_PREFIX_REGEX, infinitive_form)
     if matches is not None:
         return matches.group(1)

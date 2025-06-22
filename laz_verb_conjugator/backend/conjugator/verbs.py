@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from .common import extract_prefix
+from .common import extract_preverb
 
 if TYPE_CHECKING:
     from .conjugator import Conjugator
@@ -26,8 +26,9 @@ class Verb:
     def __init__(self, infinitive: str, present_third: str):
         self.infinitive: str = infinitive
         self.present_third: str = present_third
-        self.prefix: str = extract_prefix(self.infinitive)
+        self.preverb: str = extract_preverb(self.infinitive)
         self.stem = self._extract_stem()
+        self.prefix, self.suffix = self._extract_affixes()
 
     def accept_conjugator(self, _) -> str:
         raise NotImplementedError(
@@ -46,8 +47,8 @@ class Verb:
 
         You may want to override this method if you have a special case.
         """
-        if self.prefix is not None:
-            stem = self.infinitive[len(self.prefix) :]  # Removed the prefix.
+        if self.preverb is not None:
+            stem = self.infinitive[len(self.preverb) :]  # Removed the prefix.
         elif self.infinitive.startswith("o"):
             stem = self.infinitive[1:]  # Remove the prepending "o".
         else:
@@ -57,6 +58,21 @@ class Verb:
         if stem.endswith("u"):
             stem = stem[:-1]
         return stem
+
+    def _extract_affixes(self):
+        """Extract the affixes of the verb.
+
+        As we know the stem and the third person form, we will be able to
+        extract these affixes from the latter.
+
+        Example: if we have osinapu/isinapams, the stem will be "sinap".
+
+        Then the prefix will be "i" and the suffix "ams".
+        """
+        stem_position = self.present_third.find(self.stem)
+        prefix = self.present_third[:stem_position]
+        suffix = self.present_third[stem_position + len(self.stem) :]
+        return prefix, suffix
 
 
 class ErgativeVerb(Verb):

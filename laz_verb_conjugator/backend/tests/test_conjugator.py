@@ -662,20 +662,6 @@ def test_ergative(region_and_verb, conjugations):
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
 
 
-ergative_applicative_fixtures = {
-    (
-        Region.ARDESEN,
-        ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
-    ): {
-        Person.FIRST_SINGULAR: "gisinapam",
-        Person.SECOND_SINGULAR: "isinapam",
-        Person.THIRD_SINGULAR: "gisinapay",
-        Person.FIRST_PLURAL: "gisinapamt",
-        Person.THIRD_PLURAL: "gisinapaman",
-    },
-}
-
-
 @pytest.mark.parametrize(
     "region,object,verb,conjugations",
     [
@@ -736,16 +722,40 @@ def test_ergative_applicative(region, object, verb, conjugations):
 
 
 @pytest.mark.parametrize(
-    "verb, stem",
+    "verb, preverb, stem, prefix, suffix",
     [
         (
             ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+            None,
             "sinap",
+            "i",
+            "ams"
         ),
-        (ErgativeVerb(infinitive="oşu", present_third="pşum"), "ş"),
-        (NominativeVerb(infinitive="obadu", present_third="ibaden"), "bad"),
-        (NominativeVerb(infinitive="dobadu", present_third="dibaden"), "bad"),
+        (
+            ErgativeVerb(infinitive="oşu", present_third="pşum"),
+            None,
+            "ş",
+            "p",
+            "um"
+        ),
+        (
+            NominativeVerb(infinitive="obadu", present_third="ibaden"),
+            None,
+            "bad",
+            "i",
+            "en"
+        ),
+        (
+            NominativeVerb(infinitive="dobadu", present_third="dibaden"),
+            "do",
+            "bad",
+            "di",
+            "en"
+        )
     ],
 )
-def test_get_stem(verb: Verb, stem: str):
+def test_get_verb_properties(verb: Verb, preverb: str | None, stem: str, prefix: str, suffix: str):
+    assert verb.preverb == preverb
     assert verb.stem == stem
+    assert verb.prefix == prefix
+    assert verb.suffix == suffix

@@ -1,5 +1,11 @@
-from .common import (PassiveSuffixTable, Person, Region, Tense, extract_prefix,
-                     extract_root)
+from .common import (
+    PassiveSuffixTable,
+    Person,
+    Region,
+    Tense,
+    extract_preverb,
+    extract_root,
+)
 from .conjugator import Conjugator
 from .verbs import Verb
 
@@ -59,7 +65,7 @@ class PassiveConjugator(Conjugator):
         super().__init__(subject, region, object)
 
     def conjugate_nominative_verb(self, verb: Verb) -> str:
-        prefix = extract_prefix(verb.infinitive)
+        prefix = extract_preverb(verb.infinitive)
         stem = extract_root(verb.infinitive, 1, 1)
         suffix = SUFFIXES[self.tense][self.region][self.subject]
 

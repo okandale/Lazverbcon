@@ -1,12 +1,18 @@
-from .common import Person, Region, extract_prefix, extract_root
+from .common import Person, Region, extract_preverb, extract_root
 from .conjugator import Conjugator
 from .ergative_verbs import ConjugateErgativeVerbMixin
 from .nominative_verbs import ConjugateNominativeVerbMixin
-from .rules.applicative import (ApplicativePresentFirstPersonObject,
-                                ApplicativePresentSecondPersonObject,
-                                ApplicativePresentThirdPersonObject)
-from .rules.common import (DoPreverb, NsEndingRule,
-                           SubjectObjectNsOrRsEndingRule, UStartingRule)
+from .rules.applicative import (
+    ApplicativePresentFirstPersonObject,
+    ApplicativePresentSecondPersonObject,
+    ApplicativePresentThirdPersonObject,
+)
+from .rules.common import (
+    DoPreverb,
+    NsEndingRule,
+    SubjectObjectNsOrRsEndingRule,
+    UStartingRule,
+)
 from .verbs import Verb
 
 PRESENT_TENSE_SUFFIXES = {
@@ -70,15 +76,48 @@ DATIVE_SECOND_PERSON_SUFFIXES = {
 }
 
 PRESENT_ERGATIVE_SUFFIXES = {
-    Person.FIRST_SINGULAR: "",
-    Person.SECOND_SINGULAR: "",
-    Person.THIRD_SINGULAR: "s",
-    Person.FIRST_PLURAL: "t",
-    Person.SECOND_PLURAL: "t",
-    Person.THIRD_PLURAL: "an",
+    "ams": {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "ay",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "ams",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "ams",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "ams",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+    },
 }
 
-APPLICATIVE_SUFFIXES = {()}
+# In these prefixes, the key refers to the *object’s* person.
+APPLICATIVE_PREFIXES = {
+    Person.FIRST_SINGULAR: {
+        
+    }
+}
 
 
 class PresentConjugator(
@@ -130,18 +169,19 @@ class PresentConjugator(
         )
 
     def conjugate_default_ergative_verb(self, verb: Verb) -> str:
-        conjugation = ConjugateErgativeVerbMixin.conjugate_ergative_verb(
-            self,
-            verb,
-            suffix_table=PRESENT_ERGATIVE_SUFFIXES,
-            ending_len=1,
-        )
-
-        # Special case for Ardeşen and third person.
+        conjugation = f"{verb.prefix}{verb.stem}"
+        
         if (
-            self.region == Region.ARDESEN
-            and self.subject == Person.THIRD_SINGULAR
+            conjugation.startswith(("a", "e", "i", "o", "u"))
+            and self.subject.is_first_person()
         ):
-            # Replace the suffix.
-            conjugation = f"{conjugation[:-2]}y"
+            conjugation = self.apply_epenthetic_segment(conjugation)
+
+        conjugation = (
+            conjugation +
+            PRESENT_ERGATIVE_SUFFIXES[verb.suffix][self.region][self.subject]
+        )
+        if verb.preverb is not None:
+            conjugation = verb.preverb + conjugation
+
         return conjugation

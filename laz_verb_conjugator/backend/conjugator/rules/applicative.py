@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from ..common import Mood, Person, Region, extract_prefix
+from ..common import Mood, Person, Region, extract_preverb
 from ..verbs import Verb
 from .common import VerbRule, VerbRuleWithSuffixes
 
@@ -16,7 +16,7 @@ class ApplicativePresentFirstPersonObject(VerbRuleWithSuffixes):
         )
 
     def apply(self, conjugator: "Conjugator", verb: Verb) -> str:
-        prefix = extract_prefix(verb.infinitive)
+        prefix = extract_preverb(verb.infinitive)
         extended_stem = verb.present_third[:-1]
         stem = (
             extended_stem[len(prefix) :]
@@ -51,7 +51,7 @@ class ApplicativePresentSecondPersonObject(VerbRuleWithSuffixes):
         )
 
     def apply(self, conjugator: "Conjugator", verb: Verb) -> str:
-        prefix = extract_prefix(verb.infinitive)
+        prefix = extract_preverb(verb.infinitive)
         extended_stem = verb.present_third[:-1]
         stem = (
             extended_stem[len(prefix) :]
@@ -82,7 +82,7 @@ class ApplicativePresentThirdPersonObject(VerbRuleWithSuffixes):
         )
 
     def apply(self, conjugator: "Conjugator", verb: Verb) -> str:
-        prefix = extract_prefix(verb.infinitive)
+        prefix = extract_preverb(verb.infinitive)
 
         # For the 3rd tense, drop the prepending i- and replace it with u.
         extended_stem = f"u{verb.present_third[1:-1]}"

@@ -1,4 +1,4 @@
-from .common import Person, Region, SuffixTable, extract_prefix, extract_root
+from .common import Person, Region, SuffixTable, extract_preverb, extract_root
 from .conjugator import Conjugator
 from .rules.common import VerbRuleWithSuffixes
 from .verbs import Verb
@@ -60,11 +60,11 @@ def handle_preverb(preverb):
 
 class PresentPerfectDoPreverbRule(VerbRuleWithSuffixes):
     def matches(self, conjugator: "Conjugator", verb: Verb):
-        prefix = extract_prefix(verb.infinitive)
+        prefix = extract_preverb(verb.infinitive)
         return prefix == "do" and verb.present_third.startswith("di")
 
     def apply(self, conjugator: "Conjugator", verb: Verb):
-        prefix = extract_prefix(verb.infinitive)
+        prefix = extract_preverb(verb.infinitive)
         subject_marker = SUBJECT_MARKERS[conjugator.subject]
         # Remove the first "do" before applying the subject marker.
         stem = extract_root(verb.infinitive, 2, 1)
@@ -86,7 +86,7 @@ class PresentPerfectConjugator(Conjugator):
     ]
 
     def conjugate_default_nominative_verb(self, verb: Verb) -> str:
-        prefix = extract_prefix(verb.infinitive)
+        prefix = extract_preverb(verb.infinitive)
         stem = extract_root(verb.infinitive, 1, 1)
         conjugation = (
             SUBJECT_MARKERS[self.subject]

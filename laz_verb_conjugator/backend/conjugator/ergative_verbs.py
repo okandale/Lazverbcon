@@ -5,8 +5,13 @@ if TYPE_CHECKING:
 
 from backend.conjugator.verbs import Verb
 
-from .common import (Person, Region, RegionSuffixTable, SuffixTable,
-                     extract_prefix)
+from .common import (
+    Person,
+    Region,
+    RegionSuffixTable,
+    SuffixTable,
+    extract_preverb,
+)
 
 
 class ConjugateErgativeVerbMixin:
@@ -16,7 +21,7 @@ class ConjugateErgativeVerbMixin:
         suffix_table: SuffixTable,
         ending_len: int,
     ):
-        prefix = extract_prefix(verb.infinitive)
+        prefix = extract_preverb(verb.infinitive)
         extended_stem = verb.present_third[:-ending_len]
         stem = (
             extended_stem[len(prefix) :]
