@@ -38,6 +38,12 @@ const VerbDetails = () => {
     present_perfect: "Present Perfect",
   };
 
+  const aspects = {
+    none: "None",
+    potential: "Potential",
+    passive: "Passive"
+  };
+
   useEffect(() => {
     if (!verbID || !verbType) return;
 
@@ -204,6 +210,7 @@ const VerbDetails = () => {
                     {
                       name: "applicative",
                       label: translations[language].applicative,
+                      disabled: false
                     },
                     {
                       name: "imperative",
@@ -213,6 +220,7 @@ const VerbDetails = () => {
                     {
                       name: "causative",
                       label: translations[language].causative,
+                      disabled: false
                     },
                     {
                       name: "neg_imperative",
@@ -222,6 +230,7 @@ const VerbDetails = () => {
                     {
                       name: "optative",
                       label: translations[language].optative,
+                      disabled: false
                     },
                   ].map(({ name, label, disabled }) => (
                     <div key={name} className="flex items-center">
