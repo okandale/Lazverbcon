@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from .common import extract_prefix
+
 if TYPE_CHECKING:
     from .conjugator import Conjugator
 
@@ -24,11 +26,37 @@ class Verb:
     def __init__(self, infinitive: str, present_third: str):
         self.infinitive: str = infinitive
         self.present_third: str = present_third
+        self.prefix: str = extract_prefix(self.infinitive)
+        self.stem = self._extract_stem()
 
     def accept_conjugator(self, _) -> str:
         raise NotImplementedError(
             "Please call this function from a concrete verb."
         )
+
+    def _extract_stem(self):
+        """Get the stem of the verb.
+
+        The actual stem of the verb will be useful for conjugations among
+        tenses and moods.
+
+        If the verb is a prefixed one, remove it. Otherwise, remove the o-.
+
+        If the infinitive ends with -u, remove it too.
+
+        You may want to override this method if you have a special case.
+        """
+        if self.prefix is not None:
+            stem = self.infinitive[len(self.prefix) :]  # Removed the prefix.
+        elif self.infinitive.startswith("o"):
+            stem = self.infinitive[1:]  # Remove the prepending "o".
+        else:
+            stem = self.infinitive  # XXX: How do we handle these cases?
+
+        # Now, remove the trailing -u if it exists.
+        if stem.endswith("u"):
+            stem = stem[:-1]
+        return stem
 
 
 class ErgativeVerb(Verb):

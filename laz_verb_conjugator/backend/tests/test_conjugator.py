@@ -3,7 +3,8 @@ import pytest
 from backend.conjugator.builder import ConjugatorBuilder
 from backend.conjugator.common import Aspect, Mood, Person, Region, Tense
 from backend.conjugator.conjugator import Conjugator
-from backend.conjugator.verbs import DativeVerb, ErgativeVerb, NominativeVerb
+from backend.conjugator.verbs import (DativeVerb, ErgativeVerb, NominativeVerb,
+                                      Verb)
 
 # Expected full conjugated forms
 expected_forms = {
@@ -732,3 +733,19 @@ def test_ergative_applicative(region, object, verb, conjugations):
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, object {object}, subject {person} and {region}"
+
+
+@pytest.mark.parametrize(
+    "verb, stem",
+    [
+        (
+            ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+            "sinap",
+        ),
+        (ErgativeVerb(infinitive="oşu", present_third="pşum"), "ş"),
+        (NominativeVerb(infinitive="obadu", present_third="ibaden"), "bad"),
+        (NominativeVerb(infinitive="dobadu", present_third="dibaden"), "bad"),
+    ],
+)
+def test_get_stem(verb: Verb, stem: str):
+    assert verb.stem == stem
