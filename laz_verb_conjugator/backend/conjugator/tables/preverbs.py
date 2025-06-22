@@ -1,0 +1,3 @@
+from .do_preverb import DO_PREVERB_PREFIXES
+
+PREVERB_PREFIXES_TABLE = {"do": DO_PREVERB_PREFIXES}

@@ -1,5 +1,76 @@
 from ..common import Person, Region
 
+PRESENT_NOMINATIVE_SUFFIXES = {
+    "en": {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "er",
+            Person.SECOND_SINGULAR: "er",
+            Person.THIRD_SINGULAR: "en",
+            Person.FIRST_PLURAL: "ert",
+            Person.SECOND_PLURAL: "ert",
+            Person.THIRD_PLURAL: "enan",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "er",
+            Person.SECOND_SINGULAR: "er",
+            Person.THIRD_SINGULAR: "en",
+            Person.FIRST_PLURAL: "ert",
+            Person.SECOND_PLURAL: "ert",
+            Person.THIRD_PLURAL: "enan",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "er",
+            Person.SECOND_SINGULAR: "er",
+            Person.THIRD_SINGULAR: "en",
+            Person.FIRST_PLURAL: "ert",
+            Person.SECOND_PLURAL: "ert",
+            Person.THIRD_PLURAL: "enan",
+        },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "er",
+            Person.SECOND_SINGULAR: "er",
+            Person.THIRD_SINGULAR: "en",
+            Person.FIRST_PLURAL: "ert",
+            Person.SECOND_PLURAL: "ert",
+            Person.THIRD_PLURAL: "enan",
+        },
+    },
+    "un": {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "ur",
+            Person.SECOND_SINGULAR: "ur",
+            Person.THIRD_SINGULAR: "un",
+            Person.FIRST_PLURAL: "urt",
+            Person.SECOND_PLURAL: "urt",
+            Person.THIRD_PLURAL: "unan",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "ur",
+            Person.SECOND_SINGULAR: "ur",
+            Person.THIRD_SINGULAR: "un",
+            Person.FIRST_PLURAL: "urt",
+            Person.SECOND_PLURAL: "urt",
+            Person.THIRD_PLURAL: "unan",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "ur",
+            Person.SECOND_SINGULAR: "ur",
+            Person.THIRD_SINGULAR: "un",
+            Person.FIRST_PLURAL: "urt",
+            Person.SECOND_PLURAL: "urt",
+            Person.THIRD_PLURAL: "unan",
+        },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "ur",
+            Person.SECOND_SINGULAR: "ur",
+            Person.THIRD_SINGULAR: "un",
+            Person.FIRST_PLURAL: "urt",
+            Person.SECOND_PLURAL: "urt",
+            Person.THIRD_PLURAL: "unan",
+        },
+    },
+}
+
 PRESENT_ERGATIVE_SUFFIXES = {
     "ams": {
         Region.ARDESEN: {

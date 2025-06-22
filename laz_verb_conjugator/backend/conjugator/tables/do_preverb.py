@@ -1,5 +1,38 @@
 from ..common import Person, Region
 
+DO_PREVERB_PREFIXES = {
+    Region.ARDESEN: {
+        Person.FIRST_SINGULAR: "dovi",
+        Person.SECOND_SINGULAR: "di",
+        Person.THIRD_SINGULAR: "di",
+        Person.FIRST_PLURAL: "dovi",
+        Person.SECOND_PLURAL: "di",
+        Person.THIRD_PLURAL: "di",
+    },
+    Region.PAZAR: {
+        Person.FIRST_SINGULAR: "dovi",
+        Person.SECOND_SINGULAR: "di",
+        Person.THIRD_SINGULAR: "di",
+        Person.FIRST_PLURAL: "dovi",
+        Person.SECOND_PLURAL: "di",
+        Person.THIRD_PLURAL: "di",
+    },
+    Region.FINDIKLI_ARHAVI: {
+        Person.FIRST_SINGULAR: "dobi",
+        Person.SECOND_SINGULAR: "di",
+        Person.THIRD_SINGULAR: "di",
+        Person.FIRST_PLURAL: "dobi",
+        Person.SECOND_PLURAL: "di",
+        Person.THIRD_PLURAL: "di",
+    },
+    Region.HOPA: {
+        Person.FIRST_SINGULAR: "dovi",
+        Person.SECOND_SINGULAR: "domi",
+        Person.THIRD_SINGULAR: "domi",
+        Person.SECOND_PLURAL: "domi",
+        Person.THIRD_PLURAL: "domi",
+    },
+}
 
 DO_PREVERB_APPLICATIVE_PREFIXES = {
     Person.FIRST_SINGULAR: {

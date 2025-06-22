@@ -2,60 +2,17 @@ from .common import Mood, Person, Region, extract_preverb, extract_root
 from .conjugator import Conjugator
 from .ergative_verbs import ConjugateErgativeVerbMixin
 from .nominative_verbs import ConjugateNominativeVerbMixin
-from .rules.applicative import (
-    ApplicativePresentFirstPersonObject,
-    ApplicativePresentSecondPersonObject,
-    ApplicativePresentThirdPersonObject,
-)
-from .rules.common import (
-    DoPreverb,
-    NsEndingRule,
-    SubjectObjectNsOrRsEndingRule,
-    UStartingRule,
-)
+from .rules.applicative import (ApplicativePresentFirstPersonObject,
+                                ApplicativePresentSecondPersonObject,
+                                ApplicativePresentThirdPersonObject)
+from .rules.common import (DoPreverb, NsEndingRule,
+                           SubjectObjectNsOrRsEndingRule, UStartingRule)
+from .tables.base import (APPLICATIVE_PREFIXES, APPLICATIVE_SUFFIXES,
+                          CAUSATIVE_PREFIXES, OPTATIVE_SUFFIXES,
+                          PRESENT_ERGATIVE_SUFFIXES,
+                          PRESENT_NOMINATIVE_SUFFIXES)
+from .tables.preverbs import PREVERB_PREFIXES_TABLE
 from .verbs import Verb
-from .tables.base import (
-    APPLICATIVE_PREFIXES,
-    CAUSATIVE_PREFIXES,
-    OPTATIVE_SUFFIXES,
-    APPLICATIVE_SUFFIXES,
-    PRESENT_ERGATIVE_SUFFIXES
-)
-
-PRESENT_TENSE_SUFFIXES = {
-    Region.ARDESEN: {
-        Person.FIRST_SINGULAR: "r",
-        Person.SECOND_SINGULAR: "r",
-        Person.THIRD_SINGULAR: "n",
-        Person.FIRST_PLURAL: "rt",
-        Person.SECOND_PLURAL: "rt",
-        Person.THIRD_PLURAL: "nan",
-    },
-    Region.PAZAR: {
-        Person.FIRST_SINGULAR: "r",
-        Person.SECOND_SINGULAR: "r",
-        Person.THIRD_SINGULAR: "n",
-        Person.FIRST_PLURAL: "rt",
-        Person.SECOND_PLURAL: "rt",
-        Person.THIRD_PLURAL: "nan",
-    },
-    Region.FINDIKLI_ARHAVI: {
-        Person.FIRST_SINGULAR: "r",
-        Person.SECOND_SINGULAR: "r",
-        Person.THIRD_SINGULAR: "n",
-        Person.FIRST_PLURAL: "rt",
-        Person.SECOND_PLURAL: "rt",
-        Person.THIRD_PLURAL: "nan",
-    },
-    Region.HOPA: {
-        Person.FIRST_SINGULAR: "r",
-        Person.SECOND_SINGULAR: "r",
-        Person.THIRD_SINGULAR: "n",
-        Person.FIRST_PLURAL: "rt",
-        Person.SECOND_PLURAL: "rt",
-        Person.THIRD_PLURAL: "nan",
-    },
-}
 
 DATIVE_SUFFIXES = {
     Person.FIRST_SINGULAR: "",
@@ -82,6 +39,7 @@ DATIVE_SECOND_PERSON_SUFFIXES = {
     Person.THIRD_PLURAL: "r",
 }
 
+
 class PresentConjugator(
     Conjugator, ConjugateNominativeVerbMixin, ConjugateErgativeVerbMixin
 ):
@@ -97,27 +55,23 @@ class PresentConjugator(
         ),
     ]
 
-    NOMINATIVE_RULES = [
-        DoPreverb(ending_len=1, suffixes=PRESENT_TENSE_SUFFIXES)
-    ]
-
     ERGATIVE_RULES = []
 
     def conjugate_default_nominative_verb(self, verb: Verb) -> str:
         if Mood.OPTATIVE in self.moods:
             suffix_table = OPTATIVE_SUFFIXES[Person.THIRD_SINGULAR]
         else:
-            suffix_table = PRESENT_TENSE_SUFFIXES
-            
-        
-        #return (
-        #    ConjugateNominativeVerbMixin.conjugate_nominative_verb_region_wise(
-        #        self,
-        #        verb,
-        #        region_suffix_table=suffix_table,
-        #        ending_len=1,
-        #    )
-        #)
+            suffix_table = PRESENT_NOMINATIVE_SUFFIXES[verb.suffix]
+
+        conjugation = verb.stem + suffix_table[self.region][self.subject]
+        if verb.preverb in PREVERB_PREFIXES_TABLE:
+            conjugation = (
+                PREVERB_PREFIXES_TABLE[verb.preverb][self.region][self.subject]
+                + conjugation
+            )
+        elif self.subject.is_first_person():
+            conjugation = self.apply_epenthetic_segment(conjugation)
+        return conjugation
 
     def conjugate_default_dative_verb(self, verb: Verb) -> str:
         return (
@@ -163,7 +117,7 @@ class PresentConjugator(
             conjugation += PRESENT_ERGATIVE_SUFFIXES[verb.suffix][self.region][
                 self.subject
             ]
-        if verb.preverb is not None:
-            conjugation = verb.preverb + conjugation
+        if verb.preverb in PREVERB_PREFIXES_TABLE:
+            conjugation = PREVERB_PREFIXES_TABLE[verb.preverb] + conjugation
 
         return conjugation

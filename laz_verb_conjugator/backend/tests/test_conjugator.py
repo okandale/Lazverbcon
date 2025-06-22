@@ -547,7 +547,7 @@ def test_past_potential(region_and_verb, conjugations):
 
 optative_mood_fixtures = {
     (
-        Region.ARDESEN,
+        Region.PAZAR,
         NominativeVerb(infinitive="dobadu", present_third="dibaden"),
     ): {
         Person.FIRST_SINGULAR: "dovibada",
@@ -558,7 +558,7 @@ optative_mood_fixtures = {
         Person.THIRD_PLURAL: "dibadan",
     },
     (
-        Region.ARDESEN,
+        Region.FINDIKLI_ARHAVI,
         NominativeVerb(infinitive="oskidu", present_third="skidun"),
     ): {
         Person.FIRST_SINGULAR: "pskida",

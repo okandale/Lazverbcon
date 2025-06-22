@@ -82,7 +82,11 @@ class ErgativeVerb(Verb):
     def __str__(self):
         return (
             f'<ErgativeVerb infinitive="{self.infinitive}" '
-            f'present_third="{self.present_third}">'
+            f'present_third="{self.present_third}" '
+            f'preverb="{self.preverb}" '
+            f'stem="{self.stem}" '
+            f'prefix="{self.prefix}" '
+            f'suffix="{self.suffix}">'
         )
 
 
@@ -93,7 +97,11 @@ class NominativeVerb(Verb):
     def __str__(self):
         return (
             f'<NominativeVerb infinitive="{self.infinitive}" '
-            f'present_third="{self.present_third}">'
+            f'present_third="{self.present_third}" '
+            f'preverb="{self.preverb}" '
+            f'stem="{self.stem}" '
+            f'prefix="{self.prefix}" '
+            f'suffix="{self.suffix}">'
         )
 
 
@@ -104,5 +112,9 @@ class DativeVerb(Verb):
     def __str__(self):
         return (
             f'<DativeVerb infinitive="{self.infinitive}" '
-            f'present_third="{self.present_third}">'
+            f'present_third="{self.present_third}" '
+            f'preverb="{self.preverb}" '
+            f'stem="{self.stem}" '
+            f'prefix="{self.prefix}" '
+            f'suffix="{self.suffix}">'
         )
