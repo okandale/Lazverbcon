@@ -1,4 +1,4 @@
-from .common import Person, Region, extract_preverb, extract_root
+from .common import Mood, Person, Region, extract_preverb, extract_root
 from .conjugator import Conjugator
 from .ergative_verbs import ConjugateErgativeVerbMixin
 from .nominative_verbs import ConjugateNominativeVerbMixin
@@ -112,10 +112,300 @@ PRESENT_ERGATIVE_SUFFIXES = {
     },
 }
 
-# In these prefixes, the key refers to the *object’s* person.
+# In these prefixes, the fist key refers to the *object’s* person and
+# the second key to the subject.
 APPLICATIVE_PREFIXES = {
     Person.FIRST_SINGULAR: {
-        
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "vi",
+            Person.SECOND_SINGULAR: "mi",
+            Person.THIRD_SINGULAR: "mi",
+            Person.SECOND_PLURAL: "mi",
+            Person.THIRD_PLURAL: "mi",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "vi",
+            Person.SECOND_SINGULAR: "mi",
+            Person.THIRD_SINGULAR: "mi",
+            Person.SECOND_PLURAL: "mi",
+            Person.THIRD_PLURAL: "mi",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "bi",
+            Person.SECOND_SINGULAR: "mi",
+            Person.THIRD_SINGULAR: "mi",
+            Person.SECOND_PLURAL: "mi",
+            Person.THIRD_PLURAL: "mi"
+        }
+    },
+    Person.SECOND_SINGULAR: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "gi",
+            Person.SECOND_SINGULAR: "i",
+            Person.THIRD_SINGULAR: "gi",
+            Person.FIRST_PLURAL: "gi",
+            Person.THIRD_PLURAL: "gi",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "gi",
+            Person.SECOND_SINGULAR: "i",
+            Person.THIRD_SINGULAR: "gi",
+            Person.FIRST_PLURAL: "gi",
+            Person.THIRD_PLURAL: "gi",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "gi",
+            Person.SECOND_SINGULAR: "i",
+            Person.THIRD_SINGULAR: "gi",
+            Person.FIRST_PLURAL: "gi",
+            Person.THIRD_PLURAL: "gi"
+        }
+    },
+    Person.THIRD_SINGULAR: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "vu",
+            Person.SECOND_SINGULAR: "u",
+            Person.THIRD_SINGULAR: "u",
+            Person.FIRST_PLURAL: "vu",
+            Person.SECOND_PLURAL: "u",
+            Person.THIRD_PLURAL: "u",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "vu",
+            Person.SECOND_SINGULAR: "u",
+            Person.THIRD_SINGULAR: "u",
+            Person.FIRST_PLURAL: "vu",
+            Person.SECOND_PLURAL: "u",
+            Person.THIRD_PLURAL: "u",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "bu",
+            Person.SECOND_SINGULAR: "u",
+            Person.THIRD_SINGULAR: "u",
+            Person.FIRST_PLURAL: "bu",
+            Person.SECOND_PLURAL: "u",
+            Person.THIRD_PLURAL: "u",
+        }
+    },
+    Person.FIRST_PLURAL: {
+        Region.ARDESEN: {
+            Person.SECOND_SINGULAR: "mi",
+            Person.THIRD_SINGULAR: "mi",
+            Person.FIRST_PLURAL: "vi",
+            Person.SECOND_PLURAL: "mi",
+            Person.THIRD_PLURAL: "mi",
+        },
+        Region.PAZAR: {
+            Person.SECOND_SINGULAR: "mi",
+            Person.THIRD_SINGULAR: "mi",
+            Person.FIRST_PLURAL: "vi",
+            Person.SECOND_PLURAL: "mi",
+            Person.THIRD_PLURAL: "mi",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.SECOND_SINGULAR: "mi",
+            Person.THIRD_SINGULAR: "mi",
+            Person.FIRST_PLURAL: "bi",
+            Person.SECOND_PLURAL: "mi",
+            Person.THIRD_PLURAL: "mi",
+        }
+    },
+    Person.SECOND_PLURAL: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "gi",
+            Person.THIRD_SINGULAR: "gi",
+            Person.FIRST_PLURAL: "gi",
+            Person.SECOND_PLURAL: "i",
+            Person.THIRD_PLURAL: "gi",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "gi",
+            Person.THIRD_SINGULAR: "gi",
+            Person.FIRST_PLURAL: "gi",
+            Person.SECOND_PLURAL: "i",
+            Person.THIRD_PLURAL: "gi",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "gi",
+            Person.THIRD_SINGULAR: "gi",
+            Person.FIRST_PLURAL: "gi",
+            Person.SECOND_PLURAL: "i",
+            Person.THIRD_PLURAL: "gi",
+        }
+    },
+    Person.THIRD_PLURAL: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "vu",
+            Person.SECOND_SINGULAR: "u",
+            Person.THIRD_SINGULAR: "u",
+            Person.FIRST_PLURAL: "vu",
+            Person.SECOND_PLURAL: "u",
+            Person.THIRD_PLURAL: "u",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "vu",
+            Person.SECOND_SINGULAR: "u",
+            Person.THIRD_SINGULAR: "u",
+            Person.FIRST_PLURAL: "vu",
+            Person.SECOND_PLURAL: "u",
+            Person.THIRD_PLURAL: "u",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "bu",
+            Person.SECOND_SINGULAR: "u",
+            Person.THIRD_SINGULAR: "u",
+            Person.FIRST_PLURAL: "bu",
+            Person.SECOND_PLURAL: "u",
+            Person.THIRD_PLURAL: "u",
+        }
+    }
+    
+}
+
+APPLICATIVE_SUFFIXES = {
+    Person.FIRST_SINGULAR: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "ay",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "ams",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "ams",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman"
+        }
+    },
+    Person.SECOND_SINGULAR: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "ay",
+            Person.FIRST_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "ams",
+            Person.FIRST_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "ams",
+            Person.FIRST_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman"
+        }
+    },
+    Person.THIRD_SINGULAR: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "ay",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "ams",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "ams",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        }
+    },
+    Person.FIRST_PLURAL: {
+        Region.ARDESEN: {
+            Person.SECOND_SINGULAR: "amt",
+            Person.THIRD_SINGULAR: "aman",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.PAZAR: {
+            Person.SECOND_SINGULAR: "amt",
+            Person.THIRD_SINGULAR: "aman",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.SECOND_SINGULAR: "amt",
+            Person.THIRD_SINGULAR: "aman",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        }
+    },
+    Person.SECOND_PLURAL: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "amt",
+            Person.THIRD_SINGULAR: "aman",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "amt",
+            Person.THIRD_SINGULAR: "aman",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "amt",
+            Person.THIRD_SINGULAR: "aman",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        }
+    },
+    Person.THIRD_PLURAL: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "aman",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "aman",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "am",
+            Person.SECOND_SINGULAR: "am",
+            Person.THIRD_SINGULAR: "aman",
+            Person.FIRST_PLURAL: "amt",
+            Person.SECOND_PLURAL: "amt",
+            Person.THIRD_PLURAL: "aman",
+        }
     }
 }
 
@@ -140,15 +430,6 @@ class PresentConjugator(
     ]
 
     ERGATIVE_RULES = [
-        ApplicativePresentFirstPersonObject(
-            suffixes=PRESENT_ERGATIVE_SUFFIXES
-        ),
-        ApplicativePresentSecondPersonObject(
-            suffixes=PRESENT_ERGATIVE_SUFFIXES
-        ),
-        ApplicativePresentThirdPersonObject(
-            suffixes=PRESENT_ERGATIVE_SUFFIXES
-        ),
     ]
 
     def conjugate_default_nominative_verb(self, verb: Verb) -> str:
@@ -169,7 +450,12 @@ class PresentConjugator(
         )
 
     def conjugate_default_ergative_verb(self, verb: Verb) -> str:
-        conjugation = f"{verb.prefix}{verb.stem}"
+        
+        if Mood.APPLICATIVE in self.moods:
+            verb_prefix = APPLICATIVE_PREFIXES[self.object][self.region][self.subject]
+            conjugation = f"{verb_prefix}{verb.stem}"
+        else:
+            conjugation = f"{verb.prefix}{verb.stem}"
         
         if (
             conjugation.startswith(("a", "e", "i", "o", "u"))
@@ -177,10 +463,25 @@ class PresentConjugator(
         ):
             conjugation = self.apply_epenthetic_segment(conjugation)
 
-        conjugation = (
-            conjugation +
-            PRESENT_ERGATIVE_SUFFIXES[verb.suffix][self.region][self.subject]
-        )
+        if Mood.CAUSATIVE in self.moods:
+            conjugation += "ap"
+
+        if Mood.APPLICATIVE in self.moods:
+            conjugation += APPLICATIVE_SUFFIXES[
+                self.object
+            ][
+                self.region
+            ][
+                self.subject
+            ]
+        else:
+            conjugation += PRESENT_ERGATIVE_SUFFIXES[
+                verb.suffix
+            ][
+                self.region
+            ][
+                self.subject
+            ]
         if verb.preverb is not None:
             conjugation = verb.preverb + conjugation
 
