@@ -135,8 +135,8 @@ APPLICATIVE_PREFIXES = {
             Person.SECOND_SINGULAR: "mi",
             Person.THIRD_SINGULAR: "mi",
             Person.SECOND_PLURAL: "mi",
-            Person.THIRD_PLURAL: "mi"
-        }
+            Person.THIRD_PLURAL: "mi",
+        },
     },
     Person.SECOND_SINGULAR: {
         Region.ARDESEN: {
@@ -158,8 +158,8 @@ APPLICATIVE_PREFIXES = {
             Person.SECOND_SINGULAR: "i",
             Person.THIRD_SINGULAR: "gi",
             Person.FIRST_PLURAL: "gi",
-            Person.THIRD_PLURAL: "gi"
-        }
+            Person.THIRD_PLURAL: "gi",
+        },
     },
     Person.THIRD_SINGULAR: {
         Region.ARDESEN: {
@@ -185,7 +185,7 @@ APPLICATIVE_PREFIXES = {
             Person.FIRST_PLURAL: "bu",
             Person.SECOND_PLURAL: "u",
             Person.THIRD_PLURAL: "u",
-        }
+        },
     },
     Person.FIRST_PLURAL: {
         Region.ARDESEN: {
@@ -208,7 +208,7 @@ APPLICATIVE_PREFIXES = {
             Person.FIRST_PLURAL: "bi",
             Person.SECOND_PLURAL: "mi",
             Person.THIRD_PLURAL: "mi",
-        }
+        },
     },
     Person.SECOND_PLURAL: {
         Region.ARDESEN: {
@@ -231,7 +231,7 @@ APPLICATIVE_PREFIXES = {
             Person.FIRST_PLURAL: "gi",
             Person.SECOND_PLURAL: "i",
             Person.THIRD_PLURAL: "gi",
-        }
+        },
     },
     Person.THIRD_PLURAL: {
         Region.ARDESEN: {
@@ -257,9 +257,143 @@ APPLICATIVE_PREFIXES = {
             Person.FIRST_PLURAL: "bu",
             Person.SECOND_PLURAL: "u",
             Person.THIRD_PLURAL: "u",
-        }
-    }
-    
+        },
+    },
+}
+
+CAUSATIVE_PREFIXES = {
+    Person.FIRST_SINGULAR: {
+        Region.ARDESEN: {
+            Person.SECOND_SINGULAR: "mo",
+            Person.THIRD_SINGULAR: "mo",
+            Person.SECOND_PLURAL: "mo",
+            Person.THIRD_PLURAL: "mo",
+        },
+        Region.PAZAR: {
+            Person.SECOND_SINGULAR: "mo",
+            Person.THIRD_SINGULAR: "mo",
+            Person.SECOND_PLURAL: "mo",
+            Person.THIRD_PLURAL: "mo",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.SECOND_SINGULAR: "mo",
+            Person.THIRD_SINGULAR: "mo",
+            Person.SECOND_PLURAL: "mo",
+            Person.THIRD_PLURAL: "mo",
+        },
+    },
+    Person.SECOND_SINGULAR: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "go",
+            Person.THIRD_SINGULAR: "go",
+            Person.FIRST_PLURAL: "go",
+            Person.THIRD_PLURAL: "go",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "go",
+            Person.THIRD_SINGULAR: "go",
+            Person.FIRST_PLURAL: "go",
+            Person.THIRD_PLURAL: "go",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "go",
+            Person.THIRD_SINGULAR: "go",
+            Person.FIRST_PLURAL: "go",
+            Person.THIRD_PLURAL: "go",
+        },
+    },
+    Person.THIRD_SINGULAR: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "vo",
+            Person.SECOND_SINGULAR: "o",
+            Person.THIRD_SINGULAR: "o",
+            Person.FIRST_PLURAL: "vo",
+            Person.SECOND_PLURAL: "o",
+            Person.THIRD_PLURAL: "o",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "vo",
+            Person.SECOND_SINGULAR: "o",
+            Person.THIRD_SINGULAR: "o",
+            Person.FIRST_PLURAL: "vo",
+            Person.SECOND_PLURAL: "o",
+            Person.THIRD_PLURAL: "o",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "bo",
+            Person.SECOND_SINGULAR: "o",
+            Person.THIRD_SINGULAR: "o",
+            Person.FIRST_PLURAL: "bo",
+            Person.SECOND_PLURAL: "o",
+            Person.THIRD_PLURAL: "o",
+        },
+    },
+    Person.FIRST_PLURAL: {
+        Region.ARDESEN: {
+            Person.SECOND_SINGULAR: "mo",
+            Person.THIRD_SINGULAR: "mo",
+            Person.SECOND_PLURAL: "mo",
+            Person.THIRD_PLURAL: "mo",
+        },
+        Region.PAZAR: {
+            Person.SECOND_SINGULAR: "mo",
+            Person.THIRD_SINGULAR: "mo",
+            Person.SECOND_PLURAL: "mo",
+            Person.THIRD_PLURAL: "mo",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.SECOND_SINGULAR: "mo",
+            Person.THIRD_SINGULAR: "mo",
+            Person.SECOND_PLURAL: "mo",
+            Person.THIRD_PLURAL: "mo",
+        },
+    },
+    Person.SECOND_PLURAL: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "go",
+            Person.THIRD_SINGULAR: "go",
+            Person.FIRST_PLURAL: "go",
+            Person.THIRD_PLURAL: "go",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "go",
+            Person.THIRD_SINGULAR: "go",
+            Person.FIRST_PLURAL: "go",
+            Person.THIRD_PLURAL: "go",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "go",
+            Person.THIRD_SINGULAR: "go",
+            Person.FIRST_PLURAL: "go",
+            Person.THIRD_PLURAL: "go",
+        },
+    },
+    Person.THIRD_PLURAL: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "vo",
+            Person.SECOND_SINGULAR: "o",
+            Person.THIRD_SINGULAR: "o",
+            Person.FIRST_PLURAL: "vo",
+            Person.SECOND_PLURAL: "o",
+            Person.THIRD_PLURAL: "o",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "vo",
+            Person.SECOND_SINGULAR: "o",
+            Person.THIRD_SINGULAR: "o",
+            Person.FIRST_PLURAL: "vo",
+            Person.SECOND_PLURAL: "o",
+            Person.THIRD_PLURAL: "o",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "bo",
+            Person.SECOND_SINGULAR: "o",
+            Person.THIRD_SINGULAR: "o",
+            Person.FIRST_PLURAL: "bo",
+            Person.SECOND_PLURAL: "o",
+            Person.THIRD_PLURAL: "o",
+        },
+    },
 }
 
 APPLICATIVE_SUFFIXES = {
@@ -283,8 +417,8 @@ APPLICATIVE_SUFFIXES = {
             Person.SECOND_SINGULAR: "am",
             Person.THIRD_SINGULAR: "ams",
             Person.SECOND_PLURAL: "amt",
-            Person.THIRD_PLURAL: "aman"
-        }
+            Person.THIRD_PLURAL: "aman",
+        },
     },
     Person.SECOND_SINGULAR: {
         Region.ARDESEN: {
@@ -306,8 +440,8 @@ APPLICATIVE_SUFFIXES = {
             Person.SECOND_SINGULAR: "am",
             Person.THIRD_SINGULAR: "ams",
             Person.FIRST_PLURAL: "amt",
-            Person.THIRD_PLURAL: "aman"
-        }
+            Person.THIRD_PLURAL: "aman",
+        },
     },
     Person.THIRD_SINGULAR: {
         Region.ARDESEN: {
@@ -333,7 +467,7 @@ APPLICATIVE_SUFFIXES = {
             Person.FIRST_PLURAL: "amt",
             Person.SECOND_PLURAL: "amt",
             Person.THIRD_PLURAL: "aman",
-        }
+        },
     },
     Person.FIRST_PLURAL: {
         Region.ARDESEN: {
@@ -356,7 +490,7 @@ APPLICATIVE_SUFFIXES = {
             Person.FIRST_PLURAL: "amt",
             Person.SECOND_PLURAL: "amt",
             Person.THIRD_PLURAL: "aman",
-        }
+        },
     },
     Person.SECOND_PLURAL: {
         Region.ARDESEN: {
@@ -379,7 +513,7 @@ APPLICATIVE_SUFFIXES = {
             Person.FIRST_PLURAL: "amt",
             Person.SECOND_PLURAL: "amt",
             Person.THIRD_PLURAL: "aman",
-        }
+        },
     },
     Person.THIRD_PLURAL: {
         Region.ARDESEN: {
@@ -405,8 +539,143 @@ APPLICATIVE_SUFFIXES = {
             Person.FIRST_PLURAL: "amt",
             Person.SECOND_PLURAL: "amt",
             Person.THIRD_PLURAL: "aman",
-        }
-    }
+        },
+    },
+}
+
+OPTATIVE_SUFFIXES = {
+    Person.FIRST_SINGULAR: {
+        Region.ARDESEN: {
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "ay",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.PAZAR: {
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+    },
+    Person.SECOND_SINGULAR: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "ay",
+            Person.FIRST_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.FIRST_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.FIRST_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+    },
+    Person.THIRD_SINGULAR: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "a",
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "ay",
+            Person.FIRST_PLURAL: "at",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "a",
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.FIRST_PLURAL: "at",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "a",
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.FIRST_PLURAL: "at",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+    },
+    Person.FIRST_PLURAL: {
+        Region.ARDESEN: {
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "an",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.PAZAR: {
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "an",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "an",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+    },
+    Person.SECOND_PLURAL: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "an",
+            Person.FIRST_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "an",
+            Person.FIRST_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "an",
+            Person.FIRST_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+    },
+    Person.THIRD_PLURAL: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "a",
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "ay",
+            Person.FIRST_PLURAL: "at",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "a",
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.FIRST_PLURAL: "at",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "a",
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.FIRST_PLURAL: "at",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+    },
 }
 
 
@@ -429,8 +698,7 @@ class PresentConjugator(
         DoPreverb(ending_len=1, suffixes=PRESENT_TENSE_SUFFIXES)
     ]
 
-    ERGATIVE_RULES = [
-    ]
+    ERGATIVE_RULES = []
 
     def conjugate_default_nominative_verb(self, verb: Verb) -> str:
         return (
@@ -450,13 +718,21 @@ class PresentConjugator(
         )
 
     def conjugate_default_ergative_verb(self, verb: Verb) -> str:
-        
+
         if Mood.APPLICATIVE in self.moods:
-            verb_prefix = APPLICATIVE_PREFIXES[self.object][self.region][self.subject]
+            verb_prefix = APPLICATIVE_PREFIXES[self.object][self.region][
+                self.subject
+            ]
             conjugation = f"{verb_prefix}{verb.stem}"
+        elif Mood.CAUSATIVE in self.moods:
+            verb_prefix = CAUSATIVE_PREFIXES[self.object][self.region][
+                self.subject
+            ]
+            conjugation = f"{verb_prefix}{verb.stem}"
+            pass
         else:
             conjugation = f"{verb.prefix}{verb.stem}"
-        
+
         if (
             conjugation.startswith(("a", "e", "i", "o", "u"))
             and self.subject.is_first_person()
@@ -466,20 +742,16 @@ class PresentConjugator(
         if Mood.CAUSATIVE in self.moods:
             conjugation += "ap"
 
-        if Mood.APPLICATIVE in self.moods:
-            conjugation += APPLICATIVE_SUFFIXES[
-                self.object
-            ][
-                self.region
-            ][
+        if Mood.OPTATIVE in self.moods:
+            conjugation += OPTATIVE_SUFFIXES[self.object][self.region][
+                self.subject
+            ]
+        elif Mood.APPLICATIVE in self.moods:
+            conjugation += APPLICATIVE_SUFFIXES[self.object][self.region][
                 self.subject
             ]
         else:
-            conjugation += PRESENT_ERGATIVE_SUFFIXES[
-                verb.suffix
-            ][
-                self.region
-            ][
+            conjugation += PRESENT_ERGATIVE_SUFFIXES[verb.suffix][self.region][
                 self.subject
             ]
         if verb.preverb is not None:
