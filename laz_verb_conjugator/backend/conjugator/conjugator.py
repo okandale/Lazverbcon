@@ -1,13 +1,8 @@
 from typing import Callable, List
 
-from .common import (
-    PROTHETIC_CONSONANTS_NO_OBJECT,
-    PROTHETIC_CONSONANTS_SECOND_PERSON_OBJECT,
-    Mood,
-    Person,
-    Region,
-    extract_initial_cluster,
-)
+from .common import (PROTHETIC_CONSONANTS_NO_OBJECT,
+                     PROTHETIC_CONSONANTS_SECOND_PERSON_OBJECT, Mood, Person,
+                     Region, extract_initial_cluster)
 from .rules.common import VerbRule
 from .verbs import Verb
 

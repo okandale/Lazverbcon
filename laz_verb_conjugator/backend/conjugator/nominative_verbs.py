@@ -5,13 +5,8 @@ if TYPE_CHECKING:
 
 from backend.conjugator.verbs import Verb
 
-from .common import (
-    Person,
-    Region,
-    RegionSuffixTable,
-    SuffixTable,
-    extract_preverb,
-)
+from .common import (Person, Region, RegionSuffixTable, SuffixTable,
+                     extract_preverb)
 
 
 class ConjugateNominativeVerbMixin:

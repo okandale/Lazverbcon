@@ -30,7 +30,6 @@ class ConjugatorBuilder:
     MOOD_CONJUGATORS = {
         Mood.IMPERATIVE: ImperativeConjugator,
         Mood.NEGATIVE_IMPERATIVE: NegativeImperativeConjugator,
-        Mood.OPTATIVE: OptativeConjugator,
     }
 
     TENSE_CONJUGATORS = {
@@ -77,6 +76,18 @@ class ConjugatorBuilder:
                 "You cannot have the same person for "
                 "the subject and the object."
             )
+
+        if (
+            Mood.OPTATIVE in self.moods
+            and self.tense is not None
+            and self.tense != Tense.PRESENT
+        ):
+            raise ConjugatorError(
+                "In Optative mode, only the Present tense is possible."
+            )
+
+        if Mood.OPTATIVE in self.moods:
+            self.tense = Tense.PRESENT
 
         if self.aspect in self.ASPECT_CONJUGATORS:
             return self.ASPECT_CONJUGATORS[self.aspect](
