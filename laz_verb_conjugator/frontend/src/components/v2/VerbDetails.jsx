@@ -21,13 +21,21 @@ const VerbDetails = () => {
   const [language, setLanguage] = useState(getStoredLanguage());
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
   const [verbDetails, setVerbDetails] = useState(null);
-
+  const [tense, setTense] = useState("present");
   const [isLoadingConjugations, setIsLoadingConjugations] = useState(false);
   const [conjugations, setConjugations] = useState(null);
   const toggleLanguage = () => {
     const newLanguage = language === "en" ? "tr" : "en";
     setLanguage(newLanguage);
     setStoredLanguage(newLanguage);
+  };
+
+  const tenses = {
+    present: "Present",
+    past: "Past",
+    future: "Future",
+    past_progressive: "Past Progressive",
+    present_perfect: "Present Perfect",
   };
 
   useEffect(() => {
@@ -63,7 +71,7 @@ const VerbDetails = () => {
           verb_id: verbID,
           verb_type: verbType,
           regions: ["FA", "HO", "PZ", "AS"],
-          tense: "present",
+          tense: tense,
         }),
       });
       const data = await response.json();
@@ -91,8 +99,14 @@ const VerbDetails = () => {
             {translations[language].verbDetailsTitle}
           </h1>
 
-          <div class="bg-orange-100 border border-orange-400 text-orange-700 px-4 py-3 rounded mb-5 text-center" role="alert">
-            <span class="block sm:inline">Please bear in mind that this conjugator version may output inaccurate results.</span>
+          <div
+            class="bg-orange-100 border border-orange-400 text-orange-700 px-4 py-3 rounded mb-5 text-center"
+            role="alert"
+          >
+            <span class="block sm:inline">
+              Please bear in mind that this conjugator version may output
+              inaccurate results.
+            </span>
           </div>
 
           {isLoadingDetails && (
@@ -132,11 +146,107 @@ const VerbDetails = () => {
                   </td>
                 </tr>
               </table>
+
+              <div className="mt-5 p-5 bg-white border">
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  {/* Tense Selector */}
+                  <div>
+                    <label
+                      className="block text-gray-700 text-sm font-bold mb-2"
+                      htmlFor="tense"
+                    >
+                      Tense:
+                    </label>
+                    <select
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                      name="tense"
+                      onChange={(e) => setTense(e.target.value)}
+                    >
+                      {Object.keys(tenses).map((value) => (
+                        <option value={value} selected={value == tense}>
+                          {tenses[value]}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Aspect Selector */}
+                  <div>
+                    <label
+                      className="block text-gray-700 text-sm font-bold mb-2"
+                      htmlFor="aspect"
+                    >
+                      {translations[language].aspect}:
+                    </label>
+                    <select
+                      className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                        false ? "bg-gray-200 opacity-60" : "bg-white"
+                      }`}
+                      id="aspect"
+                      name="aspect"
+                    >
+                      <option value="">
+                        {language === "en" ? "None" : "Yok"}
+                      </option>
+                      <option value="potential">
+                        {language === "en" ? "Potential" : "Yeterlilik"}
+                      </option>
+                      <option value="passive">
+                        {language === "en" ? "Passive" : "Edilgen"}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Checkbox Options */}
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  {[
+                    {
+                      name: "applicative",
+                      label: translations[language].applicative,
+                    },
+                    {
+                      name: "imperative",
+                      label: translations[language].imperative,
+                      disabled: false,
+                    },
+                    {
+                      name: "causative",
+                      label: translations[language].causative,
+                    },
+                    {
+                      name: "neg_imperative",
+                      label: translations[language].negImperative,
+                      disabled: false,
+                    },
+                    {
+                      name: "optative",
+                      label: translations[language].optative,
+                    },
+                  ].map(({ name, label, disabled }) => (
+                    <div key={name} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id={name}
+                        name={name}
+                        className="mr-2"
+                      />
+                      <label
+                        className="text-gray-700 text-sm font-bold"
+                        htmlFor={name}
+                      >
+                        {label}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               <button
                 onClick={conjugateVerb}
                 className="flex-1 min-w-32 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-150 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed mt-5"
               >
-                Conjugate Present Form
+                Conjugate
               </button>
             </div>
           )}

@@ -17,7 +17,13 @@ REGIONS = {
     "PZ": Region.PAZAR,
 }
 
-TENSES = {"present": Tense.PRESENT}
+TENSES = {
+    "present": Tense.PRESENT,
+    "past": Tense.PAST,
+    "future": Tense.FUTURE,
+    "present_perfect": Tense.PRESENT_PREFECT,
+    "past_progressive": Tense.PAST_PROGRESSIVE
+}
 
 VERB_TYPES = {
     "nominative": NominativeVerb,
