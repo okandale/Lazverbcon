@@ -22,8 +22,18 @@ const VerbDetails = () => {
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
   const [verbDetails, setVerbDetails] = useState(null);
   const [tense, setTense] = useState("present");
+  const [aspect, setAspect] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
   const [isLoadingConjugations, setIsLoadingConjugations] = useState(false);
   const [conjugations, setConjugations] = useState(null);
+
+  // Moods.
+  const [isApplicative, setIsApplicative] = useState(false);
+  const [isCausative, setIsCausative] = useState(false);
+  const [isOptative, setIsOptative] = useState(false);
+  const [isImperative, setIsImperative] = useState(false);
+  const [isNegativeImperative, setIsNegativeImperative] = useState(false);
+
   const toggleLanguage = () => {
     const newLanguage = language === "en" ? "tr" : "en";
     setLanguage(newLanguage);
@@ -41,7 +51,7 @@ const VerbDetails = () => {
   const aspects = {
     none: "None",
     potential: "Potential",
-    passive: "Passive"
+    passive: "Passive",
   };
 
   useEffect(() => {
@@ -78,11 +88,14 @@ const VerbDetails = () => {
           verb_type: verbType,
           regions: ["FA", "HO", "PZ", "AS"],
           tense: tense,
+          aspect: aspect !== "" ? aspect : null,
         }),
       });
       const data = await response.json();
       setConjugations(data["conjugations"]);
+      setErrorMessage(null);
     } catch (error) {
+      setErrorMessage("Whoops! The conjugator didn’t like it! :(");
       console.log(error);
     } finally {
       setIsLoadingConjugations(false);
@@ -190,14 +203,18 @@ const VerbDetails = () => {
                       }`}
                       id="aspect"
                       name="aspect"
+                      onChange={(e) => setAspect(e.target.value)}
                     >
                       <option value="">
                         {language === "en" ? "None" : "Yok"}
                       </option>
-                      <option value="potential">
+                      <option
+                        value="potential"
+                        selected={aspect == "potential"}
+                      >
                         {language === "en" ? "Potential" : "Yeterlilik"}
                       </option>
-                      <option value="passive">
+                      <option value="passive" selected={aspect == "passive"}>
                         {language === "en" ? "Passive" : "Edilgen"}
                       </option>
                     </select>
@@ -206,48 +223,81 @@ const VerbDetails = () => {
 
                 {/* Checkbox Options */}
                 <div className="grid grid-cols-2 gap-4 mb-8">
-                  {[
-                    {
-                      name: "applicative",
-                      label: translations[language].applicative,
-                      disabled: false
-                    },
-                    {
-                      name: "imperative",
-                      label: translations[language].imperative,
-                      disabled: false,
-                    },
-                    {
-                      name: "causative",
-                      label: translations[language].causative,
-                      disabled: false
-                    },
-                    {
-                      name: "neg_imperative",
-                      label: translations[language].negImperative,
-                      disabled: false,
-                    },
-                    {
-                      name: "optative",
-                      label: translations[language].optative,
-                      disabled: false
-                    },
-                  ].map(({ name, label, disabled }) => (
-                    <div key={name} className="flex items-center">
-                      <input
-                        type="checkbox"
-                        id={name}
-                        name={name}
-                        className="mr-2"
-                      />
-                      <label
-                        className="text-gray-700 text-sm font-bold"
-                        htmlFor={name}
-                      >
-                        {label}
-                      </label>
-                    </div>
-                  ))}
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="applicative"
+                      checked={isApplicative}
+                      onChange={(e) => setIsApplicative(e.target.checked)}
+                      className="mr-2"
+                    />
+                    <label
+                      className="text-gray-700 text-sm font-bold"
+                      htmlFor="applicative"
+                    >
+                      Applicative
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="applicative"
+                      checked={isCausative}
+                      onChange={(e) => setIsCausative(e.target.checked)}
+                      className="mr-2"
+                    />
+                    <label
+                      className="text-gray-700 text-sm font-bold"
+                      htmlFor="applicative"
+                    >
+                      Causative
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="applicative"
+                      checked={isOptative}
+                      onChange={(e) => setIsOptative(e.target.checked)}
+                      className="mr-2"
+                    />
+                    <label
+                      className="text-gray-700 text-sm font-bold"
+                      htmlFor="applicative"
+                    >
+                      Optative
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="applicative"
+                      checked={isImperative}
+                      onChange={(e) => setIsImperative(e.target.checked)}
+                      className="mr-2"
+                    />
+                    <label
+                      className="text-gray-700 text-sm font-bold"
+                      htmlFor="applicative"
+                    >
+                      Imperative
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="applicative"
+                      checked={isNegativeImperative}
+                      onChange={(e) => setIsNegativeImperative(e.target.checked)}
+                      className="mr-2"
+                    />
+                    <label
+                      className="text-gray-700 text-sm font-bold"
+                      htmlFor="applicative"
+                    >
+                      Negative Imperative
+                    </label>
+                  </div>
                 </div>
               </div>
 
@@ -259,22 +309,32 @@ const VerbDetails = () => {
               </button>
             </div>
           )}
-          {!isLoadingConjugations && conjugations !== null && (
-            <div className="grid grid-cols-2 gap-2">
-              {Object.entries(conjugations).map(
-                ([region, regionConjugations]) => (
-                  <div className="bg-white p-2" key={region}>
-                    <h2>{region}</h2>
-                    <ul>
-                      {regionConjugations.map((result) => (
-                        <li>{result}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )
-              )}
+          {!isLoadingConjugations && errorMessage !== null && (
+            <div
+              class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-5 text-center"
+              role="alert"
+            >
+              <span class="block sm:inline">{errorMessage}</span>
             </div>
           )}
+          {!isLoadingConjugations &&
+            conjugations !== null &&
+            errorMessage === null && (
+              <div className="grid grid-cols-2 gap-2">
+                {Object.entries(conjugations).map(
+                  ([region, regionConjugations]) => (
+                    <div className="bg-white p-2" key={region}>
+                      <h2>{region}</h2>
+                      <ul>
+                        {regionConjugations.map((result) => (
+                          <li>{result}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )
+                )}
+              </div>
+            )}
         </div>
       </div>
     </>

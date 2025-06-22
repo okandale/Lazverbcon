@@ -4,7 +4,7 @@ from typing import List, Tuple
 from flask import Blueprint, abort, jsonify, request
 
 from .conjugator.builder import ConjugatorBuilder
-from .conjugator.common import Person, Region, Tense
+from .conjugator.common import Person, Region, Tense, Aspect
 from .conjugator.verbs import DativeVerb, ErgativeVerb, NominativeVerb, Verb
 from .db import get_db
 
@@ -23,6 +23,11 @@ TENSES = {
     "future": Tense.FUTURE,
     "present_perfect": Tense.PRESENT_PREFECT,
     "past_progressive": Tense.PAST_PROGRESSIVE
+}
+
+ASPECTS = {
+    "potential": Aspect.POTENTIAL,
+    "passive": Aspect.PASSIVE
 }
 
 VERB_TYPES = {
@@ -156,6 +161,7 @@ def conjugate():
     verb_type: str = request.json.get("verb_type")
     regions: List[str] = request.json.get("regions")
     tense: str = request.json.get("tense")
+    aspect: str = request.json.get("aspect")
     
     if verb_id is None or verb_type is None or tense is None:
         abort(400)
@@ -206,6 +212,8 @@ def conjugate():
     for region, verb in verbs_and_regions:
         conjugations = list()
         builder = ConjugatorBuilder()
+        if aspect is not None:
+            builder.set_aspect(ASPECTS[aspect])
         conjugator = (
             builder.set_tense(tense)
             .set_subject(Person.FIRST_SINGULAR)
