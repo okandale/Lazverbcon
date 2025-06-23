@@ -4,7 +4,8 @@ from typing import List, Tuple
 from flask import Blueprint, abort, jsonify, request
 
 from .conjugator.builder import ConjugatorBuilder
-from .conjugator.common import Person, Region, Tense
+from .conjugator.common import Aspect, Mood, Person, Region, Tense
+from .conjugator.errors import ConjugatorError
 from .conjugator.verbs import DativeVerb, ErgativeVerb, NominativeVerb, Verb
 from .db import get_db
 
@@ -17,12 +18,40 @@ REGIONS = {
     "PZ": Region.PAZAR,
 }
 
-TENSES = {"present": Tense.PRESENT}
+TENSES = {
+    "present": Tense.PRESENT,
+    "past": Tense.PAST,
+    "future": Tense.FUTURE,
+    "present_perfect": Tense.PRESENT_PREFECT,
+    "past_progressive": Tense.PAST_PROGRESSIVE,
+}
+
+ASPECTS = {"potential": Aspect.POTENTIAL, "passive": Aspect.PASSIVE}
 
 VERB_TYPES = {
     "nominative": NominativeVerb,
     "ergative": ErgativeVerb,
     "dative": DativeVerb,
+}
+
+SUBJECTS = {
+    "first_singular": [Person.FIRST_SINGULAR],
+    "second_singular": [Person.SECOND_SINGULAR],
+    "third_singular": [Person.THIRD_SINGULAR],
+    "first_plural": [Person.FIRST_PLURAL],
+    "second_plural": [Person.SECOND_PLURAL],
+    "third_plural": [Person.THIRD_PLURAL],
+    "all": Person,
+}
+
+OBJECTS = {
+    "": None,
+    "first_singular": Person.FIRST_SINGULAR,
+    "second_singular": Person.SECOND_SINGULAR,
+    "third_singular": Person.THIRD_SINGULAR,
+    "first_plural": Person.FIRST_PLURAL,
+    "second_plural": Person.SECOND_PLURAL,
+    "third_plural": Person.THIRD_PLURAL,
 }
 
 
@@ -150,8 +179,18 @@ def conjugate():
     verb_type: str = request.json.get("verb_type")
     regions: List[str] = request.json.get("regions")
     tense: str = request.json.get("tense")
+    aspect: str = request.json.get("aspect")
+    subject: str = request.json.get("subject")
+    object_: str = request.json.get("object")
+    moods: int = request.json.get("moods")
 
-    if verb_id is None or verb_type is None or tense is None:
+    if (
+        verb_id is None
+        or verb_type is None
+        or tense is None
+        or moods is None
+        or subject is None
+    ):
         abort(400)
 
     verb_type = verb_type.lower()
@@ -180,6 +219,7 @@ def conjugate():
     if not rows:
         abort(404)
     results = [dict(row) for row in rows]
+
     verbs_and_regions = [
         _build_verb_with_region(
             region=REGIONS[result["region_code"]],
@@ -189,7 +229,6 @@ def conjugate():
         )
         for result in results
     ]
-
     if tense not in TENSES:
         abort(400)
     else:
@@ -200,18 +239,27 @@ def conjugate():
     for region, verb in verbs_and_regions:
         conjugations = list()
         builder = ConjugatorBuilder()
-        conjugator = (
-            builder.set_tense(tense)
-            .set_subject(Person.FIRST_SINGULAR)
-            .set_region(region)
-            .build()
-        )
-        conjugations.append(conjugator.conjugate(verb))
-        for person in Person:
-            if person == Person.FIRST_SINGULAR:
-                continue
-            conjugator.subject = person
-            conjugations.append(conjugator.conjugate(verb))
-        results[region.name] = conjugations
+        if aspect is not None:
+            builder.set_aspect(ASPECTS[aspect])
+
+        try:
+            conjugator = (
+                builder.set_tense(tense)
+                .set_region(region)
+                .set_object(OBJECTS[object_])
+                .add_mood(Mood(moods))
+                .build()
+            )
+        except ConjugatorError as e:
+            return jsonify({"error": str(e)}), 400
+        else:
+            for current_subject in SUBJECTS[subject]:
+                try:
+                    conjugator.update_subject(current_subject)
+                except ConjugatorError as e:
+                    conjugations.append("N/A")
+                else:
+                    conjugations.append(conjugator.conjugate(verb))
+            results[region.name] = conjugations
 
     return jsonify({"conjugations": results})

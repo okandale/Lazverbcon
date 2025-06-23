@@ -1,7 +1,7 @@
-from .common import Person, Region, SuffixTable, extract_prefix
+from .common import Person, Region, SuffixTable, extract_preverb
 from .conjugator import Conjugator
 from .nominative_verbs import ConjugateNominativeVerbMixin
-from .verb_rules import DoPreverb
+from .rules.common import DoPreverb
 from .verbs import Verb
 
 PAST_TENSE_SUFFIXES: SuffixTable = {

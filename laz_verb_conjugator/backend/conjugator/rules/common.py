@@ -1,10 +1,10 @@
 from typing import TYPE_CHECKING
 
-from .common import Person, extract_prefix
-from .verbs import Verb
+from ..common import Person, extract_preverb
+from ..verbs import Verb
 
 if TYPE_CHECKING:
-    from .conjugator import Conjugator
+    from ..conjugator import Conjugator
 
 
 class VerbRule:
@@ -77,7 +77,7 @@ class DoPreverb(VerbRuleWithSuffixes):
         super().__init__(suffixes)
 
     def matches(self, conjugator: "Conjugator", verb: Verb):
-        prefix = extract_prefix(verb.infinitive)
+        prefix = extract_preverb(verb.infinitive)
         return prefix == "do" and verb.present_third.startswith("di")
 
     def _apply_with_suffix_table(
