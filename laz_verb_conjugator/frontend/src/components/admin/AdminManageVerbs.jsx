@@ -1,21 +1,19 @@
-import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import LanguageToggle from "../ui/LanguageToggle";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Home } from "lucide-react";
+import LanguageToggle from "../ui/LanguageToggle";
+import { useEffect, useRef, useState } from "react";
 import {
   translations,
   getStoredLanguage,
   setStoredLanguage,
   API_URLS,
 } from "../constants";
-import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
-import { useSearchParams } from "react-router-dom";
+import Skeleton from "@mui/material/Skeleton";
 import Pagination from "../ui/Pagination";
-import { useNavigate } from "react-router-dom";
-import VerbsTable from "./VerbsTable";
+import VerbsTable from "../v2/VerbsTable";
 
-const PickVerbForm = () => {
+const AdminManageVerbs = () => {
   const navigate = useNavigate();
 
   const [language, setLanguage] = useState(getStoredLanguage());
@@ -81,9 +79,15 @@ const PickVerbForm = () => {
       </div>
 
       {/* Title */}
-      <h1 className="text-3xl font-bold mb-6 text-center">
-        {translations[language].verbsListTitle}
-      </h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Manage verbs</h1>
+
+      <div className="text-center mb-5">
+        <Link to="/admin/add-verb">
+          <button className="flex-1 min-w-32 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-150 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed mt-5">
+            Add a verb
+          </button>
+        </Link>
+      </div>
 
       <div className="mb-6">
         <input
@@ -119,7 +123,11 @@ const PickVerbForm = () => {
                 onPageChange={handlePageChange}
               />
             </div>
-            <VerbsTable language={language} verbs={verbs} onVerbClick={handleVerbClick} />
+            <VerbsTable
+              language={language}
+              verbs={verbs}
+              onVerbClick={handleVerbClick}
+            />
             <div className="bg-white p-3 mt-3">
               <Pagination
                 currentPage={page}
@@ -134,4 +142,4 @@ const PickVerbForm = () => {
   );
 };
 
-export default PickVerbForm;
+export default AdminManageVerbs;
