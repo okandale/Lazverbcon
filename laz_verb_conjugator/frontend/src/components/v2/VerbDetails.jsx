@@ -23,6 +23,8 @@ const VerbDetails = () => {
   const [verbDetails, setVerbDetails] = useState(null);
   const [tense, setTense] = useState("present");
   const [aspect, setAspect] = useState("");
+  const [subject, setSubject] = useState("all");
+  const [object, setObject] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoadingConjugations, setIsLoadingConjugations] = useState(false);
   const [conjugations, setConjugations] = useState(null);
@@ -34,10 +36,40 @@ const VerbDetails = () => {
   const [isImperative, setIsImperative] = useState(false);
   const [isNegativeImperative, setIsNegativeImperative] = useState(false);
 
+  // Fields enabled?
+  const [isNegativeImperativeEnabled, setIsNegativeImperativeEnabled] =
+    useState(true);
+  const [isImperativeEnabled, setIsImperativeEnabled] = useState(true);
+  const [isOptativeEnabled, setIsOptativeEnabled] = useState(true);
+  const [areAspectsEnabled, setAreAspectsEnabled] = useState(true);
+  const [areObjectsEnabled, setAreObjectsEnabled] = useState(true);
+  const [areTensesEnabled, setAreTensesEnabled] = useState(true);
+
   const toggleLanguage = () => {
     const newLanguage = language === "en" ? "tr" : "en";
     setLanguage(newLanguage);
     setStoredLanguage(newLanguage);
+  };
+
+  const subjects = {
+    all: "All",
+    first_singular: "I",
+    second_singular: "You",
+    third_singular: "He/She",
+    first_plural: "We",
+    second_plural: "You",
+    third_plural: "They",
+    
+  };
+
+  const objects = {
+    "": "None",
+    first_singular: "Me",
+    second_singular: "You",
+    third_singular: "Him/Her",
+    first_plural: "Us",
+    second_plural: "You",
+    third_plural: "Them",
   };
 
   const tenses = {
@@ -53,6 +85,7 @@ const VerbDetails = () => {
     potential: "Potential",
     passive: "Passive",
   };
+
 
   useEffect(() => {
     if (!verbID || !verbType) return;
@@ -75,6 +108,40 @@ const VerbDetails = () => {
     fetchVerbDetails();
   }, [verbID, verbType]);
 
+  useEffect(() => {
+    setIsNegativeImperativeEnabled(!isImperative);
+  }, [isImperative]);
+
+  useEffect(() => {
+    setIsImperativeEnabled(!isNegativeImperative);
+  }, [isNegativeImperative]);
+
+  useEffect(() => {
+    if (isOptative) {
+      setTense("present");
+      setAspect("");
+      setAreTensesEnabled(false);
+      setAreAspectsEnabled(false);
+    } else {
+      setAreTensesEnabled(true);
+      setAreAspectsEnabled(true);
+    }
+  }, [isOptative]);
+
+  useEffect(() => {
+    setIsOptativeEnabled(
+      (tense === "present" || tense === "") && aspect === ""
+    );
+  }, [tense, aspect]);
+
+  useEffect(() => {
+    setAreAspectsEnabled(object === "");
+  }, [objects]);
+
+  useEffect(() => {
+    setAreObjectsEnabled(aspect === "");
+  }, [aspect]);
+
   const conjugateVerb = async () => {
     try {
       setIsLoadingConjugations(true);
@@ -88,12 +155,19 @@ const VerbDetails = () => {
           verb_type: verbType,
           regions: ["FA", "HO", "PZ", "AS"],
           tense: tense,
+          subject: subject,
+          object: object,
           aspect: aspect !== "" ? aspect : null,
+          moods: (isApplicative * 1) | (isCausative * 2) | (isOptative * 4) | (isImperative * 8) | (isNegativeImperative * 8)
         }),
       });
       const data = await response.json();
-      setConjugations(data["conjugations"]);
-      setErrorMessage(null);
+      if (response.status == 200) {
+        setConjugations(data["conjugations"]);
+        setErrorMessage(null);
+      } else if (response.status == 400) {
+        setErrorMessage(data["error"]);
+      }
     } catch (error) {
       setErrorMessage("Whoops! The conjugator didn’t like it! :(");
       console.log(error);
@@ -168,6 +242,49 @@ const VerbDetails = () => {
 
               <div className="mt-5 p-5 bg-white border">
                 <div className="grid grid-cols-2 gap-4 mb-4">
+                  {/* Subject Selector */}
+                  <div>
+                    <label
+                      className="block text-gray-700 text-sm font-bold mb-2"
+                      htmlFor="subject"
+                    >
+                      Subject:
+                    </label>
+                    <select
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                      name="subject"
+                      onChange={(e) => setSubject(e.target.value)}
+                    >
+                      {Object.keys(subjects).map((value) => (
+                        <option value={value} selected={value == subject}>
+                          {subjects[value]}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Object Selector */}
+                  <div>
+                    <label
+                      className="block text-gray-700 text-sm font-bold mb-2"
+                      htmlFor="object"
+                    >
+                      Object:
+                    </label>
+                    <select
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                      name="object"
+                      disabled={!areObjectsEnabled}
+                      onChange={(e) => setObject(e.target.value)}
+                    >
+                      {Object.keys(objects).map((value) => (
+                        <option value={value} selected={value == object}>
+                          {objects[value]}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
                   {/* Tense Selector */}
                   <div>
                     <label
@@ -179,6 +296,7 @@ const VerbDetails = () => {
                     <select
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
                       name="tense"
+                      disabled={!areTensesEnabled}
                       onChange={(e) => setTense(e.target.value)}
                     >
                       {Object.keys(tenses).map((value) => (
@@ -201,6 +319,7 @@ const VerbDetails = () => {
                       className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
                         false ? "bg-gray-200 opacity-60" : "bg-white"
                       }`}
+                      disabled={!areAspectsEnabled}
                       id="aspect"
                       name="aspect"
                       onChange={(e) => setAspect(e.target.value)}
@@ -227,6 +346,7 @@ const VerbDetails = () => {
                     <input
                       type="checkbox"
                       name="applicative"
+                      id="applicative"
                       checked={isApplicative}
                       onChange={(e) => setIsApplicative(e.target.checked)}
                       className="mr-2"
@@ -241,14 +361,15 @@ const VerbDetails = () => {
                   <div className="flex items-center">
                     <input
                       type="checkbox"
-                      name="applicative"
+                      name="causative"
+                      id="causative"
                       checked={isCausative}
                       onChange={(e) => setIsCausative(e.target.checked)}
                       className="mr-2"
                     />
                     <label
                       className="text-gray-700 text-sm font-bold"
-                      htmlFor="applicative"
+                      htmlFor="causative"
                     >
                       Causative
                     </label>
@@ -256,14 +377,16 @@ const VerbDetails = () => {
                   <div className="flex items-center">
                     <input
                       type="checkbox"
-                      name="applicative"
+                      name="optative"
+                      id="optative"
                       checked={isOptative}
+                      disabled={!isOptativeEnabled}
                       onChange={(e) => setIsOptative(e.target.checked)}
                       className="mr-2"
                     />
                     <label
                       className="text-gray-700 text-sm font-bold"
-                      htmlFor="applicative"
+                      htmlFor="optative"
                     >
                       Optative
                     </label>
@@ -271,14 +394,16 @@ const VerbDetails = () => {
                   <div className="flex items-center">
                     <input
                       type="checkbox"
-                      name="applicative"
+                      name="imperative"
+                      id="imperative"
                       checked={isImperative}
+                      disabled={!isImperativeEnabled}
                       onChange={(e) => setIsImperative(e.target.checked)}
                       className="mr-2"
                     />
                     <label
                       className="text-gray-700 text-sm font-bold"
-                      htmlFor="applicative"
+                      htmlFor="imperative"
                     >
                       Imperative
                     </label>
@@ -286,14 +411,18 @@ const VerbDetails = () => {
                   <div className="flex items-center">
                     <input
                       type="checkbox"
-                      name="applicative"
+                      id="negativeImperative"
+                      name="negativeImperative"
                       checked={isNegativeImperative}
-                      onChange={(e) => setIsNegativeImperative(e.target.checked)}
+                      disabled={!isNegativeImperativeEnabled}
+                      onChange={(e) =>
+                        setIsNegativeImperative(e.target.checked)
+                      }
                       className="mr-2"
                     />
                     <label
                       className="text-gray-700 text-sm font-bold"
-                      htmlFor="applicative"
+                      htmlFor="negativeImperative"
                     >
                       Negative Imperative
                     </label>

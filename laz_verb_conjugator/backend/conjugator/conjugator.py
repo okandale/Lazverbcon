@@ -3,10 +3,18 @@ from typing import Callable, List
 from .common import (PROTHETIC_CONSONANTS_NO_OBJECT,
                      PROTHETIC_CONSONANTS_SECOND_PERSON_OBJECT, Mood, Person,
                      Region, extract_initial_cluster)
+from .errors import ConjugatorError
 from .rules.common import VerbRule
 from .verbs import Verb
 
 PREVERB_HANDLERS = {}
+
+APPLICATIVE_INCOMPATIBLE_SO = {
+    Person.FIRST_SINGULAR: Person.FIRST_PLURAL,
+    Person.SECOND_SINGULAR: Person.SECOND_PLURAL,
+    Person.FIRST_PLURAL: Person.FIRST_SINGULAR,
+    Person.SECOND_PLURAL: Person.SECOND_SINGULAR,
+}
 
 
 def handle_preverb(preverb):
@@ -33,6 +41,15 @@ class Conjugator:
         self.region: Region = region
         self.object: Person = object
         self.moods: Mood = moods
+
+    def update_subject(self, subject):
+        if (
+            Mood.APPLICATIVE in self.moods
+            and subject in APPLICATIVE_INCOMPATIBLE_SO
+            and APPLICATIVE_INCOMPATIBLE_SO[subject] == self.object
+        ):
+            raise ConjugatorError("N/A")
+        self.subject = subject
 
     def conjugate(self, verb: Verb):
         return verb.accept_conjugator(self)

@@ -53,11 +53,12 @@ SUBJECT_MARKERS = {
 class PassiveConjugator(Conjugator):
 
     def __init__(
-        self, subject: Person,
+        self,
+        subject: Person,
         region: Region,
         object: Person,
         tense: Tense,
-        moods: Mood
+        moods: Mood,
     ):
         self.tense: Tense = tense
         super().__init__(subject, region, object, moods)

@@ -70,7 +70,9 @@ class ConjugatorBuilder:
             raise ConjugatorError(f"Applicative mood requires an object.")
 
         elif (
-            self.subject == self.object and Mood.APPLICATIVE not in self.moods
+            self.subject is not None
+            and self.subject == self.object
+            and Mood.APPLICATIVE not in self.moods
         ):
             raise ConjugatorError(
                 "You cannot have the same person for "
@@ -145,7 +147,7 @@ class ConjugatorBuilder:
         return self
 
     def add_mood(self, mood):
-        if mood in self.moods:
+        if mood != Mood.NONE and mood in self.moods:
             raise ConjugatorError("This mood has already been set.")
 
         # Guard check: if we add the (negative )imperative,
@@ -153,6 +155,7 @@ class ConjugatorBuilder:
         if (
             mood in (Mood.IMPERATIVE, Mood.NEGATIVE_IMPERATIVE)
             and self.tense is not None
+            and self.tense != Tense.PRESENT
         ):
             raise ConjugatorError(
                 "You cannot set the imperative mood with a tense."
@@ -167,17 +170,6 @@ class ConjugatorBuilder:
             raise ConjugatorError(
                 "The imperative and negative imperative moods "
                 "are mutually exclusive"
-            )
-
-        if mood in (
-            Mood.IMPERATIVE,
-            Mood.NEGATIVE_IMPERATIVE,
-        ) and self.subject not in (
-            Person.SECOND_PLURAL,
-            Person.SECOND_SINGULAR,
-        ):
-            raise ConjugatorError(
-                "You must set either 2nd person of singular/plural to use the (negative) imperative mood."
             )
 
         if mood == Mood.CAUSATIVE and self.object is None:

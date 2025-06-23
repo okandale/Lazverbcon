@@ -58,7 +58,7 @@ class PotentialConjugator(Conjugator):
         region: Region,
         object: Person,
         tense: Tense,
-        moods: Mood
+        moods: Mood,
     ):
         self.tense: Tense = tense
         super().__init__(subject, region, object, moods)
