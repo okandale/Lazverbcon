@@ -538,6 +538,32 @@ APPLICATIVE_SUFFIXES = {
 }
 
 OPTATIVE_SUFFIXES = {
+    None: {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "a",
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "ay",
+            Person.FIRST_PLURAL: "at",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "a",
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.FIRST_PLURAL: "at",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "a",
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.FIRST_PLURAL: "at",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+    },
     Person.FIRST_SINGULAR: {
         Region.ARDESEN: {
             Person.SECOND_SINGULAR: "a",

@@ -9,11 +9,18 @@ from .verbs import Verb
 
 PREVERB_HANDLERS = {}
 
-APPLICATIVE_INCOMPATIBLE_SO = {
+APPLICATIVE_INCOMPATIBLE_SUBJECT_OBJECT = {
     Person.FIRST_SINGULAR: Person.FIRST_PLURAL,
     Person.SECOND_SINGULAR: Person.SECOND_PLURAL,
     Person.FIRST_PLURAL: Person.FIRST_SINGULAR,
     Person.SECOND_PLURAL: Person.SECOND_SINGULAR,
+}
+
+OPTATIVE_INCOMPATIBLE_OBJECT_SUBJECT = {
+    Person.FIRST_SINGULAR: [Person.FIRST_SINGULAR, Person.FIRST_PLURAL],
+    Person.SECOND_SINGULAR: [Person.SECOND_SINGULAR, Person.SECOND_PLURAL],
+    Person.FIRST_PLURAL: [Person.FIRST_SINGULAR, Person.FIRST_PLURAL],
+    Person.SECOND_PLURAL: [Person.SECOND_SINGULAR, Person.SECOND_PLURAL],
 }
 
 
@@ -45,10 +52,18 @@ class Conjugator:
     def update_subject(self, subject):
         if (
             Mood.APPLICATIVE in self.moods
-            and subject in APPLICATIVE_INCOMPATIBLE_SO
-            and APPLICATIVE_INCOMPATIBLE_SO[subject] == self.object
+            and subject in APPLICATIVE_INCOMPATIBLE_SUBJECT_OBJECT
+            and APPLICATIVE_INCOMPATIBLE_SUBJECT_OBJECT[subject] == self.object
         ):
             raise ConjugatorError("N/A")
+
+        if (
+            Mood.OPTATIVE in self.moods
+            and self.object is not None
+            and subject in OPTATIVE_INCOMPATIBLE_OBJECT_SUBJECT[self.object]
+        ):
+            raise ConjugatorError("N/A")
+
         self.subject = subject
 
     def conjugate(self, verb: Verb):
