@@ -70,7 +70,7 @@ class Conjugator:
             and subject in OPTATIVE_INCOMPATIBLE_OBJECT_SUBJECT[self.object]
         ):
             raise ConjugatorError("N/A")
-        
+
         if (
             Mood.CAUSATIVE in self.moods
             and self.object in CAUSATIVE_INCOMPATIBLE_OBJECT_SUBJECT

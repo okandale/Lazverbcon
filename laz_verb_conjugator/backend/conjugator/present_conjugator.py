@@ -11,7 +11,8 @@ from .tables.base import (APPLICATIVE_PREFIXES, APPLICATIVE_SUFFIXES,
                           CAUSATIVE_PREFIXES, OPTATIVE_SUFFIXES,
                           PRESENT_ERGATIVE_SUFFIXES,
                           PRESENT_NOMINATIVE_SUFFIXES)
-from .tables.preverbs import PREVERB_PREFIXES_TABLE
+from .tables.preverbs import (PREVERB_APPLICATIVE_PREFIXES_TABLE,
+                              PREVERB_PREFIXES_TABLE)
 from .verbs import Verb
 
 DATIVE_SUFFIXES = {
@@ -82,7 +83,7 @@ class PresentConjugator(
 
     def conjugate_default_ergative_verb(self, verb: Verb) -> str:
 
-        if Mood.APPLICATIVE in self.moods:
+        if Mood.APPLICATIVE in self.moods and verb.preverb is None:
             verb_prefix = APPLICATIVE_PREFIXES[self.object][self.region][
                 self.subject
             ]
@@ -92,9 +93,10 @@ class PresentConjugator(
                 self.subject
             ]
             conjugation = f"{verb_prefix}{verb.stem}"
-            pass
-        else:
+        elif verb.preverb is None:
             conjugation = f"{verb.prefix}{verb.stem}"
+        else:
+            conjugation = verb.stem
 
         if (
             conjugation.startswith(("a", "e", "i", "o", "u"))
@@ -117,7 +119,19 @@ class PresentConjugator(
             conjugation += PRESENT_ERGATIVE_SUFFIXES[verb.suffix][self.region][
                 self.subject
             ]
-        if verb.preverb in PREVERB_PREFIXES_TABLE:
-            conjugation = PREVERB_PREFIXES_TABLE[verb.preverb] + conjugation
+
+        if verb.preverb is not None:
+            prefix_table = (
+                PREVERB_PREFIXES_TABLE
+                if Mood.APPLICATIVE not in self.moods
+                else PREVERB_APPLICATIVE_PREFIXES_TABLE
+            )
+            if verb.preverb in prefix_table:
+                conjugation = (
+                    PREVERB_PREFIXES_TABLE[verb.preverb][self.region][
+                        self.subject
+                    ]
+                    + conjugation
+                )
 
         return conjugation
