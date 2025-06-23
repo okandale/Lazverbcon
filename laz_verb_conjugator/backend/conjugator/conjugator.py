@@ -23,6 +23,13 @@ OPTATIVE_INCOMPATIBLE_OBJECT_SUBJECT = {
     Person.SECOND_PLURAL: [Person.SECOND_SINGULAR, Person.SECOND_PLURAL],
 }
 
+CAUSATIVE_INCOMPATIBLE_OBJECT_SUBJECT = {
+    Person.FIRST_SINGULAR: [Person.FIRST_SINGULAR, Person.FIRST_PLURAL],
+    Person.SECOND_SINGULAR: [Person.SECOND_SINGULAR, Person.SECOND_PLURAL],
+    Person.FIRST_PLURAL: [Person.FIRST_SINGULAR, Person.FIRST_PLURAL],
+    Person.SECOND_PLURAL: [Person.SECOND_SINGULAR, Person.SECOND_PLURAL],
+}
+
 
 def handle_preverb(preverb):
     def wrapper(func):
@@ -59,8 +66,15 @@ class Conjugator:
 
         if (
             Mood.OPTATIVE in self.moods
-            and self.object is not None
+            and self.object in OPTATIVE_INCOMPATIBLE_OBJECT_SUBJECT
             and subject in OPTATIVE_INCOMPATIBLE_OBJECT_SUBJECT[self.object]
+        ):
+            raise ConjugatorError("N/A")
+        
+        if (
+            Mood.CAUSATIVE in self.moods
+            and self.object in CAUSATIVE_INCOMPATIBLE_OBJECT_SUBJECT
+            and subject in CAUSATIVE_INCOMPATIBLE_OBJECT_SUBJECT[self.object]
         ):
             raise ConjugatorError("N/A")
 
