@@ -3,8 +3,12 @@ import pytest
 from backend.conjugator.builder import ConjugatorBuilder
 from backend.conjugator.common import Aspect, Mood, Person, Region, Tense
 from backend.conjugator.conjugator import Conjugator
-from backend.conjugator.verbs import (DativeVerb, ErgativeVerb, NominativeVerb,
-                                      Verb)
+from backend.conjugator.verbs import (
+    DativeVerb,
+    ErgativeVerb,
+    NominativeVerb,
+    Verb,
+)
 
 # Expected full conjugated forms
 expected_forms = {
@@ -650,7 +654,19 @@ ergative_fixtures = {
         Person.SECOND_PLURAL: "diguramt",
         Person.THIRD_PLURAL: "diguraman",
     },
+    (
+        Region.FINDIKLI_ARHAVI,
+        ErgativeVerb(infinitive="onciru", present_third="incirs"),
+    ): {
+        Person.FIRST_SINGULAR: "bincir",
+        Person.SECOND_SINGULAR: "incir",
+        Person.THIRD_SINGULAR: "incirs",
+        Person.FIRST_PLURAL: "bincirt",
+        Person.SECOND_PLURAL: "incirt",
+        Person.THIRD_PLURAL: "inciran",
+    },
 }
+
 
 @pytest.mark.parametrize(
     "region_and_verb,conjugations",
@@ -739,32 +755,34 @@ def test_ergative_applicative(region, object, verb, conjugations):
             None,
             "sinap",
             "i",
-            "ams"
+            "ams",
         ),
         (
             ErgativeVerb(infinitive="oşu", present_third="pşum"),
             None,
             "ş",
             "p",
-            "um"
+            "um",
         ),
         (
             NominativeVerb(infinitive="obadu", present_third="ibaden"),
             None,
             "bad",
             "i",
-            "en"
+            "en",
         ),
         (
             NominativeVerb(infinitive="dobadu", present_third="dibaden"),
             "do",
             "bad",
             "di",
-            "en"
-        )
+            "en",
+        ),
     ],
 )
-def test_get_verb_properties(verb: Verb, preverb: str | None, stem: str, prefix: str, suffix: str):
+def test_get_verb_properties(
+    verb: Verb, preverb: str | None, stem: str, prefix: str, suffix: str
+):
     assert verb.preverb == preverb
     assert verb.stem == stem
     assert verb.prefix == prefix
