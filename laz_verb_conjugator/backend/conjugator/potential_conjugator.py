@@ -1,5 +1,5 @@
-from .common import (Person, PotentialSuffixTable, Region, Tense,
-                     extract_prefix, extract_root)
+from .common import (Mood, Person, PotentialSuffixTable, Region, Tense,
+                     extract_preverb, extract_root)
 from .conjugator import Conjugator
 from .verbs import Verb
 
@@ -53,13 +53,18 @@ SUBJECT_MARKERS = {
 class PotentialConjugator(Conjugator):
 
     def __init__(
-        self, subject: Person, region: Region, object: Person, tense: Tense
+        self,
+        subject: Person,
+        region: Region,
+        object: Person,
+        tense: Tense,
+        moods: Mood,
     ):
         self.tense: Tense = tense
-        super().__init__(subject, region, object)
+        super().__init__(subject, region, object, moods)
 
     def conjugate_nominative_verb(self, verb: Verb) -> str:
-        prefix = extract_prefix(verb.infinitive)
+        prefix = extract_preverb(verb.infinitive)
         stem = extract_root(verb.infinitive, 1, 1)
         suffix = SUFFIXES[self.tense][self.region][self.subject]
 
