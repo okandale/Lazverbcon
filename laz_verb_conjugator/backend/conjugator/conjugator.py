@@ -1,12 +1,34 @@
 from typing import Callable, List
 
-from .common import (PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION,
-                     PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER, Person,
-                     Region, extract_initial_cluster)
-from .verb_rules import VerbRule
+from .common import (PROTHETIC_CONSONANTS_NO_OBJECT,
+                     PROTHETIC_CONSONANTS_SECOND_PERSON_OBJECT, Aspect, Mood,
+                     Person, Region, extract_initial_cluster)
+from .errors import ConjugatorError
+from .rules.common import VerbRule
 from .verbs import Verb
 
 PREVERB_HANDLERS = {}
+
+APPLICATIVE_INCOMPATIBLE_SUBJECT_OBJECT = {
+    Person.FIRST_SINGULAR: Person.FIRST_PLURAL,
+    Person.SECOND_SINGULAR: Person.SECOND_PLURAL,
+    Person.FIRST_PLURAL: Person.FIRST_SINGULAR,
+    Person.SECOND_PLURAL: Person.SECOND_SINGULAR,
+}
+
+OPTATIVE_INCOMPATIBLE_OBJECT_SUBJECT = {
+    Person.FIRST_SINGULAR: [Person.FIRST_SINGULAR, Person.FIRST_PLURAL],
+    Person.SECOND_SINGULAR: [Person.SECOND_SINGULAR, Person.SECOND_PLURAL],
+    Person.FIRST_PLURAL: [Person.FIRST_SINGULAR, Person.FIRST_PLURAL],
+    Person.SECOND_PLURAL: [Person.SECOND_SINGULAR, Person.SECOND_PLURAL],
+}
+
+CAUSATIVE_INCOMPATIBLE_OBJECT_SUBJECT = {
+    Person.FIRST_SINGULAR: [Person.FIRST_SINGULAR, Person.FIRST_PLURAL],
+    Person.SECOND_SINGULAR: [Person.SECOND_SINGULAR, Person.SECOND_PLURAL],
+    Person.FIRST_PLURAL: [Person.FIRST_SINGULAR, Person.FIRST_PLURAL],
+    Person.SECOND_PLURAL: [Person.SECOND_SINGULAR, Person.SECOND_PLURAL],
+}
 
 
 def handle_preverb(preverb):
@@ -22,10 +44,43 @@ class Conjugator:
     DATIVE_RULES: List[VerbRule] = []
     ERGATIVE_RULES: List[VerbRule] = []
 
-    def __init__(self, subject: Person, region: Region, object: Person = None):
+    def __init__(
+        self,
+        subject: Person,
+        region: Region,
+        object: Person = None,
+        moods: Mood = Mood.NONE,
+        aspect: Aspect = Aspect.NONE,
+    ):
         self.subject: Person = subject
         self.region: Region = region
         self.object: Person = object
+        self.moods: Mood = moods
+        self.aspect: Aspect = aspect
+
+    def update_subject(self, subject):
+        if (
+            Mood.APPLICATIVE in self.moods
+            and subject in APPLICATIVE_INCOMPATIBLE_SUBJECT_OBJECT
+            and APPLICATIVE_INCOMPATIBLE_SUBJECT_OBJECT[subject] == self.object
+        ):
+            raise ConjugatorError("N/A")
+
+        if (
+            Mood.OPTATIVE in self.moods
+            and self.object in OPTATIVE_INCOMPATIBLE_OBJECT_SUBJECT
+            and subject in OPTATIVE_INCOMPATIBLE_OBJECT_SUBJECT[self.object]
+        ):
+            raise ConjugatorError("N/A")
+
+        if (
+            Mood.CAUSATIVE in self.moods
+            and self.object in CAUSATIVE_INCOMPATIBLE_OBJECT_SUBJECT
+            and subject in CAUSATIVE_INCOMPATIBLE_OBJECT_SUBJECT[self.object]
+        ):
+            raise ConjugatorError("N/A")
+
+        self.subject = subject
 
     def conjugate(self, verb: Verb):
         return verb.accept_conjugator(self)
@@ -92,13 +147,22 @@ class Conjugator:
             str: The verb form with the appropriate epenthetic segment, if applicable.
                 Returns the original stem if no rule matches.
         """
-        epenthetic_segments_by_cluster = (
-            PROTHETIC_CONSONANTS_FIRST_PERSON_BY_CLUSTER_AND_REGION[
+        if self.object is None:
+            epenthetic_segments_by_cluster = PROTHETIC_CONSONANTS_NO_OBJECT[
                 self.region
             ]
-            if self.subject.is_first_person()
-            else PROTHETIC_CONSONANTS_SECOND_PERSON_BY_CLUSTER
-        )
+        elif (
+            self.object.is_first_person() and not self.object.is_first_person()
+        ):
+            return f"m{inflected_stem}"
+        elif self.object.is_second_person():
+            epenthetic_segments_by_cluster = (
+                PROTHETIC_CONSONANTS_SECOND_PERSON_OBJECT[self.region]
+            )
+        else:
+            epenthetic_segments_by_cluster = PROTHETIC_CONSONANTS_NO_OBJECT[
+                self.region
+            ]
 
         initial_cluster = extract_initial_cluster(inflected_stem)
         for (

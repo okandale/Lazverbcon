@@ -12,18 +12,19 @@ from .potential_conjugator import PotentialConjugator
 from .present_conjugator import PresentConjugator
 from .present_perfect_conjugator import PresentPerfectConjugator
 
+INCOMPATIBLE_APPLICATIVES = {
+    Person.FIRST_SINGULAR: Person.FIRST_PLURAL,
+    Person.SECOND_SINGULAR: Person.SECOND_PLURAL,
+    Person.FIRST_PLURAL: Person.FIRST_SINGULAR,
+    Person.SECOND_PLURAL: Person.SECOND_SINGULAR,
+}
+
 
 class ConjugatorBuilder:
 
-    ASPECT_CONJUGATORS = {
-        Aspect.POTENTIAL: PotentialConjugator,
-        Aspect.PASSIVE: PassiveConjugator,
-    }
-
     MOOD_CONJUGATORS = {
-        Mood.IMPERATIVE: ImperativeConjugator,
-        Mood.NEGATIVE_IMPERATIVE: NegativeImperativeConjugator,
-        Mood.OPTATIVE: OptativeConjugator,
+        Mood.IMPERATIVE: PastConjugator,
+        Mood.NEGATIVE_IMPERATIVE: PresentConjugator,
     }
 
     TENSE_CONJUGATORS = {
@@ -42,23 +43,64 @@ class ConjugatorBuilder:
         self.moods = Mood.NONE
         self.region = None
 
+    def are_applicatives_incompatible(self):
+        return (
+            INCOMPATIBLE_APPLICATIVES[self.subject] == self.object
+            if self.subject in INCOMPATIBLE_APPLICATIVES
+            else False
+        )
+
     def build(self) -> Conjugator:
-        if self.aspect in self.ASPECT_CONJUGATORS:
-            return self.ASPECT_CONJUGATORS[self.aspect](
-                subject=self.subject,
-                region=self.region,
-                object=self.object,
-                tense=self.tense,
+
+        if (
+            Mood.APPLICATIVE in self.moods
+            and self.are_applicatives_incompatible()
+        ):
+            raise ConjugatorError(
+                f"{self.subject} and {self.object} "
+                "are not compatible in applicative mode."
             )
-        elif self.moods in self.MOOD_CONJUGATORS:
+
+        if Mood.APPLICATIVE in self.moods and self.object is None:
+            raise ConjugatorError(f"Applicative mood requires an object.")
+
+        elif (
+            self.subject is not None
+            and self.subject == self.object
+            and Mood.APPLICATIVE not in self.moods
+        ):
+            raise ConjugatorError(
+                "You cannot have the same person for "
+                "the subject and the object."
+            )
+
+        if (
+            Mood.OPTATIVE in self.moods
+            and self.tense is not None
+            and self.tense != Tense.PRESENT
+        ):
+            raise ConjugatorError(
+                "In Optative mode, only the Present tense is possible."
+            )
+
+        if Mood.OPTATIVE in self.moods:
+            self.tense = Tense.PRESENT
+
+        if self.moods in self.MOOD_CONJUGATORS:
             return self.MOOD_CONJUGATORS[self.moods](
                 subject=self.subject,
                 region=self.region,
                 object=self.object,
+                aspect=self.aspect,
+                moods=self.moods,
             )
         elif self.tense in self.TENSE_CONJUGATORS:
             return self.TENSE_CONJUGATORS[self.tense](
-                subject=self.subject, region=self.region, object=self.object
+                subject=self.subject,
+                region=self.region,
+                object=self.object,
+                moods=self.moods,
+                aspect=self.aspect,
             )
         raise ConjugatorError("Could not build the conjugator.")
 
@@ -95,7 +137,7 @@ class ConjugatorBuilder:
         return self
 
     def add_mood(self, mood):
-        if mood in self.moods:
+        if mood != Mood.NONE and mood in self.moods:
             raise ConjugatorError("This mood has already been set.")
 
         # Guard check: if we add the (negative )imperative,
@@ -103,6 +145,7 @@ class ConjugatorBuilder:
         if (
             mood in (Mood.IMPERATIVE, Mood.NEGATIVE_IMPERATIVE)
             and self.tense is not None
+            and self.tense != Tense.PRESENT
         ):
             raise ConjugatorError(
                 "You cannot set the imperative mood with a tense."
@@ -117,17 +160,6 @@ class ConjugatorBuilder:
             raise ConjugatorError(
                 "The imperative and negative imperative moods "
                 "are mutually exclusive"
-            )
-
-        if mood in (
-            Mood.IMPERATIVE,
-            Mood.NEGATIVE_IMPERATIVE,
-        ) and self.subject not in (
-            Person.SECOND_PLURAL,
-            Person.SECOND_SINGULAR,
-        ):
-            raise ConjugatorError(
-                "You must set either 2nd person of singular/plural to use the (negative) imperative mood."
             )
 
         if mood == Mood.CAUSATIVE and self.object is None:
@@ -148,6 +180,9 @@ class ConjugatorBuilder:
             raise ConjugatorError(
                 "You cannot set an aspect while the optative/applicative mood is set."
             )
-
+        if self.object is not None:
+            raise ConjugatorError(
+                "The potential aspect cannot have any object."
+            )
         self.aspect = aspect
         return self

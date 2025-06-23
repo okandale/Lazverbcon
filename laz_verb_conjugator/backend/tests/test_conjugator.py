@@ -1,9 +1,14 @@
-from backend.conjugator.conjugator import Conjugator
 import pytest
 
 from backend.conjugator.builder import ConjugatorBuilder
 from backend.conjugator.common import Aspect, Mood, Person, Region, Tense
-from backend.conjugator.verbs import DativeVerb, ErgativeVerb, NominativeVerb
+from backend.conjugator.conjugator import Conjugator
+from backend.conjugator.verbs import (
+    DativeVerb,
+    ErgativeVerb,
+    NominativeVerb,
+    Verb,
+)
 
 # Expected full conjugated forms
 expected_forms = {
@@ -546,7 +551,7 @@ def test_past_potential(region_and_verb, conjugations):
 
 optative_mood_fixtures = {
     (
-        Region.ARDESEN,
+        Region.PAZAR,
         NominativeVerb(infinitive="dobadu", present_third="dibaden"),
     ): {
         Person.FIRST_SINGULAR: "dovibada",
@@ -557,7 +562,7 @@ optative_mood_fixtures = {
         Person.THIRD_PLURAL: "dibadan",
     },
     (
-        Region.ARDESEN,
+        Region.FINDIKLI_ARHAVI,
         NominativeVerb(infinitive="oskidu", present_third="skidun"),
     ): {
         Person.FIRST_SINGULAR: "pskida",
@@ -633,10 +638,32 @@ ergative_fixtures = {
     ): {
         Person.FIRST_SINGULAR: "visinapam",
         Person.SECOND_SINGULAR: "isinapam",
-        Person.THIRD_SINGULAR: "isinapams",
+        Person.THIRD_SINGULAR: "isinapay",
         Person.FIRST_PLURAL: "visinapamt",
         Person.SECOND_PLURAL: "isinapamt",
         Person.THIRD_PLURAL: "isinapaman",
+    },
+    (
+        Region.ARDESEN,
+        ErgativeVerb(infinitive="doguru", present_third="digurams"),
+    ): {
+        Person.FIRST_SINGULAR: "doviguram",
+        Person.SECOND_SINGULAR: "diguram",
+        Person.THIRD_SINGULAR: "diguray",
+        Person.FIRST_PLURAL: "doviguramt",
+        Person.SECOND_PLURAL: "diguramt",
+        Person.THIRD_PLURAL: "diguraman",
+    },
+    (
+        Region.FINDIKLI_ARHAVI,
+        ErgativeVerb(infinitive="onciru", present_third="incirs"),
+    ): {
+        Person.FIRST_SINGULAR: "bincir",
+        Person.SECOND_SINGULAR: "incir",
+        Person.THIRD_SINGULAR: "incirs",
+        Person.FIRST_PLURAL: "bincirt",
+        Person.SECOND_PLURAL: "incirt",
+        Person.THIRD_PLURAL: "inciran",
     },
 }
 
@@ -653,10 +680,176 @@ def test_ergative(region_and_verb, conjugations):
             .set_subject(person)
             .set_region(region)
             .set_tense(Tense.PRESENT)
-            .set_object(Person.SECOND_SINGULAR)
             .build()
         )
         result = conjugator.conjugate(verb)
         assert (
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, {person} and {region}"
+
+
+@pytest.mark.parametrize(
+    "region,object,verb,conjugations",
+    [
+        (
+            Region.ARDESEN,
+            Person.SECOND_SINGULAR,
+            ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+            {
+                Person.FIRST_SINGULAR: "gisinapam",
+                Person.SECOND_SINGULAR: "isinapam",
+                Person.THIRD_SINGULAR: "gisinapay",
+                Person.FIRST_PLURAL: "gisinapamt",
+                Person.THIRD_PLURAL: "gisinapaman",
+            },
+        ),
+        (
+            Region.ARDESEN,
+            Person.FIRST_SINGULAR,
+            ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+            {
+                Person.FIRST_SINGULAR: "visinapam",
+                Person.SECOND_SINGULAR: "misinapam",
+                Person.THIRD_SINGULAR: "misinapay",
+                Person.SECOND_PLURAL: "misinapamt",
+                Person.THIRD_PLURAL: "misinapaman",
+            },
+        ),
+        (
+            Region.ARDESEN,
+            Person.THIRD_SINGULAR,
+            ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+            {
+                Person.FIRST_SINGULAR: "vusinapam",
+                Person.SECOND_SINGULAR: "usinapam",
+                Person.THIRD_SINGULAR: "usinapay",
+                Person.FIRST_PLURAL: "vusinapamt",
+                Person.SECOND_PLURAL: "usinapamt",
+                Person.THIRD_PLURAL: "usinapaman",
+            },
+        ),
+    ],
+)
+def test_ergative_applicative(region, object, verb, conjugations):
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_subject(person)
+            .set_region(region)
+            .set_tense(Tense.PRESENT)
+            .set_object(object)
+            .add_mood(Mood.APPLICATIVE)
+            .build()
+        )
+        result = conjugator.conjugate(verb)
+        assert (
+            result == conjugation
+        ), f"Expected {conjugation} but got {result} for verb {verb}, object {object}, subject {person} and {region}"
+
+
+@pytest.mark.parametrize(
+    "verb, preverb, stem, prefix, suffix",
+    [
+        (
+            ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+            None,
+            "sinap",
+            "i",
+            "ams",
+        ),
+        (
+            ErgativeVerb(infinitive="oşu", present_third="pşum"),
+            None,
+            "ş",
+            "p",
+            "um",
+        ),
+        (
+            NominativeVerb(infinitive="obadu", present_third="ibaden"),
+            None,
+            "bad",
+            "i",
+            "en",
+        ),
+        (
+            NominativeVerb(infinitive="dobadu", present_third="dibaden"),
+            "do",
+            "bad",
+            "di",
+            "en",
+        ),
+    ],
+)
+def test_get_verb_properties(
+    verb: Verb, preverb: str | None, stem: str, prefix: str, suffix: str
+):
+    assert verb.preverb == preverb
+    assert verb.stem == stem
+    assert verb.prefix == prefix
+    assert verb.suffix == suffix
+
+
+@pytest.mark.parametrize(
+    "region,verb,conjugations",
+    [
+        (
+            Region.ARDESEN,
+            ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+            {
+                Person.FIRST_SINGULAR: "masinapen",
+                Person.SECOND_SINGULAR: "gasinapen",
+                Person.THIRD_SINGULAR: "asinapen",
+                Person.FIRST_PLURAL: "masinapenan",
+                Person.SECOND_PLURAL: "gasinapenan",
+                Person.THIRD_PLURAL: "asinapenan",
+            },
+        ),
+    ],
+)
+def test_present_potential(region, verb, conjugations):
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_region(region)
+            .set_aspect(Aspect.POTENTIAL)
+            .set_tense(Tense.PRESENT)
+            .build()
+        )
+        conjugator.update_subject(person)
+        result = conjugator.conjugate(verb)
+        assert (
+            result == conjugation
+        ), f"Expected {conjugation} but got {result} for verb {verb}, subject {person} and {region}"
+
+
+@pytest.mark.parametrize(
+    "region,verb,conjugations",
+    [
+        (
+            Region.ARDESEN,
+            ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+            {
+                Person.FIRST_SINGULAR: "visinaper",
+                Person.SECOND_SINGULAR: "isinaper",
+                Person.THIRD_SINGULAR: "isinapen",
+                Person.FIRST_PLURAL: "visinapert",
+                Person.SECOND_PLURAL: "isinapert",
+                Person.THIRD_PLURAL: "isinapenan",
+            },
+        ),
+    ],
+)
+def test_present_passive(region, verb, conjugations):
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_region(region)
+            .set_aspect(Aspect.PASSIVE)
+            .set_tense(Tense.PRESENT)
+            .build()
+        )
+        conjugator.update_subject(person)
+        result = conjugator.conjugate(verb)
+        assert (
+            result == conjugation
+        ), f"Expected {conjugation} but got {result} for verb {verb}, subject {person} and {region}"
