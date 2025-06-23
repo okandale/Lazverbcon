@@ -321,6 +321,12 @@ CAUSATIVE_PREFIXES = {
             Person.SECOND_PLURAL: "mo",
             Person.THIRD_PLURAL: "mo",
         },
+        Region.HOPA: {
+            Person.SECOND_SINGULAR: "mo",
+            Person.THIRD_SINGULAR: "mo",
+            Person.SECOND_PLURAL: "mo",
+            Person.THIRD_PLURAL: "mo",
+        },
     },
     Person.SECOND_SINGULAR: {
         Region.ARDESEN: {
@@ -336,6 +342,12 @@ CAUSATIVE_PREFIXES = {
             Person.THIRD_PLURAL: "go",
         },
         Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "go",
+            Person.THIRD_SINGULAR: "go",
+            Person.FIRST_PLURAL: "go",
+            Person.THIRD_PLURAL: "go",
+        },
+        Region.HOPA: {
             Person.FIRST_SINGULAR: "go",
             Person.THIRD_SINGULAR: "go",
             Person.FIRST_PLURAL: "go",
@@ -367,6 +379,14 @@ CAUSATIVE_PREFIXES = {
             Person.SECOND_PLURAL: "o",
             Person.THIRD_PLURAL: "o",
         },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "bo",
+            Person.SECOND_SINGULAR: "o",
+            Person.THIRD_SINGULAR: "o",
+            Person.FIRST_PLURAL: "bo",
+            Person.SECOND_PLURAL: "o",
+            Person.THIRD_PLURAL: "o",
+        },
     },
     Person.FIRST_PLURAL: {
         Region.ARDESEN: {
@@ -382,6 +402,12 @@ CAUSATIVE_PREFIXES = {
             Person.THIRD_PLURAL: "mo",
         },
         Region.FINDIKLI_ARHAVI: {
+            Person.SECOND_SINGULAR: "mo",
+            Person.THIRD_SINGULAR: "mo",
+            Person.SECOND_PLURAL: "mo",
+            Person.THIRD_PLURAL: "mo",
+        },
+        Region.HOPA: {
             Person.SECOND_SINGULAR: "mo",
             Person.THIRD_SINGULAR: "mo",
             Person.SECOND_PLURAL: "mo",
@@ -407,6 +433,12 @@ CAUSATIVE_PREFIXES = {
             Person.FIRST_PLURAL: "go",
             Person.THIRD_PLURAL: "go",
         },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "go",
+            Person.THIRD_SINGULAR: "go",
+            Person.FIRST_PLURAL: "go",
+            Person.THIRD_PLURAL: "go",
+        },
     },
     Person.THIRD_PLURAL: {
         Region.ARDESEN: {
@@ -426,6 +458,14 @@ CAUSATIVE_PREFIXES = {
             Person.THIRD_PLURAL: "o",
         },
         Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "bo",
+            Person.SECOND_SINGULAR: "o",
+            Person.THIRD_SINGULAR: "o",
+            Person.FIRST_PLURAL: "bo",
+            Person.SECOND_PLURAL: "o",
+            Person.THIRD_PLURAL: "o",
+        },
+        Region.HOPA: {
             Person.FIRST_SINGULAR: "bo",
             Person.SECOND_SINGULAR: "o",
             Person.THIRD_SINGULAR: "o",
@@ -459,6 +499,13 @@ APPLICATIVE_SUFFIXES = {
             Person.SECOND_PLURAL: "amt",
             Person.THIRD_PLURAL: "aman",
         },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "ap",
+            Person.SECOND_SINGULAR: "ap",
+            Person.THIRD_SINGULAR: "aps",
+            Person.SECOND_PLURAL: "apt",
+            Person.THIRD_PLURAL: "apan",
+        },
     },
     Person.SECOND_SINGULAR: {
         Region.ARDESEN: {
@@ -481,6 +528,13 @@ APPLICATIVE_SUFFIXES = {
             Person.THIRD_SINGULAR: "ams",
             Person.FIRST_PLURAL: "amt",
             Person.THIRD_PLURAL: "aman",
+        },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "ap",
+            Person.SECOND_SINGULAR: "ap",
+            Person.THIRD_SINGULAR: "aps",
+            Person.FIRST_PLURAL: "apt",
+            Person.THIRD_PLURAL: "apan",
         },
     },
     Person.THIRD_SINGULAR: {
@@ -508,6 +562,14 @@ APPLICATIVE_SUFFIXES = {
             Person.SECOND_PLURAL: "amt",
             Person.THIRD_PLURAL: "aman",
         },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "ap",
+            Person.SECOND_SINGULAR: "ap",
+            Person.THIRD_SINGULAR: "aps",
+            Person.FIRST_PLURAL: "apt",
+            Person.SECOND_PLURAL: "apt",
+            Person.THIRD_PLURAL: "apan",
+        },
     },
     Person.FIRST_PLURAL: {
         Region.ARDESEN: {
@@ -531,6 +593,13 @@ APPLICATIVE_SUFFIXES = {
             Person.SECOND_PLURAL: "amt",
             Person.THIRD_PLURAL: "aman",
         },
+        Region.HOPA: {
+            Person.SECOND_SINGULAR: "apt",
+            Person.THIRD_SINGULAR: "apan",
+            Person.FIRST_PLURAL: "apt",
+            Person.SECOND_PLURAL: "apt",
+            Person.THIRD_PLURAL: "apan",
+        },
     },
     Person.SECOND_PLURAL: {
         Region.ARDESEN: {
@@ -553,6 +622,13 @@ APPLICATIVE_SUFFIXES = {
             Person.FIRST_PLURAL: "amt",
             Person.SECOND_PLURAL: "amt",
             Person.THIRD_PLURAL: "aman",
+        },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "apt",
+            Person.THIRD_SINGULAR: "apan",
+            Person.FIRST_PLURAL: "apt",
+            Person.SECOND_PLURAL: "apt",
+            Person.THIRD_PLURAL: "apan",
         },
     },
     Person.THIRD_PLURAL: {
@@ -579,6 +655,14 @@ APPLICATIVE_SUFFIXES = {
             Person.FIRST_PLURAL: "amt",
             Person.SECOND_PLURAL: "amt",
             Person.THIRD_PLURAL: "aman",
+        },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "ap",
+            Person.SECOND_SINGULAR: "ap",
+            Person.THIRD_SINGULAR: "apan",
+            Person.FIRST_PLURAL: "apt",
+            Person.SECOND_PLURAL: "apt",
+            Person.THIRD_PLURAL: "apan",
         },
     },
 }
@@ -609,6 +693,14 @@ OPTATIVE_SUFFIXES = {
             Person.SECOND_PLURAL: "at",
             Person.THIRD_PLURAL: "an",
         },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "a",
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.FIRST_PLURAL: "at",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
     },
     Person.FIRST_SINGULAR: {
         Region.ARDESEN: {
@@ -629,6 +721,12 @@ OPTATIVE_SUFFIXES = {
             Person.SECOND_PLURAL: "at",
             Person.THIRD_PLURAL: "an",
         },
+        Region.HOPA: {
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
     },
     Person.SECOND_SINGULAR: {
         Region.ARDESEN: {
@@ -644,6 +742,12 @@ OPTATIVE_SUFFIXES = {
             Person.THIRD_PLURAL: "an",
         },
         Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.FIRST_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.HOPA: {
             Person.FIRST_SINGULAR: "a",
             Person.THIRD_SINGULAR: "as",
             Person.FIRST_PLURAL: "at",
@@ -675,6 +779,14 @@ OPTATIVE_SUFFIXES = {
             Person.SECOND_PLURAL: "at",
             Person.THIRD_PLURAL: "an",
         },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "a",
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.FIRST_PLURAL: "at",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
     },
     Person.FIRST_PLURAL: {
         Region.ARDESEN: {
@@ -690,6 +802,12 @@ OPTATIVE_SUFFIXES = {
             Person.THIRD_PLURAL: "an",
         },
         Region.FINDIKLI_ARHAVI: {
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "an",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.HOPA: {
             Person.SECOND_SINGULAR: "a",
             Person.THIRD_SINGULAR: "an",
             Person.SECOND_PLURAL: "at",
@@ -715,6 +833,12 @@ OPTATIVE_SUFFIXES = {
             Person.FIRST_PLURAL: "at",
             Person.THIRD_PLURAL: "an",
         },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "an",
+            Person.FIRST_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
     },
     Person.THIRD_PLURAL: {
         Region.ARDESEN: {
@@ -734,6 +858,14 @@ OPTATIVE_SUFFIXES = {
             Person.THIRD_PLURAL: "an",
         },
         Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "a",
+            Person.SECOND_SINGULAR: "a",
+            Person.THIRD_SINGULAR: "as",
+            Person.FIRST_PLURAL: "at",
+            Person.SECOND_PLURAL: "at",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.HOPA: {
             Person.FIRST_SINGULAR: "a",
             Person.SECOND_SINGULAR: "a",
             Person.THIRD_SINGULAR: "as",

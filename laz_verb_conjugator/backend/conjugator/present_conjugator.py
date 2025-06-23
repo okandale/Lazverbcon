@@ -11,7 +11,8 @@ from .tables.base import (APPLICATIVE_PREFIXES, APPLICATIVE_SUFFIXES,
                           CAUSATIVE_PREFIXES, OPTATIVE_SUFFIXES,
                           PRESENT_ERGATIVE_SUFFIXES,
                           PRESENT_NOMINATIVE_SUFFIXES)
-from .tables.preverbs import (PREVERB_APPLICATIVE_PREFIXES_TABLE,
+from .tables.preverbs import (DO_PREVERB_APPLICATIVE_PREFIXES,
+                              PREVERB_APPLICATIVE_PREFIXES_TABLE,
                               PREVERB_PREFIXES_TABLE)
 from .verbs import Verb
 
@@ -121,15 +122,16 @@ class PresentConjugator(
             ]
 
         if verb.preverb is not None:
-            prefix_table = (
-                PREVERB_PREFIXES_TABLE
-                if Mood.APPLICATIVE not in self.moods
-                else PREVERB_APPLICATIVE_PREFIXES_TABLE
-            )
-            if verb.preverb in prefix_table:
-                conjugation = (
-                    prefix_table[verb.preverb][self.region][self.subject]
-                    + conjugation
-                )
+            if Mood.APPLICATIVE in self.moods:
+                prefix_table = PREVERB_APPLICATIVE_PREFIXES_TABLE[
+                    verb.preverb
+                ][self.object]
+            elif Mood.CAUSATIVE in self.moods:
+                prefix_table = DO_PREVERB_APPLICATIVE_PREFIXES[verb.preverb][
+                    self.object
+                ]
+            else:
+                prefix_table = PREVERB_PREFIXES_TABLE[verb.preverb]
+            conjugation = prefix_table[self.region][self.subject] + conjugation
 
         return conjugation
