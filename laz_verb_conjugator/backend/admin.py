@@ -2,9 +2,13 @@ from flask import abort, Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+
+import os
+
 from .db import get_db
 
 from typing import List
+
 
 admin = Blueprint("admin", __name__)
 
@@ -20,7 +24,7 @@ def auth():
     if username is None or password is None:
         abort(400)
 
-    if username == "admin" and password == "password":
+    if username == "admin" and password == os.environ.get("ADMIN_PASSWORD"):
         # Okay.
         access_token = create_access_token(identity=username)
         return jsonify({"access_token": access_token})
