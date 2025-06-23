@@ -821,3 +821,35 @@ def test_present_potential(region, verb, conjugations):
             result == conjugation
         ), f"Expected {conjugation} but got {result} for verb {verb}, subject {person} and {region}"
 
+
+@pytest.mark.parametrize(
+    "region,verb,conjugations",
+    [
+        (
+            Region.ARDESEN,
+            ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+            {
+                Person.FIRST_SINGULAR: "visinaper",
+                Person.SECOND_SINGULAR: "isinaper",
+                Person.THIRD_SINGULAR: "isinapen",
+                Person.FIRST_PLURAL: "visinapert",
+                Person.SECOND_PLURAL: "isinapert",
+                Person.THIRD_PLURAL: "isinapenan",
+            },
+        ),
+    ],
+)
+def test_present_passive(region, verb, conjugations):
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_region(region)
+            .set_aspect(Aspect.PASSIVE)
+            .set_tense(Tense.PRESENT)
+            .build()
+        )
+        conjugator.update_subject(person)
+        result = conjugator.conjugate(verb)
+        assert (
+            result == conjugation
+        ), f"Expected {conjugation} but got {result} for verb {verb}, subject {person} and {region}"

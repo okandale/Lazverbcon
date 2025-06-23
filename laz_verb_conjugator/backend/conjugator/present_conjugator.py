@@ -11,7 +11,7 @@ from .tables.base import (APPLICATIVE_PREFIXES, APPLICATIVE_SUFFIXES,
                           CAUSATIVE_PREFIXES, OPTATIVE_SUFFIXES,
                           PRESENT_ERGATIVE_SUFFIXES,
                           PRESENT_NOMINATIVE_SUFFIXES,
-                          PRESENT_POTENTIAL_PREFIXES,
+                          PRESENT_PASSIVE_SUFFIXES, PRESENT_POTENTIAL_PREFIXES,
                           PRESENT_POTENTIAL_SUFFIXES)
 from .tables.preverbs import (PREVERB_APPLICATIVE_PREFIXES_TABLE,
                               PREVERB_CAUSATIVE_PREFIXES_TABLE,
@@ -75,14 +75,22 @@ class PresentConjugator(
             )
         elif self.subject.is_first_person():
             conjugation = self.apply_epenthetic_segment(conjugation)
-        return conjugation
+
+        if Mood.NEGATIVE_IMPERATIVE in self.moods:
+            return f"mo {conjugation}"
+        else:
+            return conjugation
 
     def conjugate_default_dative_verb(self, verb: Verb) -> str:
-        return (
+        conjugation = (
             DATIVE_SUBJECT_MARKERS[self.subject]
             + verb.present_third
             + DATIVE_SUFFIXES[self.subject]
         )
+        if Mood.NEGATIVE_IMPERATIVE in self.moods:
+            return f"mo {conjugation}"
+        else:
+            return conjugation
 
     def conjugate_default_ergative_verb(self, verb: Verb) -> str:
         if Mood.APPLICATIVE in self.moods and verb.preverb is None:
@@ -124,6 +132,8 @@ class PresentConjugator(
             conjugation += PRESENT_POTENTIAL_SUFFIXES[self.region][
                 self.subject
             ]
+        elif self.aspect == Aspect.PASSIVE:
+            conjugation += PRESENT_PASSIVE_SUFFIXES[self.region][self.subject]
         else:
             conjugation += PRESENT_ERGATIVE_SUFFIXES[verb.suffix][self.region][
                 self.subject
@@ -142,4 +152,7 @@ class PresentConjugator(
                 prefix_table = PREVERB_PREFIXES_TABLE[verb.preverb]
             conjugation = prefix_table[self.region][self.subject] + conjugation
 
-        return conjugation
+        if Mood.NEGATIVE_IMPERATIVE in self.moods:
+            return f"mo {conjugation}"
+        else:
+            return conjugation

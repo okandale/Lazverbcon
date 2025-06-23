@@ -142,6 +142,42 @@ PRESENT_ERGATIVE_SUFFIXES = {
             Person.THIRD_PLURAL: "an",
         },
     },
+    "ums": {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "um",
+            Person.SECOND_SINGULAR: "um",
+            Person.THIRD_SINGULAR: "uy",
+            Person.FIRST_PLURAL: "umt",
+            Person.SECOND_PLURAL: "umt",
+            Person.THIRD_PLURAL: "uman",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "um",
+            Person.SECOND_SINGULAR: "um",
+            Person.THIRD_SINGULAR: "ums",
+            Person.FIRST_PLURAL: "umt",
+            Person.SECOND_PLURAL: "umt",
+            Person.THIRD_PLURAL: "uman",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "um",
+            Person.SECOND_SINGULAR: "um",
+            Person.THIRD_SINGULAR: "ums",
+            Person.FIRST_PLURAL: "umt",
+            Person.SECOND_PLURAL: "umt",
+            Person.THIRD_PLURAL: "uman",
+        },
+    },
+    "ups": {
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "up",
+            Person.SECOND_SINGULAR: "up",
+            Person.THIRD_SINGULAR: "ups",
+            Person.FIRST_PLURAL: "upt",
+            Person.SECOND_PLURAL: "upt",
+            Person.THIRD_PLURAL: "upan",
+        },
+    },
 }
 
 APPLICATIVE_PREFIXES = {
@@ -976,6 +1012,41 @@ PRESENT_POTENTIAL_SUFFIXES = {
         Person.THIRD_SINGULAR: "en",
         Person.FIRST_PLURAL: "enan",
         Person.SECOND_PLURAL: "enan",
+        Person.THIRD_PLURAL: "enan",
+    },
+}
+
+PRESENT_PASSIVE_SUFFIXES = {
+    Region.ARDESEN: {
+        Person.FIRST_SINGULAR: "er",
+        Person.SECOND_SINGULAR: "er",
+        Person.THIRD_SINGULAR: "en",
+        Person.FIRST_PLURAL: "ert",
+        Person.SECOND_PLURAL: "ert",
+        Person.THIRD_PLURAL: "enan",
+    },
+    Region.PAZAR: {
+        Person.FIRST_SINGULAR: "er",
+        Person.SECOND_SINGULAR: "er",
+        Person.THIRD_SINGULAR: "en",
+        Person.FIRST_PLURAL: "ert",
+        Person.SECOND_PLURAL: "ert",
+        Person.THIRD_PLURAL: "enan",
+    },
+    Region.FINDIKLI_ARHAVI: {
+        Person.FIRST_SINGULAR: "er",
+        Person.SECOND_SINGULAR: "er",
+        Person.THIRD_SINGULAR: "en",
+        Person.FIRST_PLURAL: "ert",
+        Person.SECOND_PLURAL: "ert",
+        Person.THIRD_PLURAL: "enan",
+    },
+    Region.HOPA: {
+        Person.FIRST_SINGULAR: "er",
+        Person.SECOND_SINGULAR: "er",
+        Person.THIRD_SINGULAR: "en",
+        Person.FIRST_PLURAL: "ert",
+        Person.SECOND_PLURAL: "ert",
         Person.THIRD_PLURAL: "enan",
     },
 }

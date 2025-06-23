@@ -22,13 +22,9 @@ INCOMPATIBLE_APPLICATIVES = {
 
 class ConjugatorBuilder:
 
-    ASPECT_CONJUGATORS = {
-        Aspect.PASSIVE: PassiveConjugator,
-    }
-
     MOOD_CONJUGATORS = {
-        Mood.IMPERATIVE: ImperativeConjugator,
-        Mood.NEGATIVE_IMPERATIVE: NegativeImperativeConjugator,
+        Mood.IMPERATIVE: PastConjugator,
+        Mood.NEGATIVE_IMPERATIVE: PresentConjugator,
     }
 
     TENSE_CONJUGATORS = {
@@ -90,19 +86,13 @@ class ConjugatorBuilder:
         if Mood.OPTATIVE in self.moods:
             self.tense = Tense.PRESENT
 
-        if self.aspect in self.ASPECT_CONJUGATORS:
-            return self.ASPECT_CONJUGATORS[self.aspect](
-                subject=self.subject,
-                region=self.region,
-                object=self.object,
-                tense=self.tense,
-                moods=self.moods,
-            )
-        elif self.moods in self.MOOD_CONJUGATORS:
+        if self.moods in self.MOOD_CONJUGATORS:
             return self.MOOD_CONJUGATORS[self.moods](
                 subject=self.subject,
                 region=self.region,
                 object=self.object,
+                aspect=self.aspect,
+                moods=self.moods,
             )
         elif self.tense in self.TENSE_CONJUGATORS:
             return self.TENSE_CONJUGATORS[self.tense](

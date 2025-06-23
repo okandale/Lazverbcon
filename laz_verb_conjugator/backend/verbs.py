@@ -3,10 +3,9 @@ from typing import List, Tuple
 
 from flask import Blueprint, abort, jsonify, request
 
-from .conjugator.errors import ConjugatorError
-
 from .conjugator.builder import ConjugatorBuilder
-from .conjugator.common import Person, Region, Tense, Aspect, Mood
+from .conjugator.common import Aspect, Mood, Person, Region, Tense
+from .conjugator.errors import ConjugatorError
 from .conjugator.verbs import DativeVerb, ErgativeVerb, NominativeVerb, Verb
 from .db import get_db
 
@@ -24,13 +23,10 @@ TENSES = {
     "past": Tense.PAST,
     "future": Tense.FUTURE,
     "present_perfect": Tense.PRESENT_PREFECT,
-    "past_progressive": Tense.PAST_PROGRESSIVE
+    "past_progressive": Tense.PAST_PROGRESSIVE,
 }
 
-ASPECTS = {
-    "potential": Aspect.POTENTIAL,
-    "passive": Aspect.PASSIVE
-}
+ASPECTS = {"potential": Aspect.POTENTIAL, "passive": Aspect.PASSIVE}
 
 VERB_TYPES = {
     "nominative": NominativeVerb,
@@ -45,7 +41,7 @@ SUBJECTS = {
     "first_plural": [Person.FIRST_PLURAL],
     "second_plural": [Person.SECOND_PLURAL],
     "third_plural": [Person.THIRD_PLURAL],
-    "all": Person
+    "all": Person,
 }
 
 OBJECTS = {
@@ -187,8 +183,14 @@ def conjugate():
     subject: str = request.json.get("subject")
     object_: str = request.json.get("object")
     moods: int = request.json.get("moods")
-    
-    if verb_id is None or verb_type is None or tense is None or moods is None or subject is None:
+
+    if (
+        verb_id is None
+        or verb_type is None
+        or tense is None
+        or moods is None
+        or subject is None
+    ):
         abort(400)
 
     verb_type = verb_type.lower()
@@ -227,7 +229,6 @@ def conjugate():
         )
         for result in results
     ]
-
     if tense not in TENSES:
         abort(400)
     else:
@@ -240,7 +241,7 @@ def conjugate():
         builder = ConjugatorBuilder()
         if aspect is not None:
             builder.set_aspect(ASPECTS[aspect])
-        
+
         try:
             conjugator = (
                 builder.set_tense(tense)
