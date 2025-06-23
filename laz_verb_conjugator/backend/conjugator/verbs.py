@@ -27,7 +27,7 @@ class Verb:
         self.infinitive: str = infinitive
         self.present_third: str = present_third
         self.preverb: str = extract_preverb(self.infinitive)
-        self.stem = self._extract_stem()
+        self.stem: str = self._extract_stem()
         self.prefix, self.suffix = self._extract_affixes()
 
     def accept_conjugator(self, _) -> str:
