@@ -23,7 +23,6 @@ INCOMPATIBLE_APPLICATIVES = {
 class ConjugatorBuilder:
 
     ASPECT_CONJUGATORS = {
-        Aspect.POTENTIAL: PotentialConjugator,
         Aspect.PASSIVE: PassiveConjugator,
     }
 
@@ -111,6 +110,7 @@ class ConjugatorBuilder:
                 region=self.region,
                 object=self.object,
                 moods=self.moods,
+                aspect=self.aspect,
             )
         raise ConjugatorError("Could not build the conjugator.")
 
@@ -190,6 +190,9 @@ class ConjugatorBuilder:
             raise ConjugatorError(
                 "You cannot set an aspect while the optative/applicative mood is set."
             )
-
+        if self.object is not None:
+            raise ConjugatorError(
+                "The potential aspect cannot have any object."
+            )
         self.aspect = aspect
         return self

@@ -1,8 +1,8 @@
 from typing import Callable, List
 
 from .common import (PROTHETIC_CONSONANTS_NO_OBJECT,
-                     PROTHETIC_CONSONANTS_SECOND_PERSON_OBJECT, Mood, Person,
-                     Region, extract_initial_cluster)
+                     PROTHETIC_CONSONANTS_SECOND_PERSON_OBJECT, Aspect, Mood,
+                     Person, Region, extract_initial_cluster)
 from .errors import ConjugatorError
 from .rules.common import VerbRule
 from .verbs import Verb
@@ -50,11 +50,13 @@ class Conjugator:
         region: Region,
         object: Person = None,
         moods: Mood = Mood.NONE,
+        aspect: Aspect = Aspect.NONE,
     ):
         self.subject: Person = subject
         self.region: Region = region
         self.object: Person = object
         self.moods: Mood = moods
+        self.aspect: Aspect = aspect
 
     def update_subject(self, subject):
         if (

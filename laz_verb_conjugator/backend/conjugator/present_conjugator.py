@@ -1,4 +1,4 @@
-from .common import Mood, Person, Region, extract_preverb, extract_root
+from .common import Aspect, Mood, Person, Region
 from .conjugator import Conjugator
 from .ergative_verbs import ConjugateErgativeVerbMixin
 from .nominative_verbs import ConjugateNominativeVerbMixin
@@ -10,7 +10,9 @@ from .rules.common import (DoPreverb, NsEndingRule,
 from .tables.base import (APPLICATIVE_PREFIXES, APPLICATIVE_SUFFIXES,
                           CAUSATIVE_PREFIXES, OPTATIVE_SUFFIXES,
                           PRESENT_ERGATIVE_SUFFIXES,
-                          PRESENT_NOMINATIVE_SUFFIXES)
+                          PRESENT_NOMINATIVE_SUFFIXES,
+                          PRESENT_POTENTIAL_PREFIXES,
+                          PRESENT_POTENTIAL_SUFFIXES)
 from .tables.preverbs import (PREVERB_APPLICATIVE_PREFIXES_TABLE,
                               PREVERB_CAUSATIVE_PREFIXES_TABLE,
                               PREVERB_PREFIXES_TABLE)
@@ -83,7 +85,6 @@ class PresentConjugator(
         )
 
     def conjugate_default_ergative_verb(self, verb: Verb) -> str:
-
         if Mood.APPLICATIVE in self.moods and verb.preverb is None:
             verb_prefix = APPLICATIVE_PREFIXES[self.object][self.region][
                 self.subject
@@ -93,6 +94,9 @@ class PresentConjugator(
             verb_prefix = CAUSATIVE_PREFIXES[self.object][self.region][
                 self.subject
             ]
+            conjugation = f"{verb_prefix}{verb.stem}"
+        elif self.aspect == Aspect.POTENTIAL and verb.preverb is None:
+            verb_prefix = PRESENT_POTENTIAL_PREFIXES[self.region][self.subject]
             conjugation = f"{verb_prefix}{verb.stem}"
         elif verb.preverb is None:
             conjugation = f"{verb.prefix}{verb.stem}"
@@ -114,6 +118,10 @@ class PresentConjugator(
             ]
         elif Mood.APPLICATIVE in self.moods:
             conjugation += APPLICATIVE_SUFFIXES[self.object][self.region][
+                self.subject
+            ]
+        elif self.aspect == Aspect.POTENTIAL:
+            conjugation += PRESENT_POTENTIAL_SUFFIXES[self.region][
                 self.subject
             ]
         else:

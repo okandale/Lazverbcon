@@ -787,3 +787,37 @@ def test_get_verb_properties(
     assert verb.stem == stem
     assert verb.prefix == prefix
     assert verb.suffix == suffix
+
+
+@pytest.mark.parametrize(
+    "region,verb,conjugations",
+    [
+        (
+            Region.ARDESEN,
+            ErgativeVerb(infinitive="osinapu", present_third="isinapams"),
+            {
+                Person.FIRST_SINGULAR: "masinapen",
+                Person.SECOND_SINGULAR: "gasinapen",
+                Person.THIRD_SINGULAR: "asinapen",
+                Person.FIRST_PLURAL: "masinapenan",
+                Person.SECOND_PLURAL: "gasinapenan",
+                Person.THIRD_PLURAL: "asinapenan",
+            },
+        ),
+    ],
+)
+def test_present_potential(region, verb, conjugations):
+    for person, conjugation in conjugations.items():
+        conjugator = (
+            ConjugatorBuilder()
+            .set_region(region)
+            .set_aspect(Aspect.POTENTIAL)
+            .set_tense(Tense.PRESENT)
+            .build()
+        )
+        conjugator.update_subject(person)
+        result = conjugator.conjugate(verb)
+        assert (
+            result == conjugation
+        ), f"Expected {conjugation} but got {result} for verb {verb}, subject {person} and {region}"
+

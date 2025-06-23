@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from .common import extract_preverb
 
@@ -28,14 +28,14 @@ class Verb:
         self.present_third: str = present_third
         self.preverb: str = extract_preverb(self.infinitive)
         self.stem: str = self._extract_stem()
-        self.prefix, self.suffix = self._extract_affixes()
+        [self.prefix, self.suffix] = self._extract_affixes()
 
     def accept_conjugator(self, _) -> str:
         raise NotImplementedError(
             "Please call this function from a concrete verb."
         )
 
-    def _extract_stem(self):
+    def _extract_stem(self) -> str:
         """Get the stem of the verb.
 
         The actual stem of the verb will be useful for conjugations among
@@ -59,7 +59,7 @@ class Verb:
             stem = stem[:-1]
         return stem
 
-    def _extract_affixes(self):
+    def _extract_affixes(self) -> List[str]:
         """Extract the affixes of the verb.
 
         As we know the stem and the third person form, we will be able to

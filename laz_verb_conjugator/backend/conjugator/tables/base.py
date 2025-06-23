@@ -108,6 +108,40 @@ PRESENT_ERGATIVE_SUFFIXES = {
             Person.THIRD_PLURAL: "apan",
         }
     },
+    "s": {
+        Region.ARDESEN: {
+            Person.FIRST_SINGULAR: "",
+            Person.SECOND_SINGULAR: "",
+            Person.THIRD_SINGULAR: "y",
+            Person.FIRST_PLURAL: "t",
+            Person.SECOND_PLURAL: "t",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.PAZAR: {
+            Person.FIRST_SINGULAR: "",
+            Person.SECOND_SINGULAR: "",
+            Person.THIRD_SINGULAR: "s",
+            Person.FIRST_PLURAL: "r",
+            Person.SECOND_PLURAL: "t",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "",
+            Person.SECOND_SINGULAR: "",
+            Person.THIRD_SINGULAR: "s",
+            Person.FIRST_PLURAL: "t",
+            Person.SECOND_PLURAL: "t",
+            Person.THIRD_PLURAL: "an",
+        },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "",
+            Person.SECOND_SINGULAR: "",
+            Person.THIRD_SINGULAR: "s",
+            Person.FIRST_PLURAL: "t",
+            Person.SECOND_PLURAL: "t",
+            Person.THIRD_PLURAL: "an",
+        },
+    },
 }
 
 APPLICATIVE_PREFIXES = {
@@ -873,5 +907,75 @@ OPTATIVE_SUFFIXES = {
             Person.SECOND_PLURAL: "at",
             Person.THIRD_PLURAL: "an",
         },
+    },
+}
+
+PRESENT_POTENTIAL_PREFIXES = {
+    Region.ARDESEN: {
+        Person.FIRST_SINGULAR: "ma",
+        Person.SECOND_SINGULAR: "ga",
+        Person.THIRD_SINGULAR: "a",
+        Person.FIRST_PLURAL: "ma",
+        Person.SECOND_PLURAL: "ga",
+        Person.THIRD_PLURAL: "a",
+    },
+    Region.PAZAR: {
+        Person.FIRST_SINGULAR: "ma",
+        Person.SECOND_SINGULAR: "ga",
+        Person.THIRD_SINGULAR: "a",
+        Person.FIRST_PLURAL: "ma",
+        Person.SECOND_PLURAL: "ga",
+        Person.THIRD_PLURAL: "a",
+    },
+    Region.FINDIKLI_ARHAVI: {
+        Person.FIRST_SINGULAR: "ma",
+        Person.SECOND_SINGULAR: "ga",
+        Person.THIRD_SINGULAR: "a",
+        Person.FIRST_PLURAL: "ma",
+        Person.SECOND_PLURAL: "ga",
+        Person.THIRD_PLURAL: "a",
+    },
+    Region.HOPA: {
+        Person.FIRST_SINGULAR: "ma",
+        Person.SECOND_SINGULAR: "ga",
+        Person.THIRD_SINGULAR: "a",
+        Person.FIRST_PLURAL: "ma",
+        Person.SECOND_PLURAL: "ga",
+        Person.THIRD_PLURAL: "a",
+    },
+}
+
+PRESENT_POTENTIAL_SUFFIXES = {
+    Region.ARDESEN: {
+        Person.FIRST_SINGULAR: "en",
+        Person.SECOND_SINGULAR: "en",
+        Person.THIRD_SINGULAR: "en",
+        Person.FIRST_PLURAL: "enan",
+        Person.SECOND_PLURAL: "enan",
+        Person.THIRD_PLURAL: "enan",
+    },
+    Region.PAZAR: {
+        Person.FIRST_SINGULAR: "en",
+        Person.SECOND_SINGULAR: "en",
+        Person.THIRD_SINGULAR: "en",
+        Person.FIRST_PLURAL: "enan",
+        Person.SECOND_PLURAL: "enan",
+        Person.THIRD_PLURAL: "enan",
+    },
+    Region.FINDIKLI_ARHAVI: {
+        Person.FIRST_SINGULAR: "en",
+        Person.SECOND_SINGULAR: "en",
+        Person.THIRD_SINGULAR: "en",
+        Person.FIRST_PLURAL: "enan",
+        Person.SECOND_PLURAL: "enan",
+        Person.THIRD_PLURAL: "enan",
+    },
+    Region.HOPA: {
+        Person.FIRST_SINGULAR: "en",
+        Person.SECOND_SINGULAR: "en",
+        Person.THIRD_SINGULAR: "en",
+        Person.FIRST_PLURAL: "enan",
+        Person.SECOND_PLURAL: "enan",
+        Person.THIRD_PLURAL: "enan",
     },
 }
