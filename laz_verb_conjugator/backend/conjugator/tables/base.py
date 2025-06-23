@@ -97,14 +97,16 @@ PRESENT_ERGATIVE_SUFFIXES = {
             Person.SECOND_PLURAL: "amt",
             Person.THIRD_PLURAL: "aman",
         },
+    },
+    "aps": {
         Region.HOPA: {
-            Person.FIRST_SINGULAR: "am",
-            Person.SECOND_SINGULAR: "am",
-            Person.THIRD_SINGULAR: "ams",
-            Person.FIRST_PLURAL: "amt",
-            Person.SECOND_PLURAL: "amt",
-            Person.THIRD_PLURAL: "aman",
-        },
+            Person.FIRST_SINGULAR: "ap",
+            Person.SECOND_SINGULAR: "ap",
+            Person.THIRD_SINGULAR: "aps",
+            Person.FIRST_PLURAL: "apt",
+            Person.SECOND_PLURAL: "apt",
+            Person.THIRD_PLURAL: "apan",
+        }
     },
 }
 
@@ -131,6 +133,13 @@ APPLICATIVE_PREFIXES = {
             Person.SECOND_PLURAL: "mi",
             Person.THIRD_PLURAL: "mi",
         },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "bi",
+            Person.SECOND_SINGULAR: "mi",
+            Person.THIRD_SINGULAR: "mi",
+            Person.SECOND_PLURAL: "mi",
+            Person.THIRD_PLURAL: "mi",
+        },
     },
     Person.SECOND_SINGULAR: {
         Region.ARDESEN: {
@@ -148,6 +157,13 @@ APPLICATIVE_PREFIXES = {
             Person.THIRD_PLURAL: "gi",
         },
         Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "gi",
+            Person.SECOND_SINGULAR: "i",
+            Person.THIRD_SINGULAR: "gi",
+            Person.FIRST_PLURAL: "gi",
+            Person.THIRD_PLURAL: "gi",
+        },
+        Region.HOPA: {
             Person.FIRST_SINGULAR: "gi",
             Person.SECOND_SINGULAR: "i",
             Person.THIRD_SINGULAR: "gi",
@@ -180,6 +196,14 @@ APPLICATIVE_PREFIXES = {
             Person.SECOND_PLURAL: "u",
             Person.THIRD_PLURAL: "u",
         },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "bu",
+            Person.SECOND_SINGULAR: "u",
+            Person.THIRD_SINGULAR: "u",
+            Person.FIRST_PLURAL: "bu",
+            Person.SECOND_PLURAL: "u",
+            Person.THIRD_PLURAL: "u",
+        },
     },
     Person.FIRST_PLURAL: {
         Region.ARDESEN: {
@@ -197,6 +221,13 @@ APPLICATIVE_PREFIXES = {
             Person.THIRD_PLURAL: "mi",
         },
         Region.FINDIKLI_ARHAVI: {
+            Person.SECOND_SINGULAR: "mi",
+            Person.THIRD_SINGULAR: "mi",
+            Person.FIRST_PLURAL: "bi",
+            Person.SECOND_PLURAL: "mi",
+            Person.THIRD_PLURAL: "mi",
+        },
+        Region.HOPA: {
             Person.SECOND_SINGULAR: "mi",
             Person.THIRD_SINGULAR: "mi",
             Person.FIRST_PLURAL: "bi",
@@ -226,6 +257,13 @@ APPLICATIVE_PREFIXES = {
             Person.SECOND_PLURAL: "i",
             Person.THIRD_PLURAL: "gi",
         },
+        Region.HOPA: {
+            Person.FIRST_SINGULAR: "gi",
+            Person.THIRD_SINGULAR: "gi",
+            Person.FIRST_PLURAL: "gi",
+            Person.SECOND_PLURAL: "i",
+            Person.THIRD_PLURAL: "gi",
+        },
     },
     Person.THIRD_PLURAL: {
         Region.ARDESEN: {
@@ -245,6 +283,14 @@ APPLICATIVE_PREFIXES = {
             Person.THIRD_PLURAL: "u",
         },
         Region.FINDIKLI_ARHAVI: {
+            Person.FIRST_SINGULAR: "bu",
+            Person.SECOND_SINGULAR: "u",
+            Person.THIRD_SINGULAR: "u",
+            Person.FIRST_PLURAL: "bu",
+            Person.SECOND_PLURAL: "u",
+            Person.THIRD_PLURAL: "u",
+        },
+        Region.HOPA: {
             Person.FIRST_SINGULAR: "bu",
             Person.SECOND_SINGULAR: "u",
             Person.THIRD_SINGULAR: "u",

@@ -29,6 +29,7 @@ DO_PREVERB_PREFIXES = {
         Person.FIRST_SINGULAR: "dovi",
         Person.SECOND_SINGULAR: "domi",
         Person.THIRD_SINGULAR: "domi",
+        Person.FIRST_PLURAL: "dovi",
         Person.SECOND_PLURAL: "domi",
         Person.THIRD_PLURAL: "domi",
     },

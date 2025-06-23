@@ -128,9 +128,7 @@ class PresentConjugator(
             )
             if verb.preverb in prefix_table:
                 conjugation = (
-                    PREVERB_PREFIXES_TABLE[verb.preverb][self.region][
-                        self.subject
-                    ]
+                    prefix_table[verb.preverb][self.region][self.subject]
                     + conjugation
                 )
 

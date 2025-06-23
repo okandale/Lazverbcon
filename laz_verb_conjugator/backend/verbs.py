@@ -217,6 +217,7 @@ def conjugate():
     if not rows:
         abort(404)
     results = [dict(row) for row in rows]
+
     verbs_and_regions = [
         _build_verb_with_region(
             region=REGIONS[result["region_code"]],
@@ -260,4 +261,4 @@ def conjugate():
                     conjugations.append(conjugator.conjugate(verb))
             results[region.name] = conjugations
 
-        return jsonify({"conjugations": results})
+    return jsonify({"conjugations": results})

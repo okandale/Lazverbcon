@@ -639,8 +639,18 @@ ergative_fixtures = {
         Person.SECOND_PLURAL: "isinapamt",
         Person.THIRD_PLURAL: "isinapaman",
     },
+    (
+        Region.ARDESEN,
+        ErgativeVerb(infinitive="doguru", present_third="digurams"),
+    ): {
+        Person.FIRST_SINGULAR: "doviguram",
+        Person.SECOND_SINGULAR: "diguram",
+        Person.THIRD_SINGULAR: "diguray",
+        Person.FIRST_PLURAL: "doviguramt",
+        Person.SECOND_PLURAL: "diguramt",
+        Person.THIRD_PLURAL: "diguraman",
+    },
 }
-
 
 @pytest.mark.parametrize(
     "region_and_verb,conjugations",
