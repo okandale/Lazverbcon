@@ -665,6 +665,17 @@ ergative_fixtures = {
         Person.SECOND_PLURAL: "incirt",
         Person.THIRD_PLURAL: "inciran",
     },
+    (
+        Region.FINDIKLI_ARHAVI,
+        ErgativeVerb(infinitive="ot̆axu", present_third="t̆axums")
+    ): {
+        Person.FIRST_SINGULAR: "p̌t̆axum",
+        Person.SECOND_SINGULAR: "t̆axum",
+        Person.THIRD_SINGULAR: "t̆axums",
+        Person.FIRST_PLURAL: "p̌t̆axumt",
+        Person.SECOND_PLURAL: "t̆axumt",
+        Person.THIRD_PLURAL: "t̆axuman",
+    }
 }
 
 
@@ -726,6 +737,17 @@ def test_ergative(region_and_verb, conjugations):
                 Person.FIRST_PLURAL: "vusinapamt",
                 Person.SECOND_PLURAL: "usinapamt",
                 Person.THIRD_PLURAL: "usinapaman",
+            },
+        ),
+        (
+            Region.FINDIKLI_ARHAVI,
+            Person.FIRST_SINGULAR,
+            ErgativeVerb(infinitive="doguru", present_third="digurams"),
+            {
+                Person.SECOND_SINGULAR: "domiguram",
+                Person.THIRD_SINGULAR: "domigurams",
+                Person.SECOND_PLURAL: "domiguramt",
+                Person.THIRD_PLURAL: "domiguraman",
             },
         ),
     ],
