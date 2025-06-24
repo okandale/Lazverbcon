@@ -112,7 +112,8 @@ class PresentConjugator(
             conjugation = verb.stem
 
         if (
-            conjugation.startswith(("a", "e", "i", "o", "u"))
+            verb.preverb is None
+            and self.moods == Mood.NONE
             and self.subject.is_first_person()
         ):
             conjugation = self.apply_epenthetic_segment(conjugation)
