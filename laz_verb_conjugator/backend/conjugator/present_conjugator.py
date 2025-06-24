@@ -70,7 +70,9 @@ class PresentConjugator(
         conjugation = verb.stem + suffix_table[self.region][self.subject]
         if verb.preverb in PREVERB_PREFIXES_TABLE:
             conjugation = (
-                PREVERB_PREFIXES_TABLE[verb.preverb][self.region][self.subject]
+                PREVERB_PREFIXES_TABLE[verb.preverb][self.object][self.region][
+                    self.subject
+                ]
                 + conjugation
             )
         elif self.subject.is_first_person():
@@ -112,7 +114,8 @@ class PresentConjugator(
             conjugation = verb.stem
 
         if (
-            conjugation.startswith(("a", "e", "i", "o", "u"))
+            verb.preverb is None
+            and self.moods == Mood.NONE
             and self.subject.is_first_person()
         ):
             conjugation = self.apply_epenthetic_segment(conjugation)
@@ -149,7 +152,9 @@ class PresentConjugator(
                     self.object
                 ]
             else:
-                prefix_table = PREVERB_PREFIXES_TABLE[verb.preverb]
+                prefix_table = PREVERB_PREFIXES_TABLE[verb.preverb][
+                    self.object
+                ]
             conjugation = prefix_table[self.region][self.subject] + conjugation
 
         if Mood.NEGATIVE_IMPERATIVE in self.moods:

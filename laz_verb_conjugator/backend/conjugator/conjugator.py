@@ -175,3 +175,4 @@ class Conjugator:
                     if epenthetic_segment != initial_cluster
                     else inflected_stem
                 )
+        return inflected_stem
