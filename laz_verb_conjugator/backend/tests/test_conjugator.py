@@ -739,6 +739,17 @@ def test_ergative(region_and_verb, conjugations):
                 Person.THIRD_PLURAL: "usinapaman",
             },
         ),
+        (
+            Region.FINDIKLI_ARHAVI,
+            Person.FIRST_SINGULAR,
+            ErgativeVerb(infinitive="doguru", present_third="digurams"),
+            {
+                Person.SECOND_SINGULAR: "domiguram",
+                Person.THIRD_SINGULAR: "domigurams",
+                Person.SECOND_PLURAL: "domiguramt",
+                Person.THIRD_PLURAL: "domiguraman",
+            },
+        ),
     ],
 )
 def test_ergative_applicative(region, object, verb, conjugations):
