@@ -675,6 +675,17 @@ ergative_fixtures = {
         Person.FIRST_PLURAL: "p̌t̆axumt",
         Person.SECOND_PLURAL: "t̆axumt",
         Person.THIRD_PLURAL: "t̆axuman",
+    },
+    (
+        Region.FINDIKLI_ARHAVI,
+        ErgativeVerb(infinitive="çxomi oç̌opu", present_third="çxomi ç̌opums")
+    ): {
+        Person.FIRST_SINGULAR: "çxomi p̌ç̌opum",
+        Person.SECOND_SINGULAR: "çxomi ç̌opum",
+        Person.THIRD_SINGULAR: "çxomi ç̌opums",
+        Person.FIRST_PLURAL: "çxomi p̌ç̌opumt",
+        Person.SECOND_PLURAL: "çxomi ç̌opumt",
+        Person.THIRD_PLURAL: "çxomi ç̌opuman",
     }
 }
 
