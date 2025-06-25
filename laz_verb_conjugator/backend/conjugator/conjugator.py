@@ -83,7 +83,7 @@ class Conjugator:
         self.subject = subject
 
     def conjugate(self, verb: Verb):
-        return verb.accept_conjugator(self)
+        return verb.finalize_conjugation(verb.accept_conjugator(self))
 
     def apply_rule_or_fallback(
         self, verb: Verb, rules: List[VerbRule], fallback: Callable

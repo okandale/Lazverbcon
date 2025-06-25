@@ -24,11 +24,46 @@ class Verb:
     """
 
     def __init__(self, infinitive: str, present_third: str):
-        self.infinitive: str = infinitive
-        self.present_third: str = present_third
+        self._infinitive: str = infinitive
+        self._present_third: str = present_third
+
+        infinitive_elements = self._process_compound_verb(infinitive)
+
+        if len(infinitive_elements) > 1:
+            self.complement = infinitive_elements[0]
+            self.infinitive = infinitive_elements[1]
+        else:
+            self.complement = None
+            self.infinitive = infinitive_elements[0]
+
+        present_third_elements = self._process_compound_verb(present_third)
+        if len(present_third_elements) > 1:
+            self.present_third = present_third_elements[1]
+        else:
+            self.present_third = present_third_elements[0]
+
         self.preverb: str = extract_preverb(self.infinitive)
         self.stem: str = self._extract_stem()
         [self.prefix, self.suffix] = self._extract_affixes()
+
+    def finalize_conjugation(self, conjugation):
+        """Put back the complement, if it exists."""
+        return (
+            f"{self.complement} {conjugation}"
+            if self.complement is not None
+            else conjugation
+        )
+
+    def _process_compound_verb(self, verb) -> List[str]:
+        """Process compound verbs. If they are so, return the complement and
+        the actual verb.
+
+        """
+        if " " in verb:
+            complement, *verbs_part = verb.split(" ")
+            return [complement, " ".join(verbs_part)]
+        else:
+            return [verb]
 
     def accept_conjugator(self, _) -> str:
         raise NotImplementedError(
@@ -81,8 +116,8 @@ class ErgativeVerb(Verb):
 
     def __str__(self):
         return (
-            f'<ErgativeVerb infinitive="{self.infinitive}" '
-            f'present_third="{self.present_third}" '
+            f'<ErgativeVerb infinitive="{self._infinitive}" '
+            f'present_third="{self._present_third}" '
             f'preverb="{self.preverb}" '
             f'stem="{self.stem}" '
             f'prefix="{self.prefix}" '
