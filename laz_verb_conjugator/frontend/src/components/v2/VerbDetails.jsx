@@ -202,6 +202,10 @@ const VerbDetails = () => {
             </span>
           </div>
 
+          <div className="text-center m-5">
+            <Link to={"/v2/verbs"} className="text-blue-500 hover:underline">Click here to get back to the verb list</Link>
+          </div>
+
           {isLoadingDetails && (
             <Stack spacing={1}>
               <div className="flex justify-center items-center">
