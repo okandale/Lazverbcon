@@ -1,4 +1,4 @@
-from .common import Aspect, Mood, Person, Region, Tense
+from .common import Aspect, Mood, Person, Region, Tense, VerbType
 from .conjugator import Conjugator
 from .errors import ConjugatorError
 from .future_conjugator import FutureConjugator
@@ -11,6 +11,7 @@ from .past_progressive_conjugator import PastProgressiveConjugator
 from .potential_conjugator import PotentialConjugator
 from .present_conjugator import PresentConjugator
 from .present_perfect_conjugator import PresentPerfectConjugator
+from .verbs import DativeVerb, ErgativeVerb, NominativeVerb
 
 INCOMPATIBLE_APPLICATIVES = {
     Person.FIRST_SINGULAR: Person.FIRST_PLURAL,
@@ -186,3 +187,39 @@ class ConjugatorBuilder:
             )
         self.aspect = aspect
         return self
+
+
+VERB_BUILDER_EXCEPTIONS = {}
+
+
+def build_verb_exception(infinitive: str, present_third: str):
+    def wrapper(func):
+        VERB_BUILDER_EXCEPTIONS[(infinitive, present_third)] = func
+        return func
+
+    return wrapper
+
+
+class VerbBuilder:
+
+    VERB_TYPES = {
+        VerbType.NOMINATIVE: NominativeVerb,
+        VerbType.DATIVE: DativeVerb,
+        VerbType.ERGATIVE: ErgativeVerb,
+    }
+
+    def __init__(self):
+        pass
+
+    def build(self, infinitive: str, present_third: str, verb_type: VerbType):
+        if (infinitive, present_third) in VERB_BUILDER_EXCEPTIONS:
+            return VERB_BUILDER_EXCEPTIONS[(infinitive, present_third)](self)
+
+        return self.VERB_TYPES[verb_type](infinitive, present_third)
+
+    @build_verb_exception("dodumu", "dodums")
+    def handle_dodumu_exception(self):
+        verb = ErgativeVerb("dodumu", "dodums")
+        verb.stem = "d"
+        verb.suffix = "ums"
+        return verb

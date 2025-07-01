@@ -43,6 +43,11 @@ class Verb:
             self.present_third = present_third_elements[0]
 
         self.preverb: str = extract_preverb(self.infinitive)
+        self.is_preverb_mutated: bool = (
+            True
+            if extract_preverb(self.present_third) != self.preverb
+            else False
+        )
         self.stem: str = self._extract_stem()
         [self.prefix, self.suffix] = self._extract_affixes()
 

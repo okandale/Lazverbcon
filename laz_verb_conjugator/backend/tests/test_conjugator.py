@@ -1,7 +1,7 @@
 import pytest
 
-from backend.conjugator.builder import ConjugatorBuilder
-from backend.conjugator.common import Aspect, Mood, Person, Region, Tense
+from backend.conjugator.builder import ConjugatorBuilder, VerbBuilder
+from backend.conjugator.common import Aspect, Mood, Person, Region, Tense, VerbType
 from backend.conjugator.conjugator import Conjugator
 from backend.conjugator.verbs import (
     DativeVerb,
@@ -686,6 +686,17 @@ ergative_fixtures = {
         Person.FIRST_PLURAL: "çxomi p̌ç̌opumt",
         Person.SECOND_PLURAL: "çxomi ç̌opumt",
         Person.THIRD_PLURAL: "çxomi ç̌opuman",
+    },
+    (
+        Region.FINDIKLI_ARHAVI,
+        VerbBuilder().build(infinitive="dodumu", present_third="dodums", verb_type=VerbType.ERGATIVE)
+    ): {
+        Person.FIRST_SINGULAR: "dobdum",
+        Person.SECOND_SINGULAR: "dodum",
+        Person.THIRD_SINGULAR: "dodums",
+        Person.FIRST_PLURAL: "dobdumt",
+        Person.SECOND_PLURAL: "dodumt",
+        Person.THIRD_PLURAL: "doduman",
     }
 }
 
@@ -759,6 +770,18 @@ def test_ergative(region_and_verb, conjugations):
                 Person.THIRD_SINGULAR: "domigurams",
                 Person.SECOND_PLURAL: "domiguramt",
                 Person.THIRD_PLURAL: "domiguraman",
+            },
+        ),
+        (
+            Region.FINDIKLI_ARHAVI,
+            Person.FIRST_SINGULAR,
+            VerbBuilder().build(infinitive="dodumu", present_third="dodums", verb_type=ErgativeVerb),
+            {
+                Person.FIRST_SINGULAR: "dobidam",
+                Person.SECOND_SINGULAR: "domidam",
+                Person.THIRD_SINGULAR: "domidams",
+                Person.SECOND_PLURAL: "domidamt",
+                Person.THIRD_PLURAL: "domidaman",
             },
         ),
     ],
