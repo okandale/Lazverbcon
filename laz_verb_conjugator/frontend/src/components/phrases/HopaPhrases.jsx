@@ -137,7 +137,7 @@ export default function HopaPhrases() {
                     </div>
                   </div>
                   <div className="pl-10">
-                    <p className="font-mono text-blue-700 bg-blue-100 px-3 py-1 rounded inline-block">
+                    <p className="font-sans font-bold text-blue-700 bg-blue-100 px-3 py-1 rounded inline-block">
                       {phrase.hopa}
                     </p>
                   </div>
