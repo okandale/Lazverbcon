@@ -32,7 +32,19 @@ const Resources = () => {
         <h1 className="text-4xl font-extrabold mb-8 text-center text-gray-800 tracking-tight">
           {translations[language].resourceCard.title}
         </h1>
-
+        {/* Phrase Guide Section */}
+        <div className="bg-white rounded-xl shadow-xl p-8 mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            <Link to="/resources/phrase-guide" className="hover:underline text-blue-700">
+              {language === 'tr' ? 'İfade Rehberi' : 'Phrase Guide'}
+            </Link>
+          </h2>
+          <p className="text-gray-700">
+            {language === 'tr'
+              ? 'Bölge genelinde bulunan QR kodlarıyla eşleştirilmiş ifadeler — bu ifadeler dükkan elemanlar konuşurken kullanılabilir!'
+              : 'Phrases used for the QR-code that can be found throughout the region — these phrases can be used when talking to staff!'}
+          </p>
+        </div>
         {/* Resources Section */}
         <div className="bg-white rounded-xl shadow-xl p-8 mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">

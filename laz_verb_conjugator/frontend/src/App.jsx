@@ -5,6 +5,11 @@ import Classes from './components/Classes';
 import About from './components/About';
 import HomePage from './components/Home';
 import Resources from './components/Resources';
+import PhraseGuide from './components/PhraseGuide';
+import PazarPhrases from './components/phrases/PazarPhrases';
+import ArdesenPhrases from './components/phrases/ArdesenPhrases';
+import FindikliArhaviPhrases from './components/phrases/FindikliArhaviPhrases';
+import HopaPhrases from './components/phrases/HopaPhrases';
 import Keyboard from './components/Keyboard';
 import KeyboardWin from './components/Keyboardwin';       
 import KeyboardPC from './components/KeyboardPC';
@@ -22,6 +27,7 @@ function App() {
         <Route path="/events" element={<Classes />} />
         <Route path="/about" element={<About />} />
         <Route path="/resources" element={<Resources />} />
+        <Route path="/resources/phrase-guide" element={<PhraseGuide />} />
         <Route path="/keyboard" element={<Keyboard />} />
         <Route path="/keyboard/windows" element={<KeyboardWin />} />
         <Route path="/keyboard/computer" element={<KeyboardPC />} />
@@ -29,6 +35,11 @@ function App() {
         <Route path="/keyboard/android" element={<KeyboardAndr />} />
         <Route path="/keyboard/iphone" element={<KeyboardiPhone />} />
         <Route path="/keyboard/phone" element={<KeyboardMobile />} />
+        <Route path="/resources/phrase-guide/pazar" element={<PazarPhrases />} />
+        <Route path="/resources/phrase-guide/ardesen" element={<ArdesenPhrases />} />
+        <Route path="/resources/phrase-guide/findikli-arhavi" element={<FindikliArhaviPhrases />} />
+        <Route path="/resources/phrase-guide/hopa" element={<HopaPhrases />} />
+
       </Routes>
     </Router>
   );
