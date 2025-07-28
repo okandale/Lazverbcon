@@ -40,7 +40,7 @@ export default function HopaPhrases() {
         { 
           english: 'I need medicine for a headache', 
           turkish: 'Baş ağrısı için ilaç lazım', 
-          hopa: 'Ham ǯǩuna şeni ç̌ami domaç̌irs' 
+          hopa: 'Ti na maǯǩunen şeni ç̌ami domaç̌irs' 
         },
         {
           english: 'My stomach hurts',
