@@ -234,7 +234,7 @@ def conjugate():
 
 
     # Special check for "gexvamu" or "cexvamu"; add any verb that requires an applicative/causative to this block
-    if infinitive in (('gexvamu', 'cexvamu', 'otebriǩu')) and aspect is None:
+    if infinitive in (('gexvamu', 'cexvamu', 'otebriǩu', 'oteşekkyuru')) and aspect is None:
         # We specifically want at least one of 'applicative' or 'causative' to be true
         has_applicative = (request_params.get('applicative') == 'true')
         has_causative   = (request_params.get('causative') == 'true')
