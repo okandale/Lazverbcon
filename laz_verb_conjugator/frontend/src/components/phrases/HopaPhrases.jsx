@@ -3,17 +3,28 @@ import { Link } from 'react-router-dom';
 import { getStoredLanguage, setStoredLanguage } from '../constants';
 import LanguageToggle from '../ui/LanguageToggle';
 import { Home } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function HopaPhrases() {
   const [activeTab, setActiveTab] = useState('market');
-  const [language, setLanguage] = useState('en');
-  
+  const [language, setLanguage] = useState(() => getStoredLanguage() || 'en');
+  const [showTables, setShowTables] = useState({});
+
   const localized = (en, tr) => (language === 'tr' ? tr : en);
 
   const toggleLanguage = () => {
     const newLanguage = language === 'en' ? 'tr' : 'en';
     setLanguage(newLanguage);
+    setStoredLanguage(newLanguage);
   };
+
+  const toggleTable = (phraseIndex) => {
+    setShowTables(prev => ({
+      ...prev,
+      [`${activeTab}-${phraseIndex}`]: !prev[`${activeTab}-${phraseIndex}`]
+    }));
+  };
+
   const tabLabels = {
     market: { en: 'Market', tr: 'Market' },
     pharmacy: { en: 'Pharmacy', tr: 'Eczane' },
@@ -21,7 +32,12 @@ export default function HopaPhrases() {
     hotel: { en: 'Hotel', tr: 'Otel' }
   };
 
-  // Phrase data organized by category
+  const marketItems = [
+    { english: 'Apple(s)', turkish: 'Elma', hopa: 'Uşkuri' },
+    { english: 'Bread', turkish: 'Ekmek', hopa: 'Ǩovali' },
+    { english: 'Water', turkish: 'su', hopa: 'ǯöö'}
+  ];
+
   const phraseCategories = {
     market: {
       title: localized('At the Market', 'Markette'),
@@ -31,7 +47,12 @@ export default function HopaPhrases() {
           turkish: 'Bu ne kadar?', 
           hopa: 'İya naǩo lira ren?' 
         },
-        // Add more phrases here
+        { 
+          english: 'Do you have ___?', 
+          turkish: '____ var mı?', 
+          hopa: '___ giğun-i?',
+          table: marketItems
+        }
       ]
     },
     pharmacy: {
@@ -46,7 +67,7 @@ export default function HopaPhrases() {
           english: 'My stomach hurts',
           turkish: 'Karnım ağrıyor',
           hopa: 'Korba maǯǩunen'
-        },        // Add more phrases here
+        }
       ]
     },
     restaurant: {
@@ -56,11 +77,10 @@ export default function HopaPhrases() {
           english: 'I\'m vegetarian', 
           turkish: 'Ben vejetaryenim', 
           hopa: 'Ma vejetaryeni vore' 
-        },
-        // Add more phrases here
+        }
       ]
     },
-        hotel: {
+    hotel: {
       title: localized('At the hotel', 'Otelde'),
       phrases: [
         { 
@@ -73,7 +93,6 @@ export default function HopaPhrases() {
           turkish: 'Rezervasyonum var',
           hopa: 'Rezervasyoni komiğun'
         }
-        // Add more phrases here
       ]
     }
   };
@@ -81,7 +100,7 @@ export default function HopaPhrases() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white px-4 py-8">
       <div className="max-w-3xl mx-auto">
-        {/* Top bar with Home and language toggle */}
+        {/* Top bar */}
         <div className="flex justify-between items-center mb-8 pt-2">
           <Link to="/" className="text-gray-600 hover:text-gray-800 transition-colors">
             <Home size={24} />
@@ -97,7 +116,7 @@ export default function HopaPhrases() {
           {/* Tabs */}
           <div className="overflow-x-auto mb-8 border-b border-gray-200 pb-2">
             <div className="flex gap-4 w-max min-w-full">
-              {['market', 'pharmacy', 'restaurant', 'hotel'].map((tab) => (
+              {Object.keys(tabLabels).map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -120,29 +139,77 @@ export default function HopaPhrases() {
             </h2>
             
             <div className="space-y-4">
-              {phraseCategories[activeTab].phrases.map((phrase, index) => (
-                <div 
-                  key={index}
-                  className="p-4 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors"
-                >
-                  <div className="flex items-start mb-2">
-                    <span className="text-2xl mr-3">🗣️</span>
-                    <div>
-                      <p className="font-medium text-gray-700">
-                        {language === 'en' ? phrase.english : phrase.turkish}
-                      </p>
-                      <p className="text-sm text-gray-500 mt-1">
-                        {language === 'en' ? `Turkish: ${phrase.turkish}` : `English: ${phrase.english}`}
+              {phraseCategories[activeTab].phrases.map((phrase, index) => {
+                const tableKey = `${activeTab}-${index}`;
+                const isTableVisible = showTables[tableKey];
+                
+                return (
+                  <div 
+                    key={index}
+                    className="p-4 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors"
+                  >
+                    <div className="flex items-start mb-2">
+                      <span className="text-2xl mr-3">🗣️</span>
+                      <div>
+                        <p className="font-medium text-gray-700">
+                          {language === 'en' ? phrase.english : phrase.turkish}
+                        </p>
+                        <p className="text-sm text-gray-500 mt-1">
+                          {language === 'en' ? `Turkish: ${phrase.turkish}` : `English: ${phrase.english}`}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="pl-10">
+                      <p className="font-sans font-bold text-blue-700 bg-blue-100 px-3 py-1 rounded inline-block">
+                        {phrase.hopa}
                       </p>
                     </div>
+
+                    {/* Collapsible Table */}
+                    {phrase.table && (
+                      <div className="mt-3 pl-10">
+                        <button
+                          onClick={() => toggleTable(index)}
+                          className="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium"
+                        >
+                          {isTableVisible
+                            ? localized('Hide word list', 'Kelime listesini gizle')
+                            : localized('Show word list', 'Kelime listesini göster')}
+                          {isTableVisible ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                        </button>
+
+                        {isTableVisible && (
+                          <div className="mt-3 overflow-hidden rounded-lg border border-gray-300 shadow-sm">
+                            <table className="w-full border-collapse">
+                              <thead className="bg-blue-100">
+                                <tr>
+                                  <th className="p-2 text-left text-gray-700 font-semibold">
+                                    {language === 'en' ? 'English' : 'Türkçe'}
+                                  </th>
+                                  <th className="p-2 text-left text-gray-700 font-semibold">Laz</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {phrase.table.map((item, idx) => (
+                                  <tr
+                                    key={idx}
+                                    className={`${
+                                      idx % 2 === 0 ? 'bg-white' : 'bg-blue-50'
+                                    } hover:bg-blue-100 transition-colors`}
+                                  >
+                                    <td className="p-2">{language === 'en' ? item.english : item.turkish}</td>
+                                    <td className="p-2 font-bold text-blue-800">{item.hopa}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-                  <div className="pl-10">
-                    <p className="font-sans font-bold text-blue-700 bg-blue-100 px-3 py-1 rounded inline-block">
-                      {phrase.hopa}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
