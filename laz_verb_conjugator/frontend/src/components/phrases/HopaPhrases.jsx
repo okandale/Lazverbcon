@@ -35,7 +35,7 @@ export default function HopaPhrases() {
   const marketItems = [
     { english: 'Apple(s)', turkish: 'Elma', hopa: 'Uşkuri' },
     { english: 'Bread', turkish: 'Ekmek', hopa: 'Ǩovali' },
-    { english: 'Water', turkish: 'su', hopa: 'Ǯǩari'},
+    { english: 'Water', turkish: 'Su', hopa: 'Ǯǩari'},
     { english: 'Cheese', turkish: 'Peynir', hopa: 'Qvali'},
     { english: 'Egg(s)', turkish: 'Yumurta', hopa: 'Markvali'},
     { english: 'Milk', turkish: 'Süt', hopa: 'Bja'},
