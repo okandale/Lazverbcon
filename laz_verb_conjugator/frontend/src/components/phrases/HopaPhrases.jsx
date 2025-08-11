@@ -35,7 +35,16 @@ export default function HopaPhrases() {
   const marketItems = [
     { english: 'Apple(s)', turkish: 'Elma', hopa: 'Uşkuri' },
     { english: 'Bread', turkish: 'Ekmek', hopa: 'Ǩovali' },
-    { english: 'Water', turkish: 'su', hopa: 'ǯöö'}
+    { english: 'Water', turkish: 'su', hopa: 'Ǯǩari'},
+    { english: 'Cheese', turkish: 'Peynir', hopa: 'Qvali'},
+    { english: 'Egg(s)', turkish: 'Yumurta', hopa: 'Markvali'},
+    { english: 'Milk', turkish: 'Süt', hopa: 'Bja'},
+    { english: 'Chicken', turkish: 'Tavuk', hopa: 'Kotume'},
+    { english: 'Fish', turkish: 'Balık', hopa: 'Çxomi'},
+    { english: 'Anchovy', turkish: 'Hamsi', hopa: 'Kapça'},
+    { english: 'Cucumber', turkish: 'Salatalık', hopa: 'Şuǩa'},
+    { english: 'Tomato(es)', turkish: 'Domates', hopa: 'Ǩaǩa'},
+    { english: 'Onion(s)', turkish: 'Soğan', hopa: 'Ǩromi'}
   ];
 
   const phraseCategories = {
