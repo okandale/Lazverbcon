@@ -150,7 +150,7 @@ export default function HopaPhrases() {
         { 
           english: 'Can we have the bill, please?', 
           turkish: 'Hesabı alabilir miyiz?', 
-          hopa: 'Hesabi momğit, iqven-i?',
+          hopa: 'Hesabi momiğit, iqven-i?',
         },   
       ]
     },
