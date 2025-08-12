@@ -61,7 +61,27 @@ export default function HopaPhrases() {
           turkish: '____ var mı?', 
           hopa: '___ giğun-i?',
           table: marketItems
-        }
+        },
+        { 
+          english: 'Can you give me a kilo of apples', 
+          turkish: 'Bana bir kilo elma verir misiniz?', 
+          hopa: 'ar kilo uşkuri momçi, iqven-i?',
+        },
+        { 
+          english: 'I am just looking', 
+          turkish: 'Sadece bakıyorum', 
+          hopa: 'bzirom xvala',
+        },  
+        { 
+          english: 'Please give me some bread', 
+          turkish: 'Lütfen biraz ekmek verin', 
+          hopa: 'amǯiǩa ǩovali momçi, iqven-i?',
+        },
+        { 
+          english: 'Thank you!', 
+          turkish: 'Teşekkür ederim!', 
+          hopa: 'Sağolasen!',
+        },    
       ]
     },
     pharmacy: {
@@ -76,7 +96,22 @@ export default function HopaPhrases() {
           english: 'My stomach hurts',
           turkish: 'Karnım ağrıyor',
           hopa: 'Korba maǯǩunen'
-        }
+        },
+        { 
+          english: 'I need something for a cough', 
+          turkish: 'Öksürük için bir şey lazım', 
+          hopa: 'Oxvalu şeni mutxani domaç̌irs',
+        },  
+        { 
+          english: 'I have a fever', 
+          turkish: 'Ateşim var', 
+          hopa: 'Daçxuri gomogzun',
+        },
+        { 
+          english: 'Can I get this without a prescription?', 
+          turkish: 'Bunu receçetesiz alabilir miyim?', 
+          hopa: 'İya ureçeteli emaç̌open-i?',
+        },  
       ]
     },
     restaurant: {
@@ -86,7 +121,37 @@ export default function HopaPhrases() {
           english: 'I\'m vegetarian', 
           turkish: 'Ben vejetaryenim', 
           hopa: 'Ma vejetaryeni vore' 
-        }
+        },
+        { 
+          english: 'I am allergic to _____', 
+          turkish: '___ye alerjim var', 
+          hopa: '___s alerji miğun',
+        },
+        { 
+          english: 'Can I have the menu please?', 
+          turkish: 'Menü alabilir miyim?', 
+          hopa: 'Menu momçi, iqven-i?',
+        },
+        { 
+          english: 'What do you recommend?', 
+          turkish: 'Ne tavsiye edersiniz?', 
+          hopa: 'Tafsiye-skani mun\'oren? Mu tafsiye miǯumer?',
+        },
+        { 
+          english: 'I would like this dish', 
+          turkish: 'Bu yemeği istiyorum', 
+          hopa: 'İya minon',
+        }, 
+        { 
+          english: 'Please, no salt', 
+          turkish: 'Lütfen tuzsuz', 
+          hopa: 'Umcumeli iqvasen',
+        }, 
+        { 
+          english: 'Can we have the bill, please?', 
+          turkish: 'Hesabı alabilir miyiz?', 
+          hopa: 'Hesabi momğit, iqven-i?',
+        },   
       ]
     },
     hotel: {
@@ -101,7 +166,27 @@ export default function HopaPhrases() {
           english: 'I have a reservation',
           turkish: 'Rezervasyonum var',
           hopa: 'Rezervasyoni komiğun'
-        }
+        },
+        { 
+          english: 'How much is a room per night?', 
+          turkish: 'Oda gecelik ne kadar?', 
+          hopa: 'Oda ar seri şeni naǩo lira ren?',
+        },  
+        { 
+          english: 'Is breakfast included?', 
+          turkish: 'Kahvaltı dahil mi?', 
+          hopa: 'Ç̌umanişe gyari meǩateri ren-i?',
+        }, 
+        { 
+          english: 'Can I see the room first?', 
+          turkish: 'Önce odayı görebilir miyim?', 
+          hopa: 'Oda eç̌opu ǯoxle mažiren-i? ',
+        },  
+        { 
+          english: 'Can I check out late?', 
+          turkish: 'Geç çıkış yapabilir miyim?', 
+          hopa: 'leba gamamalen-na iqven-i?',
+        },  
       ]
     }
   };
