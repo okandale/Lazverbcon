@@ -63,19 +63,19 @@ export default function HopaPhrases() {
           table: marketItems
         },
         { 
-          english: 'Can you give me a kilo of apples', 
-          turkish: 'Bana bir kilo elma verir misiniz?', 
-          hopa: 'Ar kilo uşkiri çkimda megaçen-i?',
+          english: 'I would like a kilo of apples', 
+          turkish: 'Bir kilo elma istiyorum', 
+          hopa: 'Ar kilo uşkiri minon?',
         },
         { 
           english: 'I am just looking', 
           turkish: 'Sadece bakıyorum', 
-          hopa: 'xvala voǯǩer',
+          hopa: 'goviǯǩer',
         },  
         { 
-          english: 'Please give me some bread', 
-          turkish: 'Lütfen biraz ekmek verin', 
-          hopa: 'Ar mʒika kuvali çkimda megaçen-i?',
+          english: 'I would like to buy two loafs of bread', 
+          turkish: 'iki ekmek almak istiyorum', 
+          hopa: 'Jur ǩuvali yep̌ç̌opa',
         },
         { 
           english: 'Thank you!', 
@@ -150,7 +150,7 @@ export default function HopaPhrases() {
         { 
           english: 'Can we have the bill, please?', 
           turkish: 'Hesabı alabilir miyiz?', 
-          hopa: 'Hesabi yemazden-i?',
+          hopa: 'Xesabi komomiği(t)',
         },   
       ]
     },
@@ -175,7 +175,7 @@ export default function HopaPhrases() {
         { 
           english: 'Is breakfast included?', 
           turkish: 'Kahvaltı dahil mi?', 
-          hopa: 'Ç̌umaneri gyari giğunan-i?',
+          hopa: 'Ç̌umaneri gyari oǩateri ren-i?',
         }, 
         { 
           english: 'Can I see the room first?', 
