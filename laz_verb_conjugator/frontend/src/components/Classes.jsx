@@ -70,8 +70,8 @@ const Classes = () => {
       schedule: { en: '5-week and 10-week workshops; registration forms will go live shortly', tr: '5 ve 10 haftalık atölyeler; kayıt formları yakında açılacak' },
       platform: { en: 'Zoom', tr: 'Zoom' },
       description: {
-        en: 'The 5-week workshop is more introductory, focusing on basic phrases for everyday communication. The 10-week workshop covers simple topics such as greetings, questions, introducing yourself, numbers, and basic grammar structures like dative and ergative. Ideal for absolute beginners.',
-        tr: '5 haftalık atölye, günlük iletişim için temel ifadelere odaklanan daha giriş niteliğindedir. 10 haftalık atölye, temel selamlaşmalar, soru sorma, kendini tanıtma, sayılar ve yönelme ve ergatif gibi temel dilbilgisi yapıları gibi basit konuları kapsar. Mutlak başlangıç seviyesindeki öğrenciler için idealdir.'
+        en: 'The 5-week workshop is more introductory, focusing on basic phrases for everyday communication. The 10-week workshop covers simple topics such as greetings, questions, introducing yourself, numbers, and basic grammar structures like dative and ergative. Ideal for absolute beginners. Email info@lazuri.org for more information!',
+        tr: '5 haftalık atölye, günlük iletişim için temel ifadelere odaklanan daha giriş niteliğindedir. 10 haftalık atölye, temel selamlaşmalar, soru sorma, kendini tanıtma, sayılar ve yönelme ve ergatif gibi temel dilbilgisi yapıları gibi basit konuları kapsar. Mutlak başlangıç seviyesindeki öğrenciler için idealdir.Daha fazla bilgi için **[info@lazuri.org](mailto:info@lazuri.org)** adresine e-posta gönderin!'
       },
       points: [
         { en: '5-week introductory workshop: basic phrases', tr: '5 haftalık giriş atölyesi: temel ifadeler' },
