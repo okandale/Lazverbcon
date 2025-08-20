@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Home, Clock, Video } from 'lucide-react';
+import { Home, Clock, Video, DollarSign } from 'lucide-react';
 import { getStoredLanguage, setStoredLanguage } from './constants';
 import LanguageToggle from './ui/LanguageToggle';
 
@@ -70,8 +70,8 @@ const Classes = () => {
       schedule: { en: '5-week and 10-week workshops; registration forms will go live shortly', tr: '5 ve 10 haftalık atölyeler; kayıt formları yakında açılacak' },
       platform: { en: 'Zoom', tr: 'Zoom' },
       description: {
-        en: 'The 5-week workshop is more introductory, focusing on basic phrases for everyday communication. The 10-week workshop covers simple topics such as greetings, questions, introducing yourself, numbers, and basic grammar structures like dative and ergative. Ideal for absolute beginners. Email info@lazuri.org for more information!',
-        tr: '5 haftalık atölye, günlük iletişim için temel ifadelere odaklanan daha giriş niteliğindedir. 10 haftalık atölye, temel selamlaşmalar, soru sorma, kendini tanıtma, sayılar ve yönelme ve ergatif gibi temel dilbilgisi yapıları gibi basit konuları kapsar. Mutlak başlangıç seviyesindeki öğrenciler için idealdir.Daha fazla bilgi için **[info@lazuri.org](mailto:info@lazuri.org)** adresine e-posta gönderin!'
+        en: 'The 5-week workshop is more introductory, focusing on basic phrases for everyday communication. The 10-week workshop covers simple topics such as greetings, questions, introducing yourself, numbers, and basic grammar structures like dative and ergative. Ideal for absolute beginners. Please email info@lazuri.org for questions.',
+        tr: '5 haftalık atölye, günlük iletişim için temel ifadelere odaklanan daha giriş niteliğindedir. 10 haftalık atölye, temel selamlaşmalar, soru sorma, kendini tanıtma, sayılar ve yönelme ve ergatif gibi temel dilbilgisi yapıları gibi basit konuları kapsar. Mutlak başlangıç seviyesindeki öğrenciler için idealdir. Daha fazla bilgi için **[info@lazuri.org](mailto:info@lazuri.org)** adresine e-posta gönderin!'
       },
       points: [
         { en: '5-week introductory workshop: basic phrases', tr: '5 haftalık giriş atölyesi: temel ifadeler' },
@@ -99,52 +99,62 @@ const Classes = () => {
 
         {/* Conditional Rendering */}
         {showWorkshops ? (
-          // Render Workshops dynamically (only those with show: true)
-          workshops
-            .filter(workshop => workshop.show)
-            .map(workshop => (
-              <div key={workshop.id} className="bg-white rounded-xl shadow-xl p-8 mb-8">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                  {localized(workshop.title.en, workshop.title.tr)}
-                </h2>
+          <>
+            {/* Render Workshops dynamically (only those with show: true) */}
+            {workshops
+              .filter(workshop => workshop.show)
+              .map(workshop => (
+                <div key={workshop.id} className="bg-white rounded-xl shadow-xl p-8 mb-8">
+                  <h2 className="text-2xl font-bold text-gray-800 mb-6">
+                    {localized(workshop.title.en, workshop.title.tr)}
+                  </h2>
 
-                <div className="space-y-2 mb-3">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-gray-500 flex-shrink-0" />
-                    <div className="bg-gray-100 p-3 rounded text-gray-700 w-full whitespace-pre-line font-medium">
-                      {localized(workshop.schedule.en, workshop.schedule.tr)}
+                  {/* Cost Information - Now inside each workshop card */}
+                  <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 flex items-center">
+                    <DollarSign className="w-6 h-6 text-blue-500 mr-3 flex-shrink-0" />
+                    <p className="text-lg font-semibold text-blue-900">
+                      {localized('Free of charge', 'Ücretsiz')}
+                    </p>
+                  </div>
+
+                  <div className="space-y-2 mb-3">
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                      <div className="bg-gray-100 p-3 rounded text-gray-700 w-full whitespace-pre-line font-medium">
+                        {localized(workshop.schedule.en, workshop.schedule.tr)}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Video className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                      <div className="bg-gray-100 p-3 rounded text-gray-700 w-full font-medium">
+                        {typeof workshop.platform === 'string' ? workshop.platform : localized(workshop.platform.en, workshop.platform.tr)}
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Video className="w-5 h-5 text-gray-500 flex-shrink-0" />
-                    <div className="bg-gray-100 p-3 rounded text-gray-700 w-full font-medium">
-                      {typeof workshop.platform === 'string' ? workshop.platform : localized(workshop.platform.en, workshop.platform.tr)}
-                    </div>
+
+                  <p className="text-gray-600 mb-2">
+                    {localized(workshop.description.en, workshop.description.tr)}
+                  </p>
+
+                  <ul className="list-disc list-inside text-gray-600 ml-4 space-y-1">
+                    {workshop.points.map((point, index) => (
+                      <li key={index} className="font-medium">{localized(point.en, point.tr)}</li>
+                    ))}
+                  </ul>
+
+                  <div className="flex justify-center pt-4">
+                    <a
+                      href="https://docs.google.com/forms/d/e/1FAIpQLSeK3GLB2ucNw758KtkRvOXcKsbBhdFUM1aU7TPosO2pFpj2GQ/viewform"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xl py-4 px-8 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md"
+                    >
+                      {localized('Sign Up', 'Kayıt Ol')}
+                    </a>
                   </div>
                 </div>
-
-                <p className="text-gray-600 mb-2">
-                  {localized(workshop.description.en, workshop.description.tr)}
-                </p>
-
-                <ul className="list-disc list-inside text-gray-600 ml-4 space-y-1">
-                  {workshop.points.map((point, index) => (
-                    <li key={index} className="font-medium">{localized(point.en, point.tr)}</li>
-                  ))}
-                </ul>
-
-                <div className="flex justify-center pt-4">
-                  <a
-                    href="https://docs.google.com/forms/d/e/1FAIpQLScwFbxaTh8U0ZIoGIz4Q9nFmiAB9eqtMZ40wkyFiYmD3Cg-Dg/viewform?usp=dialog"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xl py-4 px-8 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md"
-                  >
-                    {localized('Sign Up', 'Kayıt Ol')}
-                  </a>
-                </div>
-              </div>
-            ))
+              ))}
+          </>
         ) : (
           // No Events Message (Bilingual)
           <div className="bg-white rounded-xl shadow-xl p-8 mb-8 text-center">
