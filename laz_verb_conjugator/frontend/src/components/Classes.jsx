@@ -66,7 +66,7 @@ const Classes = () => {
     {
       id: 3,
       show: true, // Individual workshop visibility
-      title: { en: 'Beginner Workshops hosted by the Laz Institute', tr: 'Laz Enstitüsü tarafından Başlangıç Atölyeleri' },
+      title: { en: 'Beginner Workshops offered by the Laz Institute', tr: 'Laz Enstitüsü tarafından Başlangıç Atölyeleri' },
       schedule: { en: '5-week and 10-week workshops; registration forms will go live shortly', tr: '5 ve 10 haftalık atölyeler; kayıt formları yakında açılacak' },
       platform: { en: 'Zoom', tr: 'Zoom' },
       description: {
