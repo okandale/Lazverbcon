@@ -75,7 +75,7 @@ export default function HopaPhrases() {
         { 
           english: 'I would like to buy two loafs of bread', 
           turkish: 'iki ekmek almak istiyorum', 
-          hopa: 'Jur kuvali yep̌ç̌opinu minon',
+          hopa: 'Jur kuvali yeç̌opinu minon',
         },
         { 
           english: 'Thank you!', 
@@ -145,7 +145,7 @@ export default function HopaPhrases() {
         { 
           english: 'Please, no salt', 
           turkish: 'Lütfen tuzsuz', 
-          hopa: 'Ucumeli t̆as',
+          hopa: 'Umcumeli t̆as',
         }, 
         { 
           english: 'Can we have the bill, please?', 
@@ -170,7 +170,7 @@ export default function HopaPhrases() {
         { 
           english: 'How much is a room per night?', 
           turkish: 'Oda gecelik ne kadar?', 
-          hopa: 'Oda ar seris muǩos liras didginen?',
+          hopa: 'Oda ar seris muǩo liras didginen?',
         },  
         { 
           english: 'Is breakfast included?', 
