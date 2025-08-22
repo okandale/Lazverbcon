@@ -33,17 +33,17 @@ export default function HopaPhrases() {
   };
 
   const marketItems = [
-    { english: 'Apple(s)', turkish: 'Elma', hopa: 'Uşkuri' },
-    { english: 'Bread', turkish: 'Ekmek', hopa: 'Ǩovali' },
+    { english: 'Apple(s)', turkish: 'Elma', hopa: 'Uşkiri' },
+    { english: 'Bread', turkish: 'Ekmek', hopa: 'Kuvali' },
     { english: 'Water', turkish: 'Su', hopa: 'Ǯǩari'},
     { english: 'Cheese', turkish: 'Peynir', hopa: 'Qvali'},
-    { english: 'Egg(s)', turkish: 'Yumurta', hopa: 'Markvali'},
-    { english: 'Milk', turkish: 'Süt', hopa: 'Bja'},
+    { english: 'Egg(s)', turkish: 'Yumurta', hopa: 'Makvali'},
+    { english: 'Milk', turkish: 'Süt', hopa: 'Mja'},
     { english: 'Chicken', turkish: 'Tavuk', hopa: 'Kotume'},
     { english: 'Fish', turkish: 'Balık', hopa: 'Çxomi'},
-    { english: 'Anchovy', turkish: 'Hamsi', hopa: 'Kapça'},
+    { english: 'Anchovy', turkish: 'Hamsi', hopa: 'Kapşiya'},
     { english: 'Cucumber', turkish: 'Salatalık', hopa: 'Şuǩa'},
-    { english: 'Tomato(es)', turkish: 'Domates', hopa: 'Ǩaǩa'},
+    { english: 'Tomato(es)', turkish: 'Domates', hopa: 'Domatisi/Ǩaǩa'},
     { english: 'Onion(s)', turkish: 'Soğan', hopa: 'Ǩromi'}
   ];
 
