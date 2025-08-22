@@ -145,7 +145,7 @@ export default function HopaPhrases() {
         { 
           english: 'Please, no salt', 
           turkish: 'Lütfen tuzsuz', 
-          hopa: 'Umcumeli t̆as',
+          hopa: 'Umcumeli (r)t̆as',
         }, 
         { 
           english: 'Can we have the bill, please?', 
@@ -175,7 +175,7 @@ export default function HopaPhrases() {
         { 
           english: 'Is breakfast included?', 
           turkish: 'Kahvaltı dahil mi?', 
-          hopa: 'Gyaobaşi gyari niçen-i?',
+          hopa: 'Gyaobaşi/Ç̌umaneri gyari niçen-i?',
         }, 
         { 
           english: 'Can I see the room first?', 
