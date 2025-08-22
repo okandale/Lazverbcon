@@ -54,7 +54,7 @@ export default function HopaPhrases() {
         { 
           english: 'How much is this?', 
           turkish: 'Bu ne kadar?', 
-          hopa: 'İya muǩos lira ren?' 
+          hopa: 'İya muǩos ren?' 
         },
         { 
           english: 'Do you have ___?', 
