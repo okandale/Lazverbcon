@@ -175,7 +175,7 @@ export default function HopaPhrases() {
         { 
           english: 'Is breakfast included?', 
           turkish: 'Kahvaltı dahil mi?', 
-          hopa: 'Gyaobaşi gyari niçen-i?',
+          hopa: 'Gyaobaşi/Ç̌umaneri gyari niçen-i?',
         }, 
         { 
           english: 'Can I see the room first?', 
