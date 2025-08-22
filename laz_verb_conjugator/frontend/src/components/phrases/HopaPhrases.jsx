@@ -145,7 +145,7 @@ export default function HopaPhrases() {
         { 
           english: 'Please, no salt', 
           turkish: 'Lütfen tuzsuz', 
-          hopa: 'Umcumeli t̆as',
+          hopa: 'Umcumeli (r)t̆as',
         }, 
         { 
           english: 'Can we have the bill, please?', 
