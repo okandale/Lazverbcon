@@ -140,9 +140,15 @@ class ConjugationService:
 
     def process_imperative(self, infinitive, subject, obj, applicative, causative, region_filter):
         """Process imperative conjugations."""
-        module = self.tense_modules.get('tve_past')
-        if not module or not hasattr(module, 'verbs') or infinitive not in module.verbs:
+        module = None
+        if 'tve_past' in self.tense_modules and infinitive in self.tense_modules['tve_past'].verbs:
+            module = self.tense_modules['tve_past']
+        elif 'ivd_present' in self.tense_modules and infinitive in self.tense_modules['ivd_present'].verbs:
+            module = self.tense_modules['ivd_present']
+
+        if not module:
             return None
+
 
         subjects = ['S2_Singular', 'S2_Plural'] if subject == 'all' else [subject]
         objects = self.ordered_objects if obj == 'all' else [obj] if obj else [None]

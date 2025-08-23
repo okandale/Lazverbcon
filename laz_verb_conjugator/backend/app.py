@@ -223,7 +223,7 @@ def conjugate():
 
 
     has_markers = any(request_params.get(marker) == 'true' 
-                     for marker in ['applicative', 'causative', 'optative'])
+                     for marker in ['applicative', 'causative'])
 
     # 3) Extract object (obj) and convert empty or "None" -> real None
     obj = request_params.get('obj')

@@ -20,7 +20,7 @@ verbs, regions = load_ivd_verbs()
 preverbs_rules = get_preverbs_rules('ivd_present')
 
 # Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
-def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False):
+def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False, mood=False):
     # Check for invalid SxOx combinations
     if (subject in ['S1_Singular', 'S1_Plural'] and obj in ['O1_Singular', 'O1_Plural']) or \
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
@@ -60,7 +60,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             first_word = get_first_word(third_person)  # Get the first word for compound verbs
             root = process_compound_verb(root)
 
-
+            if mood and obj:
+                raise ValueError("Dative verbs cannot take an object in the optative.")
             # Use the first word from the infinitive consistently
             first_word = first_word_infinitive
         
@@ -291,50 +292,55 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
 
             suffix = suffixes[subject]
-            if subject == 'S3_Singular' and (obj == 'O3_Singular' or obj is None):
-                suffix = ''
-            elif subject == 'S3_Singular' and obj == 'O3_Plural':
-                if root.endswith(('rs', 'ns')):
-                    root = root
-                suffix = ''
-            elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
-                if root.endswith(('en', 'rs')):
-                    root = root[:-2] if infinitive.endswith('rs') else root[:-1]
-                suffix = 'rt'
-                if root.endswith('ns'):
-                    root = root[:-1]
-                suffix = 't'
-            elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular']:
-                if root.endswith(('n', 'rs')):
-                    root = root[:-1]
-                    suffix = '' if infinitive.endswith('rs') else 'r'
-                if root.endswith('ns'):
-                    root = root[:-1]
+
+            if mood == 'optative':
+                root = root[:-2]
+                suffix = 'az' if region in 'FA' and subject in (('S1_Singular', 'S2_Singular', 'S3_Singular')) else 'as' if subject in (('S1_Singular', 'S2_Singular', 'S3_Singular')) else 'an'
+            else:
+                if subject == 'S3_Singular' and (obj == 'O3_Singular' or obj is None):
                     suffix = ''
-            elif subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural', 'S3_Plural'] and obj in ('O1_Plural', 'O2_Plural'):
-                if root.endswith(('n', 'rs')):
-                    root = root[:-2] if infinitive.endswith('rs') else root[:-1]
-                suffix = 'rt'
-                if root.endswith('ns'):
-                    root = root[:-1]
-                suffix = 't'
-            elif subject in ['S1_Plural', 'S2_Plural'] and obj in ('O1_Singular', 'O2_Singular'):
-                if root.endswith(('n', 'rs')):
-                    root = root[:-2] if infinitive.endswith('rs') else root[:-1]
-                suffix = 'rt'
-                if root.endswith('ns'):
-                    root = root[:-1]
-                suffix = 't'
-            elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
-                suffix = ''
-            elif subject in ['S1_Plural', 'S2_Plural', 'S3_Singular'] and (obj in ('O3_Singular', 'O3_Plural') or obj is None):
-                if root.endswith('rs') or root.endswith('ns'):
-                    root = root[:-1]
-                suffix = '' if root.endswith('an') else 's' if infinitive == 'coxons' and subject == 'S3_Singular' else 'an'
-            elif subject == 'S3_Plural':
-                if root.endswith('rs') or root.endswith('ns'):
-                    root = root[:-1]
-                suffix = 'an'
+                elif subject == 'S3_Singular' and obj == 'O3_Plural':
+                    if root.endswith(('rs', 'ns')):
+                        root = root
+                    suffix = ''
+                elif subject == 'S3_Singular' and obj in ['O1_Plural', 'O2_Plural']:
+                    if root.endswith(('en', 'rs')):
+                        root = root[:-2] if infinitive.endswith('rs') else root[:-1]
+                    suffix = 'rt'
+                    if root.endswith('ns'):
+                        root = root[:-1]
+                    suffix = 't'
+                elif subject in ['S1_Singular', 'S2_Singular', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular']:
+                    if root.endswith(('n', 'rs')):
+                        root = root[:-1]
+                        suffix = '' if infinitive.endswith('rs') else 'r'
+                    if root.endswith('ns'):
+                        root = root[:-1]
+                        suffix = ''
+                elif subject in ['S1_Singular', 'S1_Plural', 'S2_Singular', 'S2_Plural', 'S3_Plural'] and obj in ('O1_Plural', 'O2_Plural'):
+                    if root.endswith(('n', 'rs')):
+                        root = root[:-2] if infinitive.endswith('rs') else root[:-1]
+                    suffix = 'rt'
+                    if root.endswith('ns'):
+                        root = root[:-1]
+                    suffix = 't'
+                elif subject in ['S1_Plural', 'S2_Plural'] and obj in ('O1_Singular', 'O2_Singular'):
+                    if root.endswith(('n', 'rs')):
+                        root = root[:-2] if infinitive.endswith('rs') else root[:-1]
+                    suffix = 'rt'
+                    if root.endswith('ns'):
+                        root = root[:-1]
+                    suffix = 't'
+                elif subject in ['S1_Singular', 'S2_Singular'] and obj in ['O3_Singular', 'O3_Plural']:
+                    suffix = ''
+                elif subject in ['S1_Plural', 'S2_Plural', 'S3_Singular'] and (obj in ('O3_Singular', 'O3_Plural') or obj is None):
+                    if root.endswith('rs') or root.endswith('ns'):
+                        root = root[:-1]
+                    suffix = '' if root.endswith('an') else 's' if infinitive == 'coxons' and subject == 'S3_Singular' else 'an'
+                elif subject == 'S3_Plural':
+                    if root.endswith('rs') or root.endswith('ns'):
+                        root = root[:-1]
+                    suffix = 'an'
 
 
             # Conjugate the verb
@@ -352,6 +358,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                 else:
                     final_root = root
 
+
+
             conjugated_verb = f"{prefix}{final_root}{suffix}"
 
 
@@ -361,11 +369,12 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
     return region_conjugations
 
+
 # Define the function to handle conjugations and collection
-def collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, use_optional_preverb=False):
+def collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, use_optional_preverb=False, mood=False):
     all_conjugations = {}
     for subject in subjects:
-        result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, use_optional_preverb=use_optional_preverb)
+        result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, use_optional_preverb=use_optional_preverb, mood=mood)
         for region, conjugation_list in result.items():
             if region not in all_conjugations:
                 all_conjugations[region] = set()
@@ -373,11 +382,11 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
                 all_conjugations[region].add((subject, obj, conjugation[2]))  # Ensure unique conjugation for each combination
     return all_conjugations
 
-def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, use_optional_preverb=False):
+def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, use_optional_preverb=False, mood=False):
     all_conjugations = {}
     for subject in subjects:
         for obj in objects:
-            result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, use_optional_preverb=use_optional_preverb)
+            result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, use_optional_preverb=use_optional_preverb, mood=mood)
             for region, conjugation_list in result.items():
                 if region not in all_conjugations:
                     all_conjugations[region] = set()
@@ -385,5 +394,45 @@ def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False,
                     all_conjugations[region].add((subject, obj, conjugation[2]))
     return all_conjugations
 
-def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False):
-    return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb)
+def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False, mood=None):
+    return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb, mood)
+
+
+def extract_imperatives(all_conjugations, subjects):
+    """Extract imperative forms (S2_Singular and S2_Plural) from optative conjugations"""
+    imperatives = {}
+    for region, conjugations in all_conjugations.get("optative", {}).items():
+        imperatives[region] = []
+        for subject, obj, conjugation in conjugations:
+            if subject in subjects:  # e.g. ['S2_Singular', 'S2_Plural']
+                imperatives[region].append((subject, obj, conjugation))
+    return imperatives
+
+def format_imperatives(imperatives):
+    """Format imperatives with personal pronouns for display"""
+    result = {}
+    for region, conjugations in imperatives.items():
+        subject_pronouns = get_personal_pronouns(region, 'ivd_present')
+        object_pronouns = get_personal_pronouns_general(region)
+        formatted_conjugations = []
+        # Filter only S2_Singular and S2_Plural for sorting
+        sorted_conjugations = sorted(conjugations, key=lambda x: (x[0] == 'S2_Singular', x[0] == 'S2_Plural'), reverse=True)
+        for subject, obj, conjugation in sorted_conjugations:
+            if subject in ['S2_Singular', 'S2_Plural']:  # Filter to include only S2_Singular and S2_Plural
+                subject_pronoun = subject_pronouns[subject]
+                obj_pronoun = object_pronouns.get(obj, '')
+                formatted_conjugations.append(f"{subject_pronoun} {obj_pronoun}: {conjugation}")
+        result[region] = formatted_conjugations
+    return result
+
+# Define personal pronouns outside of regions for IVD
+def get_personal_pronouns_general(region):
+    """General personal pronouns for object reference in IVD"""
+    return {
+        'O1_Singular': 'ma',
+        'O2_Singular': 'si',
+        'O3_Singular': 'heyas' if region == "FA" else 'himus' if region == "PZ" else 'him' if region == "AŞ" else '(h)emus',
+        'O1_Plural': 'çku' if region == "FA" else 'şǩu' if region in ('AŞ', 'PZ') else 'çkin',
+        'O2_Plural': 'tkva' if region == "FA" else 't̆ǩva' if region in ('AŞ', 'PZ') else 'tkvan',
+        'O3_Plural': 'hentepes' if region == "FA" else 'hinis' if region == "PZ" else 'hini' if region == "AŞ" else 'entepes'
+    }
