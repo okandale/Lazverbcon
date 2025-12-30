@@ -3,6 +3,12 @@ from enum import Enum, IntFlag, auto
 from typing import TypeAlias
 
 
+class VerbType(Enum):
+    NOMINATIVE = auto()
+    DATIVE = auto()
+    ERGATIVE = auto()
+
+
 class Mood(IntFlag):
     NONE = 0
     APPLICATIVE = 1

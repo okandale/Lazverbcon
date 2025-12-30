@@ -13,9 +13,9 @@ from .tables.base import (APPLICATIVE_PREFIXES, APPLICATIVE_SUFFIXES,
                           PRESENT_NOMINATIVE_SUFFIXES,
                           PRESENT_PASSIVE_SUFFIXES, PRESENT_POTENTIAL_PREFIXES,
                           PRESENT_POTENTIAL_SUFFIXES)
-from .tables.preverbs import (PREVERB_APPLICATIVE_PREFIXES_TABLE,
-                              PREVERB_CAUSATIVE_PREFIXES_TABLE,
-                              PREVERB_PREFIXES_TABLE)
+from .tables.preverbs import (MUTATED_PREVERB_PREFIXES_TABLE,
+                              PREVERB_APPLICATIVE_PREFIXES_TABLE,
+                              PREVERB_CAUSATIVE_PREFIXES_TABLE)
 from .verbs import Verb
 
 DATIVE_SUFFIXES = {
@@ -68,11 +68,11 @@ class PresentConjugator(
             suffix_table = PRESENT_NOMINATIVE_SUFFIXES[verb.suffix]
 
         conjugation = verb.stem + suffix_table[self.region][self.subject]
-        if verb.preverb in PREVERB_PREFIXES_TABLE:
+        if verb.preverb in MUTATED_PREVERB_PREFIXES_TABLE:
             conjugation = (
-                PREVERB_PREFIXES_TABLE[verb.preverb][self.object][self.region][
-                    self.subject
-                ]
+                MUTATED_PREVERB_PREFIXES_TABLE[verb.preverb][self.object][
+                    self.region
+                ][self.subject]
                 + conjugation
             )
         elif self.subject.is_first_person():
@@ -114,7 +114,7 @@ class PresentConjugator(
             conjugation = verb.stem
 
         if (
-            verb.preverb is None
+            not verb.is_preverb_mutated
             and self.moods == Mood.NONE
             and self.subject.is_first_person()
         ):
@@ -144,18 +144,20 @@ class PresentConjugator(
 
         if verb.preverb is not None:
             if Mood.APPLICATIVE in self.moods:
-                prefix_table = PREVERB_APPLICATIVE_PREFIXES_TABLE[
-                    verb.preverb
-                ][self.object]
+                prefix = PREVERB_APPLICATIVE_PREFIXES_TABLE[verb.preverb][
+                    self.object
+                ][self.region][self.subject]
             elif Mood.CAUSATIVE in self.moods:
-                prefix_table = PREVERB_CAUSATIVE_PREFIXES_TABLE[verb.preverb][
+                prefix = PREVERB_CAUSATIVE_PREFIXES_TABLE[verb.preverb][
                     self.object
-                ]
+                ][self.region][self.subject]
+            elif verb.is_preverb_mutated:
+                prefix = MUTATED_PREVERB_PREFIXES_TABLE[verb.preverb][
+                    self.object
+                ][self.region][self.subject]
             else:
-                prefix_table = PREVERB_PREFIXES_TABLE[verb.preverb][
-                    self.object
-                ]
-            conjugation = prefix_table[self.region][self.subject] + conjugation
+                prefix = verb.preverb
+            conjugation = prefix + conjugation
 
         if Mood.NEGATIVE_IMPERATIVE in self.moods:
             return f"mo {conjugation}"
