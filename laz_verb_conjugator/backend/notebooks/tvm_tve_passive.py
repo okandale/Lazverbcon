@@ -97,14 +97,14 @@ def get_suffixes(tense, region, causative):
             
     return suffixes
 
-def conjugate_passive_form(infinitive, tense, subject=None, obj=None, applicative=False, causative=False, use_optional_preverb=False):
+def conjugate_passive_form(infinitive, tense, subject=None, obj=None, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False):
     
     # Check for invalid SxOx combinations
     if (subject in ['S1_Singular', 'S1_Plural'] and obj in ['O1_Singular', 'O1_Plural']) or \
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
         return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
     
-    if applicative and causative:
+    if applicative and (causative or simple_causative):
         raise ValueError("A verb can either have an applicative marker or a causative marker, but not both.")
     if applicative and obj is None:
         raise ValueError("Applicative requires an object to be specified.")
@@ -247,10 +247,10 @@ def conjugate_passive_form(infinitive, tense, subject=None, obj=None, applicativ
     return region_conjugations
 
 # Define the function to handle conjugations and collection
-def collect_conjugations_all(infinitive, subjects, tense='present', obj=None, applicative=False, causative=False):
+def collect_conjugations_all(infinitive, subjects, tense='present', obj=None, applicative=False, causative=False, simple_causative=False):
     all_conjugations = {}
     for subject in subjects:
-        result = conjugate_passive_form(infinitive, tense, subject=subject, causative=causative)
+        result = conjugate_passive_form(infinitive, tense, subject=subject, causative=causative, simple_causative=simple_causative)
         for region, conjugation_list in result.items():
             if region not in all_conjugations:
                 all_conjugations[region] = set()
