@@ -62,6 +62,7 @@ class ConjugationValidator:
             'subject': subject,
             'obj': request_params.get('obj'),
             'applicative': request_params.get('applicative', 'false').lower() == 'true',
+            'simple_causative': request_params.get('simple_causative', 'false').lower() == 'true',
             'causative': request_params.get('causative', 'false').lower() == 'true',
             'optative': request_params.get('optative', 'false').lower() == 'true',
             'imperative': request_params.get('imperative', 'false').lower() == 'true',

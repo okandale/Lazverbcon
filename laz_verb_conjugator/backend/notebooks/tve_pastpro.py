@@ -20,7 +20,7 @@ verbs, regions, co_verbs, gyo_verbs, no_verbs = load_tve_verbs()
 preverbs_rules = get_preverbs_rules('tve_pastpro')
 
 # Update the conjugate_past_progressive function to return a dictionary
-def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=False, causative=False, use_optional_preverb=False):
+def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False):
 
     
     # Check for invalid SxOx combinations
@@ -37,7 +37,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
     
     if applicative and obj is None:
         raise ValueError("Applicative requires an object to be specified.")
-    if causative and obj is None:
+    if (causative or simple_causative) and obj is None:
         raise ValueError("Causative requires an object to be specified.")
     
     if infinitive not in verbs:
@@ -108,7 +108,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
             if applicative:
                 marker = determine_marker(subject, obj, 'applicative')
                 marker_type = 'applicative'
-            elif causative:
+            elif causative or simple_causative:
                 marker = determine_marker(subject, obj, 'causative')
                 marker_type = 'causative'
 
@@ -224,7 +224,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                                 root = root
                             if applicative:
                                 root = root
-                            elif causative:
+                            elif causative or simple_causative:
                                 root = root
                             else:
                                 root = 'o' + root  # Remove only one character if there's a marker
@@ -251,14 +251,14 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                         prefix = preverb
 
                 # Special handling for "ceç̌alu"
-                elif preverb == 'gelo':
+                elif preverb in ('gelo', 'gel'):  
                     if root.endswith('ams'):
                         if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O3_Singular', 'O3_Plural'] and marker:
                             if applicative and causative:
                                 root = root
                             if applicative:
                                 root = root
-                            elif causative:
+                            elif causative or simple_causative:
                                 root = root
                             else:
                                 root = 'o' + root  # Remove only one character if there's a marker
@@ -293,7 +293,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                         if applicative:
                             if obj in ['O1_Singular', 'O1_Plural', 'O2_Singular', 'O2_Plural']:
                                 root = marker + root
-                        if causative:
+                        if causative or simple_causative:
                             root = marker + root[1:]
                         else:
                             root = 'i' + root[2:] if subject in ['S1_Singular', 'S1_Plural'] and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] else root
@@ -402,7 +402,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                                 root = 'i' + root[5:]
                             if applicative:
                                 root = 'i' + root[5:]
-                            elif causative:
+                            elif causative or simple_causative:
                                 root = 'o' + root[5:]
                             else:
                                 root = 'o' + root[1:]  # Remove only one character if there's a marker
@@ -637,7 +637,7 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                     root = root[:-2] + ('apap' if region == "HO" else 'apam')
                 elif root.endswith('y'):
                     root = root[:-2] + 'apam'
-            elif applicative:
+            elif applicative or simple_causative:
                 if infinitive in (('oşu', 'dodvu', 'otku')):
                     root = root[:-3] + ('vaps' if region == "HO" else 'vams') 
                 elif root.endswith(('ms', 'ups')):
@@ -696,10 +696,10 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
     return region_conjugations
 
 # Define the function to handle conjugations and collection
-def collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False):
+def collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, simple_causative=False):
     all_conjugations = {}
     for subject in subjects:
-        result = conjugate_past_progressive(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative)
+        result = conjugate_past_progressive(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, simple_causative=simple_causative)
         for region, conjugation_list in result.items():
             if region not in all_conjugations:
                 all_conjugations[region] = set()
@@ -707,11 +707,11 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
                 all_conjugations[region].add((subject, obj, conjugation[2]))  # Ensure unique conjugation for each combination
     return all_conjugations
 
-def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, use_optional_preverb=False):
+def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False):
     all_conjugations = {}
     for subject in subjects:
         for obj in objects:
-            result = conjugate_past_progressive(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, use_optional_preverb=use_optional_preverb)
+            result = conjugate_past_progressive(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, simple_causative=simple_causative, use_optional_preverb=use_optional_preverb)
             for region, conjugation_list in result.items():
                 if region not in all_conjugations:
                     all_conjugations[region] = set()
@@ -719,5 +719,5 @@ def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False,
                     all_conjugations[region].add((subject, obj, conjugation[2]))
     return all_conjugations
 
-def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False):
-    return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb)
+def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False):
+    return collect_conjugations(infinitive, subjects, obj, applicative, causative, simple_causative, use_optional_preverb)

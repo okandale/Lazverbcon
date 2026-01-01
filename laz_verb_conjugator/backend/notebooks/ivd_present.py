@@ -398,32 +398,91 @@ def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicati
     return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb, mood)
 
 
-def extract_imperatives(all_conjugations, subjects):
-    """Extract imperative forms (S2_Singular and S2_Plural) from optative conjugations"""
+
+
+def extract_neg_imperatives(all_conjugations, subjects):
     imperatives = {}
-    for region, conjugations in all_conjugations.get("optative", {}).items():
+    for region, conjugations in all_conjugations.items():
         imperatives[region] = []
         for subject, obj, conjugation in conjugations:
-            if subject in subjects:  # e.g. ['S2_Singular', 'S2_Plural']
-                imperatives[region].append((subject, obj, conjugation))
+            if subject in subjects:
+                # Use "mo" for region "HO", otherwise "mot"
+                neg_prefix = "mo" if region in ("HO", "AŞ") else "mot"
+                conjugation_with_neg = f"{neg_prefix} {conjugation}"
+                imperatives[region].append((subject, obj, conjugation_with_neg))
     return imperatives
 
-def format_imperatives(imperatives):
-    """Format imperatives with personal pronouns for display"""
+def format_neg_imperatives(imperatives):
     result = {}
     for region, conjugations in imperatives.items():
-        subject_pronouns = get_personal_pronouns(region, 'ivd_present')
+        # Get both subject and object pronouns for this region
+        subject_pronouns = get_personal_pronouns(region, 'tve_present')
         object_pronouns = get_personal_pronouns_general(region)
+        
         formatted_conjugations = []
-        # Filter only S2_Singular and S2_Plural for sorting
-        sorted_conjugations = sorted(conjugations, key=lambda x: (x[0] == 'S2_Singular', x[0] == 'S2_Plural'), reverse=True)
-        for subject, obj, conjugation in sorted_conjugations:
-            if subject in ['S2_Singular', 'S2_Plural']:  # Filter to include only S2_Singular and S2_Plural
-                subject_pronoun = subject_pronouns[subject]
-                obj_pronoun = object_pronouns.get(obj, '')
-                formatted_conjugations.append(f"{subject_pronoun} {obj_pronoun}: {conjugation}")
+        for subject, obj, conjugation in conjugations:
+            subject_pronoun = subject_pronouns[subject]
+            obj_pronoun = object_pronouns.get(obj, '')
+            formatted_conjugations.append(f"{subject_pronoun} {obj_pronoun}: {conjugation}")
+
+        # Reorder for negative imperatives, ensuring S2_Singular comes before S2_Plural
+        formatted_conjugations.sort(key=lambda x: (
+            x.split()[0] == subject_pronouns['S2_Plural'],  # Place S2_Plural last
+            x.split()[0] == subject_pronouns['S2_Singular'],  # Place S2_Singular first
+            ordered_objects.index(x.split()[1]) if len(x.split()) > 1 and x.split()[1] in ordered_objects else -1
+        ))
+        
         result[region] = formatted_conjugations
+    
     return result
+
+def extract_imperatives(all_conjugations, subjects):
+    """
+    all_conjugations: dict[region -> set((subject, obj, conjugation), ...)]
+    subjects: e.g. ['S2_Singular', 'S2_Plural']
+    """
+    imperatives = {}
+    for region, forms in all_conjugations.items():
+        imperatives[region] = [
+            (subj, obj, conj)
+            for (subj, obj, conj) in forms
+            if subj in subjects
+        ]
+    return imperatives
+
+
+def process_imperative(self, infinitive, subject, obj, applicative, causative, region_filter):
+    module = None
+    mood = None
+
+    if 'tve_past' in self.tense_modules and infinitive in self.tense_modules['tve_past'].verbs:
+        module = self.tense_modules['tve_past']
+        mood = None  # TVE imperative is from past (your existing logic)
+    elif 'ivd_present' in self.tense_modules and infinitive in self.tense_modules['ivd_present'].verbs:
+        module = self.tense_modules['ivd_present']
+        mood = 'optative'  # <-- KEY for IVD imperative
+
+    if not module:
+        return None
+
+    subjects = ['S2_Singular', 'S2_Plural'] if subject == 'all' else [subject]
+    objects = self.ordered_objects if obj == 'all' else [obj] if obj else [None]
+
+    all_conjugations = {}
+    for subj in subjects:
+        for obj_item in objects:
+            result = self._call_conjugation_method(
+                module, infinitive, [subj], obj_item,
+                applicative=applicative, causative=causative, mood=mood
+            )
+            for region, forms in result.items():
+                if region_filter and region not in region_filter.split(','):
+                    continue
+                all_conjugations.setdefault(region, set()).update(forms)
+
+    imperatives = module.extract_imperatives(all_conjugations, subjects)
+    return self.format_conjugations(imperatives, module)
+
 
 # Define personal pronouns outside of regions for IVD
 def get_personal_pronouns_general(region):

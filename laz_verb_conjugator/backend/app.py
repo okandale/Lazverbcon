@@ -207,6 +207,8 @@ def conjugate():
     # Make sure you define them up front
     has_applicative = (request_params.get('applicative') == 'true')
     has_causative   = (request_params.get('causative') == 'true')    
+    has_simple_causative = (request_params.get('simple_causative') == 'true')
+
 
     if not infinitive:
         error_response = {"error": "Infinitive is required"}
@@ -223,7 +225,7 @@ def conjugate():
 
 
     has_markers = any(request_params.get(marker) == 'true' 
-                     for marker in ['applicative', 'causative'])
+                     for marker in ['applicative', 'causative', 'simple_causative'])
 
     # 3) Extract object (obj) and convert empty or "None" -> real None
     obj = request_params.get('obj')
@@ -238,27 +240,31 @@ def conjugate():
         # We specifically want at least one of 'applicative' or 'causative' to be true
         has_applicative = (request_params.get('applicative') == 'true')
         has_causative   = (request_params.get('causative') == 'true')
+        has_simple_causative = (request_params.get('simple_causative') == 'true')
+
         
-        if not (has_applicative or has_causative):
+        if not (has_applicative or has_causative or has_simple_causative):
             error_response = {
-                "error": "This verb requires a marker (applicative or causative)/bu fiile uygulamalı veya ettirgen belirteci gerekiyor."
+                "error": "This verb requires a marker (applicative, causative or double causative)/bu fiile uygulamalı, oldurgan veya ettirgen belirteci gerekiyor."
             }
             log_request_response(request_params, error_response, '/api/conjugate')
             return jsonify(error_response), 400
 
 
+    if has_causative and has_simple_causative:
+        return jsonify({"error": "Select only one causative type at a time."}), 400
 
 
-    # Check verb existence in all types
+        # Check verb existence in all types
     exists_in_ivd, exists_in_tve, exists_in_tvm, exists_in_tvm_tve = check_verb_existence(infinitive, tense_modules)
 
     # 6. Now do the direct object checks for Applicative / Causative
-    if exists_in_tve and (has_applicative or has_causative):
+    if exists_in_tve and (has_applicative or has_causative or has_simple_causative):
         if has_applicative and not obj:
             error_response = {"error": "Applicative requires an object to be specified. / Uygulamalı belirteç bir nesnenin belirtilmesini gerektirir."}
             return jsonify(error_response), 400
 
-        if has_causative and not obj:
+        if (has_causative or has_simple_causative) and not obj:
             error_response = {"error": "Causative requires an object to be specified. / Ettirgen belirteç bir nesnenin belirtilmesini gerektirir"}
             return jsonify(error_response), 400
 

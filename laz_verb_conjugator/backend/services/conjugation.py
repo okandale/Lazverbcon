@@ -26,34 +26,34 @@ class ConjugationService:
                 # For TVM verbs, use tvm_tense with present tense
                 conjugations = self.process_tvm_imperative(
                     params['infinitive'], params['subject'], params['obj'],
-                    params['applicative'], params['causative'], params['region_filter'],
+                    params['applicative'], params['causative'], params['simple_causative'], params['region_filter'],
                     tense='present', is_negative=True)
             else:
                 # For TVE verbs, use existing process
                 conjugations = self.process_negative_imperative(
                     params['infinitive'], params['subject'], params['obj'],
-                    params['applicative'], params['causative'], params['region_filter'])
+                    params['applicative'], params['causative'], params['simple_causative'], params['region_filter'])
         elif params['imperative']:
             if is_tvm_verb:
                 # For TVM verbs, use tvm_tense with past tense
                 conjugations = self.process_tvm_imperative(
                     params['infinitive'], params['subject'], params['obj'],
-                    params['applicative'], params['causative'], params['region_filter'],
+                    params['applicative'], params['causative'], params['simple_causative'], params['region_filter'],
                     tense='past', is_negative=False)
             else:
                 # For TVE verbs, use existing process
                 conjugations = self.process_imperative(
                     params['infinitive'], params['subject'], params['obj'],
-                    params['applicative'], params['causative'], params['region_filter'])
+                    params['applicative'], params['causative'], params['simple_causative'], params['region_filter'])
         elif params['aspect']:
             conjugations = self.process_aspect_conjugation(
                 params['infinitive'], params['subject'], params['obj'],
                 params['aspect'], params['tense'], params['applicative'],
-                params['causative'], params['optative'], params['region_filter'])
+                params['causative'], params['simple_causative'], params['optative'], params['region_filter'])
         else:
             conjugations = self.process_tense_conjugation(
                 params['infinitive'], params['subject'], params['obj'],
-                params['tense'], params['applicative'], params['causative'],
+                params['tense'], params['applicative'], params['causative'], params['simple_causative'],
                 params['optative'], params['region_filter'])
 
         return conjugations
@@ -111,38 +111,74 @@ class ConjugationService:
         return formatted
 
     def _call_conjugation_method(self, module, infinitive, subjects, obj, tense=None,
-                               applicative=False, causative=False, mood=None):
+                               applicative=False, causative=False, simple_causative=False, mood=None):
         """Helper method to call appropriate conjugation method based on module capabilities."""
         if hasattr(module, 'collect_conjugations'):
             if hasattr(module.collect_conjugations, '__code__') and 'mood' in module.collect_conjugations.__code__.co_varnames:
                 return module.collect_conjugations(
                     infinitive, subjects, obj=obj,
-                    applicative=applicative, causative=causative, mood=mood
+                    applicative=applicative, causative=causative, simple_causative=simple_causative, mood=mood
                 )
             else:
                 return module.collect_conjugations(
                     infinitive, subjects, obj=obj,
-                    applicative=applicative, causative=causative
+                    applicative=applicative, causative=causative, simple_causative=simple_causative
                 )
         elif hasattr(module, 'collect_conjugations_all'):
             if hasattr(module.collect_conjugations_all, '__code__') and 'mood' in module.collect_conjugations_all.__code__.co_varnames:
                 return module.collect_conjugations_all(
                     infinitive, subjects=subjects, tense=tense,
-                    obj=obj, applicative=applicative, causative=causative, mood=mood
+                    obj=obj, applicative=applicative, causative=causative, simple_causative=simple_causative, mood=mood
                 )
             else:
                 return module.collect_conjugations_all(
                     infinitive, subjects=subjects, tense=tense,
-                    obj=obj, applicative=applicative, causative=causative
+                    obj=obj, applicative=applicative, causative=causative, simple_causative=simple_causative
                 )
         else:
             raise ValueError("Invalid module")
 
-    def process_imperative(self, infinitive, subject, obj, applicative, causative, region_filter):
+    def process_imperative(self, infinitive, subject, obj, applicative, causative, simple_causative, region_filter):
+        module = None
+        mood = None
+
+        # IVD imperative comes from PRESENT OPTATIVE
+        if 'ivd_present' in self.tense_modules and infinitive in self.tense_modules['ivd_present'].verbs:
+            module = self.tense_modules['ivd_present']
+            mood = 'optative'
+
+        # TVE imperative (your existing behavior)
+        elif 'tve_past' in self.tense_modules and infinitive in self.tense_modules['tve_past'].verbs:
+            module = self.tense_modules['tve_past']
+            mood = None
+
+        if not module:
+            return None
+
+        subjects = ['S2_Singular', 'S2_Plural'] if subject == 'all' else [subject]
+        objects = self.ordered_objects if obj == 'all' else [obj] if obj else [None]
+        all_conjugations = {}
+
+        for subj in subjects:
+            for obj_item in objects:
+                result = self._call_conjugation_method(
+                    module, infinitive, [subj], obj_item,
+                    applicative=applicative, causative=causative, simple_causative=simple_causative, mood=mood
+                )
+                for region, forms in result.items():
+                    if region_filter and region not in region_filter.split(','):
+                        continue
+                    all_conjugations.setdefault(region, set()).update(forms)
+
+        imperatives = module.extract_imperatives(all_conjugations, subjects)
+        return self.format_conjugations(imperatives, module)
+
+
+    def process_negative_imperative(self, infinitive, subject, obj, applicative, causative, simple_causative, region_filter):
         """Process imperative conjugations."""
         module = None
-        if 'tve_past' in self.tense_modules and infinitive in self.tense_modules['tve_past'].verbs:
-            module = self.tense_modules['tve_past']
+        if 'tve_present' in self.tense_modules and infinitive in self.tense_modules['tve_present'].verbs:
+            module = self.tense_modules['tve_present']
         elif 'ivd_present' in self.tense_modules and infinitive in self.tense_modules['ivd_present'].verbs:
             module = self.tense_modules['ivd_present']
 
@@ -158,34 +194,7 @@ class ConjugationService:
             for obj_item in objects:
                 result = self._call_conjugation_method(
                     module, infinitive, [subj], obj_item,
-                    applicative=applicative, causative=causative
-                )
-                
-                for region, forms in result.items():
-                    if region_filter and region not in region_filter.split(','):
-                        continue
-                    if region not in all_conjugations:
-                        all_conjugations[region] = set()
-                    all_conjugations[region].update(forms)
-
-        imperatives = module.extract_imperatives(all_conjugations, subjects)
-        return self.format_conjugations(imperatives, module)
-
-    def process_negative_imperative(self, infinitive, subject, obj, applicative, causative, region_filter):
-        """Process negative imperative conjugations."""
-        module = self.tense_modules.get('tve_present')
-        if not module or not hasattr(module, 'verbs') or infinitive not in module.verbs:
-            return None
-
-        subjects = ['S2_Singular', 'S2_Plural'] if subject == 'all' else [subject]
-        objects = self.ordered_objects if obj == 'all' else [obj] if obj else [None]
-        all_conjugations = {}
-
-        for subj in subjects:
-            for obj_item in objects:
-                result = self._call_conjugation_method(
-                    module, infinitive, [subj], obj_item,
-                    applicative=applicative, causative=causative
+                    applicative=applicative, causative=causative, simple_causative=simple_causative
                 )
                 
                 for region, forms in result.items():
@@ -198,7 +207,8 @@ class ConjugationService:
         neg_imperatives = module.extract_neg_imperatives(all_conjugations, subjects)
         return self.format_conjugations(neg_imperatives, module)
 
-    def process_tvm_imperative(self, infinitive, subject, obj, applicative, causative, 
+
+    def process_tvm_imperative(self, infinitive, subject, obj, applicative, causative, simple_causative, 
                              region_filter, tense, is_negative):
         """Process TVM imperative conjugations using tvm_tense module."""
         module = self.tense_modules.get('tvm_tense')
@@ -213,7 +223,7 @@ class ConjugationService:
             for obj_item in objects:
                 result = self._call_conjugation_method(
                     module, infinitive, [subj], obj_item, tense,
-                    applicative, causative
+                    applicative, causative, simple_causative,
                 )
                 
                 for region, forms in result.items():
@@ -233,7 +243,7 @@ class ConjugationService:
         return self.format_conjugations(all_conjugations, module)
 
     def process_aspect_conjugation(self, infinitive, subject, obj, aspect, tense,
-                                 applicative, causative, optative, region_filter):
+                                 applicative, causative, simple_causative, optative, region_filter):
         """Process aspect-based conjugations."""
         conjugations = {}
         module_found = False
@@ -253,7 +263,7 @@ class ConjugationService:
                     for obj_item in objects:
                         result = self._call_conjugation_method(
                             module, infinitive, [subj], obj_item, tense,
-                            applicative, causative, mood
+                            applicative, causative, simple_causative, mood
                         )
 
                         for region, forms in result.items():
@@ -274,7 +284,7 @@ class ConjugationService:
         return self.format_conjugations(conjugations, used_module)
 
     def process_tense_conjugation(self, infinitive, subject, obj, tense,
-                                applicative, causative, optative, region_filter):
+                                applicative, causative, simple_causative, optative, region_filter):
         """Process tense-based conjugations."""
         conjugations = {}
         module_found = False
@@ -301,7 +311,7 @@ class ConjugationService:
                     for obj_item in objects:
                         result = self._call_conjugation_method(
                             module, infinitive, [subj], obj_item,
-                            embedded_tense, applicative, causative,
+                            embedded_tense, applicative, causative, simple_causative,
                             'optative' if optative else None
                         )
 

@@ -20,13 +20,28 @@ const FormSection = ({
   const isTenseDisabled = formData.optative || formData.imperative || formData.neg_imperative;
   const isObjectDisabled = formData.aspect !== '' || formData.tense === 'presentperf';
 
-  const handleInputChange = e => {
+  const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
+
+    setFormData((prevData) => {
+      // Enforce: only one causative can be selected
+      if (type === "checkbox" && checked) {
+        if (name === "causative") {
+          return { ...prevData, causative: true, simple_causative: false };
+        }
+        if (name === "simple_causative") {
+          return { ...prevData, simple_causative: true, causative: false };
+        }
+      }
+
+      // Default behavior for all other fields (and for unchecking)
+      return {
+        ...prevData,
+        [name]: type === "checkbox" ? checked : value,
+      };
+    });
   };
+
 
   const handleRegionChange = e => {
     const { value, checked } = e.target;
@@ -47,6 +62,7 @@ const FormSection = ({
       aspect: '',
       applicative: false,
       causative: false,
+      simple_causative: false,
       optative: false,
       imperative: false,
       neg_imperative: false,
@@ -230,6 +246,7 @@ const FormSection = ({
         {[
           { name: 'applicative', label: translations[language].applicative },
           { name: 'imperative', label: translations[language].imperative, disabled: formData.neg_imperative },
+          { name: 'simple_causative', label: translations[language].simple_causative },
           { name: 'causative', label: translations[language].causative },
           { name: 'neg_imperative', label: translations[language].negImperative, disabled: formData.imperative },
           { name: 'optative', label: translations[language].optative }

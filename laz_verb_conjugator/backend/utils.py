@@ -129,7 +129,7 @@ def determine_marker(subject, obj, marker_type):
             return 'u'
         else:
             return ''
-    elif marker_type == 'causative':
+    elif marker_type == 'causative' or 'simple_causative':
         return 'o'
     elif marker_type == 'causative and applicative':
         if (subject in ['S1_Singular', 'S2_Singular', 'S1_Plural', 'S2_Plural', 'S3_Singular', 'S3_Plural'] and obj in ['O1_Singular', 'O2_Singular', 'O1_Plural', 'O2_Plural']) or \
