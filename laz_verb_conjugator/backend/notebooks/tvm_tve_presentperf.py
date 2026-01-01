@@ -25,13 +25,13 @@ def get_suffixes(region):
     }
     return suffixes
 
-def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicative=False, causative=False, use_optional_preverb=False):
+def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False):
     # Check for invalid SxOx combinations
     if (subject in ['S1_Singular', 'S1_Plural'] and obj in ['O1_Singular', 'O1_Plural']) or \
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
         return {region: [(subject, obj, 'N/A - Geçersiz Kombinasyon')] for region in regions[infinitive]}
     
-    if applicative or causative:
+    if applicative or (causative or simple_causative):
         raise ValueError("This tense cannot have an applicative, causative or optative. ")
     if obj:
         raise ValueError("This tense cannot have an object.")
@@ -140,10 +140,10 @@ def conjugate_present_perfect_form(infinitive, subject=None, obj=None, applicati
     return region_conjugations
 
 # Define the function to handle conjugations and collection
-def collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, mood=None):
+def collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, simple_causative=False, mood=None):
     all_conjugations = {}
     for subject in subjects:
-        result = conjugate_present_perfect_form(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative)
+        result = conjugate_present_perfect_form(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, simple_causative=simple_causative)
         for region, conjugation_list in result.items():
             if region not in all_conjugations:
                 all_conjugations[region] = set()
