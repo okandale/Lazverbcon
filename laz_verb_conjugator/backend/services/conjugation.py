@@ -139,10 +139,46 @@ class ConjugationService:
             raise ValueError("Invalid module")
 
     def process_imperative(self, infinitive, subject, obj, applicative, causative, region_filter):
+        module = None
+        mood = None
+
+        # IVD imperative comes from PRESENT OPTATIVE
+        if 'ivd_present' in self.tense_modules and infinitive in self.tense_modules['ivd_present'].verbs:
+            module = self.tense_modules['ivd_present']
+            mood = 'optative'
+
+        # TVE imperative (your existing behavior)
+        elif 'tve_past' in self.tense_modules and infinitive in self.tense_modules['tve_past'].verbs:
+            module = self.tense_modules['tve_past']
+            mood = None
+
+        if not module:
+            return None
+
+        subjects = ['S2_Singular', 'S2_Plural'] if subject == 'all' else [subject]
+        objects = self.ordered_objects if obj == 'all' else [obj] if obj else [None]
+        all_conjugations = {}
+
+        for subj in subjects:
+            for obj_item in objects:
+                result = self._call_conjugation_method(
+                    module, infinitive, [subj], obj_item,
+                    applicative=applicative, causative=causative, mood=mood
+                )
+                for region, forms in result.items():
+                    if region_filter and region not in region_filter.split(','):
+                        continue
+                    all_conjugations.setdefault(region, set()).update(forms)
+
+        imperatives = module.extract_imperatives(all_conjugations, subjects)
+        return self.format_conjugations(imperatives, module)
+
+
+    def process_negative_imperative(self, infinitive, subject, obj, applicative, causative, region_filter):
         """Process imperative conjugations."""
         module = None
-        if 'tve_past' in self.tense_modules and infinitive in self.tense_modules['tve_past'].verbs:
-            module = self.tense_modules['tve_past']
+        if 'tve_present' in self.tense_modules and infinitive in self.tense_modules['tve_present'].verbs:
+            module = self.tense_modules['tve_present']
         elif 'ivd_present' in self.tense_modules and infinitive in self.tense_modules['ivd_present'].verbs:
             module = self.tense_modules['ivd_present']
 
@@ -168,35 +204,9 @@ class ConjugationService:
                         all_conjugations[region] = set()
                     all_conjugations[region].update(forms)
 
-        imperatives = module.extract_imperatives(all_conjugations, subjects)
-        return self.format_conjugations(imperatives, module)
-
-    def process_negative_imperative(self, infinitive, subject, obj, applicative, causative, region_filter):
-        """Process negative imperative conjugations."""
-        module = self.tense_modules.get('tve_present')
-        if not module or not hasattr(module, 'verbs') or infinitive not in module.verbs:
-            return None
-
-        subjects = ['S2_Singular', 'S2_Plural'] if subject == 'all' else [subject]
-        objects = self.ordered_objects if obj == 'all' else [obj] if obj else [None]
-        all_conjugations = {}
-
-        for subj in subjects:
-            for obj_item in objects:
-                result = self._call_conjugation_method(
-                    module, infinitive, [subj], obj_item,
-                    applicative=applicative, causative=causative
-                )
-                
-                for region, forms in result.items():
-                    if region_filter and region not in region_filter.split(','):
-                        continue
-                    if region not in all_conjugations:
-                        all_conjugations[region] = set()
-                    all_conjugations[region].update(forms)
-
         neg_imperatives = module.extract_neg_imperatives(all_conjugations, subjects)
         return self.format_conjugations(neg_imperatives, module)
+
 
     def process_tvm_imperative(self, infinitive, subject, obj, applicative, causative, 
                              region_filter, tense, is_negative):
