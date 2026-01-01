@@ -20,7 +20,7 @@ verbs, regions = load_ivd_verbs()
 preverbs_rules = get_preverbs_rules('ivd_present')
 
 # Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
-def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False, mood=False):
+def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False, mood=False):
     # Check for invalid SxOx combinations
     if (subject in ['S1_Singular', 'S1_Plural'] and obj in ['O1_Singular', 'O1_Plural']) or \
        (subject in ['S2_Singular', 'S2_Plural'] and obj in ['O2_Singular', 'O2_Plural']):
@@ -28,7 +28,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
     
     if applicative and obj is None:
         raise ValueError("Applicative requires an object to be specified.")
-    if causative and obj is None:
+    if (causative or simple_causative) and obj is None:
         raise ValueError("Causative requires an object to be specified.")
     
     if infinitive not in verbs:
@@ -371,10 +371,10 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
 
 # Define the function to handle conjugations and collection
-def collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, use_optional_preverb=False, mood=False):
+def collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False, mood=False):
     all_conjugations = {}
     for subject in subjects:
-        result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, use_optional_preverb=use_optional_preverb, mood=mood)
+        result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, simple_causative=simple_causative, use_optional_preverb=use_optional_preverb, mood=mood)
         for region, conjugation_list in result.items():
             if region not in all_conjugations:
                 all_conjugations[region] = set()
@@ -382,11 +382,11 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
                 all_conjugations[region].add((subject, obj, conjugation[2]))  # Ensure unique conjugation for each combination
     return all_conjugations
 
-def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, use_optional_preverb=False, mood=False):
+def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False, mood=False):
     all_conjugations = {}
     for subject in subjects:
         for obj in objects:
-            result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, use_optional_preverb=use_optional_preverb, mood=mood)
+            result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, simple_causative=simple_causative, use_optional_preverb=use_optional_preverb, mood=mood)
             for region, conjugation_list in result.items():
                 if region not in all_conjugations:
                     all_conjugations[region] = set()
@@ -394,8 +394,8 @@ def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False,
                     all_conjugations[region].add((subject, obj, conjugation[2]))
     return all_conjugations
 
-def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False, mood=None):
-    return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb, mood)
+def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False, mood=None):
+    return collect_conjugations(infinitive, subjects, obj, applicative, causative, simple_causative, use_optional_preverb, mood)
 
 
 
@@ -451,7 +451,7 @@ def extract_imperatives(all_conjugations, subjects):
     return imperatives
 
 
-def process_imperative(self, infinitive, subject, obj, applicative, causative, region_filter):
+def process_imperative(self, infinitive, subject, obj, applicative, causative, simple_causative, region_filter):
     module = None
     mood = None
 
@@ -473,7 +473,7 @@ def process_imperative(self, infinitive, subject, obj, applicative, causative, r
         for obj_item in objects:
             result = self._call_conjugation_method(
                 module, infinitive, [subj], obj_item,
-                applicative=applicative, causative=causative, mood=mood
+                applicative=applicative, causative=causative, simple_causative=simple_causative, mood=mood
             )
             for region, forms in result.items():
                 if region_filter and region not in region_filter.split(','):
