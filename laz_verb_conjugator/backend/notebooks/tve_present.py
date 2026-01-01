@@ -21,7 +21,7 @@ verbs, regions, co_verbs, gyo_verbs, no_verbs = load_tve_verbs()
 preverbs_rules = get_preverbs_rules('tve_present')
 
 # Function to conjugate present tense with subject and object, handling preverbs, phonetic rules, applicative and causative markers
-def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, use_optional_preverb=False, mood=None):
+def conjugate_present(infinitive, subject, obj=None, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False, mood=None):
     # Check for invalid SxOx combinations
     if applicative and (
         (subject == 'S1_Singular' and obj == 'O1_Plural') or 
@@ -36,7 +36,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
     if applicative and obj is None:
         raise ValueError("Applicative requires an object to be specified.")
-    if causative and obj is None:
+    if (causative or simple_causative) and obj is None:
         raise ValueError("Causative requires an object to be specified.")
     
     if infinitive not in verbs:
@@ -113,6 +113,10 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             elif causative:
                 marker = determine_marker(subject, obj, 'causative')
                 marker_type = 'causative'
+            elif simple_causative:
+                marker = determine_marker(subject, obj, 'simple_causative')
+                marker_type = 'simple_causative'
+
 
 
 
@@ -240,7 +244,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                                 root = root
                             if applicative:
                                 root = root
-                            elif causative:
+                            elif causative or simple_causative:
                                 root = root
                             else:
                                 root = 'o' + root  # Remove only one character if there's a marker
@@ -275,7 +279,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                                 root = root
                             if applicative:
                                 root = root
-                            elif causative:
+                            elif causative or simple_causative:
                                 root = root
                             else:
                                 root = 'o' + root  # Remove only one character if there's a marker
@@ -310,7 +314,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         if applicative:
                             if obj in ['O1_Singular', 'O1_Plural', 'O2_Singular', 'O2_Plural']:
                                 root = marker + root
-                        if causative:
+                        if causative or simple_causative:
                             root = marker + root[1:]
                         else:
                             root = 'i' + root[2:] if subject in ['S1_Singular', 'S1_Plural'] and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] else root
@@ -427,7 +431,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                                 root = 'i' + root[2:]
                             if applicative:
                                 root = 'i' + root[2:]
-                            elif causative:
+                            elif causative or simple_causative:
                                 root = 'o' + root[2:]
                             else:
                                 root = 'o' + root[1:]  # Remove only one character if there's a marker
@@ -677,7 +681,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                     root = root[:-2] + ('apap' if region == "HO" else 'apam')
                 elif root.endswith('y'):
                     root = root[:-2] + 'apam'
-            elif applicative:
+            elif applicative or simple_causative:
                 if infinitive in (('oşu', 'dodvu', 'otku')):
                     root = root[:-3] + ('vaps' if region == "HO" else 'vams') 
                 elif root.endswith(('ms', 'ups')):
@@ -811,10 +815,10 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
     return region_conjugations
 
 # Define the function to handle conjugations and collection
-def collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, mood=None):
+def collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, simple_causative=False, mood=None):
     all_conjugations = {}
     for subject in subjects:
-        result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, mood=mood)
+        result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, simple_causative=simple_causative, mood=mood)
         for region, conjugation_list in result.items():
             if region not in all_conjugations:
                 all_conjugations[region] = []
@@ -861,11 +865,11 @@ def format_neg_imperatives(imperatives):
     
     return result
 
-def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, use_optional_preverb=False, mood=None):
+def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False, mood=None):
     all_conjugations = {}
     for subject in subjects:
         for obj in objects:
-            result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, use_optional_preverb=use_optional_preverb, mood=mood)
+            result = conjugate_present(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, simple_causative=simple_causative, use_optional_preverb=use_optional_preverb, mood=mood)
             for region, conjugation_list in result.items():
                 if region not in all_conjugations:
                     all_conjugations[region] = []
@@ -878,8 +882,8 @@ def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False,
 
 
 
-def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False, mood=None):
-    return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb, mood)
+def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False, mood=None):
+    return collect_conjugations(infinitive, subjects, obj, applicative, causative, simple_causative, use_optional_preverb, mood)
 
 
 

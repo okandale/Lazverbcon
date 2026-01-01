@@ -20,7 +20,7 @@ verbs, regions, co_verbs, gyo_verbs, no_verbs = load_tve_verbs()
 preverbs_rules = get_preverbs_rules('tve_past')
 
 # Update the conjugate_past function to return a dictionary
-def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causative=False, use_optional_preverb=False):
+def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False):
     # Check for invalid SxOx combinations
     if applicative and (
         (subject == 'S1_Singular' and obj == 'O1_Plural') or 
@@ -35,7 +35,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
     
     if applicative and obj is None:
         raise ValueError("Applicative requires an object to be specified.")
-    if causative and obj is None:
+    if (causative or simple_causative) and obj is None:
         raise ValueError("Causative requires an object to be specified.")
     
     if infinitive not in verbs:
@@ -103,7 +103,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             if applicative:
                 marker = determine_marker(subject, obj, 'applicative')
                 marker_type = 'applicative'
-            elif causative:
+            elif causative or simple_causative:
                 marker = determine_marker(subject, obj, 'causative')
                 marker_type = 'causative'
                 
@@ -143,13 +143,12 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
 
 
 
-                print(f"root: {root}")
-                print(f"preverb: {preverb}")
+
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                     preverb = 'ey' if region == 'PZ' else 'y'
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
                     preverb = preverb[:-1] + 'y' if preverb == 'ge' else preverb[:-1] # added for 'geçamu' as it would omit the 'y' in (no S1) O3 conjugations.
-
+ 
                 if preverb == 'mo' or infinitive.startswith('mo'):
                     if root.startswith(('mu', 'imu', 'umu', 'omu')):
                         if root.startswith(('mu', 'imu', 'umu', 'omu')):
@@ -235,7 +234,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                                 root = root
                             if applicative:
                                 root = root
-                            elif causative:
+                            elif causative or simple_causative:
                                 root = root
                             else:
                                 root = 'o' + root  # Remove only one character if there's a marker
@@ -261,15 +260,17 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                     else:
                         prefix = preverb
 
+
+
                 # Special handling for "ceç̌alu"
-                elif preverb == 'gelo':
+                elif preverb in ('gelo', 'gel'):                   
                     if root.endswith('ams'):
                         if subject in ['S1_Singular', 'S1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O3_Singular', 'O3_Plural'] and marker:
                             if applicative and causative:
                                 root = root
                             if applicative:
                                 root = root
-                            elif causative:
+                            elif causative or simple_causative:
                                 root = root
                             else:
                                 root = 'o' + root  # Remove only one character if there's a marker
@@ -305,7 +306,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                         if applicative:
                             if obj in ['O1_Singular', 'O1_Plural', 'O2_Singular', 'O2_Plural']:
                                 root = marker + root[1:]
-                        if causative:
+                        if causative or simple_causative:
                             root = marker + root[1:]
                         else:
                             root = 'i' + root[1:] if subject in ['S1_Singular', 'S1_Plural'] and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] or obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'] else root
@@ -416,7 +417,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                                 root = 'i' + root[5:]
                             if applicative:
                                 root = 'i' + root[5:]
-                            elif causative:
+                            elif causative or simple_causative:
                                 root = 'o' + root[5:]
                             else:
                                 root = 'o' + root[1:]  # Remove only one character if there's a marker
@@ -651,7 +652,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                     root = root[:-5] + 'ap'
                 elif root.endswith('rs'):
                     root = root[:-1] + 'ap'
-            elif applicative:
+            elif applicative or simple_causative:
                 if root in (('işums', 'işups', 'idums', 'itkums', 'itkups')) or infinitive in (('golusu', 'meşǩvu')):
                     root = root[:-5] + 'v' if infinitive in ('golusu') else root[:-3] + 'vap'
                 elif root.endswith(('ms', 'ps')):
@@ -729,10 +730,10 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
     return region_conjugations
 
 # Define the function to handle conjugations and collection
-def collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False):
+def collect_conjugations(infinitive, subjects, obj=None, applicative=False, causative=False, simple_causative=False):
     all_conjugations = {}
     for subject in subjects:
-        result = conjugate_past(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative)
+        result = conjugate_past(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, simple_causative=simple_causative)
         for region, conjugation_list in result.items():
             if region not in all_conjugations:
                 all_conjugations[region] = set()
@@ -765,11 +766,11 @@ def format_imperatives(imperatives):
         result[region] = formatted_conjugations
     return result
 
-def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, use_optional_preverb=False):
+def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False):
     all_conjugations = {}
     for subject in subjects:
         for obj in objects:
-            result = conjugate_past(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, use_optional_preverb=use_optional_preverb)
+            result = conjugate_past(infinitive, subject=subject, obj=obj, applicative=applicative, causative=causative, simple_causative=simple_causative, use_optional_preverb=use_optional_preverb)
             for region, conjugation_list in result.items():
                 if region not in all_conjugations:
                     all_conjugations[region] = set()
@@ -777,8 +778,8 @@ def collect_conjugations_all_subjects_all_objects(infinitive, applicative=False,
                     all_conjugations[region].add((subject, obj, conjugation[2]))
     return all_conjugations
 
-def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, use_optional_preverb=False):
-    return collect_conjugations(infinitive, subjects, obj, applicative, causative, use_optional_preverb)
+def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicative=False, causative=False, simple_causative=False, use_optional_preverb=False):
+    return collect_conjugations(infinitive, subjects, obj, applicative, causative, simple_causative, use_optional_preverb)
 
 # Define personal pronouns outside of regions
 def get_personal_pronouns_general(region):
