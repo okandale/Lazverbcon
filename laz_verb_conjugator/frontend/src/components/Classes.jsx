@@ -6,7 +6,7 @@ import LanguageToggle from './ui/LanguageToggle';
 
 const Classes = () => {
   const [language, setLanguage] = useState(getStoredLanguage() || 'en');
-  const [showWorkshops, setShowWorkshops] = useState(true); // Global toggle for all workshops
+  const [showWorkshops, setShowWorkshops] = useState(false); // Global toggle for all workshops
 
   const toggleLanguage = () => {
     const newLanguage = language === 'en' ? 'tr' : 'en';
