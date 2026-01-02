@@ -113,7 +113,7 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
             if infinitive in ('oxvenu') and marker in ('u', 'i', 'o'):  # marker case for oxenu
                 root = 'xvenums'
 
-
+            # Past tense exceptions (and imperatives); different from infinitive
             if infinitive in ('oxenu'):  # marker case for oxenu
                 root = 'xenams'
             if infinitive in ('oxvenu'):  # marker case for oxenu
@@ -122,6 +122,10 @@ def conjugate_past(infinitive, subject=None, obj=None, applicative=False, causat
                 root = 'ç̌ǩomums'
             if infinitive in ('oşǩomu'):
                 root = 'şǩomums'
+            if root.endswith('rs') and infinitive.endswith('du'):
+                root = root[:-2] + 'd'
+
+
 
             # Handle special case for verbs starting with 'i' or 'o'
             root = handle_marker(main_infinitive, root, marker, subject, obj)
