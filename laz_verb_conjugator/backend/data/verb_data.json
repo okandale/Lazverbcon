@@ -1261,7 +1261,7 @@
     "": null
   },
   {
-    "Laz Infinitive": "meǯǩomilu",
+    "Laz Infinitive": "meǯǩodu",
     "Category": "TVE",
     "Laz 3rd Person Singular Present": "noǯǩers",
     "Region": "FA, HO",
@@ -1274,7 +1274,7 @@
     "": null
   },
   {
-    "Laz Infinitive": "meǯomilu",
+    "Laz Infinitive": "meǯodu",
     "Category": "TVE",
     "Laz 3rd Person Singular Present": "noǯers",
     "Region": "PZ, AŞ",
@@ -3107,6 +3107,19 @@
     "": null
   },
   {
+    "Laz Infinitive": "oşkurinu",
+    "Category": "IVD",
+    "Laz 3rd Person Singular Present": "aşkurinen",
+    "Region": "PZ, AŞ, FA, HO",
+    "Laz 3rd Person Singular Present Alternative 1": null,
+    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present Alternative 2": null,
+    "Region Alternative 2": null,
+    "English Translation": "to fear",
+    "Turkish Verb": "korkmak",
+    "": null
+  },
+  {
     "Laz Infinitive": "oşǩidu",
     "Category": "TVM",
     "Laz 3rd Person Singular Present": "işǩviden",
@@ -3897,6 +3910,19 @@
     "Region Alternative 2": null,
     "English Translation": "to water",
     "Turkish Verb": "sulamak",
+    "": null
+  },
+  {
+    "Laz Infinitive": "oǯǩedu",
+    "Category": "TVE",
+    "Laz 3rd Person Singular Present": "oǯǩers",
+    "Region": "PZ, AŞ, FA, HO",
+    "Laz 3rd Person Singular Present Alternative 1": null,
+    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present Alternative 2": null,
+    "Region Alternative 2": null,
+    "English Translation": "to watch",
+    "Turkish Verb": "izlemek",
     "": null
   },
   {
