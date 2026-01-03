@@ -67,12 +67,12 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
             first_word = first_word_infinitive
         
             suffixes = {
-                'S1_Singular': 'rt̆asen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'asere' if region == 'PZ' else 'asinon' if region == 'HO' else 'asen',
-                'S2_Singular': 'rt̆asen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'asere' if region == 'PZ' else 'asinon' if region == 'HO' else 'asen',
-                'S3_Singular': 'rt̆asen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'asere' if region == 'PZ' else 'asinon' if region == 'HO' else 'asen',
-                'S1_Plural': 'rt̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anere' if region == 'PZ' else 'asinonan' if region == 'HO' else 'anen',
-                'S2_Plural': 'rt̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anere' if region == 'PZ' else 'asinonan' if region == 'HO' else 'anen',
-                'S3_Plural': 'rt̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anere' if region == 'PZ' else 'asinonan' if region == 'HO' else 'anen',
+                'S1_Singular': 't̆asen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'asere' if region == 'PZ' else 'asinon' if region == 'HO' else 'asen',
+                'S2_Singular': 't̆asen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'asere' if region == 'PZ' else 'asinon' if region == 'HO' else 'asen',
+                'S3_Singular': 't̆asen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'asere' if region == 'PZ' else 'asinon' if region == 'HO' else 'asen',
+                'S1_Plural': 't̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anere' if region == 'PZ' else 'asinonan' if region == 'HO' else 'anen',
+                'S2_Plural': 't̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anere' if region == 'PZ' else 'asinonan' if region == 'HO' else 'anen',
+                'S3_Plural': 't̆anen' if infinitive in ('oçkinu', 'uğun', 'uyonun', 'unon') else 'anere' if region == 'PZ' else 'asinonan' if region == 'HO' else 'anen',
             }
 
             # Extract the preverb from the infinitive if it exists
@@ -312,6 +312,11 @@ def conjugate_future(infinitive, subject, obj=None, applicative=False, causative
             else:
                 if subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and root.endswith('s'):
                     final_root = root[:-1]
+                elif infinitive in (('uğun', 'oçkinu', 'uyonun', 'uqoun', 'unon')):
+                    if infinitive == 'unon':
+                        final_root = root[:-2]
+                    else:
+                        final_root = root[:-1]
                 else:
                     final_root = root
 
