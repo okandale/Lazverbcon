@@ -315,6 +315,11 @@ def conjugate_past_progressive(infinitive, subject, obj=None, applicative=False,
             else:
                 if subject in ['S1_Plural', 'S2_Plural', 'S3_Plural'] and root.endswith('s'):
                     final_root = root[:-1]
+                elif infinitive in (('uğun', 'oçkinu', 'uyonun', 'uqoun', 'unon')):
+                    if infinitive == 'unon':
+                        root = root[:-2]
+                    else:
+                        root = root[:-1]
                 else:
                     final_root = root
                 final_root = root

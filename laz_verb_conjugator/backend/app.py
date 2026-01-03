@@ -251,6 +251,7 @@ def conjugate():
             return jsonify(error_response), 400
 
 
+
     if has_causative and has_simple_causative:
         return jsonify({"error": "Select only one causative type at a time."}), 400
 
@@ -321,19 +322,27 @@ def conjugate():
         tve_mapping = {}
         tvm_mapping = {}
         
-        for tense, modules in simplified_tense_mapping.items():
-            if isinstance(modules, list):
-                ivd_modules = [m for m in modules if isinstance(m, str) and m.startswith('ivd_')]
-                tve_modules = [m for m in modules if isinstance(m, str) and m.startswith('tve_')]
-                tvm_modules = [m for m in modules if isinstance(m, tuple) or 
-                             (isinstance(m, str) and m.startswith('tvm_'))]
-                
-                if ivd_modules and exists_in_ivd and not has_markers:
-                    ivd_mapping[tense] = ivd_modules
-                if tve_modules and exists_in_tve:
-                    tve_mapping[tense] = tve_modules
-                if tvm_modules and exists_in_tvm:
-                    tvm_mapping[tense] = tvm_modules
+    SPECIAL_IVD_PAST_AS_PASTPRO = {'uğun', 'oçkinu', 'uyonun', 'uqoun', 'unon'}
+
+    for tense_key, modules in simplified_tense_mapping.items():
+        if isinstance(modules, list):
+            ivd_modules_for_tense = [m for m in modules if isinstance(m, str) and m.startswith('ivd_')]
+            tve_modules = [m for m in modules if isinstance(m, str) and m.startswith('tve_')]
+            tvm_modules = [m for m in modules if isinstance(m, tuple) or
+                        (isinstance(m, str) and m.startswith('tvm_'))]
+
+            if ivd_modules_for_tense and exists_in_ivd and not has_markers:
+                # --- exception: use ivd_pastpro when tense is past for these infinitives ---
+                if tense_key == 'past' and infinitive in SPECIAL_IVD_PAST_AS_PASTPRO:
+                    ivd_mapping[tense_key] = ['ivd_pastpro']
+                else:
+                    ivd_mapping[tense_key] = ivd_modules_for_tense
+
+            if tve_modules and exists_in_tve:
+                tve_mapping[tense_key] = tve_modules
+            if tvm_modules and exists_in_tvm:
+                tvm_mapping[tense_key] = tvm_modules
+
 
         # Process IVD conjugations
         if exists_in_ivd and not has_markers:
