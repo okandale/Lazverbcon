@@ -3510,6 +3510,19 @@
     "": null
   },
   {
+    "Laz Infinitive": "oxandu",
+    "Category": "TVE",
+    "Laz 3rd Person Singular Present": "ixandeps",
+    "Region": "HO",
+    "Laz 3rd Person Singular Present Alternative 1": null,
+    "Region Alternative 1": null,
+    "Laz 3rd Person Singular Present Alternative 2": null,
+    "Region Alternative 2": null,
+    "English Translation": "to work",
+    "Turkish Verb": "çalışmak",
+    "": null
+  },
+  {
     "Laz Infinitive": "oxap̌aru",
     "Category": "TVE",
     "Laz 3rd Person Singular Present": "ixap̌ars",
@@ -3947,8 +3960,8 @@
     "Region Alternative 1": null,
     "Laz 3rd Person Singular Present Alternative 2": null,
     "Region Alternative 2": null,
-    "English Translation": "to insert",
-    "Turkish Verb": "sokmak",
+    "English Translation": "to remove, to rip off",
+    "Turkish Verb": "sökmek",
     "": null
   },
   {
