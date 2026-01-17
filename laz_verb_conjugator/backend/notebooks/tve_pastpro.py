@@ -430,13 +430,16 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
 
 
                 # Special handling for "ceç̌alu"
-                elif preverb == 'ce' or infinitive.startswith('ce'):
-                    if infinitive in co_verbs or root.startswith(('icu', 'ocu', 'ucu')):
-                        if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural' 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
-                            if root.startswith(('icu', 'ucu', 'ocu')):
+                elif preverb == 'ce' or infinitive.startswith('ce'): 
+                    if infinitive in co_verbs or root.startswith(('icu', 'ocu', 'ucu', 'u')):                       
+                        if (subject in ['S1_Singular', 'S1_Plural'] and marker) or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural', 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker: 
+
+                            if root.startswith(('icu', 'ucu', 'ocu')):                               
                                 root = 'c' + marker + root[3:] if (applicative and causative or causative) and subject in (('S2_Singular', 'S3_Singular', 'S3_Plural')) and obj in ('O3_Singular', 'O3_Plural') else marker + root[3:]
+ 
                             else:
-                                root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root[2:]  # Remove only one character if there's a marker
+                               
+                                root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' or marker else root[2:]  # Remove only one character if there's a marker
                         else:
                             if marker and subject in 'S3_Singular' and obj in 'O2_Plural':
                                 root = marker + root[3:]
@@ -444,8 +447,8 @@ def conjugate_past_progressive(infinitive, subject=None, obj=None, applicative=F
                                 if marker:
                                     root = 'c' + marker + root[3:] if (applicative and causative or causative) and subject in (('S2_Singular', 'S3_Singular', 'S2_Plural', 'S3_Plural')) and obj in ('O3_Singular', 'O3_Plural') and root.startswith(('icu', 'ucu', 'ocu')) else root[2:]
                                 else:
-                                    root = 'c' + 'o' + root[3:] if subject in (('S2_Singular', 'S3_Singular', 'S2_Plural', 'S3_Plural')) and obj in ('O3_Singular', 'O3_Plural') else root[1:]
-                                    preverb = '' if subject in (('S2_Singular', 'S3_Singular', 'S2_Plural', 'S3_Plural')) and obj in ('O3_Singular', 'O3_Plural') else 'ce'
+                                    root = root[1:] if subject in ('S1_Singular', 'S1_Plural') or obj in ('O1_Singular', 'O1_Plural', 'O2_Singular', 'O2_Plural') else root
+                                    preverb = 'ce' if subject in ('S1_Singular', 'S1_Plural') or obj in ('O1_Singular', 'O1_Plural', 'O2_Singular', 'O2_Plural') else ''
                     else:
                         if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
                             root = root

@@ -152,11 +152,13 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             if not handled_gontzku:
 
                 
- 
+
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and preverb == 'e':
                     preverb = 'ey' if region == 'PZ' else 'y'
                 if preverb.endswith(('a','e','i','o','u')) and marker.startswith(('a','e','i','o','u')) and not subject in ('S1_Singular', 'S1_Plural') and not obj in ('O1_Singular', 'O1_Plural', 'O2_Plural', 'O2_Singular') and infinitive not in gyo_verbs and preverb != 'me':
                     preverb = preverb[:-1] + 'y' if preverb == 'ge' else preverb[:-1] # added for 'geçamu' as it would omit the 'y' in (no S1) O3 conjugations. 
+
+
 
                 if preverb == 'mo' or infinitive.startswith('mo'):
                     if root.startswith(('mu', 'imu', 'umu', 'omu')):
@@ -393,8 +395,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                             (subject in ['S1_Singular', 'S1_Plural'] or 
                             obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural'])) or (obj in ['O3_Singular', 'O3_Plural'] and marker):
                             if marker:
-                                root = marker + root[4:] if marker in ("u", "o") else marker + root[2:]
-                                print(f"root: {root}")                          
+                                root = marker + root[4:] if marker in ("u", "o") else marker + root[2:]                        
                             preverb = 'ela'
                             preverb_form = 'el'
                             root = root if marker in ("u", "o") else root[2:]
@@ -415,7 +416,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         elif subject in ['S1_Singular', 'S1_Plural']:
                             first_letter = get_first_letter(root)
                             adjusted_prefix = adjust_prefix(preverb_form, first_letter, phonetic_rules_v)
-                            print(f"first letter: {first_letter}")
                             if root.startswith('n'):
                                 root = root[1:]
                             prefix = preverb + adjusted_prefix
@@ -459,13 +459,16 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
 
 
                 # Special handling for "ceç̌alu"
-                elif preverb == 'ce' or infinitive.startswith('ce'):
-                    if infinitive in co_verbs or root.startswith(('icu', 'ocu', 'ucu')):
-                        if subject in ['S1_Singular', 'S1_Plural'] and marker or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural' 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker:
-                            if root.startswith(('icu', 'ucu', 'ocu')):
+                elif preverb == 'ce' or infinitive.startswith('ce'): 
+                    if infinitive in co_verbs or root.startswith(('icu', 'ocu', 'ucu', 'u')):                       
+                        if (subject in ['S1_Singular', 'S1_Plural'] and marker) or obj in ['O2_Singular', 'O3_Singular', 'O3_Plural', 'O2_Plural', 'O1_Singular', 'O1_Plural'] and marker: 
+
+                            if root.startswith(('icu', 'ucu', 'ocu')):                               
                                 root = 'c' + marker + root[3:] if (applicative and causative or causative) and subject in (('S2_Singular', 'S3_Singular', 'S3_Plural')) and obj in ('O3_Singular', 'O3_Plural') else marker + root[3:]
+ 
                             else:
-                                root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' else root[2:]  # Remove only one character if there's a marker
+                               
+                                root = root if subject in ('S1_Singular', 'S1_Plural') and marker == 'u' or marker else root[2:]  # Remove only one character if there's a marker
                         else:
                             if marker and subject in 'S3_Singular' and obj in 'O2_Plural':
                                 root = marker + root[3:]
@@ -473,8 +476,8 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                                 if marker:
                                     root = 'c' + marker + root[3:] if (applicative and causative or causative) and subject in (('S2_Singular', 'S3_Singular', 'S2_Plural', 'S3_Plural')) and obj in ('O3_Singular', 'O3_Plural') and root.startswith(('icu', 'ucu', 'ocu')) else root[2:]
                                 else:
-                                    root = 'c' + 'o' + root[3:] if subject in (('S2_Singular', 'S3_Singular', 'S2_Plural', 'S3_Plural')) and obj in ('O3_Singular', 'O3_Plural') else root[1:]
-                                    preverb = '' if subject in (('S2_Singular', 'S3_Singular', 'S2_Plural', 'S3_Plural')) and obj in ('O3_Singular', 'O3_Plural') else 'ce'
+                                    root = root[1:] if subject in ('S1_Singular', 'S1_Plural') or obj in ('O1_Singular', 'O1_Plural', 'O2_Singular', 'O2_Plural') else root
+                                    preverb = 'ce' if subject in ('S1_Singular', 'S1_Plural') or obj in ('O1_Singular', 'O1_Plural', 'O2_Singular', 'O2_Plural') else ''
                     else:
                         if marker and obj in ['O2_Singular', 'O2_Plural', 'O1_Singular', 'O1_Plural']: #remove this redundant part if not necessary
                             root = root
@@ -616,7 +619,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         elif subject in ['S1_Singular', 'S1_Plural']:
                             first_letter = get_first_letter(root)
                             adjusted_prefix = adjust_prefix(preverb_form, first_letter, phonetic_rules_v)
-                            print(f"first letter: {first_letter}")
                             if root.startswith('n'):
                                 root = root[1:]
                             prefix = preverb + adjusted_prefix
@@ -744,7 +746,6 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
             if subject == 'S3_Singular' and obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] and root.endswith('ms') and mood == 'optative':
                 suffix = 'ay' if region == "AŞ" else 'as'
             elif subject == 'S3_Singular' and (obj in ['O1_Singular', 'O3_Singular', 'O2_Singular'] or obj is None) and root.endswith(('ms', 'rs')):
-                print(f"root: {root}")
                 if region == "AŞ":
                     if root.endswith(('ms', 'rs')):
                         root = root[:-2]
