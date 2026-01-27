@@ -302,7 +302,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         root = root[:-1]
                     suffix = 't̆az' if region == 'FA' and subject in (('S1_Singular', 'S2_Singular', 'S3_Singular')) else 't̆as' if subject in (('S1_Singular', 'S2_Singular', 'S3_Singular')) else 't̆an'                
                 else:
-                    root = root[:-1]
+                    root = root[:-2]
                     suffix = 'az' if region in 'FA' and subject in (('S1_Singular', 'S2_Singular', 'S3_Singular')) else 'as' if subject in (('S1_Singular', 'S2_Singular', 'S3_Singular')) else 'an'
             else:
                 if subject == 'S3_Singular' and (obj == 'O3_Singular' or obj is None):
