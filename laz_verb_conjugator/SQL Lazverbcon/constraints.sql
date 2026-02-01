@@ -1,3 +1,8 @@
+-- =========================
+-- ROW-LOCAL CHECK CONSTRAINTS
+-- (enforced by PostgreSQL)
+-- =========================
+
 -- verb_form_spelling_not_blank
 ALTER TABLE verb_form DROP CONSTRAINT IF EXISTS verb_form_spelling_not_blank;
 ALTER TABLE verb_form ADD CONSTRAINT verb_form_spelling_not_blank
@@ -55,9 +60,38 @@ ALTER TABLE verb_form DROP CONSTRAINT IF EXISTS no_simple_and_double_causative;
 ALTER TABLE verb_form ADD CONSTRAINT no_simple_and_double_causative
 CHECK (NOT (is_causative AND is_double_causative));
 
--- optional_prefix_must_be_allowed
-ALTER TABLE verb_form DROP CONSTRAINT IF EXISTS optional_prefix_must_be_allowed;
-ALTER TABLE verb_form ADD CONSTRAINT optional_prefix_must_be_allowed
+
+-- =====================================================
+-- CROSS-TABLE GRAMMAR RULES (DOCUMENTATION ONLY — NOTE)
+-- These CANNOT be CHECK constraints in PostgreSQL
+-- Must be enforced later via TRIGGERS or application logic
+-- =====================================================
+
+/*
+RULE: tvm_cannot_have_object
+TVM verbs may not take objects.
+
+Original (invalid as CHECK due to subquery):
+
+CHECK (
+  object IS NULL
+  OR NOT EXISTS (
+    SELECT 1
+    FROM verb v
+    JOIN verb_category vc
+      ON vc.verb_category_id = v.verb_category_id
+    WHERE v.verb_id = verb_form.verb_id
+      AND vc.code = 'tvm'
+  )
+);
+*/
+
+/*
+RULE: optional_prefix_must_be_allowed
+Optional prefix (ko/do) must be allowed by the verb.
+
+Original (invalid as CHECK due to subqueries):
+
 CHECK (
   optional_prefix IS NULL
   OR (
@@ -76,3 +110,23 @@ CHECK (
     ))
   )
 );
+*/
+
+/*
+RULE: non_ergative_no_applicative_or_causative
+Only ergative (tve) verbs may take applicative/causative morphology.
+
+Original (invalid as CHECK due to subquery):
+
+CHECK (
+  NOT (is_applicative OR is_causative OR is_double_causative)
+  OR EXISTS (
+    SELECT 1
+    FROM verb v
+    JOIN verb_category vc
+      ON vc.verb_category_id = v.verb_category_id
+    WHERE v.verb_id = verb_form.verb_id
+      AND vc.code = 'tve'
+  )
+);
+*/
