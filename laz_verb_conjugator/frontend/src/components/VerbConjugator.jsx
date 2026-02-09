@@ -20,7 +20,11 @@ const VerbConjugator = () => {
   const location = useLocation();
   const [language, setLanguage] = useState(getStoredLanguage());
   const [formData, setFormData] = useState(defaultFormData);
-  const [results, setResults] = useState({ data: {}, error: '' });
+
+  // `data` is the actual conjugation payload keyed by region (AŞ/PZ/FA/HO)
+  // `meta` is optional debug info returned by the backend (used for SQL tooling/debugging)
+  const [results, setResults] = useState({ data: {}, meta: null, error: '' });
+
   const [isFeedbackVisible, setFeedbackVisible] = useState(false);
 
   // Handle incoming verb from navigation
@@ -42,7 +46,7 @@ const VerbConjugator = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setResults({ data: {}, error: '' });
+    setResults({ data: {}, meta: null, error: '' });
 
     const params = new URLSearchParams();
     Object.entries(formData).forEach(([key, value]) => {
@@ -59,28 +63,43 @@ const VerbConjugator = () => {
 
     try {
       const response = await fetch(`${API_URLS.conjugate}?${params.toString()}`);
-      const data = await response.json();
+      const payload = await response.json();
 
+      // Backward/forward compatible:
+      // - old backend returned conjugations directly
+      // - new backend returns { result: <conjugations|{error}>, meta: {...} }
+      const meta = payload?.meta ?? null;
+      const data = payload?.result ?? payload;
+
+      // If server returns non-2xx, prefer `payload.error` then `payload.result.error`
       if (!response.ok) {
-        setResults({ data: {}, error: data.error || 'Error fetching conjugations.' });
+        const errMsg = payload?.error || payload?.result?.error || 'Error fetching conjugations.';
+        setResults({ data: {}, meta, error: errMsg });
         return;
       }
 
-      if (Object.keys(data).length === 0) {
-        setResults({ data: {}, error: 'No conjugations found for this verb.' });
+      // New backend may still return 200 with {result:{error:...}}
+      if (data && typeof data === 'object' && 'error' in data) {
+        setResults({ data: {}, meta, error: data.error || 'Error fetching conjugations.' });
+        return;
+      }
+
+      if (!data || Object.keys(data).length === 0) {
+        setResults({ data: {}, meta, error: 'No conjugations found for this verb.' });
       } else {
-        setResults({ data, error: '' });
+        setResults({ data, meta, error: '' });
       }
     } catch (error) {
       setResults({
         data: {},
+        meta: null,
         error: 'An error occurred while fetching conjugation. Please try again.',
       });
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">  
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
       <div className="max-w-2xl mx-auto p-4">
         {/* Header section with language toggle */}
         <div className="flex justify-between items-center mb-8 pt-2">
@@ -106,7 +125,7 @@ const VerbConjugator = () => {
             right: '1rem',
           }}
         />
-        
+
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
           {translations[language].title}
         </h1>
@@ -130,12 +149,12 @@ const VerbConjugator = () => {
           />
         </form>
 
-        <Results 
+        <Results
           results={results}
           language={language}
           translations={translations}
         />
-        
+
         <div className="text-center mt-6">
           <p className="text-gray-700 text-sm">
             {translations[language].betaMessage}{' '}
@@ -152,7 +171,7 @@ const VerbConjugator = () => {
         <div className="text-center mt-6">
           <p className="text-gray-700 text-sm italic">
             {translations[language].thankYouNote.prefix}
-            <a 
+            <a
               href={translations[language].thankYouNote.url}
               target="_blank"
               rel="noopener noreferrer"
