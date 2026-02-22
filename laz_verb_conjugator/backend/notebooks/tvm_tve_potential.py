@@ -1,4 +1,4 @@
-from utils import (
+from ..utils import (
     process_compound_verb,
     get_first_letter,
     get_first_word,
@@ -9,7 +9,7 @@ from utils import (
     subjects,
     objects
 )
-from dataloader import load_tvm_tve_potential
+from backend.dataloader import load_tvm_tve_potential
 
 verbs, regions = load_tvm_tve_potential()
 

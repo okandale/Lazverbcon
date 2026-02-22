@@ -16,13 +16,90 @@ import {
   setStoredLanguage,
 } from './constants';
 
+const DIALECT_KEYS = ['FA', 'PZ', 'HO', 'AŞ'];
+
+function looksLikeDialectPayload(obj) {
+  if (!obj || typeof obj !== 'object') return false;
+  // Must contain at least one dialect key
+  return DIALECT_KEYS.some((k) => Object.prototype.hasOwnProperty.call(obj, k));
+}
+
+function normalizeConjugationPayload(payload) {
+  // Accept shapes:
+  // A) { meta, result }                          <-- current backend (HAR)
+  // B) { result: { ...dialects..., meta } }      <-- older messy backend
+  // C) { ...dialects... }                        <-- very old backend
+  // D) { result: { result: ...dialects... } }    <-- double-wrapped
+  // Also accept error shapes:
+  // { error: "..." } or { result: { error: "..." } }
+
+  // If payload is null/undefined
+  if (!payload) {
+    return { data: {}, meta: null, error: 'Empty response from server.' };
+  }
+
+  // If server returns an explicit top-level error
+  if (payload && typeof payload === 'object' && 'error' in payload) {
+    return {
+      data: {},
+      meta: payload.meta ?? null,
+      error: payload.error || 'Error fetching conjugations.',
+    };
+  }
+
+  const meta = payload.meta ?? payload.result?.meta ?? null;
+
+  // Candidate for "dialect object"
+  let dataCandidate = null;
+
+  // New/current: { meta, result: {FA, ...} }
+  if (looksLikeDialectPayload(payload.result)) {
+    dataCandidate = payload.result;
+  }
+  // Old: dialects at top-level
+  else if (looksLikeDialectPayload(payload)) {
+    dataCandidate = payload;
+  }
+  // Double-wrapped: { result: { result: {FA,...} } }
+  else if (looksLikeDialectPayload(payload.result?.result)) {
+    dataCandidate = payload.result.result;
+  }
+  // Sometimes: { result: {...} } where {...} isn't dialects but might be error
+  else if (payload.result && typeof payload.result === 'object' && 'error' in payload.result) {
+    return {
+      data: {},
+      meta,
+      error: payload.result.error || 'Error fetching conjugations.',
+    };
+  }
+
+  if (!dataCandidate || typeof dataCandidate !== 'object') {
+    return { data: {}, meta, error: 'Unexpected response format from server.' };
+  }
+
+  // Strip meta if it got mixed into dialect keys object
+  if ('meta' in dataCandidate) {
+    // eslint-disable-next-line no-unused-vars
+    const { meta: _ignore, ...rest } = dataCandidate;
+    dataCandidate = rest;
+  }
+
+  // If no dialect keys after stripping
+  if (!looksLikeDialectPayload(dataCandidate) || Object.keys(dataCandidate).length === 0) {
+    return { data: {}, meta, error: 'No conjugations found for this verb.' };
+  }
+
+  return { data: dataCandidate, meta, error: '' };
+}
+
 const VerbConjugator = () => {
   const location = useLocation();
   const [language, setLanguage] = useState(getStoredLanguage());
   const [formData, setFormData] = useState(defaultFormData);
 
-  // `data` is the actual conjugation payload keyed by region (AŞ/PZ/FA/HO)
-  // `meta` is optional debug info returned by the backend (used for SQL tooling/debugging)
+  // results.data = dialect object (FA/PZ/HO/AŞ)
+  // results.meta = backend debug/meta
+  // results.error = user-facing error
   const [results, setResults] = useState({ data: {}, meta: null, error: '' });
 
   const [isFeedbackVisible, setFeedbackVisible] = useState(false);
@@ -30,9 +107,9 @@ const VerbConjugator = () => {
   // Handle incoming verb from navigation
   useEffect(() => {
     if (location.state?.infinitive) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        infinitive: location.state.infinitive
+        infinitive: location.state.infinitive,
       }));
       window.history.replaceState({}, document.title);
     }
@@ -51,49 +128,73 @@ const VerbConjugator = () => {
     const params = new URLSearchParams();
     Object.entries(formData).forEach(([key, value]) => {
       if (key === 'regions') {
-        if (value.length > 0) {
+        if (Array.isArray(value) && value.length > 0) {
           params.append('region', value.join(','));
         }
       } else if (typeof value === 'boolean') {
         params.append(key, value ? 'true' : 'false');
-      } else if (value !== '') {
-        params.append(key, value);
+      } else if (value !== '' && value !== null && value !== undefined) {
+        params.append(key, String(value));
       }
     });
 
     try {
-      const response = await fetch(`${API_URLS.conjugate}?${params.toString()}`);
-      const payload = await response.json();
+      if (!API_URLS?.conjugate) {
+        throw new Error("API_URLS.conjugate is missing/undefined");
+      }
 
-      // Backward/forward compatible:
-      // - old backend returned conjugations directly
-      // - new backend returns { result: <conjugations|{error}>, meta: {...} }
-      const meta = payload?.meta ?? null;
-      const data = payload?.result ?? payload;
+      const url = `${API_URLS.conjugate}?${params.toString()}`;
+      console.log("Fetch URL:", url);
 
-      // If server returns non-2xx, prefer `payload.error` then `payload.result.error`
+      const response = await fetch(url);
+
+      const text = await response.text(); // always read as text first
+
+      let payload = null;
+      try {
+        payload = JSON.parse(text);
+      } catch {
+        // not JSON
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} non-JSON: ${text.slice(0, 300)}`);
+        }
+        throw new Error(`Backend returned non-JSON: ${text.slice(0, 300)}`);
+      }
+
+      // non-2xx
       if (!response.ok) {
-        const errMsg = payload?.error || payload?.result?.error || 'Error fetching conjugations.';
-        setResults({ data: {}, meta, error: errMsg });
+        const msg = payload?.error || payload?.result?.error || `HTTP ${response.status}`;
+        setResults({ data: {}, meta: payload?.meta ?? null, error: msg });
         return;
       }
 
-      // New backend may still return 200 with {result:{error:...}}
-      if (data && typeof data === 'object' && 'error' in data) {
-        setResults({ data: {}, meta, error: data.error || 'Error fetching conjugations.' });
-        return;
+      // normalize: expect {meta, result} but accept older shapes
+      const meta = payload?.meta ?? payload?.result?.meta ?? null;
+      let data =
+        payload?.result?.FA ||
+        payload?.result?.PZ ||
+        payload?.result?.HO ||
+        payload?.result?.["AŞ"]
+          ? payload.result
+          : (payload?.result?.result ?? payload?.result ?? payload);
+
+      if (data && typeof data === 'object' && 'meta' in data) {
+        const { meta: _ignore, ...rest } = data;
+        data = rest;
       }
 
-      if (!data || Object.keys(data).length === 0) {
+      if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
         setResults({ data: {}, meta, error: 'No conjugations found for this verb.' });
-      } else {
-        setResults({ data, meta, error: '' });
+        return;
       }
-    } catch (error) {
+
+      setResults({ data, meta, error: '' });
+    } catch (err) {
+      console.error("handleSubmit crashed:", err);
       setResults({
         data: {},
         meta: null,
-        error: 'An error occurred while fetching conjugation. Please try again.',
+        error: `Frontend error: ${err?.message ?? String(err)}`
       });
     }
   };
@@ -149,11 +250,7 @@ const VerbConjugator = () => {
           />
         </form>
 
-        <Results
-          results={results}
-          language={language}
-          translations={translations}
-        />
+        <Results results={results} language={language} translations={translations} />
 
         <div className="text-center mt-6">
           <p className="text-gray-700 text-sm">

@@ -2,7 +2,7 @@
 # update similarily to potential form if all forms stay the same.
 import pandas as pd
 import os
-from utils import (
+from ..utils import (
     process_compound_verb,
     get_first_letter,
     get_first_word,
@@ -14,7 +14,7 @@ from utils import (
     tve_subject_markers as subject_markers,
     subjects
 )
-from dataloader import load_tvm_tve_passive
+from backend.dataloader import load_tvm_tve_passive
 
 verbs, regions = load_tvm_tve_passive()
 
