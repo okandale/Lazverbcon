@@ -46,3 +46,11 @@ EXCEPTION
 WHEN duplicate_object THEN NULL;
 END $$;
 
+-- enums.sql
+DO $$ BEGIN
+CREATE TYPE optional_prefix AS ENUM ('ko', 'do');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+
+
