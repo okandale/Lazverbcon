@@ -3,7 +3,7 @@ import { redirect } from "react-router-dom";
 
 const BASE_URL = import.meta.env.PROD 
   ? 'https://api.lazuri.org'
-  : 'http://127.0.0.1:5000';
+  : 'http://localhost:5000';
 
 export const API_URLS = {
   conjugate: `${BASE_URL}/api/conjugate`,

@@ -1,4 +1,4 @@
-from utils import (
+from ..utils import (
     process_compound_verb,
     get_first_letter,
     get_first_word,
@@ -13,7 +13,7 @@ from utils import (
     subjects,
     objects
 )
-from dataloader import load_ivd_verbs
+from backend.dataloader import load_ivd_verbs
 
 verbs, regions = load_ivd_verbs()
 

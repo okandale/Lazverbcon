@@ -1,4 +1,4 @@
-from utils import (
+from ..utils import (
     process_compound_verb,
     get_first_letter,
     get_first_word,
@@ -8,7 +8,7 @@ from utils import (
     presentperf_subject_markers as subject_markers,
     subjects
 )
-from dataloader import load_tvm_tve_presentperf
+from backend.dataloader import load_tvm_tve_presentperf
 
 verbs, regions = load_tvm_tve_presentperf()
 
