@@ -830,32 +830,17 @@ def collect_conjugations(infinitive, subjects, obj=None, applicative=False, caus
         all_conjugations[region] = list(all_conjugations[region])
     return all_conjugations
 
-def insert_before_last_word(phrase: str, insert: str) -> str:
-    """
-    Insert `insert` right before the last whitespace-separated token in `phrase`.
-    - "verb"            -> "mo verb"
-    - "first verb"      -> "first mo verb"
-    - "a b c"           -> "a b mo c"
-    """
-    parts = phrase.split()
-    if not parts:
-        return insert
-    if len(parts) == 1:
-        return f"{insert} {parts[0]}"
-    return " ".join(parts[:-1] + [insert, parts[-1]])
-
-
 def extract_neg_imperatives(all_conjugations, subjects):
     imperatives = {}
     for region, conjugations in all_conjugations.items():
         imperatives[region] = []
         for subject, obj, conjugation in conjugations:
             if subject in subjects:
+                # Use "mo" for region "HO", otherwise "mot"
                 neg_prefix = "mo" if region in ("HO", "AŞ") else "mot"
-                conjugation_with_neg = insert_before_last_word(conjugation, neg_prefix)
+                conjugation_with_neg = f"{neg_prefix} {conjugation}"
                 imperatives[region].append((subject, obj, conjugation_with_neg))
     return imperatives
-
 
 def format_neg_imperatives(imperatives):
     result = {}
