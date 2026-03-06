@@ -302,7 +302,7 @@ def conjugate_present(infinitive, subject, obj=None, applicative=False, causativ
                         root = root[:-1]
                     suffix = 't̆az' if region == 'FA' and subject in (('S1_Singular', 'S2_Singular', 'S3_Singular')) else 't̆as' if subject in (('S1_Singular', 'S2_Singular', 'S3_Singular')) else 't̆an'                
                 else:
-                    root = root[:-1]
+                    root = root[:-2]
                     suffix = 'az' if region in 'FA' and subject in (('S1_Singular', 'S2_Singular', 'S3_Singular')) else 'as' if subject in (('S1_Singular', 'S2_Singular', 'S3_Singular')) else 'an'
             else:
                 if subject == 'S3_Singular' and (obj == 'O3_Singular' or obj is None):
@@ -408,17 +408,32 @@ def collect_conjugations_all_subjects_specific_object(infinitive, obj, applicati
 
 
 
+def insert_before_last_word(phrase: str, insert: str) -> str:
+    """
+    Insert `insert` right before the last whitespace-separated token in `phrase`.
+    - "verb"            -> "mo verb"
+    - "first verb"      -> "first mo verb"
+    - "a b c"           -> "a b mo c"
+    """
+    parts = phrase.split()
+    if not parts:
+        return insert
+    if len(parts) == 1:
+        return f"{insert} {parts[0]}"
+    return " ".join(parts[:-1] + [insert, parts[-1]])
+
+
 def extract_neg_imperatives(all_conjugations, subjects):
     imperatives = {}
     for region, conjugations in all_conjugations.items():
         imperatives[region] = []
         for subject, obj, conjugation in conjugations:
             if subject in subjects:
-                # Use "mo" for region "HO", otherwise "mot"
                 neg_prefix = "mo" if region in ("HO", "AŞ") else "mot"
-                conjugation_with_neg = f"{neg_prefix} {conjugation}"
+                conjugation_with_neg = insert_before_last_word(conjugation, neg_prefix)
                 imperatives[region].append((subject, obj, conjugation_with_neg))
     return imperatives
+
 
 def format_neg_imperatives(imperatives):
     result = {}
