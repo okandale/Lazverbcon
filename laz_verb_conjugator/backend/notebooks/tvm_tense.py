@@ -1,4 +1,4 @@
-from utils import (
+from ..utils import (
     process_compound_verb,
     get_first_letter,
     get_first_word,
@@ -9,7 +9,7 @@ from utils import (
     subjects
 )
 
-from dataloader import load_tvm_tense
+from backend.dataloader import load_tvm_tense
 
 verbs, regions, co_verbs, gyo_verbs, no_verbs = load_tvm_tense()
 

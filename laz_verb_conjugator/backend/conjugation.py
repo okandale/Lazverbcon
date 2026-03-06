@@ -4,8 +4,8 @@ from __future__ import annotations
 from dataclasses import dataclass, asdict
 from typing import Any, Optional, Dict, Tuple
 
-from validators import ConjugationValidator
-from services.conjugation import ConjugationService
+from backend.validators import ConjugationValidator
+from backend.services.conjugation import ConjugationService
 
 
 SIMPLIFIED_TENSE_MAPPING = {

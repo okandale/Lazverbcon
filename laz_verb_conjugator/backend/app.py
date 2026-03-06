@@ -7,15 +7,20 @@ import json
 
 from flask_jwt_extended import JWTManager
 
-from config.webhook_config import WebhookConfig
-from services.webhook import WebhookService, WebhookError, SignatureVerificationError, WebhookDisabledError
+from backend.config.webhook_config import WebhookConfig
+from backend.services.webhook import (
+    WebhookService,
+    WebhookError,
+    SignatureVerificationError,
+    WebhookDisabledError,
+)
 
-from .admin import admin
-from .verbs import verbs
-from . import db  # Should fail if the database is not set.
+from backend.admin import admin
+from backend.verbs import verbs
+from backend import db  # Should fail if the database is not set.
 
 # NEW: pure-function conjugation orchestration
-from conjugation import conjugate_verb
+from backend.conjugation import conjugate_verb  # ✅ FIXED
 
 
 # -----------------------
@@ -27,18 +32,25 @@ logger = logging.getLogger(__name__)
 req_res_logger = logging.getLogger("request_response")
 req_res_logger.setLevel(logging.INFO)
 
-os.makedirs("logs", exist_ok=True)
+# Put logs inside backend/logs to match your folder structure
+LOG_DIR = os.path.join(os.path.dirname(__file__), "logs")
+os.makedirs(LOG_DIR, exist_ok=True)
 
-req_res_handler = logging.FileHandler("logs/request_response.log", encoding="utf-8")
-
+req_res_handler = logging.FileHandler(
+    os.path.join(LOG_DIR, "request_response.log"),
+    encoding="utf-8"
+)
 req_res_handler.setLevel(logging.INFO)
 
 formatter = logging.Formatter("%(asctime)s - %(message)s")
 req_res_handler.setFormatter(formatter)
 
 # Avoid adding duplicate handlers if this file is imported multiple times
-if not any(isinstance(h, logging.FileHandler) and getattr(h, "baseFilename", "") == req_res_handler.baseFilename
-           for h in req_res_logger.handlers):
+if not any(
+    isinstance(h, logging.FileHandler)
+    and getattr(h, "baseFilename", "") == req_res_handler.baseFilename
+    for h in req_res_logger.handlers
+):
     req_res_logger.addHandler(req_res_handler)
 
 
@@ -77,6 +89,7 @@ CORS(
                 "http://lazuri.org",
                 "https://lazverbcon.pages.dev",
                 "http://localhost:5173",
+                "http://localhost:5174",  # ✅ ADD THIS (your Vite dev server)
             ],
             "methods": ["GET", "POST", "OPTIONS"],
             "allow_headers": ["Content-Type", "Authorization"],
@@ -93,18 +106,18 @@ webhook_service = WebhookService(webhook_config)
 # Load tense modules
 # -----------------------
 tense_modules = {
-    "ivd_present": importlib.import_module("notebooks.ivd_present"),
-    "ivd_past": importlib.import_module("notebooks.ivd_past"),
-    "ivd_pastpro": importlib.import_module("notebooks.ivd_pastpro"),
-    "ivd_future": importlib.import_module("notebooks.ivd_future"),
-    "tvm_tve_presentperf": importlib.import_module("notebooks.tvm_tve_presentperf"),
-    "tvm_tve_potential": importlib.import_module("notebooks.tvm_tve_potential"),
-    "tvm_tve_passive": importlib.import_module("notebooks.tvm_tve_passive"),
-    "tvm_tense": importlib.import_module("notebooks.tvm_tense"),
-    "tve_present": importlib.import_module("notebooks.tve_present"),
-    "tve_pastpro": importlib.import_module("notebooks.tve_pastpro"),
-    "tve_past": importlib.import_module("notebooks.tve_past"),
-    "tve_future": importlib.import_module("notebooks.tve_future"),
+    "ivd_present": importlib.import_module("backend.notebooks.ivd_present"),
+    "ivd_past": importlib.import_module("backend.notebooks.ivd_past"),
+    "ivd_pastpro": importlib.import_module("backend.notebooks.ivd_pastpro"),
+    "ivd_future": importlib.import_module("backend.notebooks.ivd_future"),
+    "tvm_tve_presentperf": importlib.import_module("backend.notebooks.tvm_tve_presentperf"),
+    "tvm_tve_potential": importlib.import_module("backend.notebooks.tvm_tve_potential"),
+    "tvm_tve_passive": importlib.import_module("backend.notebooks.tvm_tve_passive"),
+    "tvm_tense": importlib.import_module("backend.notebooks.tvm_tense"),
+    "tve_present": importlib.import_module("backend.notebooks.tve_present"),
+    "tve_pastpro": importlib.import_module("backend.notebooks.tve_pastpro"),
+    "tve_past": importlib.import_module("backend.notebooks.tve_past"),
+    "tve_future": importlib.import_module("backend.notebooks.tve_future"),
 }
 
 
@@ -153,7 +166,6 @@ def _bool_arg(name: str) -> bool:
 
 
 @app.route("/api/conjugate", methods=["GET"])
-
 def conjugate():
     # Keep raw request params for logging
     request_params = dict(request.args)
