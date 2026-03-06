@@ -24,10 +24,17 @@ ALTER TABLE verb_form ADD CONSTRAINT imperative_restrictions
 CHECK (
   mood <> 'imperative'
   OR (
-    tense IS NULL
+    tense IN ('present','past')
     AND derivation = 'none'
   )
 );
+
+ALTER TABLE verb_form
+  DROP CONSTRAINT IF EXISTS derivation_requires_indicative;
+
+ALTER TABLE verb_form
+  ADD CONSTRAINT derivation_requires_indicative
+  CHECK (derivation = 'none' OR mood = 'indicative');
 
 -- present_perfect_no_derivation
 ALTER TABLE verb_form DROP CONSTRAINT IF EXISTS present_perfect_no_derivation;
