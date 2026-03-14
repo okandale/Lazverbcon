@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { regionNames } from './constants';
 import { Copy, Check } from 'lucide-react';
 
-const Results = ({ results, language, translations }) => {
+const Results = ({ results, language, translations, selectedObject }) => {
   const [copiedId, setCopiedId] = useState(null);
 
   const data = results?.data && typeof results.data === 'object' ? results.data : {};
@@ -87,7 +87,15 @@ const Results = ({ results, language, translations }) => {
 
                             const subject = (form?.subject ?? '').trim();
                             const obj = (form?.object ?? '').trim();
-                            const label = obj ? `${subject} ${obj}` : subject;
+                            const objectCode = (form?.object_code ?? '').trim();
+
+                            const shouldHideDefaultObject =
+                              selectedObject === '' &&
+                              objectCode === 'O3SG' &&
+                              (groupType === 'Dative' || groupType === 'Ergative');
+
+                            const visibleObj = shouldHideDefaultObject ? '' : obj;
+                            const label = visibleObj ? `${subject} ${visibleObj}` : subject;
 
                             const conj = form?.conjugation ?? '';
 

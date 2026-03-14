@@ -250,7 +250,12 @@ const VerbConjugator = () => {
           />
         </form>
 
-        <Results results={results} language={language} translations={translations} />
+        <Results
+          results={results}
+          language={language}
+          translations={translations}
+          selectedObject={formData.obj}
+        />
 
         <div className="text-center mt-6">
           <p className="text-gray-700 text-sm">
