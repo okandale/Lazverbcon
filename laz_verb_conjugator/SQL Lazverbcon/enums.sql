@@ -40,7 +40,19 @@ DO $$ BEGIN
 CREATE TYPE mood AS ENUM (
   'indicative',
   'imperative',
+  'negative_imperative',
   'optative'
+);
+EXCEPTION
+WHEN duplicate_object THEN NULL;
+END $$;
+
+
+DO $$ BEGIN
+CREATE TYPE frame_type AS ENUM (
+  'Nominative',
+  'Ergative',
+  'Dative'
 );
 EXCEPTION
 WHEN duplicate_object THEN NULL;
