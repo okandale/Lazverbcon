@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { regionNames } from './constants';
+import { regionNames } from '../constants';
 import { Copy, Check } from 'lucide-react';
 
 const Results = ({ results, language, translations, selectedObject }) => {

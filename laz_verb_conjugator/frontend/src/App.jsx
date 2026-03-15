@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import VerbConjugator from "./components/VerbConjugator";
-import VerbList from "./components/VerbList";
+import VerbList from "./components/conjugator/VerbList";
 import Classes from "./components/Classes";
 import About from "./components/About";
 import HomePage from "./components/Home";

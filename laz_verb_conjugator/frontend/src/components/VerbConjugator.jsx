@@ -4,9 +4,9 @@ import { Link, useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { Home } from 'lucide-react';
 
-import Results from './Results';
+import Results from './conjugator/Results';
 import FeedbackForm from './FeedbackForm';
-import FormSection from './FormSection';
+import FormSection from './conjugator/FormSection';
 import LanguageToggle from './ui/LanguageToggle';
 import {
   API_URLS,

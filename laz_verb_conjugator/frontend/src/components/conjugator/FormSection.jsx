@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import { translations, specialCharacters } from './constants';
-import { useFormValidation } from './useFormValidation';
-import SpecialCharButton from './ui/SpecialCharButton';
+import { translations, specialCharacters } from '../constants';
+import { useFormValidation } from '../useFormValidation';
+import SpecialCharButton from '../ui/SpecialCharButton';
 
 const FormSection = ({
   language,

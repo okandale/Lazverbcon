@@ -1,20 +1,20 @@
 import React, { useState, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import VerbTable from './VerbTable';
-import LanguageToggle from './ui/LanguageToggle';
-import SpecialCharButton from './ui/SpecialCharButton';
+import LanguageToggle from '../ui/LanguageToggle';
+import SpecialCharButton from '../ui/SpecialCharButton';
 import { Home } from 'lucide-react';
 import {
   translations,
   getStoredLanguage,
   setStoredLanguage,
   specialCharacters
-} from './constants';
+} from '../constants';
 import { 
   verbList, 
   processVerbSearch, 
   formatVerbListForDisplay 
-} from './verb-data';
+} from '../verb-data';
 
 const VerbList = () => {
   const [language, setLanguage] = useState(getStoredLanguage());
