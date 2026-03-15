@@ -8,23 +8,20 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
     <div className="bg-white shadow-md rounded px-6 pt-5 pb-5">
       <div className="flex justify-between items-start gap-4">
         <div>
-          <p className="text-lg font-bold text-blue-700">
-            {result.matched_form || result.form || '—'}
-          </p>
-          <p className="text-gray-800 font-medium">
+            <p className="text-lg font-bold text-blue-700">
+            {result.conjugated_form || '—'}
+            </p>
+            <p className="text-gray-800 font-medium">
             {result.infinitive || '—'}
-          </p>
-          <p className="text-sm text-gray-600 mt-1">
+            </p>
+            <p className="text-sm text-gray-600 mt-1">
             {[
-              result.tense,
-              result.subject,
-              result.object || null,
-              result.dialect,
-              result.match_type,
-            ]
-              .filter(Boolean)
-              .join(' • ')}
-          </p>
+                result.tense,
+                result.subject,
+                result.object || null,
+                result.dialect,
+            ].filter(Boolean).join(' • ')}
+            </p>
         </div>
 
         <button

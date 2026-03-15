@@ -108,43 +108,49 @@ const VerbConjugator = () => {
   };
 
 
-const handleReverseSearchSubmit = async (e) => {
-  e.preventDefault();
-  setIsReverseSearching(true);
-  setHasReverseSearched(true);
+  const handleReverseSearchSubmit = async (e) => {
+    e.preventDefault();
+    setIsReverseSearching(true);
+    setHasReverseSearched(true);
+    setReverseResults([]);
 
-  try {
-    console.log('Reverse search query:', reverseQuery);
+    try {
+      const spelling = reverseQuery.trim();
 
-    // temporary mock data
-    setReverseResults([
-      {
-        id: 1,
-        matched_form: reverseQuery,
-        infinitive: 'ot̆axu',
-        tense: 'past',
-        subject: 'S3SG',
-        object: '',
-        dialect: 'HO',
-        match_type: 'exact',
-        markers: [],
-      },
-      {
-        id: 2,
-        matched_form: reverseQuery,
-        infinitive: 'ot̆axu',
-        tense: 'present',
-        subject: 'S1SG',
-        object: 'O3SG',
-        dialect: 'FA',
-        match_type: 'fuzzy',
-        markers: ['applicative'],
-      },
-    ]);
-  } finally {
-    setIsReverseSearching(false);
-  }
-};
+      if (!spelling) {
+        setReverseResults([]);
+        return;
+      }
+
+      const url = `${API_URLS.reverse}?spelling=${encodeURIComponent(spelling)}`;
+      console.log('Reverse fetch URL:', url);
+
+      const response = await fetch(url);
+      const text = await response.text();
+
+      let payload = null;
+      try {
+        payload = JSON.parse(text);
+      } catch {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} non-JSON: ${text.slice(0, 300)}`);
+        }
+        throw new Error(`Backend returned non-JSON: ${text.slice(0, 300)}`);
+      }
+
+      if (!response.ok) {
+        throw new Error(payload?.error || `HTTP ${response.status}`);
+      }
+
+      const matches = Array.isArray(payload?.matches) ? payload.matches : [];
+      setReverseResults(matches);
+    } catch (err) {
+      console.error('handleReverseSearchSubmit crashed:', err);
+      setReverseResults([]);
+    } finally {
+      setIsReverseSearching(false);
+    }
+  };
   const handleSpecialCharClick = (char) => {
     if (activeTab === 'reverse') {
       const input = reverseSearchInputRef.current;
@@ -326,6 +332,12 @@ const handleReverseSearchSubmit = async (e) => {
                 setFormData((prev) => ({
                   ...prev,
                   infinitive: result.infinitive || prev.infinitive,
+                  tense: result.tense || prev.tense,
+                  subject: result.subject_code || prev.subject,
+                  obj: result.object_code || '',
+                  applicative: !!result.is_applicative,
+                  simple_causative: !!result.is_causative,
+                  causative: !!result.is_double_causative,
                 }));
               }}
             />
