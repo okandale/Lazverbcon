@@ -9,6 +9,7 @@ import FeedbackForm from './FeedbackForm';
 import FormSection from './conjugator/FormSection';
 import LanguageToggle from './ui/LanguageToggle';
 import SpecialCharacterBar from './shared/SpecialCharacterBar';
+import ReverseSearchSection from './reverseSearch/ReverseSearchSection';
 import {
   API_URLS,
   translations,
@@ -84,7 +85,8 @@ const VerbConjugator = () => {
   const [isFeedbackVisible, setFeedbackVisible] = useState(false);
   const [activeTab, setActiveTab] = useState('conjugator');
   const infinitiveInputRef = useRef(null);
-
+  const [reverseQuery, setReverseQuery] = useState('');
+  const [isReverseSearching, setIsReverseSearching] = useState(false);
   useEffect(() => {
     if (location.state?.infinitive) {
       setFormData((prev) => ({
@@ -101,6 +103,16 @@ const VerbConjugator = () => {
     setStoredLanguage(newLanguage);
   };
 
+const handleReverseSearchSubmit = async (e) => {
+  e.preventDefault();
+  setIsReverseSearching(true);
+
+  try {
+    console.log('Reverse search query:', reverseQuery);
+  } finally {
+    setIsReverseSearching(false);
+  }
+};
   const handleSpecialCharClick = (char) => {
     const input = infinitiveInputRef.current;
     if (!input) return;
@@ -244,11 +256,13 @@ const VerbConjugator = () => {
             />
           </>
         ) : (
-          <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-center text-gray-600">
-            {language === 'tr'
-              ? 'Biçim arama yakında eklenecek.'
-              : 'Form lookup coming soon.'}
-          </div>
+          <ReverseSearchSection
+            language={language}
+            reverseQuery={reverseQuery}
+            setReverseQuery={setReverseQuery}
+            onSubmit={handleReverseSearchSubmit}
+            isSearching={isReverseSearching}
+          />
         )}
 
         <div className="text-center mt-6">
