@@ -1,16 +1,15 @@
-import React, { useRef } from 'react';
-import { translations, specialCharacters } from '../constants';
+import React from 'react';
+import { translations } from '../constants';
 import { useFormValidation } from '../useFormValidation';
-import SpecialCharButton from '../ui/SpecialCharButton';
 
 const FormSection = ({
   language,
   formData,
   setFormData,
   setResults,
-  onSubmit
+  onSubmit,
+  infinitiveInputRef,
 }) => {
-  const infinitiveInputRef = useRef(null);
   const t = translations[language] || translations.en || translations.tr;
 
   useFormValidation(formData, setFormData, setResults);
@@ -67,38 +66,9 @@ const FormSection = ({
     setResults({ data: {}, meta: null, error: '' });
   };
 
-  const handleSpecialCharClick = (char) => {
-    if (infinitiveInputRef.current) {
-      const input = infinitiveInputRef.current;
-      const start = input.selectionStart;
-      const end = input.selectionEnd;
-      const text = input.value;
-      const before = text.substring(0, start);
-      const after = text.substring(end);
-
-      input.value = before + char + after;
-      input.selectionStart = input.selectionEnd = start + char.length;
-      input.focus();
-
-      setFormData((prevData) => ({
-        ...prevData,
-        infinitive: input.value,
-      }));
-    }
-  };
 
   return (
     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-      <div className="grid grid-cols-4 sm:flex sm:flex-wrap justify-center gap-2 mb-6">
-        {specialCharacters.map((char, index) => (
-          <SpecialCharButton
-            key={index}
-            char={char}
-            onClick={handleSpecialCharClick}
-          />
-        ))}
-      </div>
-
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="infinitive">
           {t.infinitive}:
