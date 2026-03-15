@@ -10,6 +10,7 @@ import FormSection from './conjugator/FormSection';
 import LanguageToggle from './ui/LanguageToggle';
 import SpecialCharacterBar from './shared/SpecialCharacterBar';
 import ReverseSearchSection from './reverseSearch/ReverseSearchSection';
+import ReverseSearchResults from './reverseSearch/ReverseSearchResults';
 import {
   API_URLS,
   translations,
@@ -85,8 +86,11 @@ const VerbConjugator = () => {
   const [isFeedbackVisible, setFeedbackVisible] = useState(false);
   const [activeTab, setActiveTab] = useState('conjugator');
   const infinitiveInputRef = useRef(null);
+  const reverseSearchInputRef = useRef(null);
   const [reverseQuery, setReverseQuery] = useState('');
   const [isReverseSearching, setIsReverseSearching] = useState(false);
+  const [reverseResults, setReverseResults] = useState([]);
+  const [hasReverseSearched, setHasReverseSearched] = useState(false);
   useEffect(() => {
     if (location.state?.infinitive) {
       setFormData((prev) => ({
@@ -103,24 +107,70 @@ const VerbConjugator = () => {
     setStoredLanguage(newLanguage);
   };
 
+
 const handleReverseSearchSubmit = async (e) => {
   e.preventDefault();
   setIsReverseSearching(true);
+  setHasReverseSearched(true);
 
   try {
     console.log('Reverse search query:', reverseQuery);
+
+    // temporary mock data
+    setReverseResults([
+      {
+        id: 1,
+        matched_form: reverseQuery,
+        infinitive: 'ot̆axu',
+        tense: 'past',
+        subject: 'S3SG',
+        object: '',
+        dialect: 'HO',
+        match_type: 'exact',
+        markers: [],
+      },
+      {
+        id: 2,
+        matched_form: reverseQuery,
+        infinitive: 'ot̆axu',
+        tense: 'present',
+        subject: 'S1SG',
+        object: 'O3SG',
+        dialect: 'FA',
+        match_type: 'fuzzy',
+        markers: ['applicative'],
+      },
+    ]);
   } finally {
     setIsReverseSearching(false);
   }
 };
   const handleSpecialCharClick = (char) => {
+    if (activeTab === 'reverse') {
+      const input = reverseSearchInputRef.current;
+      if (!input) return;
+
+      const start = input.selectionStart ?? input.value.length;
+      const end = input.selectionEnd ?? input.value.length;
+      const text = input.value ?? '';
+      const newValue = text.slice(0, start) + char + text.slice(end);
+
+      setReverseQuery(newValue);
+
+      requestAnimationFrame(() => {
+        input.focus();
+        input.setSelectionRange(start + char.length, start + char.length);
+      });
+
+      return;
+    }
+
     const input = infinitiveInputRef.current;
     if (!input) return;
 
     const start = input.selectionStart ?? input.value.length;
     const end = input.selectionEnd ?? input.value.length;
     const text = input.value ?? '';
-
     const newValue = text.slice(0, start) + char + text.slice(end);
 
     setFormData((prev) => ({
@@ -256,13 +306,30 @@ const handleReverseSearchSubmit = async (e) => {
             />
           </>
         ) : (
-          <ReverseSearchSection
-            language={language}
-            reverseQuery={reverseQuery}
-            setReverseQuery={setReverseQuery}
-            onSubmit={handleReverseSearchSubmit}
-            isSearching={isReverseSearching}
-          />
+          <>
+            <ReverseSearchSection
+              language={language}
+              reverseQuery={reverseQuery}
+              setReverseQuery={setReverseQuery}
+              onSubmit={handleReverseSearchSubmit}
+              isSearching={isReverseSearching}
+              inputRef={reverseSearchInputRef}
+            />
+
+            <ReverseSearchResults
+              language={language}
+              results={reverseResults}
+              isSearching={isReverseSearching}
+              hasSearched={hasReverseSearched}
+              onOpenInConjugator={(result) => {
+                setActiveTab('conjugator');
+                setFormData((prev) => ({
+                  ...prev,
+                  infinitive: result.infinitive || prev.infinitive,
+                }));
+              }}
+            />
+          </>
         )}
 
         <div className="text-center mt-6">

@@ -6,6 +6,7 @@ const ReverseSearchSection = ({
   setReverseQuery,
   onSubmit,
   isSearching = false,
+  inputRef,
 }) => {
   const localized = (en, tr) => (language === 'tr' ? tr : en);
 
@@ -32,6 +33,7 @@ const ReverseSearchSection = ({
             {localized('Enter a verb form:', 'Bir fiil biçimi girin:')}
           </label>
           <input
+            ref={inputRef}
             id="reverseQuery"
             type="text"
             value={reverseQuery}
