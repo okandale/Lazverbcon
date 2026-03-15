@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import { Link, useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { Home } from 'lucide-react';
-
+import VerbToolTabs from './shared/VerbToolTabs';
 import Results from './conjugator/Results';
 import FeedbackForm from './FeedbackForm';
 import FormSection from './conjugator/FormSection';
@@ -36,6 +36,8 @@ function normalizeConjugationPayload(payload) {
       error: payload.error || 'Error fetching conjugations.',
     };
   }
+
+
 
   const meta = payload.meta ?? payload.result?.meta ?? null;
   let dataCandidate = null;
@@ -80,7 +82,7 @@ const VerbConjugator = () => {
   const [formData, setFormData] = useState(defaultFormData);
   const [results, setResults] = useState({ data: {}, meta: null, error: '' });
   const [isFeedbackVisible, setFeedbackVisible] = useState(false);
-
+  const [activeTab, setActiveTab] = useState('conjugator');
   const infinitiveInputRef = useRef(null);
 
   useEffect(() => {
@@ -215,25 +217,39 @@ const VerbConjugator = () => {
             </Link>
           </p>
         </div>
-
+        <VerbToolTabs
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          language={language}
+        />
         <SpecialCharacterBar onCharClick={handleSpecialCharClick} />
 
-        <form onSubmit={handleSubmit}>
-          <FormSection
-            language={language}
-            formData={formData}
-            setFormData={setFormData}
-            setResults={setResults}
-            infinitiveInputRef={infinitiveInputRef}
-          />
-        </form>
+        {activeTab === 'conjugator' ? (
+          <>
+            <form onSubmit={handleSubmit}>
+              <FormSection
+                language={language}
+                formData={formData}
+                setFormData={setFormData}
+                setResults={setResults}
+                infinitiveInputRef={infinitiveInputRef}
+              />
+            </form>
 
-        <Results
-          results={results}
-          language={language}
-          translations={translations}
-          selectedObject={formData.obj}
-        />
+            <Results
+              results={results}
+              language={language}
+              translations={translations}
+              selectedObject={formData.obj}
+            />
+          </>
+        ) : (
+          <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-center text-gray-600">
+            {language === 'tr'
+              ? 'Biçim arama yakında eklenecek.'
+              : 'Form lookup coming soon.'}
+          </div>
+        )}
 
         <div className="text-center mt-6">
           <p className="text-gray-700 text-sm">
