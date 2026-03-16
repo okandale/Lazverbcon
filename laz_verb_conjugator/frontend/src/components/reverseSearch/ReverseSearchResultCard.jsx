@@ -16,8 +16,18 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
     return tenseLabels[tense] || tense || '—';
   };
 
+  const formatMood = (mood) => {
+    if (!mood) return '—';
+
+    const moodLabels = {
+      indicative: localized('Indicative', 'Bildirme kipi'),
+    };
+
+    return moodLabels[mood] || mood;
+  };
+
   const formatDerivation = (derivation) => {
-    if (!derivation) return null;
+    if (!derivation || derivation === 'none') return null;
 
     const derivationLabels = {
       passive: localized('Passive', 'Edilgen'),
@@ -49,6 +59,17 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
     result.is_causative ? localized('Causative', 'Ettirgen') : null,
     result.is_double_causative ? localized('Double causative', 'Çift Ettirgen') : null,
   ].filter(Boolean);
+
+  const valueChipClass = (isActive) =>
+    isActive
+      ? 'inline-flex items-center rounded-full bg-blue-50 text-blue-700 px-2.5 py-0.5 text-xs font-semibold'
+      : 'inline-flex items-center rounded-full bg-gray-100 text-gray-500 px-2.5 py-0.5 text-xs font-medium';
+
+  const hasObject = !!result.object;
+  const isNonDefaultMood = !!result.mood && result.mood !== 'indicative';
+  const derivationLabel = formatDerivation(result.derivation);
+  const hasDerivation = !!derivationLabel;
+  const hasMarkers = markerLabels.length > 0;
 
   return (
     <div className="bg-white shadow-md rounded px-6 pt-5 pb-5">
@@ -118,30 +139,38 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
               <span className="font-semibold">
                 {localized('Object:', 'Nesne:')}
               </span>{' '}
-              {result.object || localized('None', 'Yok')}
+              <span className={valueChipClass(hasObject)}>
+                {result.object || localized('None', 'Yok')}
+              </span>
             </p>
 
             <p>
               <span className="font-semibold">
                 {localized('Mood:', 'Kip:')}
               </span>{' '}
-              {result.mood || '—'}
+              <span className={valueChipClass(isNonDefaultMood)}>
+                {formatMood(result.mood)}
+              </span>
             </p>
 
             <p>
               <span className="font-semibold">
                 {localized('Derivation:', 'Türetim:')}
               </span>{' '}
-              {result.derivation ? formatDerivation(result.derivation) : '—'}
+              <span className={valueChipClass(hasDerivation)}>
+                {derivationLabel || localized('None', 'Yok')}
+              </span>
             </p>
 
             <p className="md:col-span-2">
               <span className="font-semibold">
                 {localized('Markers:', 'Belirteçler:')}
               </span>{' '}
-              {markerLabels.length > 0
-                ? markerLabels.join(', ')
-                : localized('None', 'Yok')}
+              <span className={valueChipClass(hasMarkers)}>
+                {hasMarkers
+                  ? markerLabels.join(', ')
+                  : localized('None', 'Yok')}
+              </span>
             </p>
           </div>
 

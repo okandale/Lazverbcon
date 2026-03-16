@@ -121,6 +121,9 @@ const VerbConjugator = () => {
         setReverseResults([]);
         return;
       }
+      if (!API_URLS?.reverse) {
+        throw new Error('API_URLS.reverse is missing/undefined');
+      }
 
       const url = `${API_URLS.reverse}?spelling=${encodeURIComponent(spelling)}`;
       console.log('Reverse fetch URL:', url);
@@ -328,6 +331,9 @@ const VerbConjugator = () => {
               isSearching={isReverseSearching}
               hasSearched={hasReverseSearched}
               onOpenInConjugator={(result) => {
+                const mood = result.mood || 'indicative';
+                const derivation = result.derivation || 'none';
+
                 setActiveTab('conjugator');
                 setFormData((prev) => ({
                   ...prev,
@@ -335,10 +341,22 @@ const VerbConjugator = () => {
                   tense: result.tense || prev.tense,
                   subject: result.subject_code || prev.subject,
                   obj: result.object_code || '',
+
+                  aspect:
+                    derivation === 'passive' || derivation === 'potential'
+                      ? derivation
+                      : '',
+
+                  optative: mood === 'optative',
+                  imperative: mood === 'imperative',
+                  neg_imperative: mood === 'neg_imperative',
+
                   applicative: !!result.is_applicative,
                   simple_causative: !!result.is_causative,
                   causative: !!result.is_double_causative,
                 }));
+
+                setResults({ data: {}, meta: null, error: '' });
               }}
             />
           </>
