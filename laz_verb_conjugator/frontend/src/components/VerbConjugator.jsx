@@ -165,7 +165,8 @@ const VerbConjugator = () => {
     setIsReverseSearching(true);
     setHasReverseSearched(true);
     setReverseResults([]);
-
+    setShowSuggestions(false);
+    setHighlightedSuggestionIndex(-1);
     try {
       const spelling = reverseQuery.trim();
 
