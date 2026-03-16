@@ -47,11 +47,16 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
       ? `${result.subject} → ${result.object}`
       : result.subject || result.object || null;
 
+  const regionLabel =
+    Array.isArray(result.regions) && result.regions.length > 0
+      ? result.regions.join(', ')
+      : result.dialect || null;
+
   const previewParts = [
     formatTense(result.tense),
     subjectObjectPreview,
     formatDerivation(result.derivation),
-    result.dialect,
+    regionLabel,
   ].filter(Boolean);
 
   const markerLabels = [
@@ -123,9 +128,11 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
 
             <p>
               <span className="font-semibold">
-                {localized('Dialect:', 'Ağız:')}
+                {localized('Regions:', 'Bölgeler:')}
               </span>{' '}
-              {result.dialect || '—'}
+              {Array.isArray(result.regions) && result.regions.length > 0
+                ? result.regions.join(', ')
+                : result.dialect || '—'}
             </p>
 
             <p>

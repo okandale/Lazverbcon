@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import ReverseSearchResultCard from './ReverseSearchResultCard';
 
 const ReverseSearchResults = ({
@@ -9,6 +9,54 @@ const ReverseSearchResults = ({
   onOpenInConjugator,
 }) => {
   const localized = (en, tr) => (language === 'tr' ? tr : en);
+
+  const collapsedResults = useMemo(() => {
+    if (!Array.isArray(results) || results.length === 0) {
+      return [];
+    }
+
+    const grouped = new Map();
+
+    for (const result of results) {
+      const key = JSON.stringify([
+        result.conjugated_form || '',
+        result.infinitive || '',
+        result.meaning_english || '',
+        result.meaning_turkish || '',
+        result.tense || '',
+        result.mood || '',
+        result.frame || '',
+        result.subject || '',
+        result.object || '',
+        result.subject_code || '',
+        result.object_code || '',
+        result.derivation || '',
+        !!result.is_applicative,
+        !!result.is_causative,
+        !!result.is_double_causative,
+        result.optional_prefix || '',
+      ]);
+
+      if (!grouped.has(key)) {
+        grouped.set(key, {
+          ...result,
+          regions: result.dialect ? [result.dialect] : [],
+        });
+        continue;
+      }
+
+      const existing = grouped.get(key);
+
+      if (result.dialect && !existing.regions.includes(result.dialect)) {
+        existing.regions.push(result.dialect);
+      }
+    }
+
+    return Array.from(grouped.values()).map((result) => ({
+      ...result,
+      regions: [...result.regions].sort((a, b) => a.localeCompare(b)),
+    }));
+  }, [results]);
 
   if (isSearching) {
     return (
@@ -29,7 +77,7 @@ const ReverseSearchResults = ({
     );
   }
 
-  if (!results || results.length === 0) {
+  if (!collapsedResults.length) {
     return (
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-center text-gray-600">
         {localized(
@@ -42,9 +90,9 @@ const ReverseSearchResults = ({
 
   return (
     <div className="space-y-4 mb-4">
-      {results.map((result, index) => (
+      {collapsedResults.map((result, index) => (
         <ReverseSearchResultCard
-          key={result.id ?? `${result.infinitive ?? 'result'}-${index}`}
+          key={`${result.infinitive ?? 'result'}-${result.tense ?? 'tense'}-${result.subject_code ?? 'subject'}-${result.object_code ?? 'object'}-${index}`}
           result={result}
           language={language}
           onOpenInConjugator={onOpenInConjugator}
