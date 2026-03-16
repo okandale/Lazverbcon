@@ -21,6 +21,7 @@ import {
 
 const DIALECT_KEYS = ['FA', 'PZ', 'HO', 'AŞ'];
 
+
 function looksLikeDialectPayload(obj) {
   if (!obj || typeof obj !== 'object') return false;
   return DIALECT_KEYS.some((k) => Object.prototype.hasOwnProperty.call(obj, k));
@@ -91,6 +92,11 @@ const VerbConjugator = () => {
   const [isReverseSearching, setIsReverseSearching] = useState(false);
   const [reverseResults, setReverseResults] = useState([]);
   const [hasReverseSearched, setHasReverseSearched] = useState(false);
+  const [reverseSuggestions, setReverseSuggestions] = useState([]);
+  const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [highlightedSuggestionIndex, setHighlightedSuggestionIndex] = useState(-1);
+  const skipNextSuggestionFetch = useRef(false);
   useEffect(() => {
     if (location.state?.infinitive) {
       setFormData((prev) => ({
@@ -100,7 +106,53 @@ const VerbConjugator = () => {
       window.history.replaceState({}, document.title);
     }
   }, [location.state]);
+  useEffect(() => {
+    if (skipNextSuggestionFetch.current) {
+      skipNextSuggestionFetch.current = false;
+      return;
+    }    
+    const query = reverseQuery.trim();
 
+    if (!query) {
+      setReverseSuggestions([]);
+      setShowSuggestions(false);
+      setHighlightedSuggestionIndex(-1);
+      return;
+    }
+
+    const controller = new AbortController();
+
+    const timeout = setTimeout(async () => {
+      try {
+        setIsLoadingSuggestions(true);
+
+        const response = await fetch(
+          `${API_URLS.reverse}/suggestions?q=${encodeURIComponent(query)}`,
+          { signal: controller.signal }
+        );
+
+        const payload = await response.json();
+        const suggestions = Array.isArray(payload?.suggestions) ? payload.suggestions : [];
+
+        setReverseSuggestions(suggestions);
+        setShowSuggestions(suggestions.length > 0);
+        setHighlightedSuggestionIndex(-1);
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Suggestion fetch failed:', err);
+          setReverseSuggestions([]);
+          setShowSuggestions(false);
+        }
+      } finally {
+        setIsLoadingSuggestions(false);
+      }
+    }, 200);
+
+    return () => {
+      clearTimeout(timeout);
+      controller.abort();
+    };
+  }, [reverseQuery]);
   const toggleLanguage = () => {
     const newLanguage = language === 'en' ? 'tr' : 'en';
     setLanguage(newLanguage);
@@ -323,6 +375,13 @@ const VerbConjugator = () => {
               onSubmit={handleReverseSearchSubmit}
               isSearching={isReverseSearching}
               inputRef={reverseSearchInputRef}
+              suggestions={reverseSuggestions}
+              isLoadingSuggestions={isLoadingSuggestions}
+              showSuggestions={showSuggestions}
+              setShowSuggestions={setShowSuggestions}
+              highlightedSuggestionIndex={highlightedSuggestionIndex}
+              setHighlightedSuggestionIndex={setHighlightedSuggestionIndex}
+              skipNextSuggestionFetch={skipNextSuggestionFetch}
             />
 
             <ReverseSearchResults

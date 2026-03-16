@@ -4,7 +4,7 @@ import logging
 import os
 import json
 
-from backend.db_query import get_verb_id, get_conjugation_rows, reverse_lookup
+from backend.db_query import get_verb_id, get_conjugation_rows, reverse_lookup, reverse_suggestions
 from flask_jwt_extended import JWTManager
 
 from backend.config.webhook_config import WebhookConfig
@@ -295,7 +295,22 @@ def reverse():
     log_request_response(request_params, payload, "/api/reverse")
     return jsonify(payload), 200
 
+@app.route("/api/reverse/suggestions", methods=["GET"])
+def reverse_suggestions_route():
+    request_params = dict(request.args)
 
+    q = request.args.get("q", "").strip()
+
+    if not q:
+        payload = {"suggestions": []}
+        log_request_response(request_params, payload, "/api/reverse/suggestions")
+        return jsonify(payload), 200
+
+    suggestions = reverse_suggestions(q)
+
+    payload = {"suggestions": suggestions}
+    log_request_response(request_params, payload, "/api/reverse/suggestions")
+    return jsonify(payload), 200
 # -----------------------
 # Run
 # -----------------------

@@ -142,3 +142,19 @@ def reverse_lookup(spelling: str):
             "spelling": spelling
         }).mappings().all()
     return [dict(row) for row in rows]
+
+def reverse_suggestions(query: str, limit: int = 8):
+    sql = text("""
+        SELECT DISTINCT
+            vf.spelling
+        FROM verb_form vf
+        WHERE LOWER(vf.spelling) LIKE LOWER(:query)
+        ORDER BY vf.spelling
+        LIMIT :limit
+    """)
+    with engine.connect() as conn:
+        rows = conn.execute(sql, {
+            "query": f"{query}%",
+            "limit": limit
+        }).mappings().all()
+    return [dict(row) for row in rows]
