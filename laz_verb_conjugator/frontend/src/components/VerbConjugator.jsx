@@ -21,7 +21,6 @@ import {
 
 const DIALECT_KEYS = ['FA', 'PZ', 'HO', 'AŞ'];
 
-
 function looksLikeDialectPayload(obj) {
   if (!obj || typeof obj !== 'object') return false;
   return DIALECT_KEYS.some((k) => Object.prototype.hasOwnProperty.call(obj, k));
@@ -39,8 +38,6 @@ function normalizeConjugationPayload(payload) {
       error: payload.error || 'Error fetching conjugations.',
     };
   }
-
-
 
   const meta = payload.meta ?? payload.result?.meta ?? null;
   let dataCandidate = null;
@@ -81,26 +78,31 @@ function normalizeConjugationPayload(payload) {
 
 const VerbConjugator = () => {
   const location = useLocation();
+
   const [language, setLanguage] = useState(getStoredLanguage());
   const [formData, setFormData] = useState(defaultFormData);
   const [results, setResults] = useState({ data: {}, meta: null, error: '' });
   const [isFeedbackVisible, setFeedbackVisible] = useState(false);
   const [activeTab, setActiveTab] = useState('conjugator');
+
   const infinitiveInputRef = useRef(null);
   const reverseSearchInputRef = useRef(null);
+  const skipNextSuggestionFetch = useRef(false);
+  const suppressSuggestionsRef = useRef(false);
+
   const [reverseQuery, setReverseQuery] = useState('');
   const [isReverseSearching, setIsReverseSearching] = useState(false);
   const [reverseResults, setReverseResults] = useState([]);
   const [reverseMeta, setReverseMeta] = useState({
-  query: '',
-  matchType: 'none',
+    query: '',
+    matchType: 'none',
   });
   const [hasReverseSearched, setHasReverseSearched] = useState(false);
   const [reverseSuggestions, setReverseSuggestions] = useState([]);
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [highlightedSuggestionIndex, setHighlightedSuggestionIndex] = useState(-1);
-  const skipNextSuggestionFetch = useRef(false);
+
   useEffect(() => {
     if (location.state?.infinitive) {
       setFormData((prev) => ({
@@ -110,11 +112,13 @@ const VerbConjugator = () => {
       window.history.replaceState({}, document.title);
     }
   }, [location.state]);
+
   useEffect(() => {
     if (skipNextSuggestionFetch.current) {
       skipNextSuggestionFetch.current = false;
       return;
-    }    
+    }
+
     const query = reverseQuery.trim();
 
     if (!query) {
@@ -139,7 +143,11 @@ const VerbConjugator = () => {
         const suggestions = Array.isArray(payload?.suggestions) ? payload.suggestions : [];
 
         setReverseSuggestions(suggestions);
-        setShowSuggestions(suggestions.length > 0);
+
+        if (!suppressSuggestionsRef.current) {
+          setShowSuggestions(suggestions.length > 0);
+        }
+
         setHighlightedSuggestionIndex(-1);
       } catch (err) {
         if (err.name !== 'AbortError') {
@@ -157,23 +165,27 @@ const VerbConjugator = () => {
       controller.abort();
     };
   }, [reverseQuery]);
+
   const toggleLanguage = () => {
     const newLanguage = language === 'en' ? 'tr' : 'en';
     setLanguage(newLanguage);
     setStoredLanguage(newLanguage);
   };
 
-
   const handleReverseSearchSubmit = async (e) => {
     e.preventDefault();
+
+    suppressSuggestionsRef.current = true;
+    setShowSuggestions(false);
+    setHighlightedSuggestionIndex(-1);
+
     setIsReverseSearching(true);
     setHasReverseSearched(true);
     setReverseMeta({
       query: '',
       matchType: 'none',
     });
-    setShowSuggestions(false);
-    setHighlightedSuggestionIndex(-1);
+
     try {
       const spelling = reverseQuery.trim();
 
@@ -181,6 +193,7 @@ const VerbConjugator = () => {
         setReverseResults([]);
         return;
       }
+
       if (!API_URLS?.reverse) {
         throw new Error('API_URLS.reverse is missing/undefined');
       }
@@ -209,7 +222,9 @@ const VerbConjugator = () => {
       setReverseResults(matches);
       setReverseMeta({
         query: payload?.query || spelling,
-        matchType: payload?.match_type || (matches.length ? matches[0]?.match_type || 'exact' : 'none'),
+        matchType:
+          payload?.match_type ||
+          (matches.length ? matches[0]?.match_type || 'exact' : 'none'),
       });
     } catch (err) {
       console.error('handleReverseSearchSubmit crashed:', err);
@@ -218,6 +233,7 @@ const VerbConjugator = () => {
       setIsReverseSearching(false);
     }
   };
+
   const handleSpecialCharClick = (char) => {
     if (activeTab === 'reverse') {
       const input = reverseSearchInputRef.current;
@@ -262,6 +278,7 @@ const VerbConjugator = () => {
     setResults({ data: {}, meta: null, error: '' });
 
     const params = new URLSearchParams();
+
     Object.entries(formData).forEach(([key, value]) => {
       if (key === 'regions') {
         if (Array.isArray(value) && value.length > 0) {
@@ -352,11 +369,13 @@ const VerbConjugator = () => {
             </Link>
           </p>
         </div>
+
         <VerbToolTabs
           activeTab={activeTab}
           onTabChange={setActiveTab}
           language={language}
         />
+
         <SpecialCharacterBar onCharClick={handleSpecialCharClick} />
 
         {activeTab === 'conjugator' ? (
@@ -394,6 +413,7 @@ const VerbConjugator = () => {
               highlightedSuggestionIndex={highlightedSuggestionIndex}
               setHighlightedSuggestionIndex={setHighlightedSuggestionIndex}
               skipNextSuggestionFetch={skipNextSuggestionFetch}
+              suppressSuggestionsRef={suppressSuggestionsRef}
             />
 
             <ReverseSearchResults
@@ -413,16 +433,13 @@ const VerbConjugator = () => {
                   tense: result.tense || prev.tense,
                   subject: result.subject_code || prev.subject,
                   obj: result.object_code || '',
-
                   aspect:
                     derivation === 'passive' || derivation === 'potential'
                       ? derivation
                       : '',
-
                   optative: mood === 'optative',
                   imperative: mood === 'imperative',
                   neg_imperative: mood === 'neg_imperative',
-
                   applicative: !!result.is_applicative,
                   simple_causative: !!result.is_causative,
                   causative: !!result.is_double_causative,
