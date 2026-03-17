@@ -5,18 +5,21 @@ const BASE_URL = import.meta.env.PROD
   ? 'https://api.lazuri.org'
   : 'http://localhost:5000';
 
-export const API_URLS = {
-  conjugate: `${BASE_URL}/api/conjugate`,
-  verbs: {
-    list: `${BASE_URL}/api/verbs/list`,
-    getDetails: `${BASE_URL}/api/verbs/get`,
-    conjugate: `${BASE_URL}/api/verbs/conjugate`
-  },
-  admin: {
-    auth: `${BASE_URL}/api/admin/auth`,
-    addVerb: `${BASE_URL}/api/admin/add-verb`
-  }
-};
+  export const API_URLS = {
+    conjugate: `${BASE_URL}/api/conjugate`,
+    reverse: `${BASE_URL}/api/reverse`,
+
+    verbs: {
+      list: `${BASE_URL}/api/verbs/list`,
+      getDetails: `${BASE_URL}/api/verbs/get`,
+      conjugate: `${BASE_URL}/api/verbs/conjugate`
+    },
+
+    admin: {
+      auth: `${BASE_URL}/api/admin/auth`,
+      addVerb: `${BASE_URL}/api/admin/add-verb`
+    }
+  };
 
 export const specialCharacters = ['ç̌', 't̆', 'ž', 'ǩ', 'ʒ', 'ǯ', 'p̌'];
 
