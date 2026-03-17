@@ -14,47 +14,97 @@ engine = create_engine(DATABASE_URL, future=True)
 # Order matters:
 # - longer/multi-character patterns first
 # - more specific apostrophe forms before shorter forms
-NORMALIZATION_RULES = [
-    # multi-character elder/alternative spellings
-    ("3'", "ǯ"),
-    ("ts", "ʒ"),
-    ("tz", "ǯ"),
-    ("dz", "ž"),
-    ("z'", "ž"),
-    ("k'", "ǩ"),
-    ("p'", "p̌"),
-    ("t'", "t̆"),
-    ("ç'", "ç̌"),
+# Tier 2: safe / intentional alternative spellings
+import unicodedata
 
-    # optional direct canonicalizations
-    ("t̆", "t̆"),
-    ("p̌", "p̌"),
-    ("ǩ", "ǩ"),
-    ("ʒ", "ʒ"),
-    ("ǯ", "ǯ"),
-    ("ž", "ž"),
-    ("ç̌", "ç̌"),
+# Canonical tokens
+TOKEN_K = "{KCARON}"
+TOKEN_P = "{PCARON}"
+TOKEN_T = "{TBREVE}"
+TOKEN_C = "{CCARON}"
+TOKEN_Z = "{ZCARON}"
+TOKEN_J = "{JCARON}"
+TOKEN_X = "{XLIKE}"
+TOKEN_ZH = "{EZH}"
 
-    # single-character substitutions
-    ("h", "x"),
-    ("ğ", "x"),
-    ("c", "ʒ"),
-    ("3", "ʒ"),
-    ("ç", "ç̌"),
-    ("z", "ž"),
+STRICT_NORMALIZATION_RULES = [
+    # already-canonical spellings -> token
+    ("ǩ", TOKEN_K),
+    ("p̌", TOKEN_P),
+    ("t̆", TOKEN_T),
+    ("ç̌", TOKEN_C),
+    ("ž", TOKEN_Z),
+    ("ǯ", TOKEN_J),
+    ("ʒ", TOKEN_ZH),
+    ("x", TOKEN_X),
+
+    # elder / alternative spellings -> token
+    ("3'", TOKEN_J),
+    ("ts", TOKEN_ZH),
+    ("tz", TOKEN_J),
+    ("dz", TOKEN_Z),
+    ("z'", TOKEN_Z),
+    ("k'", TOKEN_K),
+    ("p'", TOKEN_P),
+    ("t'", TOKEN_T),
+    ("ç'", TOKEN_C),
+
+    ("h", TOKEN_X),
+    ("ğ", TOKEN_X),
+    ("c", TOKEN_ZH),
+    ("3", TOKEN_ZH),
+    ("z", TOKEN_Z),
 ]
 
+BROAD_NORMALIZATION_RULES = [
+    ("k", TOKEN_K),
+    ("ç", TOKEN_C),
+    # later if needed:
+    # ("p", TOKEN_P),
+    # ("t", TOKEN_T),
+]
 
-def _normalize_reverse_input(text: str) -> str:
+TOKEN_TO_CANONICAL = {
+    TOKEN_K: "ǩ",
+    TOKEN_P: "p̌",
+    TOKEN_T: "t̆",
+    TOKEN_C: "ç̌",
+    TOKEN_Z: "ž",
+    TOKEN_J: "ǯ",
+    TOKEN_X: "x",
+    TOKEN_ZH: "ʒ",
+}
+
+
+def _apply_rules(text: str, rules) -> str:
     if not text:
         return ""
 
-    t = text.strip().lower()
+    t = unicodedata.normalize("NFC", text.strip().lower())
 
-    for src, target in NORMALIZATION_RULES:
+    for src, target in rules:
         t = t.replace(src, target)
 
     return t
+
+
+def _finalize_tokens(text: str) -> str:
+    t = text
+    for token, canonical in TOKEN_TO_CANONICAL.items():
+        t = t.replace(token, canonical)
+    return unicodedata.normalize("NFC", t)
+
+
+def _normalize_reverse_input_strict(text: str) -> str:
+    t = _apply_rules(text, STRICT_NORMALIZATION_RULES)
+    return _finalize_tokens(t)
+
+
+def _normalize_reverse_input_broad(text: str) -> str:
+    t = _apply_rules(text, STRICT_NORMALIZATION_RULES)
+    t = _apply_rules(t, BROAD_NORMALIZATION_RULES)
+    return _finalize_tokens(t)
+
 
 
 def _dedupe_reverse_rows(rows):
@@ -176,58 +226,119 @@ def get_conjugation_rows(
 
     return [dict(row) for row in rows]
 
-def _candidate_prefixes_for_query(query: str):
+def _candidate_prefixes_for_query(query: str, broad: bool = False):
     if not query:
         return ["%"]
 
     q = query.strip().lower()
 
-    # Check multi-character starts first
+    # Tier 2: strict alternate spellings
     if q.startswith("k'") or q.startswith("ǩ"):
-        return ["k%", "ǩ%"]
+        prefixes = ["k%", "ǩ%"]
+    elif q.startswith("p'") or q.startswith("p̌"):
+        prefixes = ["p%", "p̌%"]
+    elif q.startswith("t'") or q.startswith("t̆"):
+        prefixes = ["t%", "t̆%"]
+    elif q.startswith("ts") or q.startswith("c") or q.startswith("3") or q.startswith("ʒ"):
+        prefixes = ["ts%", "c%", "3%", "ʒ%"]
+    elif q.startswith("tz") or q.startswith("3'") or q.startswith("ǯ"):
+        prefixes = ["tz%", "3'%", "ǯ%"]
+    elif q.startswith("dz") or q.startswith("z") or q.startswith("z'") or q.startswith("ž"):
+        prefixes = ["dz%", "z%", "z'%", "ž%"]
+    elif q.startswith("ç'") or q.startswith("ç̌"):
+        prefixes = ["ç'%", "ç̌%"]
+    else:
+        first = q[:1]
+        groups = {
+            "x": ["x", "h", "ğ"],
+            "h": ["x", "h", "ğ"],
+            "ğ": ["x", "h", "ğ"],
+            "c": ["c", "ʒ", "3"],
+            "3": ["c", "ʒ", "3"],
+            "ʒ": ["c", "ʒ", "3"],
+            "z": ["z", "ž"],
+            "ž": ["z", "ž"],
+        }
+        prefixes = [f"{ch}%" for ch in groups.get(first, [first])]
 
-    if q.startswith("p'") or q.startswith("p̌"):
-        return ["p%", "p̌%"]
+    # Tier 3: broad plain-letter equivalence
+    if broad:
+        extra = []
+        first = q[:1]
 
-    if q.startswith("t'") or q.startswith("t̆"):
-        return ["t%", "t̆%"]
+        broad_groups = {
+            "k": ["k", "ǩ"],
+            "ǩ": ["k", "ǩ"],
+            "ç": ["ç", "ç̌"],
+            "ç̌": ["ç", "ç̌"],
+            # add later only if needed:
+            # "p": ["p", "p̌"],
+            # "p̌": ["p", "p̌"],
+            # "t": ["t", "t̆"],
+            # "t̆": ["t", "t̆"],
+        }
 
-    if q.startswith("ts") or q.startswith("c") or q.startswith("3") or q.startswith("ʒ"):
-        return ["ts%", "c%", "3%", "ʒ%"]
+        if first in broad_groups:
+            extra.extend([f"{ch}%" for ch in broad_groups[first]])
 
-    if q.startswith("tz") or q.startswith("3'") or q.startswith("ǯ"):
-        return ["tz%", "3'%", "ǯ%"]
+        prefixes = list(dict.fromkeys(prefixes + extra))
 
-    if q.startswith("dz") or q.startswith("z") or q.startswith("z'") or q.startswith("ž"):
-        return ["dz%", "z%", "z'%", "ž%"]
+    return prefixes
 
-    if q.startswith("ç'") or q.startswith("ç̌"):
-        return ["ç'%", "ç̌%"]
+def _fetch_reverse_candidates(conn, prefixes):
+    if not prefixes:
+        return []
 
-    first = q[:1]
+    candidate_conditions = []
+    candidate_params = {}
 
-    groups = {
-        "x": ["x", "h", "ğ"],
-        "h": ["x", "h", "ğ"],
-        "ğ": ["x", "h", "ğ"],
-        "k": ["k", "ǩ"],
-        "ǩ": ["k", "ǩ"],
-        "p": ["p", "p̌"],
-        "p̌": ["p", "p̌"],
-        "t": ["t", "t̆"],
-        "t̆": ["t", "t̆"],
-        "c": ["c", "ʒ", "3"],
-        "3": ["c", "ʒ", "3"],
-        "ʒ": ["c", "ʒ", "3"],
-        "z": ["z", "ž"],
-        "ž": ["z", "ž"],
-    }
+    for i, prefix in enumerate(prefixes):
+        key = f"prefix{i}"
+        candidate_conditions.append(f"LOWER(vf.spelling) LIKE LOWER(:{key})")
+        candidate_params[key] = prefix
 
-    return [f"{ch}%" for ch in groups.get(first, [first])]
+    candidate_sql = text(f"""
+        SELECT
+            vf.spelling AS conjugated_form,
+            v.infinitive,
+            d.laz_name AS dialect,
+            v.meaning_english,
+            v.meaning_turkish,
+            vf.tense,
+            vf.mood,
+            vf.frame,
+            COALESCE(ps.form, vf.subject::text) AS subject,
+            COALESCE(po.form, vf.object::text) AS object,
+            vf.subject AS subject_code,
+            vf.object AS object_code,
+            vf.derivation,
+            vf.is_applicative,
+            vf.is_causative,
+            vf.is_double_causative,
+            vf.optional_prefix
+        FROM verb_form vf
+        JOIN verb v
+          ON vf.verb_id = v.verb_id
+        JOIN dialect d
+          ON v.dialect_id = d.dialect_id
+        LEFT JOIN pronoun ps
+          ON ps.dialect_id = v.dialect_id
+         AND ps.code = vf.subject
+         AND ps.frame = vf.frame
+        LEFT JOIN pronoun po
+          ON po.dialect_id = v.dialect_id
+         AND po.code = vf.object
+         AND po.frame = vf.frame
+        WHERE {" OR ".join(candidate_conditions)}
+        ORDER BY d.dialect_id, v.infinitive
+    """)
+
+    return conn.execute(candidate_sql, candidate_params).mappings().all()
 
 def reverse_lookup(spelling: str):
     spelling = (spelling or "").strip()
-    normalized_spelling = _normalize_reverse_input(spelling)
+    strict_normalized_spelling = _normalize_reverse_input_strict(spelling)
+    broad_normalized_spelling = _normalize_reverse_input_broad(spelling)
 
     exact_sql = text("""
         SELECT
@@ -265,55 +376,8 @@ def reverse_lookup(spelling: str):
         ORDER BY d.dialect_id, v.infinitive
     """)
 
-    # Fetch candidate pool for Python-side normalized matching.
-    # Starting conservative: candidates with same first letter OR first normalized letter.
-    prefixes = _candidate_prefixes_for_query(spelling)
-
-    candidate_conditions = []
-    candidate_params = {}
-
-    for i, prefix in enumerate(prefixes):
-        key = f"prefix{i}"
-        candidate_conditions.append(f"LOWER(vf.spelling) LIKE LOWER(:{key})")
-        candidate_params[key] = prefix
-
-    candidate_sql = text(f"""
-        SELECT
-            vf.spelling AS conjugated_form,
-            v.infinitive,
-            d.laz_name AS dialect,
-            v.meaning_english,
-            v.meaning_turkish,
-            vf.tense,
-            vf.mood,
-            vf.frame,
-            COALESCE(ps.form, vf.subject::text) AS subject,
-            COALESCE(po.form, vf.object::text) AS object,
-            vf.subject AS subject_code,
-            vf.object AS object_code,
-            vf.derivation,
-            vf.is_applicative,
-            vf.is_causative,
-            vf.is_double_causative,
-            vf.optional_prefix
-        FROM verb_form vf
-        JOIN verb v
-        ON vf.verb_id = v.verb_id
-        JOIN dialect d
-        ON v.dialect_id = d.dialect_id
-        LEFT JOIN pronoun ps
-        ON ps.dialect_id = v.dialect_id
-        AND ps.code = vf.subject
-        AND ps.frame = vf.frame
-        LEFT JOIN pronoun po
-        ON po.dialect_id = v.dialect_id
-        AND po.code = vf.object
-        AND po.frame = vf.frame
-        WHERE {" OR ".join(candidate_conditions)}
-        ORDER BY d.dialect_id, v.infinitive
-    """)
-
     with engine.connect() as conn:
+        # Tier 1: exact
         exact_rows = conn.execute(
             exact_sql,
             {"spelling": spelling}
@@ -324,31 +388,47 @@ def reverse_lookup(spelling: str):
             for row in results:
                 row["match_type"] = "exact"
                 row["matched_query"] = spelling
-                row["normalized_query"] = normalized_spelling
+                row["normalized_query"] = strict_normalized_spelling
             return results
 
-        # Use first raw character as a first-pass filter.
-        # If you notice missed matches, widen this later.
-        candidate_rows = conn.execute(
-            candidate_sql,
-            candidate_params
-        ).mappings().all()
+        # Tier 2: strict alternate spellings
+        strict_prefixes = _candidate_prefixes_for_query(spelling, broad=False)
+        strict_candidate_rows = _fetch_reverse_candidates(conn, strict_prefixes)
 
-    normalized_matches = []
+        strict_matches = []
+        for row in strict_candidate_rows:
+            row_dict = dict(row)
+            candidate_spelling = row_dict.get("conjugated_form", "")
+            normalized_candidate = _normalize_reverse_input_strict(candidate_spelling)
 
-    for row in candidate_rows:
+            if normalized_candidate == strict_normalized_spelling:
+                row_dict["match_type"] = "normalized_strict"
+                row_dict["matched_query"] = spelling
+                row_dict["normalized_query"] = strict_normalized_spelling
+                strict_matches.append(row_dict)
+
+        strict_matches = _dedupe_reverse_rows(strict_matches)
+        if strict_matches:
+            return strict_matches
+
+        # Tier 3: broad plain-letter fallback
+        broad_prefixes = _candidate_prefixes_for_query(spelling, broad=True)
+        broad_candidate_rows = _fetch_reverse_candidates(conn, broad_prefixes)
+
+    broad_matches = []
+    for row in broad_candidate_rows:
         row_dict = dict(row)
         candidate_spelling = row_dict.get("conjugated_form", "")
-        normalized_candidate = _normalize_reverse_input(candidate_spelling)
+        normalized_candidate = _normalize_reverse_input_broad(candidate_spelling)
 
-        if normalized_candidate == normalized_spelling:
-            row_dict["match_type"] = "normalized"
+        if normalized_candidate == broad_normalized_spelling:
+            row_dict["match_type"] = "normalized_broad"
             row_dict["matched_query"] = spelling
-            row_dict["normalized_query"] = normalized_spelling
-            normalized_matches.append(row_dict)
+            row_dict["normalized_query"] = broad_normalized_spelling
+            broad_matches.append(row_dict)
 
-    normalized_matches = _dedupe_reverse_rows(normalized_matches)
-    return normalized_matches
+    broad_matches = _dedupe_reverse_rows(broad_matches)
+    return broad_matches
 
 
 def reverse_suggestions(query: str, limit: int = 8):
