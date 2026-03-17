@@ -22,12 +22,17 @@ CHECK (NOT (is_causative OR is_double_causative) OR object IS NOT NULL);
 ALTER TABLE verb_form DROP CONSTRAINT IF EXISTS imperative_restrictions;
 ALTER TABLE verb_form ADD CONSTRAINT imperative_restrictions
 CHECK (
-  mood <> 'imperative'
+  mood NOT IN ('imperative', 'negative_imperative')
   OR (
-    tense IS NULL
+    tense IN ('present', 'past')
     AND derivation = 'none'
   )
 );
+
+-- derivation_requires_indicative
+ALTER TABLE verb_form DROP CONSTRAINT IF EXISTS derivation_requires_indicative;
+ALTER TABLE verb_form ADD CONSTRAINT derivation_requires_indicative
+CHECK (derivation = 'none' OR mood = 'indicative');
 
 -- present_perfect_no_derivation
 ALTER TABLE verb_form DROP CONSTRAINT IF EXISTS present_perfect_no_derivation;
@@ -60,6 +65,86 @@ ALTER TABLE verb_form DROP CONSTRAINT IF EXISTS no_simple_and_double_causative;
 ALTER TABLE verb_form ADD CONSTRAINT no_simple_and_double_causative
 CHECK (NOT (is_causative AND is_double_causative));
 
+-- =========================
+-- UNIQUE INDEXES
+-- =========================
+
+DROP INDEX IF EXISTS ux_vf_dup_objnull_prefixnull;
+DROP INDEX IF EXISTS ux_vf_dup_objset_prefixnull;
+DROP INDEX IF EXISTS ux_vf_dup_objnull_prefixset;
+DROP INDEX IF EXISTS ux_vf_dup_objset_prefixset;
+
+-- object NULL, optional_prefix NULL
+CREATE UNIQUE INDEX ux_vf_dup_objnull_prefixnull
+ON verb_form (
+    verb_id,
+    frame,
+    subject,
+    tense,
+    mood,
+    derivation,
+    is_applicative,
+    is_causative,
+    is_double_causative,
+    spelling
+)
+WHERE object IS NULL
+  AND optional_prefix IS NULL;
+
+-- object NOT NULL, optional_prefix NULL
+CREATE UNIQUE INDEX ux_vf_dup_objset_prefixnull
+ON verb_form (
+    verb_id,
+    frame,
+    subject,
+    object,
+    tense,
+    mood,
+    derivation,
+    is_applicative,
+    is_causative,
+    is_double_causative,
+    spelling
+)
+WHERE object IS NOT NULL
+  AND optional_prefix IS NULL;
+
+-- object NULL, optional_prefix NOT NULL
+CREATE UNIQUE INDEX ux_vf_dup_objnull_prefixset
+ON verb_form (
+    verb_id,
+    frame,
+    subject,
+    tense,
+    mood,
+    derivation,
+    is_applicative,
+    is_causative,
+    is_double_causative,
+    spelling,
+    optional_prefix
+)
+WHERE object IS NULL
+  AND optional_prefix IS NOT NULL;
+
+-- object NOT NULL, optional_prefix NOT NULL
+CREATE UNIQUE INDEX ux_vf_dup_objset_prefixset
+ON verb_form (
+    verb_id,
+    frame,
+    subject,
+    object,
+    tense,
+    mood,
+    derivation,
+    is_applicative,
+    is_causative,
+    is_double_causative,
+    spelling,
+    optional_prefix
+)
+WHERE object IS NOT NULL
+  AND optional_prefix IS NOT NULL;
 
 -- =====================================================
 -- CROSS-TABLE GRAMMAR RULES (DOCUMENTATION ONLY — NOTE)

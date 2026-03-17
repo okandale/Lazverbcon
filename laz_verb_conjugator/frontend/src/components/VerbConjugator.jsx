@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Link, useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { Home } from 'lucide-react';
-
-import Results from './Results';
+import VerbToolTabs from './shared/VerbToolTabs';
+import Results from './conjugator/Results';
 import FeedbackForm from './FeedbackForm';
-import FormSection from './FormSection';
+import FormSection from './conjugator/FormSection';
 import LanguageToggle from './ui/LanguageToggle';
+import SpecialCharacterBar from './shared/SpecialCharacterBar';
+import ReverseSearchSection from './reverseSearch/ReverseSearchSection';
+import ReverseSearchResults from './reverseSearch/ReverseSearchResults';
 import {
   API_URLS,
   translations,
@@ -20,25 +23,14 @@ const DIALECT_KEYS = ['FA', 'PZ', 'HO', 'AŞ'];
 
 function looksLikeDialectPayload(obj) {
   if (!obj || typeof obj !== 'object') return false;
-  // Must contain at least one dialect key
   return DIALECT_KEYS.some((k) => Object.prototype.hasOwnProperty.call(obj, k));
 }
 
 function normalizeConjugationPayload(payload) {
-  // Accept shapes:
-  // A) { meta, result }                          <-- current backend (HAR)
-  // B) { result: { ...dialects..., meta } }      <-- older messy backend
-  // C) { ...dialects... }                        <-- very old backend
-  // D) { result: { result: ...dialects... } }    <-- double-wrapped
-  // Also accept error shapes:
-  // { error: "..." } or { result: { error: "..." } }
-
-  // If payload is null/undefined
   if (!payload) {
     return { data: {}, meta: null, error: 'Empty response from server.' };
   }
 
-  // If server returns an explicit top-level error
   if (payload && typeof payload === 'object' && 'error' in payload) {
     return {
       data: {},
@@ -48,24 +40,19 @@ function normalizeConjugationPayload(payload) {
   }
 
   const meta = payload.meta ?? payload.result?.meta ?? null;
-
-  // Candidate for "dialect object"
   let dataCandidate = null;
 
-  // New/current: { meta, result: {FA, ...} }
   if (looksLikeDialectPayload(payload.result)) {
     dataCandidate = payload.result;
-  }
-  // Old: dialects at top-level
-  else if (looksLikeDialectPayload(payload)) {
+  } else if (looksLikeDialectPayload(payload)) {
     dataCandidate = payload;
-  }
-  // Double-wrapped: { result: { result: {FA,...} } }
-  else if (looksLikeDialectPayload(payload.result?.result)) {
+  } else if (looksLikeDialectPayload(payload.result?.result)) {
     dataCandidate = payload.result.result;
-  }
-  // Sometimes: { result: {...} } where {...} isn't dialects but might be error
-  else if (payload.result && typeof payload.result === 'object' && 'error' in payload.result) {
+  } else if (
+    payload.result &&
+    typeof payload.result === 'object' &&
+    'error' in payload.result
+  ) {
     return {
       data: {},
       meta,
@@ -77,14 +64,11 @@ function normalizeConjugationPayload(payload) {
     return { data: {}, meta, error: 'Unexpected response format from server.' };
   }
 
-  // Strip meta if it got mixed into dialect keys object
   if ('meta' in dataCandidate) {
-    // eslint-disable-next-line no-unused-vars
     const { meta: _ignore, ...rest } = dataCandidate;
     dataCandidate = rest;
   }
 
-  // If no dialect keys after stripping
   if (!looksLikeDialectPayload(dataCandidate) || Object.keys(dataCandidate).length === 0) {
     return { data: {}, meta, error: 'No conjugations found for this verb.' };
   }
@@ -94,17 +78,31 @@ function normalizeConjugationPayload(payload) {
 
 const VerbConjugator = () => {
   const location = useLocation();
+
   const [language, setLanguage] = useState(getStoredLanguage());
   const [formData, setFormData] = useState(defaultFormData);
-
-  // results.data = dialect object (FA/PZ/HO/AŞ)
-  // results.meta = backend debug/meta
-  // results.error = user-facing error
   const [results, setResults] = useState({ data: {}, meta: null, error: '' });
-
   const [isFeedbackVisible, setFeedbackVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState('conjugator');
 
-  // Handle incoming verb from navigation
+  const infinitiveInputRef = useRef(null);
+  const reverseSearchInputRef = useRef(null);
+  const skipNextSuggestionFetch = useRef(false);
+  const suppressSuggestionsRef = useRef(false);
+
+  const [reverseQuery, setReverseQuery] = useState('');
+  const [isReverseSearching, setIsReverseSearching] = useState(false);
+  const [reverseResults, setReverseResults] = useState([]);
+  const [reverseMeta, setReverseMeta] = useState({
+    query: '',
+    matchType: 'none',
+  });
+  const [hasReverseSearched, setHasReverseSearched] = useState(false);
+  const [reverseSuggestions, setReverseSuggestions] = useState([]);
+  const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [highlightedSuggestionIndex, setHighlightedSuggestionIndex] = useState(-1);
+
   useEffect(() => {
     if (location.state?.infinitive) {
       setFormData((prev) => ({
@@ -115,10 +113,164 @@ const VerbConjugator = () => {
     }
   }, [location.state]);
 
+  useEffect(() => {
+    if (skipNextSuggestionFetch.current) {
+      skipNextSuggestionFetch.current = false;
+      return;
+    }
+
+    const query = reverseQuery.trim();
+
+    if (!query) {
+      setReverseSuggestions([]);
+      setShowSuggestions(false);
+      setHighlightedSuggestionIndex(-1);
+      return;
+    }
+
+    const controller = new AbortController();
+
+    const timeout = setTimeout(async () => {
+      try {
+        setIsLoadingSuggestions(true);
+
+        const response = await fetch(
+          `${API_URLS.reverse}/suggestions?q=${encodeURIComponent(query)}`,
+          { signal: controller.signal }
+        );
+
+        const payload = await response.json();
+        const suggestions = Array.isArray(payload?.suggestions) ? payload.suggestions : [];
+
+        setReverseSuggestions(suggestions);
+
+        if (!suppressSuggestionsRef.current) {
+          setShowSuggestions(suggestions.length > 0);
+        }
+
+        setHighlightedSuggestionIndex(-1);
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Suggestion fetch failed:', err);
+          setReverseSuggestions([]);
+          setShowSuggestions(false);
+        }
+      } finally {
+        setIsLoadingSuggestions(false);
+      }
+    }, 200);
+
+    return () => {
+      clearTimeout(timeout);
+      controller.abort();
+    };
+  }, [reverseQuery]);
+
   const toggleLanguage = () => {
     const newLanguage = language === 'en' ? 'tr' : 'en';
     setLanguage(newLanguage);
     setStoredLanguage(newLanguage);
+  };
+
+  const handleReverseSearchSubmit = async (e) => {
+    e.preventDefault();
+
+    suppressSuggestionsRef.current = true;
+    setShowSuggestions(false);
+    setHighlightedSuggestionIndex(-1);
+
+    setIsReverseSearching(true);
+    setHasReverseSearched(true);
+    setReverseMeta({
+      query: '',
+      matchType: 'none',
+    });
+
+    try {
+      const spelling = reverseQuery.trim();
+
+      if (!spelling) {
+        setReverseResults([]);
+        return;
+      }
+
+      if (!API_URLS?.reverse) {
+        throw new Error('API_URLS.reverse is missing/undefined');
+      }
+
+      const url = `${API_URLS.reverse}?spelling=${encodeURIComponent(spelling)}`;
+      console.log('Reverse fetch URL:', url);
+
+      const response = await fetch(url);
+      const text = await response.text();
+
+      let payload = null;
+      try {
+        payload = JSON.parse(text);
+      } catch {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} non-JSON: ${text.slice(0, 300)}`);
+        }
+        throw new Error(`Backend returned non-JSON: ${text.slice(0, 300)}`);
+      }
+
+      if (!response.ok) {
+        throw new Error(payload?.error || `HTTP ${response.status}`);
+      }
+
+      const matches = Array.isArray(payload?.matches) ? payload.matches : [];
+      setReverseResults(matches);
+      setReverseMeta({
+        query: payload?.query || spelling,
+        matchType:
+          payload?.match_type ||
+          (matches.length ? matches[0]?.match_type || 'exact' : 'none'),
+      });
+    } catch (err) {
+      console.error('handleReverseSearchSubmit crashed:', err);
+      setReverseResults([]);
+    } finally {
+      setIsReverseSearching(false);
+    }
+  };
+
+  const handleSpecialCharClick = (char) => {
+    if (activeTab === 'reverse') {
+      const input = reverseSearchInputRef.current;
+      if (!input) return;
+
+      const start = input.selectionStart ?? input.value.length;
+      const end = input.selectionEnd ?? input.value.length;
+      const text = input.value ?? '';
+      const newValue = text.slice(0, start) + char + text.slice(end);
+
+      setReverseQuery(newValue);
+
+      requestAnimationFrame(() => {
+        input.focus();
+        input.setSelectionRange(start + char.length, start + char.length);
+      });
+
+      return;
+    }
+
+    const input = infinitiveInputRef.current;
+    if (!input) return;
+
+    const start = input.selectionStart ?? input.value.length;
+    const end = input.selectionEnd ?? input.value.length;
+    const text = input.value ?? '';
+    const newValue = text.slice(0, start) + char + text.slice(end);
+
+    setFormData((prev) => ({
+      ...prev,
+      infinitive: newValue,
+    }));
+
+    requestAnimationFrame(() => {
+      input.focus();
+      input.setSelectionRange(start + char.length, start + char.length);
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -126,6 +278,7 @@ const VerbConjugator = () => {
     setResults({ data: {}, meta: null, error: '' });
 
     const params = new URLSearchParams();
+
     Object.entries(formData).forEach(([key, value]) => {
       if (key === 'regions') {
         if (Array.isArray(value) && value.length > 0) {
@@ -140,61 +293,39 @@ const VerbConjugator = () => {
 
     try {
       if (!API_URLS?.conjugate) {
-        throw new Error("API_URLS.conjugate is missing/undefined");
+        throw new Error('API_URLS.conjugate is missing/undefined');
       }
 
       const url = `${API_URLS.conjugate}?${params.toString()}`;
-      console.log("Fetch URL:", url);
+      console.log('Fetch URL:', url);
 
       const response = await fetch(url);
-
-      const text = await response.text(); // always read as text first
+      const text = await response.text();
 
       let payload = null;
       try {
         payload = JSON.parse(text);
       } catch {
-        // not JSON
         if (!response.ok) {
           throw new Error(`HTTP ${response.status} non-JSON: ${text.slice(0, 300)}`);
         }
         throw new Error(`Backend returned non-JSON: ${text.slice(0, 300)}`);
       }
 
-      // non-2xx
       if (!response.ok) {
         const msg = payload?.error || payload?.result?.error || `HTTP ${response.status}`;
         setResults({ data: {}, meta: payload?.meta ?? null, error: msg });
         return;
       }
 
-      // normalize: expect {meta, result} but accept older shapes
-      const meta = payload?.meta ?? payload?.result?.meta ?? null;
-      let data =
-        payload?.result?.FA ||
-        payload?.result?.PZ ||
-        payload?.result?.HO ||
-        payload?.result?.["AŞ"]
-          ? payload.result
-          : (payload?.result?.result ?? payload?.result ?? payload);
-
-      if (data && typeof data === 'object' && 'meta' in data) {
-        const { meta: _ignore, ...rest } = data;
-        data = rest;
-      }
-
-      if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
-        setResults({ data: {}, meta, error: 'No conjugations found for this verb.' });
-        return;
-      }
-
-      setResults({ data, meta, error: '' });
+      const normalized = normalizeConjugationPayload(payload);
+      setResults(normalized);
     } catch (err) {
-      console.error("handleSubmit crashed:", err);
+      console.error('handleSubmit crashed:', err);
       setResults({
         data: {},
         meta: null,
-        error: `Frontend error: ${err?.message ?? String(err)}`
+        error: `Frontend error: ${err?.message ?? String(err)}`,
       });
     }
   };
@@ -202,7 +333,6 @@ const VerbConjugator = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
       <div className="max-w-2xl mx-auto p-4">
-        {/* Header section with language toggle */}
         <div className="flex justify-between items-center mb-8 pt-2">
           <Link to="/" className="text-gray-600 hover:text-gray-800">
             <Home size={24} />
@@ -240,17 +370,86 @@ const VerbConjugator = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <FormSection
-            language={language}
-            formData={formData}
-            setFormData={setFormData}
-            setResults={setResults}
-            onSubmit={handleSubmit}
-          />
-        </form>
+        <VerbToolTabs
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          language={language}
+        />
 
-        <Results results={results} language={language} translations={translations} />
+        <SpecialCharacterBar onCharClick={handleSpecialCharClick} />
+
+        {activeTab === 'conjugator' ? (
+          <>
+            <form onSubmit={handleSubmit}>
+              <FormSection
+                language={language}
+                formData={formData}
+                setFormData={setFormData}
+                setResults={setResults}
+                infinitiveInputRef={infinitiveInputRef}
+              />
+            </form>
+
+            <Results
+              results={results}
+              language={language}
+              translations={translations}
+              selectedObject={formData.obj}
+            />
+          </>
+        ) : (
+          <>
+            <ReverseSearchSection
+              language={language}
+              reverseQuery={reverseQuery}
+              setReverseQuery={setReverseQuery}
+              onSubmit={handleReverseSearchSubmit}
+              isSearching={isReverseSearching}
+              inputRef={reverseSearchInputRef}
+              suggestions={reverseSuggestions}
+              isLoadingSuggestions={isLoadingSuggestions}
+              showSuggestions={showSuggestions}
+              setShowSuggestions={setShowSuggestions}
+              highlightedSuggestionIndex={highlightedSuggestionIndex}
+              setHighlightedSuggestionIndex={setHighlightedSuggestionIndex}
+              skipNextSuggestionFetch={skipNextSuggestionFetch}
+              suppressSuggestionsRef={suppressSuggestionsRef}
+            />
+
+            <ReverseSearchResults
+              language={language}
+              results={reverseResults}
+              isSearching={isReverseSearching}
+              hasSearched={hasReverseSearched}
+              meta={reverseMeta}
+              onOpenInConjugator={(result) => {
+                const mood = result.mood || 'indicative';
+                const derivation = result.derivation || 'none';
+
+                setActiveTab('conjugator');
+                setFormData((prev) => ({
+                  ...prev,
+                  infinitive: result.infinitive || prev.infinitive,
+                  tense: result.tense || prev.tense,
+                  subject: result.subject_code || prev.subject,
+                  obj: result.object_code || '',
+                  aspect:
+                    derivation === 'passive' || derivation === 'potential'
+                      ? derivation
+                      : '',
+                  optative: mood === 'optative',
+                  imperative: mood === 'imperative',
+                  neg_imperative: mood === 'neg_imperative',
+                  applicative: !!result.is_applicative,
+                  simple_causative: !!result.is_causative,
+                  causative: !!result.is_double_causative,
+                }));
+
+                setResults({ data: {}, meta: null, error: '' });
+              }}
+            />
+          </>
+        )}
 
         <div className="text-center mt-6">
           <p className="text-gray-700 text-sm">
