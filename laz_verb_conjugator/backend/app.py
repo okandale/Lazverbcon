@@ -273,12 +273,15 @@ def conjugate():
 # -----------------------
 # Reverse lookup
 # -----------------------
+
+# -----------------------
+# Reverse lookup
+# -----------------------
 @app.route("/api/reverse", methods=["GET"])
 def reverse():
-
     request_params = dict(request.args)
 
-    spelling = request.args.get("spelling", "")
+    spelling = request.args.get("spelling", "").strip()
 
     if not spelling:
         payload = {"error": "Missing spelling"}
@@ -286,14 +289,17 @@ def reverse():
         return jsonify(payload), 400
 
     matches = reverse_lookup(spelling)
+    match_type = matches[0].get("match_type", "exact") if matches else "none"
 
     payload = {
         "query": spelling,
+        "match_type": match_type,
         "matches": matches,
     }
 
     log_request_response(request_params, payload, "/api/reverse")
     return jsonify(payload), 200
+
 
 @app.route("/api/reverse/suggestions", methods=["GET"])
 def reverse_suggestions_route():

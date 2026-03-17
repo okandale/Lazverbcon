@@ -6,6 +6,7 @@ const ReverseSearchResults = ({
   results = [],
   isSearching = false,
   hasSearched = false,
+  meta = { query: '', matchType: 'none' },
   onOpenInConjugator,
 }) => {
   const localized = (en, tr) => (language === 'tr' ? tr : en);
@@ -58,6 +59,14 @@ const ReverseSearchResults = ({
     }));
   }, [results]);
 
+  const matchNotice =
+    meta?.matchType === 'normalized'
+      ? localized(
+          `No exact match found for “${meta?.query}”. Showing alternate spelling matches.`,
+          `“${meta?.query}” için tam eşleşme bulunamadı. Alternatif yazım eşleşmeleri gösteriliyor.`
+        )
+      : null;
+
   if (isSearching) {
     return (
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-center text-gray-600">
@@ -90,6 +99,12 @@ const ReverseSearchResults = ({
 
   return (
     <div className="space-y-4 mb-4">
+      {matchNotice && (
+        <div className="bg-amber-50 border border-amber-200 text-amber-800 rounded px-4 py-3 text-sm">
+          {matchNotice}
+        </div>
+      )}
+
       {collapsedResults.map((result, index) => (
         <ReverseSearchResultCard
           key={`${result.infinitive ?? 'result'}-${result.tense ?? 'tense'}-${result.subject_code ?? 'subject'}-${result.object_code ?? 'object'}-${index}`}

@@ -4,6 +4,13 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
   const [expanded, setExpanded] = useState(false);
   const localized = (en, tr) => (language === 'tr' ? tr : en);
 
+  const matchLabel =
+    result.match_type === 'normalized'
+      ? localized('Alternate spelling match', 'Alternatif yazım eşleşmesi')
+      : result.match_type === 'fuzzy'
+      ? localized('Similar spelling match', 'Benzer yazım eşleşmesi')
+      : null;
+
   const formatTense = (tense) => {
     const tenseLabels = {
       present: localized('Present', 'Şimdiki Zaman'),
@@ -83,7 +90,13 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
           <p className="text-lg font-bold text-blue-700 break-words">
             {result.conjugated_form || '—'}
           </p>
-
+          {matchLabel && (
+            <div className="mt-1">
+              <span className="inline-flex items-center rounded-full bg-amber-50 text-amber-700 px-2.5 py-0.5 text-xs font-medium">
+                {matchLabel}
+              </span>
+            </div>
+          )}
           <p className="text-gray-800 font-medium break-words">
             {result.infinitive || '—'}
             {meaning && (

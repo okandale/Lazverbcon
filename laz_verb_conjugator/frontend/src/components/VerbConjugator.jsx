@@ -91,6 +91,10 @@ const VerbConjugator = () => {
   const [reverseQuery, setReverseQuery] = useState('');
   const [isReverseSearching, setIsReverseSearching] = useState(false);
   const [reverseResults, setReverseResults] = useState([]);
+  const [reverseMeta, setReverseMeta] = useState({
+  query: '',
+  matchType: 'none',
+  });
   const [hasReverseSearched, setHasReverseSearched] = useState(false);
   const [reverseSuggestions, setReverseSuggestions] = useState([]);
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
@@ -164,7 +168,10 @@ const VerbConjugator = () => {
     e.preventDefault();
     setIsReverseSearching(true);
     setHasReverseSearched(true);
-    setReverseResults([]);
+    setReverseMeta({
+      query: '',
+      matchType: 'none',
+    });
     setShowSuggestions(false);
     setHighlightedSuggestionIndex(-1);
     try {
@@ -200,6 +207,10 @@ const VerbConjugator = () => {
 
       const matches = Array.isArray(payload?.matches) ? payload.matches : [];
       setReverseResults(matches);
+      setReverseMeta({
+        query: payload?.query || spelling,
+        matchType: payload?.match_type || (matches.length ? matches[0]?.match_type || 'exact' : 'none'),
+      });
     } catch (err) {
       console.error('handleReverseSearchSubmit crashed:', err);
       setReverseResults([]);
@@ -390,6 +401,7 @@ const VerbConjugator = () => {
               results={reverseResults}
               isSearching={isReverseSearching}
               hasSearched={hasReverseSearched}
+              meta={reverseMeta}
               onOpenInConjugator={(result) => {
                 const mood = result.mood || 'indicative';
                 const derivation = result.derivation || 'none';
