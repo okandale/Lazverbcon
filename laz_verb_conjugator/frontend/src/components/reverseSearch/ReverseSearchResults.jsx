@@ -67,13 +67,17 @@ const ReverseSearchResults = ({
     }));
   }, [results]);
 
-  const matchNotice =
-    meta?.matchType === 'normalized'
-      ? localized(
-          `No exact match found for “${meta?.query}”. Showing alternate spelling matches.`,
-          `“${meta?.query}” için tam eşleşme bulunamadı. Alternatif yazım eşleşmeleri gösteriliyor.`
-        )
-      : null;
+  const isAlternateMatch =
+    meta?.matchType === 'normalized' ||
+    meta?.matchType === 'normalized_strict' ||
+    meta?.matchType === 'normalized_broad';
+
+  const matchNotice = isAlternateMatch
+    ? localized(
+        `No exact match found for “${meta?.query}”. Showing alternate spelling matches.`,
+        `“${meta?.query}” için tam eşleşme bulunamadı. Alternatif yazım eşleşmeleri gösteriliyor.`
+      )
+    : null;
 
   if (isSearching) {
     return (

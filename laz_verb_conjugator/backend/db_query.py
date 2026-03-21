@@ -117,7 +117,6 @@ def _dedupe_reverse_rows(rows):
             bool(row.get("is_causative")),
             bool(row.get("is_double_causative")),
             row.get("optional_prefix"),
-            row.get("verb_group_code"),
         )
 
         if key in seen:
