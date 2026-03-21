@@ -1,4 +1,5 @@
 import os
+import unicodedata
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 
@@ -9,13 +10,6 @@ if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL is not set.")
 
 engine = create_engine(DATABASE_URL, future=True)
-
-
-# Order matters:
-# - longer/multi-character patterns first
-# - more specific apostrophe forms before shorter forms
-# Tier 2: safe / intentional alternative spellings
-import unicodedata
 
 # Canonical tokens
 TOKEN_K = "{KCARON}"
@@ -59,7 +53,7 @@ STRICT_NORMALIZATION_RULES = [
 BROAD_NORMALIZATION_RULES = [
     ("k", TOKEN_K),
     ("ç", TOKEN_C),
-    # later if needed:
+    # Uncomment later only if you truly want these broader fallbacks:
     # ("p", TOKEN_P),
     # ("t", TOKEN_T),
 ]
@@ -81,10 +75,8 @@ def _apply_rules(text: str, rules) -> str:
         return ""
 
     t = unicodedata.normalize("NFC", text.strip().lower())
-
     for src, target in rules:
         t = t.replace(src, target)
-
     return t
 
 
@@ -104,7 +96,6 @@ def _normalize_reverse_input_broad(text: str) -> str:
     t = _apply_rules(text, STRICT_NORMALIZATION_RULES)
     t = _apply_rules(t, BROAD_NORMALIZATION_RULES)
     return _finalize_tokens(t)
-
 
 
 def _dedupe_reverse_rows(rows):
@@ -197,7 +188,6 @@ def get_conjugation_rows(
     elif object_filter and object_filter != "all":
         conditions.append("vf.object = CAST(:object_filter AS person)")
         params["object_filter"] = object_filter
-    # if object_filter == "all": no object filter
 
     sql = text(f"""
         SELECT
@@ -229,7 +219,7 @@ def get_conjugation_rows(
     return [dict(row) for row in rows]
 
 
-def _candidate_prefixes_for_query(query: str):
+def _candidate_prefixes_for_query(query: str, broad: bool = False):
     if not query:
         return ["%"]
 
@@ -274,7 +264,7 @@ def _candidate_prefixes_for_query(query: str):
             "ǩ": ["k", "ǩ"],
             "ç": ["ç", "ç̌"],
             "ç̌": ["ç", "ç̌"],
-            # add later only if needed:
+            # Uncomment later only if truly needed:
             # "p": ["p", "p̌"],
             # "p̌": ["p", "p̌"],
             # "t": ["t", "t̆"],
@@ -287,6 +277,7 @@ def _candidate_prefixes_for_query(query: str):
         prefixes = list(dict.fromkeys(prefixes + extra))
 
     return prefixes
+
 
 def _fetch_reverse_candidates(conn, prefixes):
     if not prefixes:
@@ -318,12 +309,17 @@ def _fetch_reverse_candidates(conn, prefixes):
             vf.is_applicative,
             vf.is_causative,
             vf.is_double_causative,
-            vf.optional_prefix
+            vf.optional_prefix,
+            vc.code AS verb_group_code,
+            vc.english_name AS verb_group_english,
+            vc.turkish_name AS verb_group_turkish
         FROM verb_form vf
         JOIN verb v
           ON vf.verb_id = v.verb_id
         JOIN dialect d
           ON v.dialect_id = d.dialect_id
+        JOIN verb_category vc
+          ON v.verb_category_id = vc.verb_category_id
         LEFT JOIN pronoun ps
           ON ps.dialect_id = v.dialect_id
          AND ps.code = vf.subject
@@ -385,57 +381,6 @@ def reverse_lookup(spelling: str):
         ORDER BY d.dialect_id, v.infinitive
     """)
 
-    prefixes = _candidate_prefixes_for_query(spelling)
-
-    candidate_conditions = []
-    candidate_params = {}
-
-    for i, prefix in enumerate(prefixes):
-        key = f"prefix{i}"
-        candidate_conditions.append(f"LOWER(vf.spelling) LIKE LOWER(:{key})")
-        candidate_params[key] = prefix
-
-    candidate_sql = text(f"""
-        SELECT
-            vf.spelling AS conjugated_form,
-            v.infinitive,
-            d.laz_name AS dialect,
-            v.meaning_english,
-            v.meaning_turkish,
-            vf.tense,
-            vf.mood,
-            vf.frame,
-            COALESCE(ps.form, vf.subject::text) AS subject,
-            COALESCE(po.form, vf.object::text) AS object,
-            vf.subject AS subject_code,
-            vf.object AS object_code,
-            vf.derivation,
-            vf.is_applicative,
-            vf.is_causative,
-            vf.is_double_causative,
-            vf.optional_prefix,
-            vc.code AS verb_group_code,
-            vc.english_name AS verb_group_english,
-            vc.turkish_name AS verb_group_turkish
-        FROM verb_form vf
-        JOIN verb v
-          ON vf.verb_id = v.verb_id
-        JOIN dialect d
-          ON v.dialect_id = d.dialect_id
-        JOIN verb_category vc
-          ON v.verb_category_id = vc.verb_category_id
-        LEFT JOIN pronoun ps
-          ON ps.dialect_id = v.dialect_id
-         AND ps.code = vf.subject
-         AND ps.frame = vf.frame
-        LEFT JOIN pronoun po
-          ON po.dialect_id = v.dialect_id
-         AND po.code = vf.object
-         AND po.frame = vf.frame
-        WHERE {" OR ".join(candidate_conditions)}
-        ORDER BY d.dialect_id, v.infinitive
-    """)
-
     with engine.connect() as conn:
         # Tier 1: exact
         exact_rows = conn.execute(
@@ -451,10 +396,9 @@ def reverse_lookup(spelling: str):
                 row["normalized_query"] = strict_normalized_spelling
             return results
 
-        candidate_rows = conn.execute(
-            candidate_sql,
-            candidate_params
-        ).mappings().all()
+        # Tier 2: strict alternate-spelling fallback
+        strict_prefixes = _candidate_prefixes_for_query(spelling, broad=False)
+        strict_candidate_rows = _fetch_reverse_candidates(conn, strict_prefixes)
 
         strict_matches = []
         for row in strict_candidate_rows:
