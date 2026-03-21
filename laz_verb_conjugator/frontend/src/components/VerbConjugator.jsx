@@ -85,11 +85,6 @@ const VerbConjugator = () => {
   const [isFeedbackVisible, setFeedbackVisible] = useState(false);
   const [activeTab, setActiveTab] = useState('conjugator');
 
-  const infinitiveInputRef = useRef(null);
-  const reverseSearchInputRef = useRef(null);
-  const skipNextSuggestionFetch = useRef(false);
-  const suppressSuggestionsRef = useRef(false);
-
   const [reverseQuery, setReverseQuery] = useState('');
   const [isReverseSearching, setIsReverseSearching] = useState(false);
   const [reverseResults, setReverseResults] = useState([]);
@@ -102,6 +97,12 @@ const VerbConjugator = () => {
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [highlightedSuggestionIndex, setHighlightedSuggestionIndex] = useState(-1);
+
+  const infinitiveInputRef = useRef(null);
+  const reverseSearchInputRef = useRef(null);
+  const skipNextSuggestionFetch = useRef(false);
+  const suppressSuggestionsRef = useRef(false);
+  const reverseLookupAbortRef = useRef(null);
 
   useEffect(() => {
     if (location.state?.infinitive) {
@@ -179,6 +180,26 @@ const VerbConjugator = () => {
     setShowSuggestions(false);
     setHighlightedSuggestionIndex(-1);
 
+    const spelling = reverseQuery.trim();
+
+    if (!spelling) {
+      setReverseResults([]);
+      setReverseMeta({
+        query: '',
+        matchType: 'none',
+      });
+      setHasReverseSearched(false);
+      setIsReverseSearching(false);
+      return;
+    }
+
+    if (reverseLookupAbortRef.current) {
+      reverseLookupAbortRef.current.abort();
+    }
+
+    const controller = new AbortController();
+    reverseLookupAbortRef.current = controller;
+
     setIsReverseSearching(true);
     setHasReverseSearched(true);
     setReverseMeta({
@@ -187,13 +208,6 @@ const VerbConjugator = () => {
     });
 
     try {
-      const spelling = reverseQuery.trim();
-
-      if (!spelling) {
-        setReverseResults([]);
-        return;
-      }
-
       if (!API_URLS?.reverse) {
         throw new Error('API_URLS.reverse is missing/undefined');
       }
@@ -201,7 +215,7 @@ const VerbConjugator = () => {
       const url = `${API_URLS.reverse}?spelling=${encodeURIComponent(spelling)}`;
       console.log('Reverse fetch URL:', url);
 
-      const response = await fetch(url);
+      const response = await fetch(url, { signal: controller.signal });
       const text = await response.text();
 
       let payload = null;
@@ -227,11 +241,49 @@ const VerbConjugator = () => {
           (matches.length ? matches[0]?.match_type || 'exact' : 'none'),
       });
     } catch (err) {
+      if (err.name === 'AbortError') {
+        return;
+      }
+
       console.error('handleReverseSearchSubmit crashed:', err);
       setReverseResults([]);
+      setReverseMeta({
+        query: spelling,
+        matchType: 'none',
+      });
     } finally {
+      if (reverseLookupAbortRef.current === controller) {
+        reverseLookupAbortRef.current = null;
+      }
       setIsReverseSearching(false);
     }
+  };
+
+  const handleReverseReset = () => {
+    if (reverseLookupAbortRef.current) {
+      reverseLookupAbortRef.current.abort();
+      reverseLookupAbortRef.current = null;
+    }
+
+    suppressSuggestionsRef.current = false;
+    skipNextSuggestionFetch.current = true;
+
+    setReverseQuery('');
+    setReverseResults([]);
+    setReverseMeta({
+      query: '',
+      matchType: 'none',
+    });
+    setHasReverseSearched(false);
+    setIsReverseSearching(false);
+    setReverseSuggestions([]);
+    setIsLoadingSuggestions(false);
+    setShowSuggestions(false);
+    setHighlightedSuggestionIndex(-1);
+
+    requestAnimationFrame(() => {
+      reverseSearchInputRef.current?.focus();
+    });
   };
 
   const handleSpecialCharClick = (char) => {
@@ -404,6 +456,7 @@ const VerbConjugator = () => {
               reverseQuery={reverseQuery}
               setReverseQuery={setReverseQuery}
               onSubmit={handleReverseSearchSubmit}
+              onReset={handleReverseReset}
               isSearching={isReverseSearching}
               inputRef={reverseSearchInputRef}
               suggestions={reverseSuggestions}
