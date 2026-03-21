@@ -173,6 +173,7 @@ def get_conjugation_rows(
         "vf.is_applicative = :is_applicative",
         "vf.is_causative = :is_causative",
         "vf.is_double_causative = :is_double_causative",
+        "vf.optional_prefix IS NULL",
     ]
 
     params = {

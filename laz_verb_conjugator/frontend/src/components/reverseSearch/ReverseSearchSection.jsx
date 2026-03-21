@@ -5,6 +5,7 @@ const ReverseSearchSection = ({
   reverseQuery,
   setReverseQuery,
   onSubmit,
+  onReset,
   isSearching = false,
   inputRef,
   suggestions = [],
@@ -169,6 +170,16 @@ const ReverseSearchSection = ({
               {isSearching
                 ? localized('Searching...', 'Aranıyor...')
                 : localized('Search', 'Ara')}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={onReset}
+            className="flex-1 min-w-32 bg-gray-500 hover:bg-gray-600 active:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-150 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+          >
+            <span className="block w-full text-center">
+              {localized('Reset', 'Sıfırla')}
             </span>
           </button>
         </div>

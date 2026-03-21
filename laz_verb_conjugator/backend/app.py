@@ -228,16 +228,12 @@ def conjugate():
 
             forms = []
             for r in rows:
-                form = r["spelling"]
-                if r["optional_prefix"]:
-                    form = f"{r['optional_prefix']} {form}"
-
                 forms.append({
                     "subject": r["subject"],
                     "object": r["object"],
                     "subject_code": r["subject_code"],
                     "object_code": r["object_code"],
-                    "conjugation": form
+                    "conjugation": r["spelling"]
                 })
 
             results[dialect_code][frame] = forms
