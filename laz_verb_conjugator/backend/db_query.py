@@ -76,6 +76,7 @@ def _dedupe_reverse_rows(rows):
             bool(row.get("is_causative")),
             bool(row.get("is_double_causative")),
             row.get("optional_prefix"),
+            row.get("verb_group_code"),
         )
 
         if key in seen:
@@ -177,6 +178,7 @@ def get_conjugation_rows(
 
     return [dict(row) for row in rows]
 
+
 def _candidate_prefixes_for_query(query: str):
     if not query:
         return ["%"]
@@ -226,6 +228,7 @@ def _candidate_prefixes_for_query(query: str):
 
     return [f"{ch}%" for ch in groups.get(first, [first])]
 
+
 def reverse_lookup(spelling: str):
     spelling = (spelling or "").strip()
     normalized_spelling = _normalize_reverse_input(spelling)
@@ -248,12 +251,17 @@ def reverse_lookup(spelling: str):
             vf.is_applicative,
             vf.is_causative,
             vf.is_double_causative,
-            vf.optional_prefix
+            vf.optional_prefix,
+            vc.code AS verb_group_code,
+            vc.english_name AS verb_group_english,
+            vc.turkish_name AS verb_group_turkish
         FROM verb_form vf
         JOIN verb v
           ON vf.verb_id = v.verb_id
         JOIN dialect d
           ON v.dialect_id = d.dialect_id
+        JOIN verb_category vc
+          ON v.verb_category_id = vc.verb_category_id
         LEFT JOIN pronoun ps
           ON ps.dialect_id = v.dialect_id
          AND ps.code = vf.subject
@@ -266,8 +274,6 @@ def reverse_lookup(spelling: str):
         ORDER BY d.dialect_id, v.infinitive
     """)
 
-    # Fetch candidate pool for Python-side normalized matching.
-    # Starting conservative: candidates with same first letter OR first normalized letter.
     prefixes = _candidate_prefixes_for_query(spelling)
 
     candidate_conditions = []
@@ -296,20 +302,25 @@ def reverse_lookup(spelling: str):
             vf.is_applicative,
             vf.is_causative,
             vf.is_double_causative,
-            vf.optional_prefix
+            vf.optional_prefix,
+            vc.code AS verb_group_code,
+            vc.english_name AS verb_group_english,
+            vc.turkish_name AS verb_group_turkish
         FROM verb_form vf
         JOIN verb v
-        ON vf.verb_id = v.verb_id
+          ON vf.verb_id = v.verb_id
         JOIN dialect d
-        ON v.dialect_id = d.dialect_id
+          ON v.dialect_id = d.dialect_id
+        JOIN verb_category vc
+          ON v.verb_category_id = vc.verb_category_id
         LEFT JOIN pronoun ps
-        ON ps.dialect_id = v.dialect_id
-        AND ps.code = vf.subject
-        AND ps.frame = vf.frame
+          ON ps.dialect_id = v.dialect_id
+         AND ps.code = vf.subject
+         AND ps.frame = vf.frame
         LEFT JOIN pronoun po
-        ON po.dialect_id = v.dialect_id
-        AND po.code = vf.object
-        AND po.frame = vf.frame
+          ON po.dialect_id = v.dialect_id
+         AND po.code = vf.object
+         AND po.frame = vf.frame
         WHERE {" OR ".join(candidate_conditions)}
         ORDER BY d.dialect_id, v.infinitive
     """)
@@ -328,8 +339,6 @@ def reverse_lookup(spelling: str):
                 row["normalized_query"] = normalized_spelling
             return results
 
-        # Use first raw character as a first-pass filter.
-        # If you notice missed matches, widen this later.
         candidate_rows = conn.execute(
             candidate_sql,
             candidate_params
