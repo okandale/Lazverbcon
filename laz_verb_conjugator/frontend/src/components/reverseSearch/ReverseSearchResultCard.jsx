@@ -5,7 +5,7 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
   const localized = (en, tr) => (language === 'tr' ? tr : en);
 
   const matchLabel =
-    result.match_type === 'normalized'
+    result.match_type === 'normalized_strict' || result.match_type === 'normalized_broad'
       ? localized('Alternate spelling match', 'Alternatif yazım eşleşmesi')
       : result.match_type === 'fuzzy'
       ? localized('Similar spelling match', 'Benzer yazım eşleşmesi')
@@ -97,6 +97,18 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
   };
 
   const formatVerbGroup = () => {
+    const frame = result.frame || '';
+
+    const frameLabels = {
+      Dative: localized('Dative', 'Yönelme fiili'),
+      Ergative: localized('Ergative', 'Ergatif fiili'),
+      Nominative: localized('Nominative', 'Nominatif fiili'),
+    };
+
+    if (frameLabels[frame]) {
+      return frameLabels[frame];
+    }
+
     if (language === 'tr') {
       return result.verb_group_turkish || result.verb_group_code || '—';
     }
@@ -145,10 +157,7 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
   const derivationLabel = formatDerivation(result.derivation);
   const hasDerivation = !!derivationLabel;
   const hasMarkers = markerLabels.length > 0;
-  const hasVerbGroup =
-    !!result.verb_group_code ||
-    !!result.verb_group_english ||
-    !!result.verb_group_turkish;
+  const hasVerbGroup = !!displayVerbGroup && displayVerbGroup !== '—';
 
   return (
     <div className="bg-white shadow-md rounded px-6 pt-5 pb-5">
