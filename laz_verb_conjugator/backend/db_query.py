@@ -126,6 +126,7 @@ def _dedupe_reverse_rows(rows):
             bool(row.get("is_causative")),
             bool(row.get("is_double_causative")),
             row.get("optional_prefix"),
+            row.get("verb_group_code"),
         )
 
         if key in seen:
@@ -227,7 +228,8 @@ def get_conjugation_rows(
 
     return [dict(row) for row in rows]
 
-def _candidate_prefixes_for_query(query: str, broad: bool = False):
+
+def _candidate_prefixes_for_query(query: str):
     if not query:
         return ["%"]
 
@@ -336,6 +338,7 @@ def _fetch_reverse_candidates(conn, prefixes):
 
     return conn.execute(candidate_sql, candidate_params).mappings().all()
 
+
 def reverse_lookup(spelling: str):
     spelling = (spelling or "").strip()
     strict_normalized_spelling = _normalize_reverse_input_strict(spelling)
@@ -359,12 +362,17 @@ def reverse_lookup(spelling: str):
             vf.is_applicative,
             vf.is_causative,
             vf.is_double_causative,
-            vf.optional_prefix
+            vf.optional_prefix,
+            vc.code AS verb_group_code,
+            vc.english_name AS verb_group_english,
+            vc.turkish_name AS verb_group_turkish
         FROM verb_form vf
         JOIN verb v
           ON vf.verb_id = v.verb_id
         JOIN dialect d
           ON v.dialect_id = d.dialect_id
+        JOIN verb_category vc
+          ON v.verb_category_id = vc.verb_category_id
         LEFT JOIN pronoun ps
           ON ps.dialect_id = v.dialect_id
          AND ps.code = vf.subject
@@ -374,6 +382,57 @@ def reverse_lookup(spelling: str):
          AND po.code = vf.object
          AND po.frame = vf.frame
         WHERE LOWER(vf.spelling) = LOWER(:spelling)
+        ORDER BY d.dialect_id, v.infinitive
+    """)
+
+    prefixes = _candidate_prefixes_for_query(spelling)
+
+    candidate_conditions = []
+    candidate_params = {}
+
+    for i, prefix in enumerate(prefixes):
+        key = f"prefix{i}"
+        candidate_conditions.append(f"LOWER(vf.spelling) LIKE LOWER(:{key})")
+        candidate_params[key] = prefix
+
+    candidate_sql = text(f"""
+        SELECT
+            vf.spelling AS conjugated_form,
+            v.infinitive,
+            d.laz_name AS dialect,
+            v.meaning_english,
+            v.meaning_turkish,
+            vf.tense,
+            vf.mood,
+            vf.frame,
+            COALESCE(ps.form, vf.subject::text) AS subject,
+            COALESCE(po.form, vf.object::text) AS object,
+            vf.subject AS subject_code,
+            vf.object AS object_code,
+            vf.derivation,
+            vf.is_applicative,
+            vf.is_causative,
+            vf.is_double_causative,
+            vf.optional_prefix,
+            vc.code AS verb_group_code,
+            vc.english_name AS verb_group_english,
+            vc.turkish_name AS verb_group_turkish
+        FROM verb_form vf
+        JOIN verb v
+          ON vf.verb_id = v.verb_id
+        JOIN dialect d
+          ON v.dialect_id = d.dialect_id
+        JOIN verb_category vc
+          ON v.verb_category_id = vc.verb_category_id
+        LEFT JOIN pronoun ps
+          ON ps.dialect_id = v.dialect_id
+         AND ps.code = vf.subject
+         AND ps.frame = vf.frame
+        LEFT JOIN pronoun po
+          ON po.dialect_id = v.dialect_id
+         AND po.code = vf.object
+         AND po.frame = vf.frame
+        WHERE {" OR ".join(candidate_conditions)}
         ORDER BY d.dialect_id, v.infinitive
     """)
 
@@ -392,9 +451,10 @@ def reverse_lookup(spelling: str):
                 row["normalized_query"] = strict_normalized_spelling
             return results
 
-        # Tier 2: strict alternate spellings
-        strict_prefixes = _candidate_prefixes_for_query(spelling, broad=False)
-        strict_candidate_rows = _fetch_reverse_candidates(conn, strict_prefixes)
+        candidate_rows = conn.execute(
+            candidate_sql,
+            candidate_params
+        ).mappings().all()
 
         strict_matches = []
         for row in strict_candidate_rows:

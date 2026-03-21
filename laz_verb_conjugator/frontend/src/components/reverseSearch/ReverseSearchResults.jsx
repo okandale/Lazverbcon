@@ -11,6 +11,11 @@ const ReverseSearchResults = ({
 }) => {
   const localized = (en, tr) => (language === 'tr' ? tr : en);
 
+  const normalizeObjectCode = (code) => {
+    if (code === 'O3SG' || code === 'O3PL') return 'O3';
+    return code || '';
+  };
+
   const collapsedResults = useMemo(() => {
     if (!Array.isArray(results) || results.length === 0) {
       return [];
@@ -19,6 +24,9 @@ const ReverseSearchResults = ({
     const grouped = new Map();
 
     for (const result of results) {
+      const normalizedSubjectCode = result.subject_code || '';
+      const normalizedObjectCode = normalizeObjectCode(result.object_code);
+
       const key = JSON.stringify([
         result.conjugated_form || '',
         result.infinitive || '',
@@ -27,10 +35,8 @@ const ReverseSearchResults = ({
         result.tense || '',
         result.mood || '',
         result.frame || '',
-        result.subject || '',
-        result.object || '',
-        result.subject_code || '',
-        result.object_code || '',
+        normalizedSubjectCode,
+        normalizedObjectCode,
         result.derivation || '',
         !!result.is_applicative,
         !!result.is_causative,
@@ -41,6 +47,8 @@ const ReverseSearchResults = ({
       if (!grouped.has(key)) {
         grouped.set(key, {
           ...result,
+          normalized_subject_code: normalizedSubjectCode,
+          normalized_object_code: normalizedObjectCode,
           regions: result.dialect ? [result.dialect] : [],
         });
         continue;
@@ -107,7 +115,7 @@ const ReverseSearchResults = ({
 
       {collapsedResults.map((result, index) => (
         <ReverseSearchResultCard
-          key={`${result.infinitive ?? 'result'}-${result.tense ?? 'tense'}-${result.subject_code ?? 'subject'}-${result.object_code ?? 'object'}-${index}`}
+          key={`${result.infinitive ?? 'result'}-${result.tense ?? 'tense'}-${result.normalized_subject_code ?? 'subject'}-${result.normalized_object_code ?? 'object'}-${index}`}
           result={result}
           language={language}
           onOpenInConjugator={onOpenInConjugator}
