@@ -149,9 +149,10 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
 
   const valueChipClass = (isActive) =>
     isActive
-      ? 'inline-flex items-center rounded-full bg-blue-50 text-blue-700 px-2.5 py-0.5 text-xs font-semibold'
-      : 'inline-flex items-center rounded-full bg-gray-100 text-gray-500 px-2.5 py-0.5 text-xs font-medium';
+      ? 'inline-flex items-center rounded-full bg-blue-50 text-blue-700 px-3 py-1 text-sm font-semibold'
+      : 'inline-flex items-center rounded-full bg-gray-100 text-gray-500 px-3 py-1 text-sm font-medium';
 
+  const hasSubject = !!displaySubject;
   const hasObject = !!displayObject;
   const isNonDefaultMood = !!result.mood && result.mood !== 'indicative';
   const derivationLabel = formatDerivation(result.derivation);
@@ -203,8 +204,8 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
 
       {expanded && (
         <div className="mt-4 border-t pt-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 text-sm text-gray-700">
-            <p className="md:col-span-2">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm text-gray-700">
+            <p className="col-span-2">
               <span className="font-semibold">
                 {localized('Infinitive:', 'Mastar:')}
               </span>{' '}
@@ -231,7 +232,9 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
               <span className="font-semibold">
                 {localized('Subject:', 'Özne:')}
               </span>{' '}
-              {displaySubject || '—'}
+              <span className={valueChipClass(hasSubject)}>
+                {displaySubject || localized('None', 'Yok')}
+              </span>
             </p>
 
             <p>
