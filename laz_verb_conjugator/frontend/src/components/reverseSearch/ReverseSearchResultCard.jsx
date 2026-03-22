@@ -275,7 +275,7 @@ const ReverseSearchResultCard = ({ result, language, onOpenInConjugator }) => {
 
             <p>
               <span className="font-semibold">
-                {localized('Markers:', 'Belirteçler:')}
+                {localized('Markers:', 'Belirteç:')}
               </span>{' '}
               <span className={valueChipClass(hasMarkers)}>
                 {hasMarkers
