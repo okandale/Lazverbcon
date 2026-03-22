@@ -21,6 +21,40 @@ import {
 
 const DIALECT_KEYS = ['FA', 'PZ', 'HO', 'AŞ'];
 
+const FEEDBACK_TEXT = {
+  en: {
+    betaMessage:
+      'The website is still in beta. Some forms may be grammatically correct but not commonly used, so we encourage you to check with elders in your community.',
+    feedbackLinkText: 'feedback form',
+    emailText: 'You can report any errors via the',
+    emailSuffix: 'or email me at',
+  },
+  tr: {
+    betaMessage:
+      'Web sitesi hâlâ beta aşamasındadır. Bazı biçimler doğru olsa da yaygın kullanılmayabilir; bu yüzden topluluğunuzdaki büyüklerle teyit etmeniz önerilir.',
+    feedbackLinkText: 'geri bildirim formu',
+    emailText: 'Karşılaştığınız hataları',
+    emailSuffix: 'üzerinden bildirebilir ya da bana şu adresten e-posta gönderebilirsiniz:',
+  },
+};
+
+const CREDIT_TEXT = {
+  en: {
+    prefix: 'Special thanks to the ',
+    lazInstituteText: 'Laz Institute',
+    middle: ' and ',
+    panglotText: 'Panglot',
+    suffix: ' for their support.',
+  },
+  tr: {
+    prefix: 'Destekleri için ',
+    lazInstituteText: 'Laz Enstitüsü',
+    middle: ' ve ',
+    panglotText: 'Panglot',
+    suffix: '’a özel teşekkürler.',
+  },
+};
+
 function looksLikeDialectPayload(obj) {
   if (!obj || typeof obj !== 'object') return false;
   return DIALECT_KEYS.some((k) => Object.prototype.hasOwnProperty.call(obj, k));
@@ -506,29 +540,47 @@ const VerbConjugator = () => {
 
         <div className="text-center mt-6">
           <p className="text-gray-700 text-sm">
-            {translations[language].betaMessage}{' '}
+            {FEEDBACK_TEXT[language].betaMessage}{' '}
+            {FEEDBACK_TEXT[language].emailText}{' '}
             <button
               onClick={() => setFeedbackVisible(true)}
               className="text-blue-500 hover:underline"
+              type="button"
             >
-              {translations[language].feedbackLinkText}
-            </button>
+              {FEEDBACK_TEXT[language].feedbackLinkText}
+            </button>{' '}
+            {FEEDBACK_TEXT[language].emailSuffix}{' '}
+            <a
+              href="mailto:info@lazuri.org"
+              className="text-blue-500 hover:underline"
+            >
+              info@lazuri.org
+            </a>
             .
           </p>
         </div>
 
         <div className="text-center mt-6">
           <p className="text-gray-700 text-sm italic">
-            {translations[language].thankYouNote.prefix}
+            {CREDIT_TEXT[language].prefix}
             <a
-              href={translations[language].thankYouNote.url}
+              href="https://lazuri.org/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 hover:underline"
             >
-              {translations[language].thankYouNote.linkText}
+              {CREDIT_TEXT[language].lazInstituteText}
             </a>
-            {translations[language].thankYouNote.suffix}
+            {CREDIT_TEXT[language].middle}
+            <a
+              href="https://panglot.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              {CREDIT_TEXT[language].panglotText}
+            </a>
+            {CREDIT_TEXT[language].suffix}
           </p>
         </div>
 
