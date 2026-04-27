@@ -133,7 +133,7 @@ const Resources = () => {
               >
                 {language === 'tr'
                   ? 'GitHub sayfasından modu indir'
-                  : 'Download the Mod on GitHub'}
+                  : 'Download the mod on GitHub'}
               </a>
 
               <a
