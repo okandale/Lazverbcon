@@ -49,46 +49,6 @@ const Resources = () => {
 
         {/* Resources Section */}
         <div className="bg-white rounded-xl shadow-xl p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">
-            {t.dictionariesTitle}
-          </h2>
-
-          {/* Laz Institute's Dictionary */}
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              {t.lazInstituteDictionary.title}
-            </h3>
-            <p className="text-gray-600 mb-4">
-              {t.lazInstituteDictionary.description}
-            </p>
-            <a
-              href="https://www.lazcasozluk.org/#/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800"
-            >
-              {t.lazInstituteDictionary.linkText}
-            </a>
-          </div>
-
-          {/* Lazca.xyz Dictionary */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              {t.lazcaXyzDictionary.title}
-            </h3>
-            <p className="text-gray-600 mb-4">
-              {t.lazcaXyzDictionary.description}
-            </p>
-            <a
-              href="https://lazca.xyz/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800"
-            >
-              {t.lazcaXyzDictionary.linkText}
-            </a>
-          </div>
-
           {/* General Information Section */}
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             {t.generalInformationTitle}
@@ -113,7 +73,7 @@ const Resources = () => {
           </div>
 
           {/* Minecraft Language Mod */}
-          <div className="mb-6">
+          <div className="mb-8">
             <h3 className="text-xl font-semibold text-gray-800 mb-2">
               {language === 'tr'
                 ? 'Minecraft Dil Modu'
@@ -138,7 +98,7 @@ const Resources = () => {
               </a>
 
               <a
-                href="https://youtu.be/H81NtEUhfWE?si=djUVm2fbXAaG5eRb"
+                href="https://youtu.be/jZl_4j0vgXQ?si=4wms-5qAIdFChJXu"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800"
@@ -148,6 +108,47 @@ const Resources = () => {
                   : 'Watch the installation video'}
               </a>
             </div>
+          </div>
+
+          {/* Dictionaries Section */}
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            {t.dictionariesTitle}
+          </h2>
+
+          {/* Laz Institute's Dictionary */}
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              {t.lazInstituteDictionary.title}
+            </h3>
+            <p className="text-gray-600 mb-4">
+              {t.lazInstituteDictionary.description}
+            </p>
+            <a
+              href="https://www.lazcasozluk.org/#/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800"
+            >
+              {t.lazInstituteDictionary.linkText}
+            </a>
+          </div>
+
+          {/* Lazca.xyz Dictionary */}
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              {t.lazcaXyzDictionary.title}
+            </h3>
+            <p className="text-gray-600 mb-4">
+              {t.lazcaXyzDictionary.description}
+            </p>
+            <a
+              href="https://lazca.xyz/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800"
+            >
+              {t.lazcaXyzDictionary.linkText}
+            </a>
           </div>
         </div>
 
