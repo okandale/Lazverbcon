@@ -19,8 +19,8 @@ const Resources = () => {
       <div className="max-w-4xl mx-auto py-8 px-4">
         {/* Top Bar (Home link + Language Toggle) */}
         <div className="flex justify-between items-center mb-8 pt-2">
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className="text-gray-600 hover:text-gray-800 transition duration-300"
           >
             <Home size={24} />
@@ -32,6 +32,20 @@ const Resources = () => {
         <h1 className="text-4xl font-extrabold mb-8 text-center text-gray-800 tracking-tight">
           {translations[language].resourceCard.title}
         </h1>
+
+        {/* Phrase Guide Section */}
+        <div className="bg-white rounded-xl shadow-xl p-8 mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            <Link to="/resources/phrase-guide" className="hover:underline text-blue-700">
+              {language === 'tr' ? 'İfade Rehberi' : 'Phrase Guide'}
+            </Link>
+          </h2>
+          <p className="text-gray-700">
+            {language === 'tr'
+              ? 'Bölge genelinde bulunan QR kodlarıyla eşleştirilmiş ifadeler - bu ifadeler dükkan elemanlarıyla konuşurken kullanılabilir!'
+              : 'Phrases used for the QR codes that can be found throughout the region — these phrases can be used when talking to staff!'}
+          </p>
+        </div>
 
         {/* Resources Section */}
         <div className="bg-white rounded-xl shadow-xl p-8 mb-8">
@@ -58,7 +72,7 @@ const Resources = () => {
           </div>
 
           {/* Lazca.xyz Dictionary */}
-          <div className="mb-6">
+          <div className="mb-8">
             <h3 className="text-xl font-semibold text-gray-800 mb-2">
               {t.lazcaXyzDictionary.title}
             </h3>
@@ -96,6 +110,44 @@ const Resources = () => {
             >
               {t.lazInstitute.linkText}
             </a>
+          </div>
+
+          {/* Minecraft Language Mod */}
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              {language === 'tr'
+                ? 'Minecraft Dil Modu'
+                : 'Minecraft Language Mod'}
+            </h3>
+            <p className="text-gray-600 mb-4">
+              {language === 'tr'
+                ? 'Lazca ve Wolastoq dillerini Minecraft’a ekleyen özel dil modu projemizi inceleyebilirsiniz. Kendi dilinizi eklemek isterseniz bizimle iletişime geçebilirsiniz!'
+                : 'Explore our custom Minecraft language mod project, currently featuring Laz and Wolastoq. If you would like to add your own language to Minecraft, feel free to contact us!'}
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <a
+                href="https://github.com/okandale/Custom-Language-Minecraft"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800"
+              >
+                {language === 'tr'
+                  ? 'GitHub sayfasından modu indir'
+                  : 'Download the Mod on GitHub'}
+              </a>
+
+              <a
+                href="https://youtu.be/H81NtEUhfWE?si=djUVm2fbXAaG5eRb"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800"
+              >
+                {language === 'tr'
+                  ? 'Kurulum videosunu izle'
+                  : 'Watch the installation video'}
+              </a>
+            </div>
           </div>
         </div>
 
