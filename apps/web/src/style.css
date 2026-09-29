@@ -537,6 +537,7 @@ td small {
 .reverse-panel {
   padding: 36px;
   min-height: 360px;
+  overflow: visible;
 }
 .reverse-panel h2 {
   font-family: Georgia, serif;
@@ -549,14 +550,46 @@ td small {
   display: flex;
   gap: 12px;
 }
-.reverse-form > input {
+.reverse-autocomplete {
+  position: relative;
   flex: 1;
   min-width: 0;
+}
+.reverse-autocomplete > input {
+  width: 100%;
   background: white;
   border: 1px solid #d6dfcc;
   border-radius: 7px;
   padding: 13px 15px;
   font-size: 13px;
+}
+.reverse-suggestions {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 264px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  border: 1px solid #d6dfcc;
+  border-radius: 7px;
+  background: white;
+  box-shadow: 0 8px 24px #263b331a;
+}
+.reverse-suggestions [role="option"] {
+  padding: 12px;
+  min-height: 44px;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.reverse-suggestions [role="option"]:hover,
+.reverse-suggestions [aria-selected="true"] {
+  background: #edf2e6;
 }
 .muted {
   color: #8a957d;
@@ -575,6 +608,25 @@ td small {
   font-family: Georgia, serif;
   font-size: 24px;
   margin: 0 0 6px;
+}
+.analysis-details {
+  margin-top: 12px;
+  font-size: 12px;
+}
+.analysis-details summary {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.analysis-details ul {
+  padding: 0;
+  list-style: none;
+}
+.analysis-details li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  margin-top: 8px;
 }
 .match p {
   font-size: 12px;

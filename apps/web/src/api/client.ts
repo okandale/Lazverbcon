@@ -39,5 +39,19 @@ export async function requireData<T>(result: {
 
 export function requestFromMatch(match: Match): Request {
   const { dialect, ...features } = match.features;
-  return { entry_id: match.entry.id, ...features, dialects: [dialect] };
+  const dialects = [
+    ...new Set(
+      match.variants
+        .filter(
+          (variant) =>
+            variant.features.optional_preverb === features.optional_preverb,
+        )
+        .map((variant) => variant.features.dialect),
+    ),
+  ];
+  return {
+    entry_id: match.entry.id,
+    ...features,
+    dialects: dialects.length ? dialects : [dialect],
+  };
 }

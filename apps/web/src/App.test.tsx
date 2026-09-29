@@ -43,7 +43,12 @@ const form = {
   object_pronoun: "",
   rule: "tve_present",
 };
-const match = { entry, features, form } as Match;
+const match = {
+  entry,
+  features,
+  form,
+  variants: [{ features, form }],
+} as Match;
 const calls: Record<string, unknown>[] = [];
 
 beforeEach(() => {

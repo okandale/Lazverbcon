@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { api, requireData } from "../../api/client";
 import type { Match } from "../../api/client";
-import { dialectNames, labels, names } from "../../i18n";
+import { labels } from "../../i18n";
 import type { Language } from "../../i18n";
 import { CharacterBar } from "../CharacterBar";
+import { ReverseMatch } from "./ReverseMatch";
 
 export function ReverseSearch({
   language,
@@ -18,12 +19,14 @@ export function ReverseSearch({
   onSearch: (query: string) => void;
 }) {
   const t = labels[language];
-  const n = names[language];
   const input = useRef<HTMLInputElement>(null);
   const [reverseText, setReverseText] = useState(initialQuery);
   const [reverseQuery, setReverseQuery] = useState(initialQuery);
   const [reversePage, setReversePage] = useState(0);
   const [prefix, setPrefix] = useState("");
+  const suggestionsId = useId();
+  const [suggestionsOpen, setSuggestionsOpen] = useState(false);
+  const [activeSuggestion, setActiveSuggestion] = useState(-1);
   useEffect(() => {
     const timer = setTimeout(() => setPrefix(reverseText.trim()), 200);
     return () => clearTimeout(timer);
@@ -39,6 +42,29 @@ export function ReverseSearch({
         }),
       ),
   });
+  // Hide the previous prefix's results immediately while the next query debounces.
+  const words =
+    prefix.length > 1 && prefix === reverseText.trim()
+      ? (suggestions.data?.suggestions ?? [])
+      : [];
+  const showSuggestions = suggestionsOpen && words.length > 0;
+  const changeText = (value: string) => {
+    setReverseText(value);
+    setSuggestionsOpen(true);
+    setActiveSuggestion(-1);
+  };
+  const selectSuggestion = (word: string) => {
+    setReverseText(word);
+    setSuggestionsOpen(false);
+    setActiveSuggestion(-1);
+  };
+  useEffect(() => {
+    if (showSuggestions && activeSuggestion >= 0) {
+      document
+        .getElementById(`${suggestionsId}-${activeSuggestion}`)
+        ?.scrollIntoView?.({ block: "nearest" });
+    }
+  }, [activeSuggestion, showSuggestions, suggestionsId]);
   const reverse = useQuery({
     queryKey: ["reverse", reverseQuery, reversePage],
     enabled: !!reverseQuery,
@@ -69,30 +95,109 @@ export function ReverseSearch({
           setReverseQuery(reverseText.trim());
           onSearch(reverseText.trim());
           setReversePage(0);
+          setSuggestionsOpen(false);
+          setActiveSuggestion(-1);
         }}
       >
-        <input
-          ref={input}
-          aria-label={t.reverse}
-          placeholder={t.reverseHint}
-          value={reverseText}
-          onChange={(e) => setReverseText(e.target.value)}
-          required
-          maxLength={200}
-          list="reverse-suggestions"
-        />
-        <datalist id="reverse-suggestions">
-          {suggestions.data?.suggestions.map((word) => (
-            <option key={word} value={word} />
-          ))}
-        </datalist>
+        <div className="reverse-autocomplete">
+          <input
+            ref={input}
+            role="combobox"
+            aria-label={t.reverse}
+            aria-autocomplete="list"
+            aria-expanded={showSuggestions}
+            aria-controls={showSuggestions ? suggestionsId : undefined}
+            aria-activedescendant={
+              showSuggestions && activeSuggestion >= 0
+                ? `${suggestionsId}-${activeSuggestion}`
+                : undefined
+            }
+            placeholder={t.reverseHint}
+            value={reverseText}
+            onChange={(e) => changeText(e.target.value)}
+            onFocus={() => setSuggestionsOpen(true)}
+            onBlur={() => {
+              setSuggestionsOpen(false);
+              setActiveSuggestion(-1);
+            }}
+            onKeyDown={(e) => {
+              if (e.nativeEvent.isComposing) return;
+              if (e.key === "Escape") {
+                setSuggestionsOpen(false);
+                setActiveSuggestion(-1);
+              } else if (
+                (e.key === "ArrowDown" || e.key === "ArrowUp") &&
+                words.length
+              ) {
+                e.preventDefault();
+                setSuggestionsOpen(true);
+                setActiveSuggestion((previous) => {
+                  if (!showSuggestions || previous < 0)
+                    return e.key === "ArrowDown" ? 0 : words.length - 1;
+                  return (
+                    (previous +
+                      (e.key === "ArrowDown" ? 1 : -1) +
+                      words.length) %
+                    words.length
+                  );
+                });
+              } else if (
+                e.key === "Enter" &&
+                showSuggestions &&
+                activeSuggestion >= 0
+              ) {
+                e.preventDefault();
+                selectSuggestion(words[activeSuggestion]);
+              }
+            }}
+            required
+            maxLength={200}
+            autoComplete="off"
+            spellCheck={false}
+          />
+          {showSuggestions && (
+            <ul
+              id={suggestionsId}
+              className="reverse-suggestions"
+              role="listbox"
+              aria-label={
+                language === "en"
+                  ? "Verb form suggestions"
+                  : "Fiil biçimi önerileri"
+              }
+            >
+              {words.map((word, index) => (
+                <li
+                  key={word}
+                  id={`${suggestionsId}-${index}`}
+                  role="option"
+                  aria-selected={activeSuggestion === index}
+                  onPointerDown={(e) => e.preventDefault()}
+                  onClick={() => selectSuggestion(word)}
+                >
+                  {word}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
         <button className="primary">{t.find} ↗</button>
+        <button
+          type="button"
+          onClick={() => {
+            setReverseText("");
+            setReverseQuery("");
+            setReversePage(0);
+            setSuggestionsOpen(false);
+            setActiveSuggestion(-1);
+            onSearch("");
+            input.current?.focus();
+          }}
+        >
+          {t.reset}
+        </button>
       </form>
-      <CharacterBar
-        value={reverseText}
-        onChange={setReverseText}
-        input={input}
-      />
+      <CharacterBar value={reverseText} onChange={changeText} input={input} />
       {reverse.isFetching && <p>{t.loading}</p>}
       {reverse.error && <p role="alert">{reverse.error.message}</p>}
       {reverse.data && (
@@ -105,31 +210,12 @@ export function ReverseSearch({
           {reverse.data.total === 0 && <p>{t.noMatches}</p>}
           <div className="reverse-list">
             {reverse.data.matches.map((match, i) => (
-              <article className="match" key={i}>
-                <div>
-                  <h3>{match.form.spelling}</h3>
-                  <p>
-                    {match.entry.infinitive} ·{" "}
-                    {language === "en"
-                      ? match.entry.english
-                      : match.entry.turkish}
-                  </p>
-                  <small>
-                    {dialectNames[match.features.dialect]} ·{" "}
-                    {n[match.features.tense]} · {n[match.features.mood]} ·{" "}
-                    {n[match.features.subject]}
-                    {match.features.object && ` → ${n[match.features.object]}`}
-                    {` · ${n[match.entry.verb_class]}`}
-                    {match.features.derivation !== "none" &&
-                      ` · ${n[match.features.derivation]}`}
-                    {match.features.applicative && ` · ${t.applicative}`}
-                    {match.features.causative !== "none" &&
-                      ` · ${t.causative}: ${n[match.features.causative]}`}
-                    {match.features.optional_preverb && ` · ${t.optional}`}
-                  </small>
-                </div>
-                <button onClick={() => onSelect(match)}>{t.open} →</button>
-              </article>
+              <ReverseMatch
+                key={i}
+                match={match}
+                language={language}
+                onSelect={onSelect}
+              />
             ))}
           </div>
           <div className="pagination">

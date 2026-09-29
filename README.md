@@ -63,6 +63,14 @@ the implementation workspace.
 
 ## Migration status
 
+Reverse lookup groups equivalent spellings across dialects and unchanged
+optional-preverb settings. Counts and pagination refer to groups. Each result's
+“Dialects and options” section retains the individual settings; the main action
+opens matching dialects together. Different lexical entries, object numbers and
+markers remain separate. The API returns those original requests in `variants`
+alongside representative `features` and `form` fields. Existing SQLite releases
+work without a database schema migration.
+
 **The core engine and public learning pages are migrated.** The page-by-page
 [migration checklist](docs/migration-backlog.md) tracks completed work and the
 remaining translations, data decisions, integrations and deferred administration.

@@ -257,28 +257,54 @@ class Catalog:
         with self.connect() as db:
             for tier, column, key in tiers:
                 # Column names come exclusively from the fixed table above.
-                count = db.execute(
-                    f"SELECT count(*) FROM forms WHERE {column}=?", (key,)
-                ).fetchone()[0]
-                if not count:
-                    continue
                 rows = db.execute(
                     f"""SELECT f.data AS form, r.features, e.data AS entry
                     FROM forms f JOIN requests r ON r.id=f.request_id JOIN entries e ON e.id=r.entry_id
-                    WHERE f.{column}=? ORDER BY e.id,r.features,f.data LIMIT ? OFFSET ?""",
-                    (key, limit, offset),
+                    WHERE f.{column}=? ORDER BY e.id,r.features,f.data""",
+                    (key,),
                 )
-                matches = []
+                groups = {}
                 for row in rows:
                     features = unpack_features(row["features"])
-                    matches.append(
-                        {
-                            "features": features,
-                            "entry": json.loads(row["entry"]),
-                            "form": unpack_form(row["form"], features),
-                        }
+                    form = unpack_form(row["form"], features)
+                    entry = json.loads(row["entry"])
+                    # Dialects and an unchanged optional preverb share one card.
+                    # Keep lexical identity, object number, markers and frame distinct.
+                    group_key = canonical(
+                        [
+                            entry["id"],
+                            form["spelling"],
+                            form["frame"],
+                            form["rule"],
+                            {
+                                k: v
+                                for k, v in features.items()
+                                if k not in ("dialect", "optional_preverb")
+                            },
+                        ]
                     )
-                return {"match_type": tier, "total": count, "matches": matches}
+                    group = groups.setdefault(group_key, {"entry": entry, "variants": []})
+                    group["variants"].append({"features": features, "form": form})
+                if not groups:
+                    continue
+                matches = []
+                for group in groups.values():
+                    # Prefer the ordinary preverb setting for the main Open action.
+                    # Every original request remains available in the variant list.
+                    variants = sorted(
+                        group["variants"],
+                        key=lambda v: (
+                            v["features"]["optional_preverb"],
+                            v["features"]["dialect"],
+                            canonical(v),
+                        ),
+                    )
+                    matches.append({**group, **variants[0], "variants": variants})
+                return {
+                    "match_type": tier,
+                    "total": len(matches),
+                    "matches": matches[offset : offset + limit],
+                }
         return {"match_type": "none", "total": 0, "matches": []}
 
     def suggestions(self, prefix: str, limit: int = 8) -> list[str]:

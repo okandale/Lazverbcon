@@ -67,10 +67,14 @@ class VerbPage(BaseModel):
     total: int
 
 
-class Match(BaseModel):
-    entry: Entry
+class AnalysisVariant(BaseModel):
     features: Features
     form: Form
+
+
+class Match(AnalysisVariant):
+    entry: Entry
+    variants: list[AnalysisVariant] = Field(min_length=1)
 
 
 class ReverseResponse(BaseModel):

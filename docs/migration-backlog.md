@@ -36,6 +36,52 @@ content must be resolved before completing it.
 | WEB-16 | English/Turkish language choice | Done | All new public pages support English/Turkish, with local preference storage and explicit language query links. Shared links override the stored preference. Language persistence and Turkish mobile navigation checked. |
 | WEB-17 | `/v2/verbs`, `/v2/verb/:verbID/:verbType` | Partial | `/v2/verbs` permanently redirects to `/verbs`, preserving query parameters. Old `/v2/verb/:id/:class` links return a recovery page (HTTP 410) pointing to search. Remaining: a verified mapping of historical production IDs to current entries; a local numeric ID is not reliable proof of the production identity. The duplicate conjugator stays retired. |
 
+### Reverse result grouping — implemented
+
+**WEB-18 (Done):** Reverse lookup groups matching dialects and optional-preverb
+settings with identical spellings before counting and pagination. Each card keeps
+its lexical entry, spelling, frame, rule and grammatical features distinct;
+third-person singular/plural objects and different markers are not collapsed.
+All original requests remain in the API's `variants` list and the card's
+“Dialects and options” details. The main Open action selects all grouped dialects
+that support its representative optional-preverb setting; individual settings
+can also be opened from the details. Reset clears input, results and shared query.
+
+Checked with five backend regression tests and frontend tests for grouped dialect
+selection, opening an individual optional-preverb variant, and resetting search.
+All 14 focused backend tests and 21 frontend tests pass, as do the production
+build and the local full-catalog HTTP smoke check. Browser verification confirmed
+three `doviba` cards and opening the nominative group with AS/PZ/HO selected.
+Server deployment of this change still requires pushing and rebuilding the image.
+
+Investigation on 2026-09-29: `doviba` has 18 underlying exact rows in the full catalog:
+
+- `verb-0020`, TVM, “to flow, to leak”: 3 dialects (AS/PZ/HO) × 2 optional-preverb
+  settings = 6 rows. Present optative, first-person singular, no object/markers.
+- `verb-0019`, TVE, “to pour”: the same 3 dialects × 2 optional-preverb settings ×
+  2 marker combinations = 12 rows. Present optative, first-person singular subject
+  and object, applicative, with either no causative or simple causative.
+
+All 18 rows were re-evaluated against both the current engine and frozen reference
+and reproduced `doviba`. Ignoring dialect and the unchanged optional-preverb
+setting leaves 3 feature groups, not 18. This establishes software behavior, not
+linguistic validity. The historical SQL export has only 3 exact rows, grouped into
+2 cards by the old frontend; its lexical assignments also differ (see DATA-02).
+
+### Form lookup suggestions
+
+The reverse-search suggestions endpoint was migrated, but the initial frontend
+used a native HTML datalist, which did not provide the old site's visible
+dropdown consistently. Replaced it with an explicit suggestion list on
+2026-09-29. It appears after two characters, supports pointer selection, arrow
+keys, Enter and Escape, and hides stale results while the input changes.
+Selecting a suggestion fills the input; submitting searches for its analyses.
+The dropdown shows spellings; infinitives and dialects appear in search results.
+Five regression tests cover selection, keyboard use, stale prefixes, focus and reset.
+The production build and all 21 frontend tests passed. Browser verification
+against the full SQLite catalog confirmed `dovigur` suggestions and a successful
+lookup of the selected `doviguram` form.
+
 ## Administration and hosting
 
 | ID | Feature | Status | Remaining work and completion check |
@@ -67,6 +113,20 @@ questions, separate from the missing public pages.
 - [ ] **DATA-01:** Reconcile the historical SQL export with the new lexicon and
   generated forms, accounting for collapsed lexical identities and export losses.
   This has not been done row by row; a mismatch alone is not proof of a rule error.
+- [ ] **DATA-02:** Resolve the concrete `doviba` discrepancy. Historical SQL rows
+  19959/19971 attach the nominative, unmarked optative in PZ/AS to “to pour”
+  (verb IDs 36/37); row 19995 attaches it in HO to “to flow, to leak” (verb ID 39).
+  The migrated lexicon/reference yields the nominative form for “to flow, to leak”
+  in all three dialects, plus ergative applicative analyses for “to pour”. Review
+  the original data/export mapping and linguistic examples before changing those
+  meanings, dialect assignments or marker rules. UI grouping alone cannot resolve
+  this discrepancy. The old import notebook demonstrably loses class identity:
+  cell 30 (zero-based) deduplicates on `(dialect_id, infinitive)`, and cell 63
+  joins generated forms on that same pair. The SQL dump enforces that unique
+  pair too. This can attach nominative forms to the surviving ergative entry;
+  it supports an export-mapping explanation, not changing the new engine's
+  independently preserved lexical identities. Full historical reconciliation
+  (DATA-01) and the validity of the extra marker analyses remain unresolved.
 
 ## Already implemented
 

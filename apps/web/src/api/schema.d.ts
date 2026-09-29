@@ -130,6 +130,11 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
+    /** AnalysisVariant */
+    AnalysisVariant: {
+      features: components["schemas"]["Features"];
+      form: components["schemas"]["Form"];
+    };
     /**
      * Causative
      * @enum {string}
@@ -270,9 +275,11 @@ export interface components {
     };
     /** Match */
     Match: {
-      entry: components["schemas"]["Entry"];
       features: components["schemas"]["Features"];
       form: components["schemas"]["Form"];
+      entry: components["schemas"]["Entry"];
+      /** Variants */
+      variants: components["schemas"]["AnalysisVariant"][];
     };
     /**
      * Mood

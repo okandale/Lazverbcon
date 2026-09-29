@@ -309,6 +309,22 @@
   },
   "components": {
     "schemas": {
+      "AnalysisVariant": {
+        "properties": {
+          "features": {
+            "$ref": "#/components/schemas/Features"
+          },
+          "form": {
+            "$ref": "#/components/schemas/Form"
+          }
+        },
+        "type": "object",
+        "required": [
+          "features",
+          "form"
+        ],
+        "title": "AnalysisVariant"
+      },
       "Causative": {
         "type": "string",
         "enum": [
@@ -665,21 +681,30 @@
       },
       "Match": {
         "properties": {
-          "entry": {
-            "$ref": "#/components/schemas/Entry"
-          },
           "features": {
             "$ref": "#/components/schemas/Features"
           },
           "form": {
             "$ref": "#/components/schemas/Form"
+          },
+          "entry": {
+            "$ref": "#/components/schemas/Entry"
+          },
+          "variants": {
+            "items": {
+              "$ref": "#/components/schemas/AnalysisVariant"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Variants"
           }
         },
         "type": "object",
         "required": [
-          "entry",
           "features",
-          "form"
+          "form",
+          "entry",
+          "variants"
         ],
         "title": "Match"
       },
