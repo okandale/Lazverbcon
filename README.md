@@ -39,10 +39,11 @@ docker run --rm -p 127.0.0.1:8080:8000 lazverbcon:local
 ```
 
 This builds a local image; no prebuilt image has been published to a registry.
-Docker is unavailable in the implementation workspace, so the container build
-has not yet been executed here. CI includes a complete image build and HTTP smoke
-check. The engine generation, reference verification and web build have passed
-locally outside Docker.
+The image build and reference verification passed on a Debian VM. Container
+startup failed there; a release-directory permission fix is awaiting a rebuild
+and runtime verification. The build now checks application setup as the runtime
+user. CI also includes a complete image build and HTTP smoke check. Docker is
+unavailable in the implementation workspace.
 
 ## Migration status
 
