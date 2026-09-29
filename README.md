@@ -31,6 +31,21 @@ For another local port, use `LAZ_PORT=8081 docker compose up -d`.
 The database is bundled in the image; there is no database container or volume
 to configure. The default port binding is accessible only on this computer.
 
+For LAN access, add the server's actual LAN IP to a `.env` file in the repository
+root, then recreate the container (no image rebuild is needed):
+
+```dotenv
+LAZ_BIND_ADDRESS=192.168.1.50
+```
+
+```bash
+docker compose up -d --wait
+```
+
+Open `http://192.168.1.50:8080` from another device on the same network, replacing
+the example IP with your server's address. If a firewall is enabled on the VM,
+allow TCP port 8080 from your LAN.
+
 Without Compose, the equivalent commands are:
 
 ```bash
@@ -39,11 +54,12 @@ docker run --rm -p 127.0.0.1:8080:8000 lazverbcon:local
 ```
 
 This builds a local image; no prebuilt image has been published to a registry.
-The image build and reference verification passed on a Debian VM. Container
-startup failed there; a release-directory permission fix is awaiting a rebuild
-and runtime verification. The build now checks application setup as the runtime
-user. CI also includes a complete image build and HTTP smoke check. Docker is
-unavailable in the implementation workspace.
+The image build, reference verification, container startup and health endpoint
+passed on a Debian VM on 2026-09-29 after correcting release-directory
+permissions. The server reported all 327 entries and 1,278,826 forms in the full
+SQLite catalog. The build checks application setup as the runtime user. CI also
+includes a complete image build and HTTP smoke check. Docker is unavailable in
+the implementation workspace.
 
 ## Migration status
 
