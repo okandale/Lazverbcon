@@ -1,0 +1,51 @@
+name: Checks
+on: [push, pull_request]
+jobs:
+  engine-and-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          cache: pip
+      - run: pip install -r requirements.lock
+      - run: pip install --no-deps -e .
+      - run: ruff check packages/engine/src/laz_engine apps/api/src scripts tests
+      - run: ruff format --check packages/engine/src/laz_engine apps/api/src scripts tests
+      - run: pytest -q
+      - run: lazcon openapi --output /tmp/openapi.json
+      - run: diff -u apps/web/openapi.json /tmp/openapi.json
+      - run: lazcon build --profile core --output artifacts/core.sqlite
+  website:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '11.25.0'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+          cache-dependency-path: apps/web/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm generate:api
+      - run: git diff --exit-code -- src/api/schema.d.ts
+      - run: pnpm test
+      - run: pnpm build
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose build
+      - run: docker compose up -d
+      - run: python3 scripts/smoke_server.py
+      - if: failure()
+        run: docker compose logs
+      - if: always()
+        run: docker compose down

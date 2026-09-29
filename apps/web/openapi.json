@@ -1,0 +1,938 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Lazverbcon",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/verbs": {
+      "get": {
+        "summary": "Verbs",
+        "operationId": "search_verbs",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 200,
+              "default": "",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 30,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerbPage"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/verbs/{entry_id}": {
+      "get": {
+        "summary": "Verb",
+        "operationId": "get_verb",
+        "parameters": [
+          {
+            "name": "entry_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Entry Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Entry"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/conjugations": {
+      "post": {
+        "summary": "Conjugations",
+        "operationId": "conjugate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConjugationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConjugationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/conjugation-options": {
+      "post": {
+        "summary": "Options",
+        "description": "Option metadata uses the same validation as generation and requests.",
+        "operationId": "conjugation_options",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConjugationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptionsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reverse": {
+      "get": {
+        "summary": "Reverse",
+        "operationId": "reverse_lookup",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "title": "Q"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReverseResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reverse/suggestions": {
+      "get": {
+        "summary": "Suggestions",
+        "operationId": "reverse_suggestions",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 200,
+              "default": "",
+              "title": "Q"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuggestionsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Causative": {
+        "type": "string",
+        "enum": [
+          "none",
+          "simple",
+          "double"
+        ],
+        "title": "Causative"
+      },
+      "Cell": {
+        "properties": {
+          "features": {
+            "$ref": "#/components/schemas/Features"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "unsupported",
+              "not_generated",
+              "error"
+            ],
+            "title": "Status"
+          },
+          "forms": {
+            "items": {
+              "$ref": "#/components/schemas/Form"
+            },
+            "type": "array",
+            "title": "Forms"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "features",
+          "status"
+        ],
+        "title": "Cell"
+      },
+      "ConjugationRequest": {
+        "properties": {
+          "entry_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Entry Id"
+          },
+          "dialects": {
+            "items": {
+              "$ref": "#/components/schemas/Dialect"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 1,
+            "title": "Dialects"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Person"
+              },
+              {
+                "type": "string",
+                "const": "all"
+              }
+            ],
+            "title": "Subject",
+            "default": "all"
+          },
+          "object": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Person"
+              },
+              {
+                "type": "string",
+                "const": "all"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Object"
+          },
+          "tense": {
+            "$ref": "#/components/schemas/Tense",
+            "default": "present"
+          },
+          "mood": {
+            "$ref": "#/components/schemas/Mood",
+            "default": "indicative"
+          },
+          "derivation": {
+            "$ref": "#/components/schemas/Derivation",
+            "default": "none"
+          },
+          "applicative": {
+            "type": "boolean",
+            "title": "Applicative",
+            "default": false
+          },
+          "causative": {
+            "$ref": "#/components/schemas/Causative",
+            "default": "none"
+          },
+          "optional_preverb": {
+            "type": "boolean",
+            "title": "Optional Preverb",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "entry_id"
+        ],
+        "title": "ConjugationRequest"
+      },
+      "ConjugationResponse": {
+        "properties": {
+          "entry": {
+            "$ref": "#/components/schemas/Entry"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "engine",
+              "database"
+            ],
+            "title": "Source"
+          },
+          "cells": {
+            "items": {
+              "$ref": "#/components/schemas/Cell"
+            },
+            "type": "array",
+            "title": "Cells"
+          }
+        },
+        "type": "object",
+        "required": [
+          "entry",
+          "source",
+          "cells"
+        ],
+        "title": "ConjugationResponse"
+      },
+      "Derivation": {
+        "type": "string",
+        "enum": [
+          "none",
+          "potential",
+          "passive"
+        ],
+        "title": "Derivation"
+      },
+      "Dialect": {
+        "type": "string",
+        "enum": [
+          "AS",
+          "PZ",
+          "FA",
+          "HO"
+        ],
+        "title": "Dialect"
+      },
+      "Entry": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "infinitive": {
+            "type": "string",
+            "title": "Infinitive"
+          },
+          "verb_class": {
+            "$ref": "#/components/schemas/VerbClass"
+          },
+          "english": {
+            "type": "string",
+            "title": "English"
+          },
+          "turkish": {
+            "type": "string",
+            "title": "Turkish"
+          },
+          "variants": {
+            "items": {
+              "$ref": "#/components/schemas/PrincipalPart"
+            },
+            "type": "array",
+            "title": "Variants"
+          },
+          "source_row": {
+            "type": "integer",
+            "title": "Source Row"
+          },
+          "issues": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Issues",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "infinitive",
+          "verb_class",
+          "english",
+          "turkish",
+          "variants",
+          "source_row"
+        ],
+        "title": "Entry"
+      },
+      "Features": {
+        "properties": {
+          "dialect": {
+            "$ref": "#/components/schemas/Dialect"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/Person"
+          },
+          "object": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Person"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "tense": {
+            "$ref": "#/components/schemas/Tense",
+            "default": "present"
+          },
+          "mood": {
+            "$ref": "#/components/schemas/Mood",
+            "default": "indicative"
+          },
+          "derivation": {
+            "$ref": "#/components/schemas/Derivation",
+            "default": "none"
+          },
+          "applicative": {
+            "type": "boolean",
+            "title": "Applicative",
+            "default": false
+          },
+          "causative": {
+            "$ref": "#/components/schemas/Causative",
+            "default": "none"
+          },
+          "optional_preverb": {
+            "type": "boolean",
+            "title": "Optional Preverb",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "dialect",
+          "subject"
+        ],
+        "title": "Features"
+      },
+      "Form": {
+        "properties": {
+          "spelling": {
+            "type": "string",
+            "title": "Spelling"
+          },
+          "frame": {
+            "type": "string",
+            "title": "Frame"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/Person"
+          },
+          "object": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Person"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "subject_pronoun": {
+            "type": "string",
+            "title": "Subject Pronoun"
+          },
+          "object_pronoun": {
+            "type": "string",
+            "title": "Object Pronoun"
+          },
+          "rule": {
+            "type": "string",
+            "title": "Rule"
+          }
+        },
+        "type": "object",
+        "required": [
+          "spelling",
+          "frame",
+          "subject",
+          "object",
+          "subject_pronoun",
+          "object_pronoun",
+          "rule"
+        ],
+        "title": "Form"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Match": {
+        "properties": {
+          "entry": {
+            "$ref": "#/components/schemas/Entry"
+          },
+          "features": {
+            "$ref": "#/components/schemas/Features"
+          },
+          "form": {
+            "$ref": "#/components/schemas/Form"
+          }
+        },
+        "type": "object",
+        "required": [
+          "entry",
+          "features",
+          "form"
+        ],
+        "title": "Match"
+      },
+      "Mood": {
+        "type": "string",
+        "enum": [
+          "indicative",
+          "optative",
+          "imperative",
+          "negative_imperative"
+        ],
+        "title": "Mood"
+      },
+      "Option": {
+        "properties": {
+          "value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason Code"
+          }
+        },
+        "type": "object",
+        "required": [
+          "value",
+          "enabled",
+          "reason"
+        ],
+        "title": "Option"
+      },
+      "OptionsResponse": {
+        "properties": {
+          "dialects": {
+            "items": {
+              "$ref": "#/components/schemas/Dialect"
+            },
+            "type": "array",
+            "title": "Dialects"
+          },
+          "options": {
+            "additionalProperties": {
+              "items": {
+                "$ref": "#/components/schemas/Option"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Options"
+          }
+        },
+        "type": "object",
+        "required": [
+          "dialects",
+          "options"
+        ],
+        "title": "OptionsResponse"
+      },
+      "Person": {
+        "type": "string",
+        "enum": [
+          "1sg",
+          "2sg",
+          "3sg",
+          "1pl",
+          "2pl",
+          "3pl"
+        ],
+        "title": "Person"
+      },
+      "PrincipalPart": {
+        "properties": {
+          "form": {
+            "type": "string",
+            "title": "Form"
+          },
+          "dialects": {
+            "items": {
+              "$ref": "#/components/schemas/Dialect"
+            },
+            "type": "array",
+            "title": "Dialects"
+          }
+        },
+        "type": "object",
+        "required": [
+          "form",
+          "dialects"
+        ],
+        "title": "PrincipalPart"
+      },
+      "ReverseResponse": {
+        "properties": {
+          "match_type": {
+            "type": "string",
+            "enum": [
+              "exact",
+              "alternate",
+              "broad",
+              "none"
+            ],
+            "title": "Match Type"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "matches": {
+            "items": {
+              "$ref": "#/components/schemas/Match"
+            },
+            "type": "array",
+            "title": "Matches"
+          }
+        },
+        "type": "object",
+        "required": [
+          "match_type",
+          "total",
+          "matches"
+        ],
+        "title": "ReverseResponse"
+      },
+      "SuggestionsResponse": {
+        "properties": {
+          "suggestions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Suggestions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "suggestions"
+        ],
+        "title": "SuggestionsResponse"
+      },
+      "Tense": {
+        "type": "string",
+        "enum": [
+          "present",
+          "past",
+          "future",
+          "past_progressive",
+          "present_perfect"
+        ],
+        "title": "Tense"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "VerbClass": {
+        "type": "string",
+        "enum": [
+          "IVD",
+          "TVE",
+          "TVM"
+        ],
+        "title": "VerbClass"
+      },
+      "VerbPage": {
+        "properties": {
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/Entry"
+            },
+            "type": "array",
+            "title": "Entries"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          }
+        },
+        "type": "object",
+        "required": [
+          "entries",
+          "total"
+        ],
+        "title": "VerbPage"
+      }
+    }
+  }
+}

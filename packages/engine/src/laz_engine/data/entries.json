@@ -1,0 +1,6585 @@
+[
+  {
+    "id": "verb-0001",
+    "infinitive": "avara doskudu",
+    "verb_class": "TVM",
+    "english": "to be idle",
+    "turkish": "avare kalmak",
+    "variants": [
+      {
+        "form": "avara doskudun",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 1,
+    "issues": []
+  },
+  {
+    "id": "verb-0002",
+    "infinitive": "cebazgu",
+    "verb_class": "TVE",
+    "english": "to press, to step on something",
+    "turkish": "basmak",
+    "variants": [
+      {
+        "form": "cobazgams",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 2,
+    "issues": []
+  },
+  {
+    "id": "verb-0003",
+    "infinitive": "cebgaru",
+    "verb_class": "TVE",
+    "english": "to lament over something",
+    "turkish": "ağıt yakmak",
+    "variants": [
+      {
+        "form": "cabgars",
+        "dialects": [
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 3,
+    "issues": []
+  },
+  {
+    "id": "verb-0004",
+    "infinitive": "ceçamu",
+    "verb_class": "TVE",
+    "english": "to hit something/someone",
+    "turkish": "vurmak (bir şeye)",
+    "variants": [
+      {
+        "form": "ceçams",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 4,
+    "issues": []
+  },
+  {
+    "id": "verb-0005",
+    "infinitive": "ceç̌u",
+    "verb_class": "TVE",
+    "english": "to begin",
+    "turkish": "başlamak",
+    "variants": [
+      {
+        "form": "coç̌ams",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 5,
+    "issues": []
+  },
+  {
+    "id": "verb-0006",
+    "infinitive": "cegapu",
+    "verb_class": "TVM",
+    "english": "to get used to",
+    "turkish": "alışmak",
+    "variants": [
+      {
+        "form": "cagen",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 6,
+    "issues": []
+  },
+  {
+    "id": "verb-0007",
+    "infinitive": "ceginu",
+    "verb_class": "TVE",
+    "english": "to get someone become familiar with something",
+    "turkish": "alıştırmak",
+    "variants": [
+      {
+        "form": "coginams",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 7,
+    "issues": []
+  },
+  {
+    "id": "verb-0008",
+    "infinitive": "cedginu",
+    "verb_class": "IVD",
+    "english": "to crave",
+    "turkish": "aşermek",
+    "variants": [
+      {
+        "form": "cadginen",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 8,
+    "issues": []
+  },
+  {
+    "id": "verb-0009",
+    "infinitive": "celabalu",
+    "verb_class": "TVE",
+    "english": "to hang",
+    "turkish": "asmak",
+    "variants": [
+      {
+        "form": "celabams",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 9,
+    "issues": []
+  },
+  {
+    "id": "verb-0010",
+    "infinitive": "cemp̌onu",
+    "verb_class": "TVE",
+    "english": "to vaccinate/fertilize",
+    "turkish": "aşılamak",
+    "variants": [
+      {
+        "form": "comp̌onams",
+        "dialects": [
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 10,
+    "issues": []
+  },
+  {
+    "id": "verb-0011",
+    "infinitive": "cexunu",
+    "verb_class": "TVM",
+    "english": "to get on/ride/ascend",
+    "turkish": "binmek",
+    "variants": [
+      {
+        "form": "cexedun",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 11,
+    "issues": []
+  },
+  {
+    "id": "verb-0012",
+    "infinitive": "ceyonu",
+    "verb_class": "TVE",
+    "english": "to vaccinate/fertilize",
+    "turkish": "aşılamak",
+    "variants": [
+      {
+        "form": "ciyonams",
+        "dialects": [
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 12,
+    "issues": []
+  },
+  {
+    "id": "verb-0013",
+    "infinitive": "coxons",
+    "verb_class": "IVD",
+    "english": "to be called",
+    "turkish": "adında olmak",
+    "variants": [
+      {
+        "form": "coxons",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 13,
+    "issues": []
+  },
+  {
+    "id": "verb-0014",
+    "infinitive": "coxo gedvalu",
+    "verb_class": "TVE",
+    "english": "to name something/someone",
+    "turkish": "adlandırmak",
+    "variants": [
+      {
+        "form": "coxo gyodums",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "coxo gyodumers",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 14,
+    "issues": []
+  },
+  {
+    "id": "verb-0015",
+    "infinitive": "cozun",
+    "verb_class": "IVD",
+    "english": "to be called",
+    "turkish": "adında olmak",
+    "variants": [
+      {
+        "form": "cozun",
+        "dialects": [
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 15,
+    "issues": []
+  },
+  {
+    "id": "verb-0016",
+    "infinitive": "çxomi oç̌opu",
+    "verb_class": "TVE",
+    "english": "to fish",
+    "turkish": "balık avlamak",
+    "variants": [
+      {
+        "form": "çxomi ç̌opums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "çxomi ç̌opups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 16,
+    "issues": []
+  },
+  {
+    "id": "verb-0017",
+    "infinitive": "diç̌irs",
+    "verb_class": "IVD",
+    "english": "to require",
+    "turkish": "lazım gelmek",
+    "variants": [
+      {
+        "form": "diç̌irs",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 17,
+    "issues": []
+  },
+  {
+    "id": "verb-0018",
+    "infinitive": "dobadu",
+    "verb_class": "TVM",
+    "english": "to be born",
+    "turkish": "doğmak",
+    "variants": [
+      {
+        "form": "dibaden",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 18,
+    "issues": []
+  },
+  {
+    "id": "verb-0019",
+    "infinitive": "dobalu",
+    "verb_class": "TVE",
+    "english": "to pour",
+    "turkish": "akıtmak",
+    "variants": [
+      {
+        "form": "dobams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "dobaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 19,
+    "issues": []
+  },
+  {
+    "id": "verb-0020",
+    "infinitive": "dobalu",
+    "verb_class": "TVM",
+    "english": "to flow, to leak",
+    "turkish": "akmak",
+    "variants": [
+      {
+        "form": "diben",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 20,
+    "issues": []
+  },
+  {
+    "id": "verb-0021",
+    "infinitive": "dobazginapu",
+    "verb_class": "TVE",
+    "english": "to step on the floor",
+    "turkish": "bastırmak",
+    "variants": [
+      {
+        "form": "dobazginapams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "dobažginapaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 21,
+    "issues": []
+  },
+  {
+    "id": "verb-0022",
+    "infinitive": "dodginu",
+    "verb_class": "IVD",
+    "english": "to stand",
+    "turkish": "ayakta durmak",
+    "variants": [
+      {
+        "form": "dvadginen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "HO"
+        ]
+      },
+      {
+        "form": "dadginen",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 22,
+    "issues": []
+  },
+  {
+    "id": "verb-0023",
+    "infinitive": "dodgitu",
+    "verb_class": "TVM",
+    "english": "to stand",
+    "turkish": "ayakta durmak",
+    "variants": [
+      {
+        "form": "dodgitun",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 23,
+    "issues": []
+  },
+  {
+    "id": "verb-0024",
+    "infinitive": "dodumu",
+    "verb_class": "TVE",
+    "english": "to put, to place (something on the floor)",
+    "turkish": "koymak (yere)",
+    "variants": [
+      {
+        "form": "dodums",
+        "dialects": [
+          "FA",
+          "PZ",
+          "AS"
+        ]
+      },
+      {
+        "form": "dodumers",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 24,
+    "issues": []
+  },
+  {
+    "id": "verb-0025",
+    "infinitive": "dodvumu",
+    "verb_class": "TVE",
+    "english": "to put, to place (something on the floor)",
+    "turkish": "koymak (yere)",
+    "variants": [
+      {
+        "form": "dodvups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 25,
+    "issues": []
+  },
+  {
+    "id": "verb-0026",
+    "infinitive": "doguru",
+    "verb_class": "TVE",
+    "english": "to learn",
+    "turkish": "öğrenmek",
+    "variants": [
+      {
+        "form": "digurams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "diguraps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 26,
+    "issues": []
+  },
+  {
+    "id": "verb-0027",
+    "infinitive": "dogutu",
+    "verb_class": "TVM",
+    "english": "to stand",
+    "turkish": "ayakta durmak",
+    "variants": [
+      {
+        "form": "dogutun",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 27,
+    "issues": []
+  },
+  {
+    "id": "verb-0028",
+    "infinitive": "doinu",
+    "verb_class": "TVE",
+    "english": "to give birth",
+    "turkish": "doğurmak",
+    "variants": [
+      {
+        "form": "doinams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "doinaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 28,
+    "issues": []
+  },
+  {
+    "id": "verb-0029",
+    "infinitive": "doǩanu",
+    "verb_class": "TVE",
+    "english": "to throw",
+    "turkish": "atmak",
+    "variants": [
+      {
+        "form": "doǩanams",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 29,
+    "issues": []
+  },
+  {
+    "id": "verb-0030",
+    "infinitive": "doloç̌aru",
+    "verb_class": "TVE",
+    "english": "to record",
+    "turkish": "kaydetmek",
+    "variants": [
+      {
+        "form": "doloç̌arums",
+        "dialects": [
+          "PZ",
+          "FA",
+          "AS"
+        ]
+      },
+      {
+        "form": "doloç̌arups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 30,
+    "issues": []
+  },
+  {
+    "id": "verb-0031",
+    "infinitive": "domçinu",
+    "verb_class": "TVE",
+    "english": "to declare, to inform",
+    "turkish": "bildirmek",
+    "variants": [
+      {
+        "form": "dumçinams",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 31,
+    "issues": []
+  },
+  {
+    "id": "verb-0032",
+    "infinitive": "doşinu",
+    "verb_class": "TVE",
+    "english": "to hurry",
+    "turkish": "acele etmek",
+    "variants": [
+      {
+        "form": "duşinams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 32,
+    "issues": []
+  },
+  {
+    "id": "verb-0033",
+    "infinitive": "doskidu",
+    "verb_class": "TVM",
+    "english": "to stay",
+    "turkish": "kalmak",
+    "variants": [
+      {
+        "form": "doskidur",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 33,
+    "issues": []
+  },
+  {
+    "id": "verb-0034",
+    "infinitive": "dosǩudu",
+    "verb_class": "TVM",
+    "english": "to stay",
+    "turkish": "kalmak",
+    "variants": [
+      {
+        "form": "dosǩudun",
+        "dialects": [
+          "AS",
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 34,
+    "issues": []
+  },
+  {
+    "id": "verb-0035",
+    "infinitive": "doşǩvalu",
+    "verb_class": "TVM",
+    "english": "to sink",
+    "turkish": "batmak",
+    "variants": [
+      {
+        "form": "dvaşǩven",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 35,
+    "issues": []
+  },
+  {
+    "id": "verb-0036",
+    "infinitive": "dotanu",
+    "verb_class": "TVE",
+    "english": "to dawn",
+    "turkish": "ağarmak (gün)",
+    "variants": [
+      {
+        "form": "dotanums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "dotanups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 36,
+    "issues": []
+  },
+  {
+    "id": "verb-0037",
+    "infinitive": "dotanu",
+    "verb_class": "TVM",
+    "english": "to dawn",
+    "turkish": "ağarmak (gün)",
+    "variants": [
+      {
+        "form": "dotanun",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 37,
+    "issues": []
+  },
+  {
+    "id": "verb-0038",
+    "infinitive": "doǯonu",
+    "verb_class": "IVD",
+    "english": "to think",
+    "turkish": "sanmak",
+    "variants": [
+      {
+        "form": "daǯonen",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "dvaǯonen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 38,
+    "issues": []
+  },
+  {
+    "id": "verb-0039",
+    "infinitive": "dvaç̌irs",
+    "verb_class": "IVD",
+    "english": "to require",
+    "turkish": "lazım gelmek",
+    "variants": [
+      {
+        "form": "dvaç̌irs",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 39,
+    "issues": []
+  },
+  {
+    "id": "verb-0040",
+    "infinitive": "eç̌opu",
+    "verb_class": "TVE",
+    "english": "to buy",
+    "turkish": "almak",
+    "variants": [
+      {
+        "form": "eç̌opums",
+        "dialects": [
+          "FA",
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 40,
+    "issues": []
+  },
+  {
+    "id": "verb-0041",
+    "infinitive": "elaşinu",
+    "verb_class": "TVE",
+    "english": "to remember",
+    "turkish": "anmak",
+    "variants": [
+      {
+        "form": "elişinams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "elişinaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 41,
+    "issues": []
+  },
+  {
+    "id": "verb-0042",
+    "infinitive": "eoçvalu",
+    "verb_class": "TVE",
+    "english": "to open",
+    "turkish": "açmak (üzerini)",
+    "variants": [
+      {
+        "form": "eoçums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 42,
+    "issues": []
+  },
+  {
+    "id": "verb-0043",
+    "infinitive": "exondvalu",
+    "verb_class": "TVE",
+    "english": "to take responsibility",
+    "turkish": "sormluluk almak",
+    "variants": [
+      {
+        "form": "exindums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 43,
+    "issues": []
+  },
+  {
+    "id": "verb-0044",
+    "infinitive": "gamaçamu",
+    "verb_class": "TVE",
+    "english": "to sell",
+    "turkish": "satmak",
+    "variants": [
+      {
+        "form": "gamaçams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "gamaçaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 44,
+    "issues": []
+  },
+  {
+    "id": "verb-0045",
+    "infinitive": "gamaǩatu",
+    "verb_class": "TVM",
+    "english": "to separate, to part",
+    "turkish": "ayrılmak",
+    "variants": [
+      {
+        "form": "gamiǩaten",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 45,
+    "issues": []
+  },
+  {
+    "id": "verb-0046",
+    "infinitive": "gamaǩat̆u",
+    "verb_class": "TVE",
+    "english": "to split, to separate",
+    "turkish": "ayırmak",
+    "variants": [
+      {
+        "form": "gamaǩatums",
+        "dialects": [
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 46,
+    "issues": []
+  },
+  {
+    "id": "verb-0047",
+    "infinitive": "gamaqonu",
+    "verb_class": "TVE",
+    "english": "to send off, to throw out (living being)",
+    "turkish": "dışarı çıkarmak (canlı, hareket edebilen)",
+    "variants": [
+      {
+        "form": "gamiqonaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 47,
+    "issues": []
+  },
+  {
+    "id": "verb-0048",
+    "infinitive": "gamayonu",
+    "verb_class": "TVE",
+    "english": "to send off, to throw out (living being)",
+    "turkish": "dışarı çıkarmak (canlı, hareket edebilen)",
+    "variants": [
+      {
+        "form": "gamiyonams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 48,
+    "issues": []
+  },
+  {
+    "id": "verb-0049",
+    "infinitive": "gebažgu",
+    "verb_class": "TVE",
+    "english": "to press, to step on something",
+    "turkish": "basmak",
+    "variants": [
+      {
+        "form": "gyobazgams",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "gyobazgaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 49,
+    "issues": []
+  },
+  {
+    "id": "verb-0050",
+    "infinitive": "geçamu",
+    "verb_class": "TVE",
+    "english": "to hit something/someone",
+    "turkish": "vurmak (bir şeye)",
+    "variants": [
+      {
+        "form": "geçams",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "geçaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 50,
+    "issues": []
+  },
+  {
+    "id": "verb-0051",
+    "infinitive": "geç̌ǩu",
+    "verb_class": "TVE",
+    "english": "to begin",
+    "turkish": "başlamak",
+    "variants": [
+      {
+        "form": "gyoç̌ǩams",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "gyoç̌ǩaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 51,
+    "issues": []
+  },
+  {
+    "id": "verb-0052",
+    "infinitive": "gegapu",
+    "verb_class": "TVM",
+    "english": "to get used to",
+    "turkish": "alışmak",
+    "variants": [
+      {
+        "form": "gyagen",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 52,
+    "issues": []
+  },
+  {
+    "id": "verb-0053",
+    "infinitive": "geginu",
+    "verb_class": "TVE",
+    "english": "to get someone become familiar with something",
+    "turkish": "alıştırmak",
+    "variants": [
+      {
+        "form": "gyoginams",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "gyoginaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 53,
+    "issues": []
+  },
+  {
+    "id": "verb-0054",
+    "infinitive": "geǩordinu",
+    "verb_class": "TVE",
+    "english": "to reduce",
+    "turkish": "azaltmak",
+    "variants": [
+      {
+        "form": "geǩordinaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 54,
+    "issues": []
+  },
+  {
+    "id": "verb-0055",
+    "infinitive": "geǩordu",
+    "verb_class": "TVM",
+    "english": "to become less, to run low",
+    "turkish": "azalmak",
+    "variants": [
+      {
+        "form": "gyoǩordun",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 55,
+    "issues": []
+  },
+  {
+    "id": "verb-0056",
+    "infinitive": "geloǩidu",
+    "verb_class": "TVE",
+    "english": "to hang",
+    "turkish": "asmak",
+    "variants": [
+      {
+        "form": "geloǩidams",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "geloǩidaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 56,
+    "issues": []
+  },
+  {
+    "id": "verb-0057",
+    "infinitive": "gemgaru",
+    "verb_class": "TVE",
+    "english": "to lament over something",
+    "turkish": "ağıt yakmak",
+    "variants": [
+      {
+        "form": "gyamgars",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 57,
+    "issues": []
+  },
+  {
+    "id": "verb-0058",
+    "infinitive": "gemp̌onu",
+    "verb_class": "TVE",
+    "english": "to vaccinate/fertilize",
+    "turkish": "aşılamak",
+    "variants": [
+      {
+        "form": "gyomp̌onams",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "gyomp̌onaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 58,
+    "issues": []
+  },
+  {
+    "id": "verb-0059",
+    "infinitive": "gent̆onu",
+    "verb_class": "TVM",
+    "english": "to sink",
+    "turkish": "batmak",
+    "variants": [
+      {
+        "form": "gyant̆onen",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 59,
+    "issues": []
+  },
+  {
+    "id": "verb-0060",
+    "infinitive": "gexunu",
+    "verb_class": "TVM",
+    "english": "to get on/ride/ascend",
+    "turkish": "binmek",
+    "variants": [
+      {
+        "form": "gexedun",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 60,
+    "issues": []
+  },
+  {
+    "id": "verb-0061",
+    "infinitive": "geǯipxu",
+    "verb_class": "TVE",
+    "english": "arrange, set up",
+    "turkish": "ayarlamak",
+    "variants": [
+      {
+        "form": "geǯipxups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 61,
+    "issues": []
+  },
+  {
+    "id": "verb-0062",
+    "infinitive": "geǯopxu",
+    "verb_class": "TVE",
+    "english": "arrange, set up",
+    "turkish": "ayarlamak",
+    "variants": [
+      {
+        "form": "geǯopxums",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 62,
+    "issues": []
+  },
+  {
+    "id": "verb-0063",
+    "infinitive": "giloǩidu",
+    "verb_class": "TVE",
+    "english": "to hang",
+    "turkish": "asmak",
+    "variants": [
+      {
+        "form": "giloǩidaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 63,
+    "issues": []
+  },
+  {
+    "id": "verb-0064",
+    "infinitive": "goǩuʒxu",
+    "verb_class": "TVM",
+    "english": "to wake up",
+    "turkish": "uyanmak",
+    "variants": [
+      {
+        "form": "goǩuʒxun",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 64,
+    "issues": []
+  },
+  {
+    "id": "verb-0065",
+    "infinitive": "golusu",
+    "verb_class": "TVE",
+    "english": "to not care",
+    "turkish": "umursamamak",
+    "variants": [
+      {
+        "form": "golusumers",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 65,
+    "issues": []
+  },
+  {
+    "id": "verb-0066",
+    "infinitive": "gonç̌elu",
+    "verb_class": "IVD",
+    "english": "to miss someone",
+    "turkish": "özlemek",
+    "variants": [
+      {
+        "form": "ganç̌elen",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "gvanç̌elen",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 66,
+    "issues": []
+  },
+  {
+    "id": "verb-0067",
+    "infinitive": "gondunu",
+    "verb_class": "TVM",
+    "english": "to get lost",
+    "turkish": "kaybolmak",
+    "variants": [
+      {
+        "form": "gondunun",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 67,
+    "issues": []
+  },
+  {
+    "id": "verb-0068",
+    "infinitive": "gonǯǩu",
+    "verb_class": "TVE",
+    "english": "to open",
+    "turkish": "açmak (kapı, kilit vb.)",
+    "variants": [
+      {
+        "form": "gonǯǩips",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 68,
+    "issues": []
+  },
+  {
+    "id": "verb-0069",
+    "infinitive": "gonǯu",
+    "verb_class": "TVE",
+    "english": "to open",
+    "turkish": "açmak (kapı, kilit vb.)",
+    "variants": [
+      {
+        "form": "gonǯams",
+        "dialects": [
+          "FA",
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 69,
+    "issues": []
+  },
+  {
+    "id": "verb-0070",
+    "infinitive": "goşinu",
+    "verb_class": "IVD",
+    "english": "to remember",
+    "turkish": "hatırlamak",
+    "variants": [
+      {
+        "form": "gaşinen",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "gvaşinen",
+        "dialects": [
+          "AS",
+          "PZ",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 70,
+    "issues": []
+  },
+  {
+    "id": "verb-0071",
+    "infinitive": "goşinu",
+    "verb_class": "TVE",
+    "english": "to remind",
+    "turkish": "hatırlatmak",
+    "variants": [
+      {
+        "form": "goişinams",
+        "dialects": [
+          "FA",
+          "AS",
+          "PZ"
+        ]
+      },
+      {
+        "form": "goişinaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 71,
+    "issues": []
+  },
+  {
+    "id": "verb-0072",
+    "infinitive": "goxiru",
+    "verb_class": "TVE",
+    "english": "to steal",
+    "turkish": "araklamak",
+    "variants": [
+      {
+        "form": "goixirams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "goixiraps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 72,
+    "issues": []
+  },
+  {
+    "id": "verb-0073",
+    "infinitive": "guri donç̌inu",
+    "verb_class": "IVD",
+    "english": "to feel pity for someone",
+    "turkish": "acımak",
+    "variants": [
+      {
+        "form": "guri danç̌en",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 73,
+    "issues": []
+  },
+  {
+    "id": "verb-0074",
+    "infinitive": "guris meç̌valu",
+    "verb_class": "IVD",
+    "english": "to feel pity for someone",
+    "turkish": "acımak",
+    "variants": [
+      {
+        "form": "guris naç̌ven",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 74,
+    "issues": []
+  },
+  {
+    "id": "verb-0075",
+    "infinitive": "guri mentxu",
+    "verb_class": "TVM",
+    "english": "to faint",
+    "turkish": "bayılmak",
+    "variants": [
+      {
+        "form": "guri nantxen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 75,
+    "issues": []
+  },
+  {
+    "id": "verb-0076",
+    "infinitive": "gyožin",
+    "verb_class": "IVD",
+    "english": "to be called",
+    "turkish": "adında olmak",
+    "variants": [
+      {
+        "form": "gyožin",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 76,
+    "issues": []
+  },
+  {
+    "id": "verb-0077",
+    "infinitive": "ǩai doǯonu",
+    "verb_class": "IVD",
+    "english": "to enjoy/like",
+    "turkish": "hoşlanmak",
+    "variants": [
+      {
+        "form": "ǩai daǯonen",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 77,
+    "issues": []
+  },
+  {
+    "id": "verb-0078",
+    "infinitive": "ǩai oǯonu",
+    "verb_class": "IVD",
+    "english": "to enjoy/like",
+    "turkish": "hoşlanmak",
+    "variants": [
+      {
+        "form": "ǩai aǯonen",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 78,
+    "issues": []
+  },
+  {
+    "id": "verb-0079",
+    "infinitive": "ǩoǩoǯalu",
+    "verb_class": "TVE",
+    "english": "to divide, to detach",
+    "turkish": "ayırmak (ikiye)",
+    "variants": [
+      {
+        "form": "ǩoǩoǯams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 79,
+    "issues": []
+  },
+  {
+    "id": "verb-0080",
+    "infinitive": "ǩuçxe medgalu",
+    "verb_class": "TVE",
+    "english": "to step",
+    "turkish": "adım atmak",
+    "variants": [
+      {
+        "form": "ǩuçxe medgams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 80,
+    "issues": []
+  },
+  {
+    "id": "verb-0081",
+    "infinitive": "lumcun",
+    "verb_class": "TVM",
+    "english": "to become evening",
+    "turkish": "akşam olmak",
+    "variants": [
+      {
+        "form": "lumcun",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      },
+      {
+        "form": "dolumcun",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 81,
+    "issues": []
+  },
+  {
+    "id": "verb-0082",
+    "infinitive": "mebazgu",
+    "verb_class": "TVE",
+    "english": "to poop",
+    "turkish": "sıçmak",
+    "variants": [
+      {
+        "form": "nobazgams",
+        "dialects": [
+          "AS"
+        ]
+      },
+      {
+        "form": "nobažgaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 82,
+    "issues": []
+  },
+  {
+    "id": "verb-0083",
+    "infinitive": "meçamu",
+    "verb_class": "TVE",
+    "english": "to give",
+    "turkish": "vermek",
+    "variants": [
+      {
+        "form": "meçams",
+        "dialects": [
+          "FA",
+          "PZ",
+          "AS"
+        ]
+      },
+      {
+        "form": "meçaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 83,
+    "issues": []
+  },
+  {
+    "id": "verb-0084",
+    "infinitive": "meǩap̌inu",
+    "verb_class": "TVE",
+    "english": "to jump",
+    "turkish": "atlamak",
+    "variants": [
+      {
+        "form": "nuǩap̌ams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 84,
+    "issues": []
+  },
+  {
+    "id": "verb-0085",
+    "infinitive": "meǩiru",
+    "verb_class": "TVE",
+    "english": "to tie something/someone",
+    "turkish": "bağlamak (birini/birşeyi bir yere)",
+    "variants": [
+      {
+        "form": "meǩirups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 85,
+    "issues": []
+  },
+  {
+    "id": "verb-0086",
+    "infinitive": "meǩoru",
+    "verb_class": "TVE",
+    "english": "to tie something/someone",
+    "turkish": "bağlamak (birini/birşeyi bir yere)",
+    "variants": [
+      {
+        "form": "meǩorums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 86,
+    "issues": []
+  },
+  {
+    "id": "verb-0087",
+    "infinitive": "meǩoru",
+    "verb_class": "TVM",
+    "english": "to be tied to something",
+    "turkish": "bağlı olmak (birine, bir yere)",
+    "variants": [
+      {
+        "form": "noǩorun",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "noǩirun",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 87,
+    "issues": []
+  },
+  {
+    "id": "verb-0088",
+    "infinitive": "memçinu",
+    "verb_class": "TVE",
+    "english": "to declare, to inform",
+    "turkish": "bildirmek",
+    "variants": [
+      {
+        "form": "numçinams",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "numçinaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 88,
+    "issues": []
+  },
+  {
+    "id": "verb-0089",
+    "infinitive": "memgvapinu",
+    "verb_class": "TVE",
+    "english": "to liken",
+    "turkish": "benzetmek",
+    "variants": [
+      {
+        "form": "numgvapinams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "nungapinaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 89,
+    "issues": []
+  },
+  {
+    "id": "verb-0090",
+    "infinitive": "memgvapu",
+    "verb_class": "IVD",
+    "english": "to resemble",
+    "turkish": "benzemek",
+    "variants": [
+      {
+        "form": "nampgvapen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "HO"
+        ]
+      },
+      {
+        "form": "nangapen",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 90,
+    "issues": []
+  },
+  {
+    "id": "verb-0091",
+    "infinitive": "memgvapu",
+    "verb_class": "TVE",
+    "english": "to take after",
+    "turkish": "benziyor halde olmak",
+    "variants": [
+      {
+        "form": "numgvay",
+        "dialects": [
+          "AS"
+        ]
+      },
+      {
+        "form": "nungams",
+        "dialects": [
+          "PZ",
+          "FA"
+        ]
+      },
+      {
+        "form": "nungaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 91,
+    "issues": []
+  },
+  {
+    "id": "verb-0092",
+    "infinitive": "mendoğmalu",
+    "verb_class": "TVE",
+    "english": "to take something by force",
+    "turkish": "almak (zorla)",
+    "variants": [
+      {
+        "form": "menduğams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "menduğaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 92,
+    "issues": []
+  },
+  {
+    "id": "verb-0093",
+    "infinitive": "meoçamu",
+    "verb_class": "TVE",
+    "english": "to curse",
+    "turkish": "beddua etmek",
+    "variants": [
+      {
+        "form": "meiçams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 93,
+    "issues": []
+  },
+  {
+    "id": "verb-0094",
+    "infinitive": "meşǩidu",
+    "verb_class": "TVE",
+    "english": "to strangle",
+    "turkish": "boğmak",
+    "variants": [
+      {
+        "form": "noşǩidams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 94,
+    "issues": []
+  },
+  {
+    "id": "verb-0095",
+    "infinitive": "meşǩvidu",
+    "verb_class": "TVE",
+    "english": "to strangle",
+    "turkish": "boğmak",
+    "variants": [
+      {
+        "form": "noşǩvidaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 95,
+    "issues": []
+  },
+  {
+    "id": "verb-0096",
+    "infinitive": "meşǩvu",
+    "verb_class": "TVE",
+    "english": "to liberate",
+    "turkish": "azad etmek",
+    "variants": [
+      {
+        "form": "naşǩums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "naşǩumers",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 96,
+    "issues": []
+  },
+  {
+    "id": "verb-0097",
+    "infinitive": "meşvelu",
+    "verb_class": "TVE",
+    "english": "to help",
+    "turkish": "yardım etmek",
+    "variants": [
+      {
+        "form": "nuşvelams",
+        "dialects": [
+          "FA",
+          "AS",
+          "PZ"
+        ]
+      },
+      {
+        "form": "nuşvelaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 97,
+    "issues": []
+  },
+  {
+    "id": "verb-0098",
+    "infinitive": "met̆işu",
+    "verb_class": "TVE",
+    "english": "to consecrate, to wow",
+    "turkish": "adamak",
+    "variants": [
+      {
+        "form": "nutişams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 98,
+    "issues": []
+  },
+  {
+    "id": "verb-0099",
+    "infinitive": "meǯǩodu",
+    "verb_class": "TVE",
+    "english": "to look at something, to gaze at",
+    "turkish": "bakmak",
+    "variants": [
+      {
+        "form": "noǯǩers",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 99,
+    "issues": []
+  },
+  {
+    "id": "verb-0100",
+    "infinitive": "meǯodu",
+    "verb_class": "TVE",
+    "english": "to look at something, to gaze at",
+    "turkish": "bakmak",
+    "variants": [
+      {
+        "form": "noǯers",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 100,
+    "issues": []
+  },
+  {
+    "id": "verb-0101",
+    "infinitive": "mijaçamu",
+    "verb_class": "TVE",
+    "english": "to curse",
+    "turkish": "beddua etmek",
+    "variants": [
+      {
+        "form": "mijiçaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 101,
+    "issues": []
+  },
+  {
+    "id": "verb-0102",
+    "infinitive": "moğerdinams",
+    "verb_class": "TVE",
+    "english": "to cheat, to defraud",
+    "turkish": "aldatmak",
+    "variants": [
+      {
+        "form": "moğerdinams",
+        "dialects": [
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "moğordinams",
+        "dialects": [
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 102,
+    "issues": []
+  },
+  {
+    "id": "verb-0103",
+    "infinitive": "monžinu",
+    "verb_class": "TVE",
+    "english": "to increase (transitive)",
+    "turkish": "artırmak",
+    "variants": [
+      {
+        "form": "munžinams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "munžinaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 103,
+    "issues": []
+  },
+  {
+    "id": "verb-0104",
+    "infinitive": "monžinu",
+    "verb_class": "TVM",
+    "english": "to increase (intransitive)",
+    "turkish": "artmak",
+    "variants": [
+      {
+        "form": "manžinen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 104,
+    "issues": []
+  },
+  {
+    "id": "verb-0105",
+    "infinitive": "moselu",
+    "verb_class": "TVM",
+    "english": "to arise",
+    "turkish": "ayaklanmak",
+    "variants": [
+      {
+        "form": "moiselen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 105,
+    "issues": []
+  },
+  {
+    "id": "verb-0106",
+    "infinitive": "moskidu",
+    "verb_class": "TVM",
+    "english": "to remain",
+    "turkish": "arta kalmak",
+    "variants": [
+      {
+        "form": "moskidun",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 106,
+    "issues": []
+  },
+  {
+    "id": "verb-0107",
+    "infinitive": "mosǩudu",
+    "verb_class": "TVM",
+    "english": "to remain",
+    "turkish": "arta kalmak",
+    "variants": [
+      {
+        "form": "mosǩudun",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 107,
+    "issues": []
+  },
+  {
+    "id": "verb-0108",
+    "infinitive": "moşvacu",
+    "verb_class": "TVE",
+    "english": "to rest",
+    "turkish": "dinlenmek",
+    "variants": [
+      {
+        "form": "moişvacams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "moişvaceps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 108,
+    "issues": []
+  },
+  {
+    "id": "verb-0109",
+    "infinitive": "moǯǩimu",
+    "verb_class": "TVE",
+    "english": "to open",
+    "turkish": "açmak (üzerini)",
+    "variants": [
+      {
+        "form": "moǯǩips",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 109,
+    "issues": []
+  },
+  {
+    "id": "verb-0110",
+    "infinitive": "moǯondu",
+    "verb_class": "IVD",
+    "english": "to like",
+    "turkish": "beğenmek",
+    "variants": [
+      {
+        "form": "moǯons",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 110,
+    "issues": []
+  },
+  {
+    "id": "verb-0111",
+    "infinitive": "moǯoxvalu",
+    "verb_class": "TVM",
+    "english": "to arise",
+    "turkish": "ayaklanmak",
+    "variants": [
+      {
+        "form": "moǯixven",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 111,
+    "issues": []
+  },
+  {
+    "id": "verb-0112",
+    "infinitive": "obadu",
+    "verb_class": "TVM",
+    "english": "to age (male)",
+    "turkish": "ihtiyarlamak (erkek)",
+    "variants": [
+      {
+        "form": "ibaden",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 112,
+    "issues": []
+  },
+  {
+    "id": "verb-0113",
+    "infinitive": "obaxu",
+    "verb_class": "TVE",
+    "english": "to beat up",
+    "turkish": "dovmek",
+    "variants": [
+      {
+        "form": "baxums",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "baxups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 113,
+    "issues": []
+  },
+  {
+    "id": "verb-0114",
+    "infinitive": "obgaru",
+    "verb_class": "TVE",
+    "english": "to cry",
+    "turkish": "ağlamak",
+    "variants": [
+      {
+        "form": "ibgars",
+        "dialects": [
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 114,
+    "issues": []
+  },
+  {
+    "id": "verb-0115",
+    "infinitive": "obiru",
+    "verb_class": "TVE",
+    "english": "to sing/play",
+    "turkish": "şarkı söylemek",
+    "variants": [
+      {
+        "form": "ibirs",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 115,
+    "issues": []
+  },
+  {
+    "id": "verb-0116",
+    "infinitive": "obodu",
+    "verb_class": "TVM",
+    "english": "to wander around",
+    "turkish": "avarelik etmek",
+    "variants": [
+      {
+        "form": "iboden",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 116,
+    "issues": []
+  },
+  {
+    "id": "verb-0117",
+    "infinitive": "obonu",
+    "verb_class": "TVE",
+    "english": "to clean (a body part)",
+    "turkish": "vucudun bir bolumunu veya tamamını yıkamak",
+    "variants": [
+      {
+        "form": "ibons",
+        "dialects": [
+          "HO"
+        ]
+      },
+      {
+        "form": "ibonams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 117,
+    "issues": []
+  },
+  {
+    "id": "verb-0118",
+    "infinitive": "oç̌abu",
+    "verb_class": "TVE",
+    "english": "to glue",
+    "turkish": "yapıştırmak",
+    "variants": [
+      {
+        "form": "ç̌abups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 118,
+    "issues": []
+  },
+  {
+    "id": "verb-0119",
+    "infinitive": "oçalişu",
+    "verb_class": "TVE",
+    "english": "to work",
+    "turkish": "çalışmak",
+    "variants": [
+      {
+        "form": "içalişams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "içalişaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 119,
+    "issues": []
+  },
+  {
+    "id": "verb-0120",
+    "infinitive": "oçaminu",
+    "verb_class": "TVM",
+    "english": "to itch",
+    "turkish": "kaşınmak",
+    "variants": [
+      {
+        "form": "içaminen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "inçamins",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 120,
+    "issues": []
+  },
+  {
+    "id": "verb-0121",
+    "infinitive": "oçaminu",
+    "verb_class": "TVE",
+    "english": "to scratch",
+    "turkish": "kaşımak",
+    "variants": [
+      {
+        "form": "içaminaps",
+        "dialects": [
+          "HO"
+        ]
+      },
+      {
+        "form": "içaminams",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 121,
+    "issues": []
+  },
+  {
+    "id": "verb-0122",
+    "infinitive": "oçamu",
+    "verb_class": "TVE",
+    "english": "to feed",
+    "turkish": "yedirmek",
+    "variants": [
+      {
+        "form": "çams",
+        "dialects": [
+          "AS",
+          "PZ",
+          "FA"
+        ]
+      },
+      {
+        "form": "çaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 122,
+    "issues": []
+  },
+  {
+    "id": "verb-0123",
+    "infinitive": "oç̌aru",
+    "verb_class": "TVE",
+    "english": "to write",
+    "turkish": "yazmak",
+    "variants": [
+      {
+        "form": "ç̌arums",
+        "dialects": [
+          "FA",
+          "PZ"
+        ]
+      },
+      {
+        "form": "ç̌arups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 123,
+    "issues": []
+  },
+  {
+    "id": "verb-0124",
+    "infinitive": "oçedinu",
+    "verb_class": "TVE",
+    "english": "to cheat, to defraud",
+    "turkish": "aldatmak",
+    "variants": [
+      {
+        "form": "oçedinams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 124,
+    "issues": []
+  },
+  {
+    "id": "verb-0125",
+    "infinitive": "oceru",
+    "verb_class": "TVE",
+    "english": "to believe",
+    "turkish": "inanmak",
+    "variants": [
+      {
+        "form": "icers",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 125,
+    "issues": []
+  },
+  {
+    "id": "verb-0126",
+    "infinitive": "ocginu",
+    "verb_class": "TVE",
+    "english": "to win",
+    "turkish": "yenmek",
+    "variants": [
+      {
+        "form": "ocginams",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "ocginaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 126,
+    "issues": []
+  },
+  {
+    "id": "verb-0127",
+    "infinitive": "oçilu",
+    "verb_class": "TVM",
+    "english": "to marry (male)",
+    "turkish": "erkeğin evlenmesi",
+    "variants": [
+      {
+        "form": "içilen",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 127,
+    "issues": []
+  },
+  {
+    "id": "verb-0128",
+    "infinitive": "oçindu",
+    "verb_class": "IVD",
+    "english": "to sneeze",
+    "turkish": "aksırmak",
+    "variants": [
+      {
+        "form": "açinden",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 128,
+    "issues": []
+  },
+  {
+    "id": "verb-0129",
+    "infinitive": "oçinu",
+    "verb_class": "TVE",
+    "english": "to know someone",
+    "turkish": "tanımak",
+    "variants": [
+      {
+        "form": "içinems",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      },
+      {
+        "form": "içinops",
+        "dialects": [
+          "HO"
+        ]
+      },
+      {
+        "form": "içinams",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 129,
+    "issues": []
+  },
+  {
+    "id": "verb-0130",
+    "infinitive": "oçit̆inu",
+    "verb_class": "IVD",
+    "english": "to sneeze",
+    "turkish": "aksırmak",
+    "variants": [
+      {
+        "form": "açit̆inen",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 130,
+    "issues": []
+  },
+  {
+    "id": "verb-0131",
+    "infinitive": "oç̌ǩadu",
+    "verb_class": "TVE",
+    "english": "to flint",
+    "turkish": "çakmak",
+    "variants": [
+      {
+        "form": "ç̌ǩadups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 131,
+    "issues": []
+  },
+  {
+    "id": "verb-0132",
+    "infinitive": "oçkinu",
+    "verb_class": "IVD",
+    "english": "to know",
+    "turkish": "bilmek",
+    "variants": [
+      {
+        "form": "uçkin",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 132,
+    "issues": []
+  },
+  {
+    "id": "verb-0133",
+    "infinitive": "oçǩiru",
+    "verb_class": "TVE",
+    "english": "to cut",
+    "turkish": "kesmek",
+    "variants": [
+      {
+        "form": "çǩirups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 133,
+    "issues": []
+  },
+  {
+    "id": "verb-0134",
+    "infinitive": "oç̌ǩiru",
+    "verb_class": "TVE",
+    "english": "to mow (with a knife/hook)",
+    "turkish": "biçmek",
+    "variants": [
+      {
+        "form": "ç̌ǩirups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 134,
+    "issues": []
+  },
+  {
+    "id": "verb-0135",
+    "infinitive": "oç̌ǩomu",
+    "verb_class": "TVE",
+    "english": "to eat",
+    "turkish": "yemek",
+    "variants": [
+      {
+        "form": "imxors",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 135,
+    "issues": []
+  },
+  {
+    "id": "verb-0136",
+    "infinitive": "oç̌ǩoru",
+    "verb_class": "TVE",
+    "english": "to mow (with a knife/hook)",
+    "turkish": "biçmek",
+    "variants": [
+      {
+        "form": "ç̌ǩorums",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "ç̌ǩirups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 136,
+    "issues": []
+  },
+  {
+    "id": "verb-0137",
+    "infinitive": "oçodinu",
+    "verb_class": "TVE",
+    "english": "to finish/complete",
+    "turkish": "bitirmek",
+    "variants": [
+      {
+        "form": "oçodinams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "oçodinaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 137,
+    "issues": []
+  },
+  {
+    "id": "verb-0138",
+    "infinitive": "oçodinu",
+    "verb_class": "TVM",
+    "english": "to end",
+    "turkish": "bitmek",
+    "variants": [
+      {
+        "form": "içoden",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 138,
+    "issues": []
+  },
+  {
+    "id": "verb-0139",
+    "infinitive": "oç̌opu",
+    "verb_class": "TVE",
+    "english": "to catch",
+    "turkish": "yakalamak",
+    "variants": [
+      {
+        "form": "ç̌opums",
+        "dialects": [
+          "FA",
+          "PZ",
+          "AS"
+        ]
+      },
+      {
+        "form": "ç̌opups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 139,
+    "issues": []
+  },
+  {
+    "id": "verb-0140",
+    "infinitive": "ocoxu",
+    "verb_class": "TVE",
+    "english": "to call someone",
+    "turkish": "çağırmak",
+    "variants": [
+      {
+        "form": "ucoxams",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "ucoxops",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 140,
+    "issues": []
+  },
+  {
+    "id": "verb-0141",
+    "infinitive": "oçu",
+    "verb_class": "TVE",
+    "english": "to wait",
+    "turkish": "beklemek",
+    "variants": [
+      {
+        "form": "çumers",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      },
+      {
+        "form": "çums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 141,
+    "issues": []
+  },
+  {
+    "id": "verb-0142",
+    "infinitive": "oçindu",
+    "verb_class": "IVD",
+    "english": "to sneeze",
+    "turkish": "aksırmak",
+    "variants": [
+      {
+        "form": "açinden",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 142,
+    "issues": []
+  },
+  {
+    "id": "verb-0143",
+    "infinitive": "oç̌u",
+    "verb_class": "IVD",
+    "english": "to ache",
+    "turkish": "acımak (his)",
+    "variants": [
+      {
+        "form": "aç̌ven",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 143,
+    "issues": []
+  },
+  {
+    "id": "verb-0144",
+    "infinitive": "oç̌u",
+    "verb_class": "TVE",
+    "english": "to hurt someone",
+    "turkish": "acıtmak",
+    "variants": [
+      {
+        "form": "uç̌ums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "uç̌ups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 144,
+    "issues": []
+  },
+  {
+    "id": "verb-0145",
+    "infinitive": "oç̌uç̌u",
+    "verb_class": "TVE",
+    "english": "to wink",
+    "turkish": "göz kırpmak",
+    "variants": [
+      {
+        "form": "ç̌uç̌ups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 145,
+    "issues": []
+  },
+  {
+    "id": "verb-0146",
+    "infinitive": "oğarğalu",
+    "verb_class": "TVE",
+    "english": "to speak",
+    "turkish": "konuşmak",
+    "variants": [
+      {
+        "form": "ğarğals",
+        "dialects": [
+          "HO"
+        ]
+      },
+      {
+        "form": "ğarğalaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 146,
+    "issues": []
+  },
+  {
+    "id": "verb-0147",
+    "infinitive": "oğaru",
+    "verb_class": "TVE",
+    "english": "to draw",
+    "turkish": "çizmek",
+    "variants": [
+      {
+        "form": "ğarums",
+        "dialects": [
+          "FA",
+          "AS",
+          "PZ"
+        ]
+      },
+      {
+        "form": "ğarups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 147,
+    "issues": []
+  },
+  {
+    "id": "verb-0148",
+    "infinitive": "oğerdinu",
+    "verb_class": "TVE",
+    "english": "to cheat, to defraud",
+    "turkish": "aldatmak",
+    "variants": [
+      {
+        "form": "oğerdinaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 148,
+    "issues": []
+  },
+  {
+    "id": "verb-0149",
+    "infinitive": "ogibu",
+    "verb_class": "TVE",
+    "english": "to boil",
+    "turkish": "haşlamak, pişmek",
+    "variants": [
+      {
+        "form": "gibups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 149,
+    "issues": []
+  },
+  {
+    "id": "verb-0150",
+    "infinitive": "ogibu",
+    "verb_class": "TVM",
+    "english": "to be boiled",
+    "turkish": "haşlanmak",
+    "variants": [
+      {
+        "form": "igiben",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 150,
+    "issues": []
+  },
+  {
+    "id": "verb-0151",
+    "infinitive": "ognu",
+    "verb_class": "TVE",
+    "english": "to hear",
+    "turkish": "duymak",
+    "variants": [
+      {
+        "form": "ognams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "ognaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 151,
+    "issues": []
+  },
+  {
+    "id": "verb-0152",
+    "infinitive": "ogoru",
+    "verb_class": "TVE",
+    "english": "to look, to want",
+    "turkish": "istemek, aramak",
+    "variants": [
+      {
+        "form": "gorums",
+        "dialects": [
+          "FA",
+          "PZ",
+          "AS"
+        ]
+      },
+      {
+        "form": "gorups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 152,
+    "issues": []
+  },
+  {
+    "id": "verb-0153",
+    "infinitive": "oğuru",
+    "verb_class": "TVM",
+    "english": "to die",
+    "turkish": "ölmek",
+    "variants": [
+      {
+        "form": "ğurun",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 153,
+    "issues": []
+  },
+  {
+    "id": "verb-0154",
+    "infinitive": "ogzalu",
+    "verb_class": "TVE",
+    "english": "to walk",
+    "turkish": "yürümek",
+    "variants": [
+      {
+        "form": "igzals",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 154,
+    "issues": []
+  },
+  {
+    "id": "verb-0155",
+    "infinitive": "ogzu",
+    "verb_class": "TVE",
+    "english": "to make something work",
+    "turkish": "çalıştırmak",
+    "variants": [
+      {
+        "form": "ogzams",
+        "dialects": [
+          "FA",
+          "PZ",
+          "AS"
+        ]
+      },
+      {
+        "form": "ogzaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 155,
+    "issues": []
+  },
+  {
+    "id": "verb-0156",
+    "infinitive": "ojginu",
+    "verb_class": "TVE",
+    "english": "to win",
+    "turkish": "yenmek",
+    "variants": [
+      {
+        "form": "ojginams",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 156,
+    "issues": []
+  },
+  {
+    "id": "verb-0157",
+    "infinitive": "okadu",
+    "verb_class": "TVE",
+    "english": "to consecrate, to wow",
+    "turkish": "adamak",
+    "variants": [
+      {
+        "form": "ukadams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "ukadeps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 157,
+    "issues": []
+  },
+  {
+    "id": "verb-0158",
+    "infinitive": "oǩap̌u",
+    "verb_class": "TVE",
+    "english": "to run",
+    "turkish": "koşmak",
+    "variants": [
+      {
+        "form": "uǩap̌ams",
+        "dialects": [
+          "FA",
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 158,
+    "issues": []
+  },
+  {
+    "id": "verb-0159",
+    "infinitive": "oǩiru",
+    "verb_class": "TVE",
+    "english": "to tie",
+    "turkish": "bağlamak",
+    "variants": [
+      {
+        "form": "ǩirups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 159,
+    "issues": []
+  },
+  {
+    "id": "verb-0160",
+    "infinitive": "oǩiru",
+    "verb_class": "TVE",
+    "english": "to tie something/someone",
+    "turkish": "bağlamak (birini/birşeyi bir yere)",
+    "variants": [
+      {
+        "form": "ǩirums",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "ǩirups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 160,
+    "issues": []
+  },
+  {
+    "id": "verb-0161",
+    "infinitive": "oǩitxu",
+    "verb_class": "TVE",
+    "english": "to ask/read",
+    "turkish": "sormak/okumak",
+    "variants": [
+      {
+        "form": "iǩitxams",
+        "dialects": [
+          "FA",
+          "AS",
+          "PZ"
+        ]
+      },
+      {
+        "form": "iǩitxups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 161,
+    "issues": []
+  },
+  {
+    "id": "verb-0162",
+    "infinitive": "oǩiu",
+    "verb_class": "TVE",
+    "english": "to bawl out",
+    "turkish": "azarlamak",
+    "variants": [
+      {
+        "form": "uǩiams",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 162,
+    "issues": []
+  },
+  {
+    "id": "verb-0163",
+    "infinitive": "oǩobğu",
+    "verb_class": "TVE",
+    "english": "to save (money)",
+    "turkish": "biriktirmek",
+    "variants": [
+      {
+        "form": "oǩobğams",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "oǩobğaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 163,
+    "issues": []
+  },
+  {
+    "id": "verb-0164",
+    "infinitive": "oǩoğmalu",
+    "verb_class": "TVE",
+    "english": "to save (money)",
+    "turkish": "biriktirmek",
+    "variants": [
+      {
+        "form": "oǩigams",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 164,
+    "issues": []
+  },
+  {
+    "id": "verb-0165",
+    "infinitive": "oǩomandu",
+    "verb_class": "IVD",
+    "english": "to miss someone",
+    "turkish": "özlemek",
+    "variants": [
+      {
+        "form": "aǩomanden",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 165,
+    "issues": []
+  },
+  {
+    "id": "verb-0166",
+    "infinitive": "oǩonağuru",
+    "verb_class": "TVM",
+    "english": "to faint",
+    "turkish": "bayılmak",
+    "variants": [
+      {
+        "form": "oǩonağurun",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 166,
+    "issues": []
+  },
+  {
+    "id": "verb-0167",
+    "infinitive": "oǩont̆alu",
+    "verb_class": "TVE",
+    "english": "to unite/join",
+    "turkish": "birleştirmek",
+    "variants": [
+      {
+        "form": "oǩont̆alams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "oǩont̆alaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 167,
+    "issues": []
+  },
+  {
+    "id": "verb-0168",
+    "infinitive": "oǩoreʒxu",
+    "verb_class": "TVE",
+    "english": "to lament over something",
+    "turkish": "ağıt yakmak",
+    "variants": [
+      {
+        "form": "ǩoreʒxums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "ǩoroʒxups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 168,
+    "issues": []
+  },
+  {
+    "id": "verb-0169",
+    "infinitive": "oǩorinu",
+    "verb_class": "TVE",
+    "english": "to reduce",
+    "turkish": "azaltmak",
+    "variants": [
+      {
+        "form": "uǩorinams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 169,
+    "issues": []
+  },
+  {
+    "id": "verb-0170",
+    "infinitive": "oǩortu",
+    "verb_class": "TVE",
+    "english": "to split, to separate",
+    "turkish": "ayırmak",
+    "variants": [
+      {
+        "form": "oǩortams",
+        "dialects": [
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "oǩortaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 170,
+    "issues": []
+  },
+  {
+    "id": "verb-0171",
+    "infinitive": "oǩoru",
+    "verb_class": "TVE",
+    "english": "to connect, to tie",
+    "turkish": "bağlamak",
+    "variants": [
+      {
+        "form": "ǩorums",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      },
+      {
+        "form": "ǩirups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 171,
+    "issues": []
+  },
+  {
+    "id": "verb-0172",
+    "infinitive": "okosu",
+    "verb_class": "TVE",
+    "english": "to sweep",
+    "turkish": "süpürmek",
+    "variants": [
+      {
+        "form": "kosums",
+        "dialects": [
+          "FA",
+          "PZ",
+          "AS"
+        ]
+      },
+      {
+        "form": "kosups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 172,
+    "issues": []
+  },
+  {
+    "id": "verb-0173",
+    "infinitive": "oǩovelu",
+    "verb_class": "TVM",
+    "english": "to come to an agreement",
+    "turkish": "anlaşmak",
+    "variants": [
+      {
+        "form": "oǩuvelun",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 173,
+    "issues": []
+  },
+  {
+    "id": "verb-0174",
+    "infinitive": "oǩoǯǩu",
+    "verb_class": "TVE",
+    "english": "to divide, to detach",
+    "turkish": "ayırmak (ikiye)",
+    "variants": [
+      {
+        "form": "oǩoǯǩams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "oǩoǯǩips",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 174,
+    "issues": []
+  },
+  {
+    "id": "verb-0175",
+    "infinitive": "oǩriu",
+    "verb_class": "TVE",
+    "english": "to bawl out",
+    "turkish": "azarlamak",
+    "variants": [
+      {
+        "form": "uǩriams",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 175,
+    "issues": []
+  },
+  {
+    "id": "verb-0176",
+    "infinitive": "oǩriu",
+    "verb_class": "TVE",
+    "english": "to shout, to scream",
+    "turkish": "bağırmak",
+    "variants": [
+      {
+        "form": "ǩriams",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 176,
+    "issues": []
+  },
+  {
+    "id": "verb-0177",
+    "infinitive": "olafu",
+    "verb_class": "TVE",
+    "english": "to speak",
+    "turkish": "konuşmak",
+    "variants": [
+      {
+        "form": "lafups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 177,
+    "issues": []
+  },
+  {
+    "id": "verb-0178",
+    "infinitive": "olaǩirdu",
+    "verb_class": "TVE",
+    "english": "to speak",
+    "turkish": "konuşmak",
+    "variants": [
+      {
+        "form": "ilaǩirday",
+        "dialects": [
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 178,
+    "issues": []
+  },
+  {
+    "id": "verb-0179",
+    "infinitive": "olalu",
+    "verb_class": "TVE",
+    "english": "to bark, to talk nonsene",
+    "turkish": "havlamak, boş konuşmak",
+    "variants": [
+      {
+        "form": "lalups",
+        "dialects": [
+          "HO"
+        ]
+      },
+      {
+        "form": "lalums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 179,
+    "issues": []
+  },
+  {
+    "id": "verb-0180",
+    "infinitive": "olasiru",
+    "verb_class": "TVE",
+    "english": "to grind/sharpen",
+    "turkish": "bilemek",
+    "variants": [
+      {
+        "form": "lasirums",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "lasirups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 180,
+    "issues": []
+  },
+  {
+    "id": "verb-0181",
+    "infinitive": "olast̆u",
+    "verb_class": "TVE",
+    "english": "to grind/sharpen",
+    "turkish": "bilemek",
+    "variants": [
+      {
+        "form": "last̆ums",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 181,
+    "issues": []
+  },
+  {
+    "id": "verb-0182",
+    "infinitive": "olaxinu",
+    "verb_class": "TVE",
+    "english": "to lead astray, to turn mad",
+    "turkish": "azdırmak",
+    "variants": [
+      {
+        "form": "olaxinams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 182,
+    "issues": []
+  },
+  {
+    "id": "verb-0183",
+    "infinitive": "olimbu",
+    "verb_class": "IVD",
+    "english": "to love",
+    "turkish": "sevmek",
+    "variants": [
+      {
+        "form": "alimben",
+        "dialects": [
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 183,
+    "issues": []
+  },
+  {
+    "id": "verb-0184",
+    "infinitive": "olva",
+    "verb_class": "TVM",
+    "english": "to go",
+    "turkish": "gitmek",
+    "variants": [
+      {
+        "form": "ulun",
+        "dialects": [
+          "AS",
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 184,
+    "issues": []
+  },
+  {
+    "id": "verb-0185",
+    "infinitive": "omç̌eşu",
+    "verb_class": "TVE",
+    "english": "to wait",
+    "turkish": "beklemek",
+    "variants": [
+      {
+        "form": "mç̌eşums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 185,
+    "issues": []
+  },
+  {
+    "id": "verb-0186",
+    "infinitive": "omçinu",
+    "verb_class": "TVE",
+    "english": "to declare, to inform",
+    "turkish": "bildirmek",
+    "variants": [
+      {
+        "form": "umçinams",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "umçinaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 186,
+    "issues": []
+  },
+  {
+    "id": "verb-0187",
+    "infinitive": "omç̌ǩeşu",
+    "verb_class": "TVE",
+    "english": "to wait",
+    "turkish": "beklemek",
+    "variants": [
+      {
+        "form": "mç̌ǩeşums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "mç̌ǩeşups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 187,
+    "issues": []
+  },
+  {
+    "id": "verb-0188",
+    "infinitive": "omç̌u",
+    "verb_class": "IVD",
+    "english": "to hurry",
+    "turkish": "acele etmek",
+    "variants": [
+      {
+        "form": "amç̌ven",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 188,
+    "issues": []
+  },
+  {
+    "id": "verb-0189",
+    "infinitive": "omçviru",
+    "verb_class": "TVE",
+    "english": "to swim",
+    "turkish": "yüzmek",
+    "variants": [
+      {
+        "form": "imçvirs",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 189,
+    "issues": []
+  },
+  {
+    "id": "verb-0190",
+    "infinitive": "omeselu",
+    "verb_class": "TVE",
+    "english": "to explain",
+    "turkish": "anlatmak",
+    "variants": [
+      {
+        "form": "imeselams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "imeselaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 190,
+    "issues": []
+  },
+  {
+    "id": "verb-0191",
+    "infinitive": "omgaru",
+    "verb_class": "TVE",
+    "english": "to cry, to weep",
+    "turkish": "ağlamak",
+    "variants": [
+      {
+        "form": "imgars",
+        "dialects": [
+          "PZ",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 191,
+    "issues": []
+  },
+  {
+    "id": "verb-0192",
+    "infinitive": "omǩolanu",
+    "verb_class": "TVM",
+    "english": "to get bitter",
+    "turkish": "acılaşmak",
+    "variants": [
+      {
+        "form": "imǩolanen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 192,
+    "issues": []
+  },
+  {
+    "id": "verb-0193",
+    "infinitive": "omku",
+    "verb_class": "TVE",
+    "english": "to grind",
+    "turkish": "öğütmek",
+    "variants": [
+      {
+        "form": "mkums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "mkups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 193,
+    "issues": []
+  },
+  {
+    "id": "verb-0194",
+    "infinitive": "omonǩanu",
+    "verb_class": "TVM",
+    "english": "to get heavier",
+    "turkish": "ağırlaşmak",
+    "variants": [
+      {
+        "form": "imonǩanen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 194,
+    "issues": []
+  },
+  {
+    "id": "verb-0195",
+    "infinitive": "omşkironu",
+    "verb_class": "IVD",
+    "english": "to be hungry",
+    "turkish": "acıkmak",
+    "variants": [
+      {
+        "form": "amşkironen",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 195,
+    "issues": []
+  },
+  {
+    "id": "verb-0196",
+    "infinitive": "omşkorinu",
+    "verb_class": "IVD",
+    "english": "to be hungry",
+    "turkish": "acıkmak",
+    "variants": [
+      {
+        "form": "amşkorinen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 196,
+    "issues": []
+  },
+  {
+    "id": "verb-0197",
+    "infinitive": "omʒikanu",
+    "verb_class": "TVM",
+    "english": "to become less, to run low",
+    "turkish": "azalmak",
+    "variants": [
+      {
+        "form": "imʒikanen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 197,
+    "issues": []
+  },
+  {
+    "id": "verb-0198",
+    "infinitive": "onaxu",
+    "verb_class": "TVE",
+    "english": "to clean laundry",
+    "turkish": "çamaşır yıkamak",
+    "variants": [
+      {
+        "form": "naxups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 198,
+    "issues": []
+  },
+  {
+    "id": "verb-0199",
+    "infinitive": "onç̌aru",
+    "verb_class": "TVE",
+    "english": "to write",
+    "turkish": "yazmak",
+    "variants": [
+      {
+        "form": "nç̌aruy",
+        "dialects": [
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 199,
+    "issues": []
+  },
+  {
+    "id": "verb-0200",
+    "infinitive": "oncğore ovapu",
+    "verb_class": "IVD",
+    "english": "to be ashamed",
+    "turkish": "arlanmak",
+    "variants": [
+      {
+        "form": "oncğore aven",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 200,
+    "issues": []
+  },
+  {
+    "id": "verb-0201",
+    "infinitive": "oncğore oyapu",
+    "verb_class": "IVD",
+    "english": "to be ashamed",
+    "turkish": "arlanmak",
+    "variants": [
+      {
+        "form": "oncğore ayen",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 201,
+    "issues": []
+  },
+  {
+    "id": "verb-0202",
+    "infinitive": "oncğore oqvapu",
+    "verb_class": "IVD",
+    "english": "to be ashamed",
+    "turkish": "arlanmak",
+    "variants": [
+      {
+        "form": "oncğore aqven",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 202,
+    "issues": []
+  },
+  {
+    "id": "verb-0203",
+    "infinitive": "onciru",
+    "verb_class": "TVE",
+    "english": "to sleep",
+    "turkish": "uyumak",
+    "variants": [
+      {
+        "form": "incirs",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 203,
+    "issues": []
+  },
+  {
+    "id": "verb-0204",
+    "infinitive": "onçiru",
+    "verb_class": "TVE",
+    "english": "to swim",
+    "turkish": "yüzmek",
+    "variants": [
+      {
+        "form": "inçirs",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 204,
+    "issues": []
+  },
+  {
+    "id": "verb-0205",
+    "infinitive": "onçviru",
+    "verb_class": "TVE",
+    "english": "to swim",
+    "turkish": "yüzmek",
+    "variants": [
+      {
+        "form": "inçvirs",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 205,
+    "issues": []
+  },
+  {
+    "id": "verb-0206",
+    "infinitive": "onǩanu",
+    "verb_class": "TVE",
+    "english": "to move slightly",
+    "turkish": "kımıldamak",
+    "variants": [
+      {
+        "form": "inǩans",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 206,
+    "issues": []
+  },
+  {
+    "id": "verb-0207",
+    "infinitive": "onǩap̌u",
+    "verb_class": "TVE",
+    "english": "to run",
+    "turkish": "koşmak",
+    "variants": [
+      {
+        "form": "unǩap̌ams",
+        "dialects": [
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 207,
+    "issues": []
+  },
+  {
+    "id": "verb-0208",
+    "infinitive": "onǩapu",
+    "verb_class": "TVM",
+    "english": "",
+    "turkish": "",
+    "variants": [
+      {
+        "form": "unǩapun",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 208,
+    "issues": []
+  },
+  {
+    "id": "verb-0209",
+    "infinitive": "onǩilu",
+    "verb_class": "TVE",
+    "english": "to lock",
+    "turkish": "kilitlemek",
+    "variants": [
+      {
+        "form": "ǩilups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 209,
+    "issues": []
+  },
+  {
+    "id": "verb-0210",
+    "infinitive": "op̌aramitu",
+    "verb_class": "TVE",
+    "english": "to speak",
+    "turkish": "konuşmak",
+    "variants": [
+      {
+        "form": "ip̌aramitams",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 210,
+    "issues": []
+  },
+  {
+    "id": "verb-0211",
+    "infinitive": "opatxu",
+    "verb_class": "TVE",
+    "english": "to shake off, to beat lightly",
+    "turkish": "1.silkelemek 2. hafifçe dövmek",
+    "variants": [
+      {
+        "form": "patxups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 211,
+    "issues": []
+  },
+  {
+    "id": "verb-0212",
+    "infinitive": "op̌içvu",
+    "verb_class": "TVE",
+    "english": "to fast",
+    "turkish": "oruç tutmak",
+    "variants": [
+      {
+        "form": "ip̌içvaps",
+        "dialects": [
+          "HO"
+        ]
+      },
+      {
+        "form": "ip̌içvams",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 212,
+    "issues": []
+  },
+  {
+    "id": "verb-0213",
+    "infinitive": "op̌içu",
+    "verb_class": "TVE",
+    "english": "to fast",
+    "turkish": "oruç tutmak",
+    "variants": [
+      {
+        "form": "ip̌içums",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 213,
+    "issues": []
+  },
+  {
+    "id": "verb-0214",
+    "infinitive": "op̌lanu",
+    "verb_class": "TVM",
+    "english": "to be consoled",
+    "turkish": "avunmak",
+    "variants": [
+      {
+        "form": "ip̌lanen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "imp̌lanen",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 214,
+    "issues": []
+  },
+  {
+    "id": "verb-0215",
+    "infinitive": "op̌lanu",
+    "verb_class": "TVE",
+    "english": "to comfort",
+    "turkish": "avutmak",
+    "variants": [
+      {
+        "form": "op̌lanams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "op̌lanaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 215,
+    "issues": []
+  },
+  {
+    "id": "verb-0216",
+    "infinitive": "op̌riǩanu",
+    "verb_class": "TVM",
+    "english": "to get bitter",
+    "turkish": "acılaşmak",
+    "variants": [
+      {
+        "form": "ip̌riǩanen",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 216,
+    "issues": []
+  },
+  {
+    "id": "verb-0217",
+    "infinitive": "opsimu",
+    "verb_class": "TVE",
+    "english": "to pee",
+    "turkish": "işemek",
+    "variants": [
+      {
+        "form": "psips",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 217,
+    "issues": []
+  },
+  {
+    "id": "verb-0218",
+    "infinitive": "oputxu",
+    "verb_class": "TVM",
+    "english": "to fly",
+    "turkish": "uçmak",
+    "variants": [
+      {
+        "form": "putxun",
+        "dialects": [
+          "AS",
+          "PZ",
+          "HO",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 218,
+    "issues": []
+  },
+  {
+    "id": "verb-0219",
+    "infinitive": "oqominu",
+    "verb_class": "IVD",
+    "english": "to be thirsty",
+    "turkish": "susamak",
+    "variants": [
+      {
+        "form": "aqominen",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 219,
+    "issues": []
+  },
+  {
+    "id": "verb-0220",
+    "infinitive": "oqondinu",
+    "verb_class": "TVE",
+    "english": "to wait",
+    "turkish": "beklemek",
+    "variants": [
+      {
+        "form": "iqondeps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 220,
+    "issues": []
+  },
+  {
+    "id": "verb-0221",
+    "infinitive": "oqoropu",
+    "verb_class": "TVE",
+    "english": "to love",
+    "turkish": "sevmek",
+    "variants": [
+      {
+        "form": "qorops",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 221,
+    "issues": []
+  },
+  {
+    "id": "verb-0222",
+    "infinitive": "oqoru",
+    "verb_class": "TVE",
+    "english": "to shout, to scream",
+    "turkish": "bağırmak",
+    "variants": [
+      {
+        "form": "quraps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 222,
+    "issues": []
+  },
+  {
+    "id": "verb-0223",
+    "infinitive": "oquru",
+    "verb_class": "TVE",
+    "english": "to tell someone off",
+    "turkish": "kızmak",
+    "variants": [
+      {
+        "form": "uqurs",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 223,
+    "issues": []
+  },
+  {
+    "id": "verb-0224",
+    "infinitive": "oqvapu",
+    "verb_class": "IVD",
+    "english": "to be something/someone (to someone)",
+    "turkish": "biri için birşey olmak",
+    "variants": [
+      {
+        "form": "aqven",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 224,
+    "issues": []
+  },
+  {
+    "id": "verb-0225",
+    "infinitive": "oqvapu",
+    "verb_class": "TVM",
+    "english": "to become",
+    "turkish": "olmak",
+    "variants": [
+      {
+        "form": "iqven",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 225,
+    "issues": []
+  },
+  {
+    "id": "verb-0226",
+    "infinitive": "oqvilu",
+    "verb_class": "TVE",
+    "english": "to kill by shooting",
+    "turkish": "vurarak öldürmek",
+    "variants": [
+      {
+        "form": "qvilups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 226,
+    "issues": []
+  },
+  {
+    "id": "verb-0227",
+    "infinitive": "ordu",
+    "verb_class": "TVE",
+    "english": "to raise",
+    "turkish": "büyütmek",
+    "variants": [
+      {
+        "form": "ordams",
+        "dialects": [
+          "FA",
+          "AS",
+          "PZ"
+        ]
+      },
+      {
+        "form": "ordaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 227,
+    "issues": []
+  },
+  {
+    "id": "verb-0228",
+    "infinitive": "ordu",
+    "verb_class": "TVM",
+    "english": "to grow up",
+    "turkish": "büyümek",
+    "variants": [
+      {
+        "form": "irden",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 228,
+    "issues": []
+  },
+  {
+    "id": "verb-0229",
+    "infinitive": "oropu",
+    "verb_class": "IVD",
+    "english": "to love",
+    "turkish": "sevmek",
+    "variants": [
+      {
+        "form": "aoropen",
+        "dialects": [
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 229,
+    "issues": []
+  },
+  {
+    "id": "verb-0230",
+    "infinitive": "oropu",
+    "verb_class": "TVE",
+    "english": "to love",
+    "turkish": "sevmek",
+    "variants": [
+      {
+        "form": "oroms",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 230,
+    "issues": []
+  },
+  {
+    "id": "verb-0231",
+    "infinitive": "osiminu",
+    "verb_class": "TVE",
+    "english": "to listen",
+    "turkish": "dinlemek",
+    "variants": [
+      {
+        "form": "isimins",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 231,
+    "issues": []
+  },
+  {
+    "id": "verb-0232",
+    "infinitive": "osinapu",
+    "verb_class": "TVE",
+    "english": "to speak",
+    "turkish": "konuşmak",
+    "variants": [
+      {
+        "form": "isinapams",
+        "dialects": [
+          "FA",
+          "PZ",
+          "AS"
+        ]
+      },
+      {
+        "form": "isinapay",
+        "dialects": []
+      }
+    ],
+    "source_row": 232,
+    "issues": [
+      "Unpaired principal part/dialect: Alternative 1"
+    ]
+  },
+  {
+    "id": "verb-0233",
+    "infinitive": "oşinu",
+    "verb_class": "TVE",
+    "english": "to respect",
+    "turkish": "saygı göstermek",
+    "variants": [
+      {
+        "form": "şinems",
+        "dialects": [
+          "PZ"
+        ]
+      },
+      {
+        "form": "şinums",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "şinaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 233,
+    "issues": []
+  },
+  {
+    "id": "verb-0234",
+    "infinitive": "oşiru",
+    "verb_class": "TVE",
+    "english": "to erode, corrode",
+    "turkish": "aşındırmak",
+    "variants": [
+      {
+        "form": "şirums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "şirups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 234,
+    "issues": []
+  },
+  {
+    "id": "verb-0235",
+    "infinitive": "oşit̆inu",
+    "verb_class": "IVD",
+    "english": "to sneeze",
+    "turkish": "aksırmak",
+    "variants": [
+      {
+        "form": "aşit̆inen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 235,
+    "issues": []
+  },
+  {
+    "id": "verb-0236",
+    "infinitive": "oskedinu",
+    "verb_class": "TVE",
+    "english": "to raise, to keep someone alive",
+    "turkish": "besleyerek yaşatmak, yaşamda tutmak",
+    "variants": [
+      {
+        "form": "osǩedinams",
+        "dialects": [
+          "AS",
+          "PZ"
+        ]
+      },
+      {
+        "form": "oskedinaps",
+        "dialects": [
+          "HO"
+        ]
+      },
+      {
+        "form": "oskedinams",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 236,
+    "issues": []
+  },
+  {
+    "id": "verb-0237",
+    "infinitive": "oskidu",
+    "verb_class": "TVM",
+    "english": "to live",
+    "turkish": "yaşamak",
+    "variants": [
+      {
+        "form": "skidun",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 237,
+    "issues": []
+  },
+  {
+    "id": "verb-0238",
+    "infinitive": "oşǩinu",
+    "verb_class": "TVE",
+    "english": "to listen",
+    "turkish": "dinlemek",
+    "variants": [
+      {
+        "form": "işǩinams",
+        "dialects": [
+          "AS",
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 238,
+    "issues": []
+  },
+  {
+    "id": "verb-0239",
+    "infinitive": "osǩudu",
+    "verb_class": "TVM",
+    "english": "to live",
+    "turkish": "yaşamak",
+    "variants": [
+      {
+        "form": "sǩudun",
+        "dialects": [
+          "AS",
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 239,
+    "issues": []
+  },
+  {
+    "id": "verb-0240",
+    "infinitive": "oşǩunu",
+    "verb_class": "IVD",
+    "english": "to know",
+    "turkish": "bilmek",
+    "variants": [
+      {
+        "form": "uşǩun",
+        "dialects": [
+          "AS",
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 240,
+    "issues": []
+  },
+  {
+    "id": "verb-0241",
+    "infinitive": "oşkurinu",
+    "verb_class": "IVD",
+    "english": "to fear",
+    "turkish": "korkmak",
+    "variants": [
+      {
+        "form": "aşkurinen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 241,
+    "issues": []
+  },
+  {
+    "id": "verb-0242",
+    "infinitive": "oşǩidu",
+    "verb_class": "TVM",
+    "english": "to drown",
+    "turkish": "boğulmak",
+    "variants": [
+      {
+        "form": "işǩviden",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 242,
+    "issues": []
+  },
+  {
+    "id": "verb-0243",
+    "infinitive": "oşǩomu",
+    "verb_class": "TVE",
+    "english": "to eat",
+    "turkish": "yemek",
+    "variants": [
+      {
+        "form": "imxors",
+        "dialects": [
+          "AS",
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 243,
+    "issues": []
+  },
+  {
+    "id": "verb-0244",
+    "infinitive": "oşǩoru",
+    "verb_class": "TVE",
+    "english": "to mow (with a knife/hook)",
+    "turkish": "biçmek",
+    "variants": [
+      {
+        "form": "şǩorums",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 244,
+    "issues": []
+  },
+  {
+    "id": "verb-0245",
+    "infinitive": "oslebinu",
+    "verb_class": "TVE",
+    "english": "",
+    "turkish": "",
+    "variants": [
+      {
+        "form": "islebinams",
+        "dialects": [
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 245,
+    "issues": []
+  },
+  {
+    "id": "verb-0246",
+    "infinitive": "oşolu",
+    "verb_class": "TVM",
+    "english": "to get wet",
+    "turkish": "ıslanmak",
+    "variants": [
+      {
+        "form": "işolen",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 246,
+    "issues": []
+  },
+  {
+    "id": "verb-0247",
+    "infinitive": "osteru",
+    "verb_class": "TVE",
+    "english": "to play",
+    "turkish": "oynamak",
+    "variants": [
+      {
+        "form": "isters",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 247,
+    "issues": []
+  },
+  {
+    "id": "verb-0248",
+    "infinitive": "ostibu",
+    "verb_class": "TVE",
+    "english": "to be quiet",
+    "turkish": "susmak",
+    "variants": [
+      {
+        "form": "stibums",
+        "dialects": [
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 248,
+    "issues": []
+  },
+  {
+    "id": "verb-0249",
+    "infinitive": "ostibu",
+    "verb_class": "TVM",
+    "english": "to be quiet",
+    "turkish": "susmak",
+    "variants": [
+      {
+        "form": "stibun",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 249,
+    "issues": []
+  },
+  {
+    "id": "verb-0250",
+    "infinitive": "ostu",
+    "verb_class": "TVM",
+    "english": "to slip",
+    "turkish": "kaymak",
+    "variants": [
+      {
+        "form": "stun",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 250,
+    "issues": []
+  },
+  {
+    "id": "verb-0251",
+    "infinitive": "ost̆u",
+    "verb_class": "TVE",
+    "english": "to slip",
+    "turkish": "kaymak",
+    "variants": [
+      {
+        "form": "st̆un",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 251,
+    "issues": []
+  },
+  {
+    "id": "verb-0252",
+    "infinitive": "oşu",
+    "verb_class": "TVE",
+    "english": "to drink",
+    "turkish": "içmek",
+    "variants": [
+      {
+        "form": "şums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "şups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 252,
+    "issues": []
+  },
+  {
+    "id": "verb-0253",
+    "infinitive": "moşvacu",
+    "verb_class": "TVM",
+    "english": "to rest",
+    "turkish": "dinlenmek",
+    "variants": [
+      {
+        "form": "moişvaceps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 253,
+    "issues": []
+  },
+  {
+    "id": "verb-0254",
+    "infinitive": "osvaru",
+    "verb_class": "TVE",
+    "english": "to line up",
+    "turkish": "sıraya dizmek",
+    "variants": [
+      {
+        "form": "svarups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 254,
+    "issues": []
+  },
+  {
+    "id": "verb-0255",
+    "infinitive": "ot̆rağodu",
+    "verb_class": "TVE",
+    "english": "to sing",
+    "turkish": "şarkı söylemek",
+    "variants": [
+      {
+        "form": "t̆rağodums",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 255,
+    "issues": []
+  },
+  {
+    "id": "verb-0256",
+    "infinitive": "otanu",
+    "verb_class": "TVE",
+    "english": "to brighten",
+    "turkish": "aydınlatmak",
+    "variants": [
+      {
+        "form": "otanams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "otanaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 256,
+    "issues": []
+  },
+  {
+    "id": "verb-0257",
+    "infinitive": "ot̆at̆u",
+    "verb_class": "TVE",
+    "english": "to contaminate",
+    "turkish": "bulaştırmak",
+    "variants": [
+      {
+        "form": "t̆at̆ups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 257,
+    "issues": []
+  },
+  {
+    "id": "verb-0258",
+    "infinitive": "ot̆axu",
+    "verb_class": "TVE",
+    "english": "to break",
+    "turkish": "kırmak",
+    "variants": [
+      {
+        "form": "t̆axums",
+        "dialects": [
+          "FA",
+          "AS",
+          "PZ"
+        ]
+      },
+      {
+        "form": "t̆axups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 258,
+    "issues": []
+  },
+  {
+    "id": "verb-0259",
+    "infinitive": "otebriǩu",
+    "verb_class": "TVE",
+    "english": "to congratulate",
+    "turkish": "tebrik etmek",
+    "variants": [
+      {
+        "form": "utebriǩams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 259,
+    "issues": []
+  },
+  {
+    "id": "verb-0260",
+    "infinitive": "oteşekkyuru",
+    "verb_class": "TVE",
+    "english": "to thank someone",
+    "turkish": "teşekkür etmek",
+    "variants": [
+      {
+        "form": "uteşekkyurams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "uteşekkyuraps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 260,
+    "issues": []
+  },
+  {
+    "id": "verb-0261",
+    "infinitive": "otiru",
+    "verb_class": "TVE",
+    "english": "to carry",
+    "turkish": "taşımak",
+    "variants": [
+      {
+        "form": "tirups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 261,
+    "issues": []
+  },
+  {
+    "id": "verb-0262",
+    "infinitive": "ot̆işu",
+    "verb_class": "TVE",
+    "english": "to accomplish, to succeed",
+    "turkish": "başarmak",
+    "variants": [
+      {
+        "form": "t̆işums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "t̆işups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 262,
+    "issues": []
+  },
+  {
+    "id": "verb-0263",
+    "infinitive": "ot̆ǩoçu",
+    "verb_class": "TVM",
+    "english": "to rush forward",
+    "turkish": "atılmak",
+    "variants": [
+      {
+        "form": "it̆ǩoçen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 263,
+    "issues": []
+  },
+  {
+    "id": "verb-0264",
+    "infinitive": "ot̆ǩoçu",
+    "verb_class": "TVE",
+    "english": "to throw",
+    "turkish": "atmak",
+    "variants": [
+      {
+        "form": "ot̆ǩoçams",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 264,
+    "issues": []
+  },
+  {
+    "id": "verb-0265",
+    "infinitive": "otku",
+    "verb_class": "TVE",
+    "english": "to say",
+    "turkish": "söylemek",
+    "variants": [
+      {
+        "form": "tkums",
+        "dialects": [
+          "FA",
+          "AS",
+          "PZ"
+        ]
+      },
+      {
+        "form": "tkumers",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 265,
+    "issues": []
+  },
+  {
+    "id": "verb-0266",
+    "infinitive": "ot̆ǩu",
+    "verb_class": "TVE",
+    "english": "to say",
+    "turkish": "söylemek",
+    "variants": [
+      {
+        "form": "it̆urs",
+        "dialects": [
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 266,
+    "issues": []
+  },
+  {
+    "id": "verb-0267",
+    "infinitive": "otoru",
+    "verb_class": "TVE",
+    "english": "to carry",
+    "turkish": "taşımak",
+    "variants": [
+      {
+        "form": "torums",
+        "dialects": [
+          "FA",
+          "AS",
+          "PZ"
+        ]
+      },
+      {
+        "form": "tirups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 267,
+    "issues": []
+  },
+  {
+    "id": "verb-0268",
+    "infinitive": "oucu",
+    "verb_class": "TVE",
+    "english": "to listen",
+    "turkish": "dinlemek",
+    "variants": [
+      {
+        "form": "iucams",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 268,
+    "issues": []
+  },
+  {
+    "id": "verb-0269",
+    "infinitive": "ovalu",
+    "verb_class": "TVE",
+    "english": "to waive",
+    "turkish": "el sallamak",
+    "variants": [
+      {
+        "form": "valups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 269,
+    "issues": []
+  },
+  {
+    "id": "verb-0270",
+    "infinitive": "ovapu",
+    "verb_class": "IVD",
+    "english": "to be something/someone (to someone)",
+    "turkish": "biri için birşey olmak",
+    "variants": [
+      {
+        "form": "aven",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 270,
+    "issues": []
+  },
+  {
+    "id": "verb-0271",
+    "infinitive": "ovapu",
+    "verb_class": "TVM",
+    "english": "to be",
+    "turkish": "olmak",
+    "variants": [
+      {
+        "form": "iven",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 271,
+    "issues": []
+  },
+  {
+    "id": "verb-0272",
+    "infinitive": "oxaçǩu",
+    "verb_class": "TVE",
+    "english": "to sow",
+    "turkish": "tohum ekmek",
+    "variants": [
+      {
+        "form": "xaçǩups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 272,
+    "issues": []
+  },
+  {
+    "id": "verb-0273",
+    "infinitive": "oxandu",
+    "verb_class": "TVE",
+    "english": "to work",
+    "turkish": "çalışmak",
+    "variants": [
+      {
+        "form": "ixandeps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 273,
+    "issues": []
+  },
+  {
+    "id": "verb-0274",
+    "infinitive": "oxap̌aru",
+    "verb_class": "TVE",
+    "english": "to speak",
+    "turkish": "konuşmak",
+    "variants": [
+      {
+        "form": "ixap̌ars",
+        "dialects": [
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 274,
+    "issues": []
+  },
+  {
+    "id": "verb-0275",
+    "infinitive": "oxaresiru",
+    "verb_class": "TVE",
+    "english": "to forgive",
+    "turkish": "affetmek",
+    "variants": [
+      {
+        "form": "uxaresirams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 275,
+    "issues": []
+  },
+  {
+    "id": "verb-0276",
+    "infinitive": "oxarsuvu",
+    "verb_class": "TVE",
+    "english": "to forgive",
+    "turkish": "affetmek",
+    "variants": [
+      {
+        "form": "uxarsuvams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 276,
+    "issues": []
+  },
+  {
+    "id": "verb-0277",
+    "infinitive": "oxarsuvu",
+    "verb_class": "TVE",
+    "english": "to connect, to tie",
+    "turkish": "bağlamak",
+    "variants": [
+      {
+        "form": "uxarsuvams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 277,
+    "issues": []
+  },
+  {
+    "id": "verb-0278",
+    "infinitive": "oxat̆iru",
+    "verb_class": "TVE",
+    "english": "to forgive",
+    "turkish": "affetmek",
+    "variants": [
+      {
+        "form": "uxat̆irams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "uxat̆irups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 278,
+    "issues": []
+  },
+  {
+    "id": "verb-0279",
+    "infinitive": "oxaziru",
+    "verb_class": "TVE",
+    "english": "to prepare",
+    "turkish": "hazırlamak",
+    "variants": [
+      {
+        "form": "xazirums",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      },
+      {
+        "form": "xazirups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 279,
+    "issues": []
+  },
+  {
+    "id": "verb-0280",
+    "infinitive": "oxažiru",
+    "verb_class": "TVE",
+    "english": "to prepare",
+    "turkish": "hazırlamak",
+    "variants": [
+      {
+        "form": "xažirums",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 280,
+    "issues": []
+  },
+  {
+    "id": "verb-0281",
+    "infinitive": "oxçinu",
+    "verb_class": "TVM",
+    "english": "to age (female)",
+    "turkish": "kadının yaşlanması",
+    "variants": [
+      {
+        "form": "ixçinen",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 281,
+    "issues": []
+  },
+  {
+    "id": "verb-0282",
+    "infinitive": "oxelu",
+    "verb_class": "TVM",
+    "english": "to be happy",
+    "turkish": "sevinmek",
+    "variants": [
+      {
+        "form": "ixelen",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 282,
+    "issues": []
+  },
+  {
+    "id": "verb-0283",
+    "infinitive": "oxenu",
+    "verb_class": "TVE",
+    "english": "to do",
+    "turkish": "yapmak",
+    "variants": [
+      {
+        "form": "ikums",
+        "dialects": [
+          "AS",
+          "PZ"
+        ]
+      },
+      {
+        "form": "ikoms",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 283,
+    "issues": []
+  },
+  {
+    "id": "verb-0284",
+    "infinitive": "oxerxu",
+    "verb_class": "TVE",
+    "english": "to mow (with a saw)",
+    "turkish": "biçmek (testere ile)",
+    "variants": [
+      {
+        "form": "xerxums",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "xerxups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 284,
+    "issues": []
+  },
+  {
+    "id": "verb-0285",
+    "infinitive": "oxmaru",
+    "verb_class": "TVE",
+    "english": "to use",
+    "turkish": "kullanmak",
+    "variants": [
+      {
+        "form": "ixmars",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 285,
+    "issues": []
+  },
+  {
+    "id": "verb-0286",
+    "infinitive": "oxomu",
+    "verb_class": "TVE",
+    "english": "to dry",
+    "turkish": "kurumak",
+    "variants": [
+      {
+        "form": "xomun",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 286,
+    "issues": []
+  },
+  {
+    "id": "verb-0287",
+    "infinitive": "oxop̌u",
+    "verb_class": "TVE",
+    "english": "to shovel up",
+    "turkish": "küremek",
+    "variants": [
+      {
+        "form": "xop̌ums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 287,
+    "issues": []
+  },
+  {
+    "id": "verb-0288",
+    "infinitive": "oxoşkvinu",
+    "verb_class": "TVE",
+    "english": "to liberate",
+    "turkish": "azad etmek",
+    "variants": [
+      {
+        "form": "oxoşkums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "oxoşkumers",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 288,
+    "issues": []
+  },
+  {
+    "id": "verb-0289",
+    "infinitive": "oxoǯonu",
+    "verb_class": "TVE",
+    "english": "to understand",
+    "turkish": "anlamak",
+    "variants": [
+      {
+        "form": "oxoǯonams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "oxoǯonaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 289,
+    "issues": []
+  },
+  {
+    "id": "verb-0290",
+    "infinitive": "oxtimu",
+    "verb_class": "TVM",
+    "english": "to go",
+    "turkish": "gitmek",
+    "variants": [
+      {
+        "form": "ulun",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 290,
+    "issues": []
+  },
+  {
+    "id": "verb-0291",
+    "infinitive": "oxu",
+    "verb_class": "TVE",
+    "english": "to shovel up",
+    "turkish": "küremek, HO: eşelemek",
+    "variants": [
+      {
+        "form": "xums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "xups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 291,
+    "issues": []
+  },
+  {
+    "id": "verb-0292",
+    "infinitive": "oxvenu",
+    "verb_class": "TVE",
+    "english": "to do",
+    "turkish": "yapmak",
+    "variants": [
+      {
+        "form": "ikips",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 292,
+    "issues": []
+  },
+  {
+    "id": "verb-0293",
+    "infinitive": "oyapu",
+    "verb_class": "IVD",
+    "english": "to be",
+    "turkish": "olmak",
+    "variants": [
+      {
+        "form": "ayen",
+        "dialects": [
+          "PZ"
+        ]
+      },
+      {
+        "form": "aen",
+        "dialects": [
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 293,
+    "issues": []
+  },
+  {
+    "id": "verb-0294",
+    "infinitive": "oyapu",
+    "verb_class": "TVM",
+    "english": "to become",
+    "turkish": "olmak",
+    "variants": [
+      {
+        "form": "iyen",
+        "dialects": [
+          "AS",
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 294,
+    "issues": []
+  },
+  {
+    "id": "verb-0295",
+    "infinitive": "oyondrinu",
+    "verb_class": "TVE",
+    "english": "to make someone wait",
+    "turkish": "bekletmek",
+    "variants": [
+      {
+        "form": "oyondrinams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 295,
+    "issues": []
+  },
+  {
+    "id": "verb-0296",
+    "infinitive": "oyondru",
+    "verb_class": "TVE",
+    "english": "to wait",
+    "turkish": "beklemek",
+    "variants": [
+      {
+        "form": "iyondrams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 296,
+    "issues": []
+  },
+  {
+    "id": "verb-0297",
+    "infinitive": "oyoxu",
+    "verb_class": "TVE",
+    "english": "to call someone",
+    "turkish": "çağırmak",
+    "variants": [
+      {
+        "form": "uyoxums",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 297,
+    "issues": []
+  },
+  {
+    "id": "verb-0298",
+    "infinitive": "ožiru",
+    "verb_class": "TVE",
+    "english": "to see",
+    "turkish": "görmek",
+    "variants": [
+      {
+        "form": "žirops",
+        "dialects": [
+          "HO"
+        ]
+      },
+      {
+        "form": "žirems",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      },
+      {
+        "form": "žiroms",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 298,
+    "issues": []
+  },
+  {
+    "id": "verb-0299",
+    "infinitive": "ožiru",
+    "verb_class": "IVD",
+    "english": "to see",
+    "turkish": "görmek",
+    "variants": [
+      {
+        "form": "ažiren",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 299,
+    "issues": []
+  },
+  {
+    "id": "verb-0300",
+    "infinitive": "ožiʒu",
+    "verb_class": "TVM",
+    "english": "to laugh",
+    "turkish": "gulmek",
+    "variants": [
+      {
+        "form": "ižiʒaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 300,
+    "issues": []
+  },
+  {
+    "id": "verb-0301",
+    "infinitive": "oʒadu",
+    "verb_class": "TVE",
+    "english": "to verify",
+    "turkish": "doğrulamak",
+    "variants": [
+      {
+        "form": "ʒadums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      },
+      {
+        "form": "ʒadups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 301,
+    "issues": []
+  },
+  {
+    "id": "verb-0302",
+    "infinitive": "oǯamu",
+    "verb_class": "TVE",
+    "english": "to extinguish (e.g. ticks, lice, fleas)",
+    "turkish": "öldürmek (bit, pire)",
+    "variants": [
+      {
+        "form": "ǯamups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 302,
+    "issues": []
+  },
+  {
+    "id": "verb-0303",
+    "infinitive": "oǯilu",
+    "verb_class": "TVE",
+    "english": "to pluck",
+    "turkish": "koparmak",
+    "variants": [
+      {
+        "form": "ǯilums",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      },
+      {
+        "form": "ǯiloms",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "ǯilups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 303,
+    "issues": []
+  },
+  {
+    "id": "verb-0304",
+    "infinitive": "oǯǩedu",
+    "verb_class": "TVE",
+    "english": "to watch",
+    "turkish": "izlemek",
+    "variants": [
+      {
+        "form": "oǯǩers",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 304,
+    "issues": []
+  },
+  {
+    "id": "verb-0305",
+    "infinitive": "oǯǩidu",
+    "verb_class": "TVE",
+    "english": "to build",
+    "turkish": "örmek",
+    "variants": [
+      {
+        "form": "ǯǩidums",
+        "dialects": [
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 305,
+    "issues": []
+  },
+  {
+    "id": "verb-0306",
+    "infinitive": "oǯǩu",
+    "verb_class": "TVE",
+    "english": "to remove, to rip off",
+    "turkish": "sökmek",
+    "variants": [
+      {
+        "form": "ǯǩips",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 306,
+    "issues": []
+  },
+  {
+    "id": "verb-0307",
+    "infinitive": "oǯǩunu",
+    "verb_class": "IVD",
+    "english": "to ache",
+    "turkish": "ağrımak",
+    "variants": [
+      {
+        "form": "aǯǩunen",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 307,
+    "issues": []
+  },
+  {
+    "id": "verb-0308",
+    "infinitive": "oǯǩunu",
+    "verb_class": "TVE",
+    "english": "to ache",
+    "turkish": "ağrımak",
+    "variants": [
+      {
+        "form": "ǯǩups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 308,
+    "issues": []
+  },
+  {
+    "id": "verb-0309",
+    "infinitive": "oǯǩunu",
+    "verb_class": "TVE",
+    "english": "to hurt someone",
+    "turkish": "ağrıtmak",
+    "variants": [
+      {
+        "form": "uǯǩunaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 309,
+    "issues": []
+  },
+  {
+    "id": "verb-0310",
+    "infinitive": "oǯodu",
+    "verb_class": "TVE",
+    "english": "to build",
+    "turkish": "örmek",
+    "variants": [
+      {
+        "form": "ǯodums",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 310,
+    "issues": []
+  },
+  {
+    "id": "verb-0311",
+    "infinitive": "oǯu",
+    "verb_class": "TVE",
+    "english": "to lead astray, to turn mad",
+    "turkish": "azdırmak",
+    "variants": [
+      {
+        "form": "oǯams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 311,
+    "issues": []
+  },
+  {
+    "id": "verb-0312",
+    "infinitive": "oǯunu",
+    "verb_class": "IVD",
+    "english": "to ache",
+    "turkish": "ağrımak",
+    "variants": [
+      {
+        "form": "aǯunen",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 312,
+    "issues": []
+  },
+  {
+    "id": "verb-0313",
+    "infinitive": "oǯunu",
+    "verb_class": "TVE",
+    "english": "to hurt someone",
+    "turkish": "ağrıtmak",
+    "variants": [
+      {
+        "form": "uǯunams",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 313,
+    "issues": []
+  },
+  {
+    "id": "verb-0314",
+    "infinitive": "oʒxunu",
+    "verb_class": "TVE",
+    "english": "to weed out",
+    "turkish": "ayıklamak",
+    "variants": [
+      {
+        "form": "ʒxunups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 314,
+    "issues": []
+  },
+  {
+    "id": "verb-0315",
+    "infinitive": "oʒxunu",
+    "verb_class": "TVE",
+    "english": "to distinguish, to differentiate",
+    "turkish": "ayrım yapmak",
+    "variants": [
+      {
+        "form": "ʒxunums",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 315,
+    "issues": []
+  },
+  {
+    "id": "verb-0316",
+    "infinitive": "ren",
+    "verb_class": "TVM",
+    "english": "to be",
+    "turkish": "olmak",
+    "variants": [
+      {
+        "form": "ren",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      },
+      {
+        "form": "on",
+        "dialects": [
+          "AS",
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 316,
+    "issues": []
+  },
+  {
+    "id": "verb-0317",
+    "infinitive": "uğun",
+    "verb_class": "IVD",
+    "english": "to have",
+    "turkish": "var (cansız)",
+    "variants": [
+      {
+        "form": "uğun",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 317,
+    "issues": []
+  },
+  {
+    "id": "verb-0318",
+    "infinitive": "unon",
+    "verb_class": "IVD",
+    "english": "to want",
+    "turkish": "istemek",
+    "variants": [
+      {
+        "form": "unon",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 318,
+    "issues": []
+  },
+  {
+    "id": "verb-0319",
+    "infinitive": "uqoun",
+    "verb_class": "IVD",
+    "english": "to have",
+    "turkish": "var (canlı)",
+    "variants": [
+      {
+        "form": "uqoun",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 319,
+    "issues": []
+  },
+  {
+    "id": "verb-0320",
+    "infinitive": "uyonun",
+    "verb_class": "IVD",
+    "english": "to have",
+    "turkish": "var (canlı)",
+    "variants": [
+      {
+        "form": "uyonun",
+        "dialects": [
+          "PZ",
+          "AS",
+          "FA"
+        ]
+      }
+    ],
+    "source_row": 320,
+    "issues": []
+  },
+  {
+    "id": "verb-0321",
+    "infinitive": "xe oǩoç̌apxu",
+    "verb_class": "TVE",
+    "english": "to applaud",
+    "turkish": "alkışlamak",
+    "variants": [
+      {
+        "form": "xe oǩoç̌apxams",
+        "dialects": [
+          "FA",
+          "AS",
+          "PZ"
+        ]
+      }
+    ],
+    "source_row": 321,
+    "issues": []
+  },
+  {
+    "id": "verb-0322",
+    "infinitive": "xe oǩotvaʒinu",
+    "verb_class": "TVE",
+    "english": "to applaud",
+    "turkish": "alkışlamak",
+    "variants": [
+      {
+        "form": "xe oǩotvaʒinaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 322,
+    "issues": []
+  },
+  {
+    "id": "verb-0323",
+    "infinitive": "yeç̌opu",
+    "verb_class": "TVE",
+    "english": "to buy",
+    "turkish": "almak",
+    "variants": [
+      {
+        "form": "yeç̌opups",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 323,
+    "issues": []
+  },
+  {
+    "id": "verb-0324",
+    "infinitive": "yoxo cedvalu",
+    "verb_class": "TVE",
+    "english": "to name something/someone",
+    "turkish": "adlandırmak",
+    "variants": [
+      {
+        "form": "yoxo codums",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 324,
+    "issues": []
+  },
+  {
+    "id": "verb-0325",
+    "infinitive": "zop̌ini",
+    "verb_class": "TVE",
+    "english": "to mention, to talk about",
+    "turkish": "bahsetmek",
+    "variants": [
+      {
+        "form": "zop̌ons",
+        "dialects": [
+          "FA",
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 325,
+    "issues": []
+  },
+  {
+    "id": "verb-0326",
+    "infinitive": "gexvamu",
+    "verb_class": "TVE",
+    "english": "to celebrate",
+    "turkish": "kutlamak",
+    "variants": [
+      {
+        "form": "gyuxvamams",
+        "dialects": [
+          "FA"
+        ]
+      },
+      {
+        "form": "gyuxvamaps",
+        "dialects": [
+          "HO"
+        ]
+      }
+    ],
+    "source_row": 326,
+    "issues": []
+  },
+  {
+    "id": "verb-0327",
+    "infinitive": "cexvamu",
+    "verb_class": "TVE",
+    "english": "to celebrate",
+    "turkish": "kutlamak",
+    "variants": [
+      {
+        "form": "cuxvamams",
+        "dialects": [
+          "PZ",
+          "AS"
+        ]
+      }
+    ],
+    "source_row": 327,
+    "issues": []
+  }
+]

@@ -1,0 +1,204 @@
+{
+  "dative_present": {
+    "source": "ivd_present",
+    "stages": [
+      "prepare_stem",
+      "apply_agreement",
+      "select_ending",
+      "finish_form"
+    ],
+    "preverb_handlers": [
+      "_preverb_do",
+      "_preverb_go",
+      "_preverb_me",
+      "_preverb_mo"
+    ]
+  },
+  "dative_past": {
+    "source": "ivd_past",
+    "stages": [
+      "prepare_stem",
+      "apply_agreement",
+      "select_ending",
+      "finish_form"
+    ],
+    "preverb_handlers": [
+      "_preverb_do",
+      "_preverb_go",
+      "_preverb_me"
+    ]
+  },
+  "dative_future": {
+    "source": "ivd_future",
+    "stages": [
+      "prepare_stem",
+      "apply_agreement",
+      "select_ending",
+      "finish_form"
+    ],
+    "preverb_handlers": [
+      "_preverb_do",
+      "_preverb_go",
+      "_preverb_me"
+    ]
+  },
+  "dative_progressive": {
+    "source": "ivd_pastpro",
+    "stages": [
+      "prepare_stem",
+      "apply_agreement",
+      "select_ending",
+      "finish_form"
+    ],
+    "preverb_handlers": [
+      "_preverb_do",
+      "_preverb_go",
+      "_preverb_me",
+      "_preverb_mo"
+    ]
+  },
+  "ergative_present": {
+    "source": "tve_present",
+    "stages": [
+      "prepare_stem",
+      "apply_markers",
+      "apply_preverbs",
+      "adjust_stem",
+      "select_ending",
+      "finish_form"
+    ],
+    "preverb_handlers": [
+      "_preverb_ce",
+      "_preverb_cel",
+      "_preverb_do",
+      "_preverb_ela_el",
+      "_preverb_ge",
+      "_preverb_gelo",
+      "_preverb_gol",
+      "_preverb_me",
+      "_preverb_mo",
+      "_preverb_oxo",
+      "_preverb_oǩo"
+    ]
+  },
+  "ergative_past": {
+    "source": "tve_past",
+    "stages": [
+      "prepare_stem",
+      "apply_markers",
+      "apply_preverbs",
+      "adjust_stem",
+      "select_ending",
+      "finish_form"
+    ],
+    "preverb_handlers": [
+      "_preverb_ce",
+      "_preverb_cel",
+      "_preverb_do",
+      "_preverb_ela_el",
+      "_preverb_ge",
+      "_preverb_gelo_gel",
+      "_preverb_gol",
+      "_preverb_me",
+      "_preverb_mo",
+      "_preverb_oxo",
+      "_preverb_oǩo"
+    ]
+  },
+  "ergative_future": {
+    "source": "tve_future",
+    "stages": [
+      "prepare_stem",
+      "apply_markers",
+      "apply_preverbs",
+      "adjust_stem",
+      "select_ending",
+      "finish_form"
+    ],
+    "preverb_handlers": [
+      "_preverb_ce",
+      "_preverb_cel",
+      "_preverb_do",
+      "_preverb_ela_el",
+      "_preverb_ge",
+      "_preverb_gelo_gel",
+      "_preverb_gol",
+      "_preverb_me",
+      "_preverb_mo",
+      "_preverb_oxo",
+      "_preverb_oǩo"
+    ]
+  },
+  "ergative_progressive": {
+    "source": "tve_pastpro",
+    "stages": [
+      "prepare_stem",
+      "apply_markers",
+      "apply_preverbs",
+      "adjust_stem",
+      "select_ending",
+      "finish_form"
+    ],
+    "preverb_handlers": [
+      "_preverb_ce",
+      "_preverb_cel",
+      "_preverb_do",
+      "_preverb_ela_el",
+      "_preverb_ge",
+      "_preverb_gelo_gel",
+      "_preverb_gol",
+      "_preverb_me",
+      "_preverb_mo",
+      "_preverb_oxo",
+      "_preverb_oǩo"
+    ]
+  },
+  "nominative": {
+    "source": "tvm_tense",
+    "stages": [
+      "prepare_stem",
+      "apply_markers",
+      "apply_preverbs",
+      "adjust_stem",
+      "select_ending",
+      "finish_form"
+    ],
+    "preverb_handlers": [
+      "_preverb_ce",
+      "_preverb_do",
+      "_preverb_ge",
+      "_preverb_me",
+      "_preverb_oxo",
+      "_preverb_oǩo"
+    ]
+  },
+  "potential": {
+    "source": "tvm_tve_potential",
+    "stages": [
+      "prepare_stem",
+      "apply_preverbs",
+      "finish_form"
+    ],
+    "preverb_handlers": []
+  },
+  "passive": {
+    "source": "tvm_tve_passive",
+    "stages": [
+      "prepare_stem",
+      "apply_preverbs",
+      "finish_form"
+    ],
+    "preverb_handlers": [
+      "_preverb_me"
+    ]
+  },
+  "perfect": {
+    "source": "tvm_tve_presentperf",
+    "stages": [
+      "prepare_stem",
+      "apply_preverbs",
+      "finish_form"
+    ],
+    "preverb_handlers": []
+  }
+}

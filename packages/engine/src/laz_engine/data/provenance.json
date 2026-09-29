@@ -1,0 +1,19 @@
+{
+  "source_commit": "0b3c9cd",
+  "files": {
+    "laz_verb_conjugator/backend/notebooks/ivd_future.py": "d01a9de7346a8904c60c0f09e04297359040d9c069ca36b3c0a4a9fa0685f705",
+    "laz_verb_conjugator/backend/notebooks/ivd_past.py": "a64bd9f089bdbdff3e56509b2420e0f49dcdc02cc805183f3dba923d77031953",
+    "laz_verb_conjugator/backend/notebooks/ivd_pastpro.py": "cca4ea0e5ac1b68963d52bfe84933891355ea493d06b1d1004f700453880a70b",
+    "laz_verb_conjugator/backend/notebooks/ivd_present.py": "f9d9fae34f034a4bd65c4309c73330f4388c6704969dd7fc6814bfc214e39505",
+    "laz_verb_conjugator/backend/notebooks/tve_future.py": "61fbce8986f415111768628708edc9a617af8e1617c82d96633abebf7c6951dc",
+    "laz_verb_conjugator/backend/notebooks/tve_past.py": "45421da810204990611ea613bdb93d415c576904a4033c08ff2c6cc78450b131",
+    "laz_verb_conjugator/backend/notebooks/tve_pastpro.py": "73e9de831438bef6884643e043f4902973b9ddf91f7f8daf42cbdca256a3bab5",
+    "laz_verb_conjugator/backend/notebooks/tve_present.py": "7908f294fc69bd77225328940688f6854de4a32991b31ec9e7ba1b4ff9d90e93",
+    "laz_verb_conjugator/backend/notebooks/tvm_tense.py": "cc1c212c061d0818d022c22e3b0b1405d7d31bdc43825af6ee0ce85fb0c2c528",
+    "laz_verb_conjugator/backend/notebooks/tvm_tve_passive.py": "3e95599997bb8edd77aba1b83f3d5b1bc6adcf89ba33a3be6b5c3246c7b3ee6a",
+    "laz_verb_conjugator/backend/notebooks/tvm_tve_potential.py": "49794888a53a5af420c8fd95a482d188dc80199b71ae24e135beda7d8c3103ef",
+    "laz_verb_conjugator/backend/notebooks/tvm_tve_presentperf.py": "1849070d9949496653190ab467762b1ed9ed79889c188b4e72495377331e53a0",
+    "laz_verb_conjugator/backend/utils.py": "5f15f7c73c8ec3fd0c27594df020f8b2354ef631076a7179b9ab4faea6bbcf1a",
+    "laz_verb_conjugator/backend/data/verb_data.json": "87b52396858c8c453f4d45067440b3437f79e5afdd7716d3e4efbe7c180f26e4"
+  }
+}
