@@ -7,7 +7,7 @@
 node_modules/
 apps/web/dist/
 .DS_Store
-
+*Lazverbcon.code-workspace
 # Generated databases and SQLite sidecar files
 *.sqlite
 *.sqlite-*
