@@ -1,0 +1,23 @@
+{
+  "source_commit": "b2f0f8b57e51702da215dc48dc7b78587c139c2d",
+  "verification": "Original rule function ASTs compared successfully before legacy removal on 2026-10-01. The reference snapshot is test-only; do not update these hashes to silence a regression.",
+  "files": {
+    "__init__.py": "8be54ee99f9aec99c2537f61184f04a421d2fe86c59d1508e47e9b2370e9bda4",
+    "engine.py": "bd8e65a7f9dac3b62a068bfae74290b8a5d62a714a1c08f152e76286262e36cd",
+    "rules/__init__.py": "2d6cd77f0ffcfa5377d1224aa1d9676239d00904f2a766dad802169fe2de5908",
+    "rules/ivd_future.py": "3f6528f20698480b2d3b938c14bb0be1e018157a623937289101357c16ea12e6",
+    "rules/ivd_past.py": "19eef6cec20eef21623948193607b8126cb54febbde8264aacf4527be9f730ed",
+    "rules/ivd_pastpro.py": "4dbaa202886ace1a89ff87b59277aca58e215feff6ae9c9c1274309acaa6d8ed",
+    "rules/ivd_present.py": "2a54e7bb7685daf8cdf3f889e6adfff320fb85b954de276d218b487affcba951",
+    "rules/tve_future.py": "8a9c7e7a04bd1af19e53190e12bc9c2efed32aca23068efaa77df0901b0d7bb6",
+    "rules/tve_past.py": "a0af0aa1bf089ef58481bc259775435bb1f6f91bdca6f8f6552f12a2281cb21e",
+    "rules/tve_pastpro.py": "e5fb7b8220d3dce5444355fa68aac4e25746dbbcef16ad7ff6d9ac5b9e67d247",
+    "rules/tve_present.py": "bb7d94232e1618c5d257528f6b0ba5e9ef716c8fa01a82bac231e421e4b7e843",
+    "rules/tvm_tense.py": "a2bbaee6e62f20cbb9f6034b9bded997c0763f8d022a49b97f27de9da5d41290",
+    "rules/tvm_tve_passive.py": "fbc75ae9a12daac791823cff20991841209db488dff6c67a835de7951e0f684d",
+    "rules/tvm_tve_potential.py": "c912675626b98eed3d74bd8f77d315411a25baf96fa8a9fa55ed32d255fd3394",
+    "rules/tvm_tve_presentperf.py": "814ffbfbc18d3f60238b88e06acd082f5e047794885da3aee5c3d7ab9a9542c8",
+    "rules/utils.py": "5f15f7c73c8ec3fd0c27594df020f8b2354ef631076a7179b9ab4faea6bbcf1a",
+    "validation.py": "405ba4189af2f07cee169a883a00f5484bb0b053b5e396c0c20a861e691ab962"
+  }
+}

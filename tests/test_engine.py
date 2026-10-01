@@ -1,4 +1,4 @@
-import ast
+import hashlib
 import json
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
@@ -86,39 +86,15 @@ def test_past_substitution_and_distinct_imperatives(verb):
     assert conjugate(verb("uğun", "IVD"), f).forms[0].rule == "ivd_pastpro"
 
 
-class StripPrints(ast.NodeTransformer):
-    def visit_Expr(self, node):
-        if (
-            isinstance(node.value, ast.Call)
-            and isinstance(node.value.func, ast.Name)
-            and node.value.func.id == "print"
-        ):
-            return None
-        return self.generic_visit(node)
-
-
-def test_extracted_rule_bodies_are_unchanged():
-    """Independent AST check: no accidental linguistic edits during extraction."""
-    for original in (ROOT / "laz_verb_conjugator/backend/notebooks").glob("*.py"):
-        if original.name == "__init__.py":
-            continue
-        source = {
-            n.name: n
-            for n in ast.parse(original.read_text()).body
-            if isinstance(n, ast.FunctionDef)
-        }
-        extracted = ast.parse((ROOT / "migration/reference/rules" / original.name).read_text())
-        for fn in (n for n in extracted.body if isinstance(n, ast.FunctionDef)):
-            old = StripPrints().visit(source[fn.name])
-            if fn.name.startswith("conjugate_"):
-                fn.args.kwonlyargs = []
-                fn.args.kw_defaults = []
-                while (
-                    fn.body
-                    and isinstance(fn.body[0], ast.Assign)
-                    and isinstance(fn.body[0].value, ast.Attribute)
-                    and isinstance(fn.body[0].value.value, ast.Name)
-                    and fn.body[0].value.value.id == "context"
-                ):
-                    fn.body.pop(0)
-            assert ast.dump(fn) == ast.dump(old), f"Rule body changed: {original.name}/{fn.name}"
+def test_frozen_reference_snapshot_is_complete_and_unchanged():
+    """Preserve the independently checked baseline after retiring the old app."""
+    reference = ROOT / "migration/reference"
+    manifest = json.loads((ROOT / "migration/reference-checksums.json").read_text())
+    actual = {
+        path.relative_to(reference).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in reference.rglob("*.py")
+    }
+    assert manifest["files"], "Missing reference checksums"
+    assert actual == manifest["files"], (
+        "Frozen reference changed; inspect against its source commit"
+    )

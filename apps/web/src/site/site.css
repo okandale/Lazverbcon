@@ -260,6 +260,9 @@ a.primary {
   flex-wrap: wrap;
   gap: 10px;
 }
+.prose + .category-nav {
+  margin-top: 24px;
+}
 .category-nav button {
   border: 1px solid #d1d8ca;
   border-radius: 6px;

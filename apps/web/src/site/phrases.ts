@@ -11,7 +11,7 @@ export type Category = keyof typeof categories;
 export type Phrase = {
   en: string;
   tr: string;
-  laz: string;
+  laz: string | null;
   vocabulary?: boolean;
 };
 export const phrases: Record<Category, Phrase[]> = {
@@ -135,3 +135,28 @@ export const vocabulary = [
   { en: "Tomato(es)", tr: "Domates", laz: "Domatisi/Ǩaǩa" },
   { en: "Onion(s)", tr: "Soğan", laz: "Ǩromi" },
 ];
+
+// Live Pazar, Ardeşen and Fındıklı–Arhavi guides checked on 2026-10-01.
+// Each had these three English prompts and literal "..." translations, with no hotel tab.
+// Keep independent data per dialect so authors can fill each guide separately.
+function unfinishedGuide(): Partial<Record<Category, Phrase[]>> {
+  return {
+    market: [{ en: "How much is this?", tr: "Bu ne kadar?", laz: null }],
+    pharmacy: [
+      {
+        en: "I need medicine for a headache",
+        tr: "Baş ağrısı için ilaç lazım",
+        laz: null,
+      },
+    ],
+    restaurant: [{ en: "I’m vegetarian", tr: "Ben vejetaryenim", laz: null }],
+  };
+}
+export const draftGuides: Record<
+  string,
+  Partial<Record<Category, Phrase[]>>
+> = {
+  pazar: unfinishedGuide(),
+  ardesen: unfinishedGuide(),
+  "findikli-arhavi": unfinishedGuide(),
+};

@@ -6,9 +6,6 @@
 **/__pycache__
 **/*.egg-info
 apps/web/dist
-laz_verb_conjugator
-lazverbcon.sql
-lazverbcon.dump
 artifacts
 lewis-upload
 tests/*

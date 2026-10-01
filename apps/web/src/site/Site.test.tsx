@@ -73,14 +73,21 @@ it("restores phrase categories, vocabulary, copy and browser back state", async 
   expect(Object.values(phrases).flat()).toHaveLength(24);
   expect(vocabulary).toHaveLength(12);
 });
-it("does not display placeholders or Hopa phrases as another dialect", () => {
-  mount("/resources/phrase-guide/ardesen");
-  expect(screen.getByRole("heading", { level: 1 }).textContent).toContain(
-    "Ardeşen",
-  );
-  expect(screen.getByText(/don’t yet have reviewed Ardeşen/)).toBeTruthy();
-  expect(screen.queryByText("İya muǩos ren?")).toBeNull();
-});
+it.each(["pazar", "ardesen", "findikli-arhavi"])(
+  "preserves the unfinished %s guide without substituting Hopa translations",
+  (dialect) => {
+    mount(`/resources/phrase-guide/${dialect}`);
+    expect(screen.getByText("Translation pending")).toBeTruthy();
+    expect(screen.getByText("How much is this?")).toBeTruthy();
+    expect(screen.getByText("...")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "At the pharmacy" }));
+    expect(screen.getByText("I need medicine for a headache")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "At the restaurant" }));
+    expect(screen.getByText("I’m vegetarian")).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "At the hotel" })).toBeNull();
+    expect(screen.queryByText("İya muǩos ren?")).toBeNull();
+  },
+);
 it("prepares feedback with context without submitting to an external service", async () => {
   const fetch = vi.fn();
   vi.stubGlobal("fetch", fetch);
@@ -96,7 +103,9 @@ it("prepares feedback with context without submitting to an external service", a
   fireEvent.change(screen.getByLabelText("Dialect, example or explanation"), {
     target: { value: "Hopa example" },
   });
-  fireEvent.click(screen.getByRole("button", { name: "Prepare email →" }));
+  fireEvent.click(
+    screen.getByRole("button", { name: "Prepare email instead" }),
+  );
   const href = screen
     .getByRole("link", { name: "Open email app ↗" })
     .getAttribute("href")!;

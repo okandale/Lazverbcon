@@ -30,14 +30,20 @@ focused modules. `docs/rules.md` explains their order and editing workflow.
 The application no longer imports a legacy rule adapter. Original rule bodies
 are retained in `migration/reference/rules/` strictly as test evidence, together
 with the previous dispatcher and validation. They are excluded from the installed
-Python package and Docker image. AST tests still ensure this reference matches
-the source modules, while output tests compare the refactored implementation to it.
+Python package and Docker image. The original AST comparison passed before
+removing the old app on 2026-10-01. `reference-checksums.json` now pins all 17
+reference Python files; tests require the complete unchanged snapshot. Output
+tests still compare the refactored implementation to it. The original app and
+one-time import tools remain recoverable from [Git history](../docs/legacy-archive.md).
 
 All **1,511,672 requests** in the first SQLite release match the refactored engine,
-including statuses, complete variant sets, pronouns and grammatical codes. The
-new release adds **4,290 potential optative forms**, for **1,278,826 form records**.
-There are **1,273,322 stored requests**: impossible person pairs are now rejected
+including statuses, complete variant sets, pronouns and grammatical codes. That historical
+release added **4,290 potential optative forms**, for **1,278,826 form records**.
+It contained **1,273,322 stored requests**: impossible person pairs are now rejected
 by common validation before generation, rather than stored as empty requests.
+
+The current schema 2 catalog has **1,303,622 forms** across **1,298,134 requests**.
+The later maintainer corrections supersede the historical totals above.
 
 ## What is supported
 
@@ -48,16 +54,19 @@ by common validation before generation, rather than stored as empty requests.
 - TVE applicative, simple causative, double causative and their combinations.
 - TVE/TVM present perfect, potential and passive; passive double causative.
 - Potential optative, using the original module’s explicit optative ending table.
-- Optional preverbs where the original functions implement that parameter.
+- Explicit `ko`/`do` prefixes for attested entry/dialect pairs, including potential
+  and perfect constructions. The legacy optional-preverb boolean remains supported
+  separately with its original restrictions.
 - All six subjects, all six explicit objects and no object, subject to restrictions.
 
 This is coverage of the **supported reference interface**, not a claim that every
 grammatical construction in Laz has been implemented. Non-indicative moods have
 one canonical request tense (`present`); dispatch chooses the underlying rule.
-Passive optatives and imperatives, potential imperatives, potential markers,
-passive simple causative and optional preverbs in potential/perfect remain
-explicitly unavailable. They need reviewed linguistic examples because the
-source has no usable rule for them or accepts a flag without applying it.
+Passive optatives and imperatives, potential imperatives, potential markers and
+passive simple causative remain explicitly unavailable outside attested dump
+coverage. These need reviewed examples because the source has no usable rule or
+accepts a flag without applying it. Explicit prefixes in potential/perfect are
+now implemented; only the legacy boolean retains its old restrictions.
 TVM object/marker branches conflict with the original service’s TVM-only object
 restriction, so that interface remains restricted pending reviewed examples.
 
@@ -91,8 +100,9 @@ The generated database records engine and lexicon hashes and its coverage profil
 `tests/fixtures/reference.json` contains 4,836 outputs captured by executing the
 original modules, independently of the new engine. It covers all twelve modules,
 all four dialect codes, subjects, representative objects/markers, moods, compounds,
-Unicode spelling and optional preverbs. `scripts/capture_reference.py` recreates
-it using an environment that can import the old modules (including pandas).
+Unicode spelling and optional preverbs. The original `scripts/capture_reference.py`
+is archived in Git with the old app; it requires that historical environment
+(including pandas). See [recovery instructions](../docs/legacy-archive.md).
 
 Do not regenerate the fixture file to silence a regression. Inspect differences
 and record any intentional linguistic change with concrete examples first.
@@ -102,7 +112,7 @@ API validation, database publication failures, Unicode search, reverse round tri
 and read-only serving. A complete generation run additionally exercises every
 enumerated combination and refuses publication on unexpected failures.
 
-The historical PostgreSQL dump remains secondary evidence. It is not imported
-into the new serving database. A complete row-by-row reconciliation of that export
-has not been performed; its collapsed lexical identities and export losses must
-be resolved before treating differences as linguistic defects.
+The earlier `lazverbcon.sql` export remains in Git history as historical evidence. The later
+`lewis-upload/lazverbcon2.dump` is authoritative and every row has been reconciled.
+Its expected conjugations verify generated output; runtime serving does not read
+that dump. See [the final parity report](../docs/maintainer-parity.md).

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Language } from "../i18n";
 import { Card, localLink, PageIntro } from "./shared";
 import { phraseDialects } from "./content";
-import { categories, phrases, vocabulary } from "./phrases";
+import { categories, phrases, vocabulary, draftGuides } from "./phrases";
 import type { Category } from "./phrases";
 
 function categoryFromURL(): Category {
@@ -21,6 +21,8 @@ export function PhraseGuide({
   const [category, setCategory] = useState<Category>(categoryFromURL);
   const [notice, setNotice] = useState("");
   const region = phraseDialects.find((d) => d.slug === dialect);
+  const guide = dialect === "hopa" ? phrases : draftGuides[dialect ?? ""];
+  const activeCategory = guide?.[category] ? category : "market";
   useEffect(() => {
     const update = () => setCategory(categoryFromURL());
     window.addEventListener("popstate", update);
@@ -93,13 +95,13 @@ export function PhraseGuide({
             <section className="panel prose">
               <h2>
                 {l === "en"
-                  ? "These phrases are still to come."
-                  : "Bu ifadeler henüz hazır değil."}
+                  ? "Translations in progress."
+                  : "Çeviriler hazırlanıyor."}
               </h2>
               <p>
                 {l === "en"
-                  ? `We don’t yet have reviewed ${region.name} translations for this guide. You can explore the Hopa guide or contact us to contribute phrases.`
-                  : `Bu rehber için gözden geçirilmiş ${region.name} çevirileri henüz yok. Hopa rehberini inceleyebilir veya ifade eklemek için bizimle iletişime geçebilirsiniz.`}
+                  ? "Laz translations for this guide are not available yet. The phrases below are awaiting translation."
+                  : "Bu rehberin Lazca çevirileri henüz hazır değil. Aşağıdaki ifadeler çevrilmeyi bekliyor."}
               </p>
               <a href={localLink("/resources/phrase-guide/hopa", l)}>
                 {l === "en"
@@ -110,7 +112,8 @@ export function PhraseGuide({
                 <a href="mailto:info@lazuri.org">info@lazuri.org</a>
               </p>
             </section>
-          ) : (
+          ) : null}
+          {guide && (
             <>
               <div
                 className="category-nav"
@@ -119,20 +122,25 @@ export function PhraseGuide({
                   l === "en" ? "Phrase categories" : "İfade kategorileri"
                 }
               >
-                {(Object.keys(categories) as Category[]).map((c) => (
+                {(Object.keys(guide) as Category[]).map((c) => (
                   <button
                     key={c}
-                    aria-pressed={category === c}
+                    aria-pressed={activeCategory === c}
                     onClick={() => select(c)}
                   >
                     {categories[c][l]}
                   </button>
                 ))}
               </div>
-              <h2 className="content-heading">{categories[category][l]}</h2>
+              <h2 className="content-heading">
+                {categories[activeCategory][l]}
+              </h2>
               <div className="phrase-list">
-                {phrases[category].map((p, i) => (
-                  <article className="panel phrase" key={`${category}-${i}`}>
+                {guide[activeCategory]?.map((p, i) => (
+                  <article
+                    className="panel phrase"
+                    key={`${activeCategory}-${i}`}
+                  >
                     <div className="phrase-meaning">
                       <span className="card-index">
                         {String(i + 1).padStart(2, "0")}
@@ -143,13 +151,22 @@ export function PhraseGuide({
                       </p>
                     </div>
                     <div className="phrase-laz">
-                      <p lang="lzz">{p.laz}</p>
-                      <button
-                        aria-label={`${l === "en" ? "Copy" : "Kopyala"}: ${p.laz}`}
-                        onClick={() => void copy(p.laz)}
-                      >
-                        {l === "en" ? "Copy ↗" : "Kopyala ↗"}
-                      </button>
+                      <p lang={p.laz ? "lzz" : undefined}>{p.laz ?? "..."}</p>
+                      {!p.laz && (
+                        <small>
+                          {l === "en"
+                            ? "Translation pending"
+                            : "Çeviri bekleniyor"}
+                        </small>
+                      )}
+                      {p.laz && (
+                        <button
+                          aria-label={`${l === "en" ? "Copy" : "Kopyala"}: ${p.laz}`}
+                          onClick={() => void copy(p.laz!)}
+                        >
+                          {l === "en" ? "Copy ↗" : "Kopyala ↗"}
+                        </button>
+                      )}
                     </div>
                     {p.vocabulary && (
                       <details className="vocabulary">

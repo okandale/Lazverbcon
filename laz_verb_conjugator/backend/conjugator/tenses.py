@@ -1,2 +1,0 @@
-class PresentTense:
-    pass

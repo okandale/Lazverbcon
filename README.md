@@ -1,8 +1,8 @@
 # Lazverbcon
 
 A mobile-friendly Laz verb explorer, an independent Python conjugation engine,
-and a reproducible SQLite publisher. The original application remains under
-`laz_verb_conjugator/` as a migration reference.
+and a reproducible SQLite publisher. The active tree contains the new app.
+The original application is preserved in Git history; see [legacy recovery](docs/legacy-archive.md).
 
 ## Quick start: Docker
 
@@ -17,7 +17,7 @@ Open **http://localhost:8080**. Docker builds the website, installs Python,
 generates the full SQLite database, checks the historical reference cases and
 every conjugation/rejection in the maintainer's dump, and packages
 everything into one image. No local Python, Node or database setup is required.
-The first build downloads dependencies and generates about 452 MiB of data, so
+The first build downloads dependencies and generates about 471 MiB of data, so
 allow several minutes. Later builds reuse cached steps when their inputs have
 not changed. Starting an existing image does not regenerate the database.
 
@@ -79,12 +79,15 @@ optional-preverb settings. Counts and pagination refer to groups. Each result's
 “Dialects and options” section retains the individual settings; the main action
 opens matching dialects together. Different lexical entries, object numbers and
 markers remain separate. The API returns those original requests in `variants`
-alongside representative `features` and `form` fields. Existing SQLite releases
-work without a database schema migration.
+alongside representative `features` and `form` fields. Use a schema 2 catalog
+with this version of the app.
 
 **The core engine and public learning pages are migrated.** The page-by-page
 [migration checklist](docs/migration-backlog.md) tracks completed work and the
-remaining translations, data decisions, integrations and deferred administration.
+remaining data decisions and future administration. Feedback delivery has been
+confirmed by the owner.
+Unfinished phrase translations retain their original placeholders and are authoring
+work outside migration scope.
 
 The core conjugator is running in the new architecture. All 327 lexical entries
 and all twelve reference rule modules are included, with forward lookup, reverse
@@ -94,16 +97,20 @@ All twelve rule modules now run through named stages in `paradigms/`, with share
 phonology, markers, endings and pronoun tables in `rules/`. Thirteen identical
 preverb handlers are shared across tenses. Each principal part uses fresh local
 state. The application does not import the original rule modules; a frozen copy
-under `migration/reference/` is used only by regression tests.
+under `migration/reference/` is used only by regression tests and protected by
+`migration/reference-checksums.json`. It is not a second runnable application.
 
 The learning home, searchable verb directory, resources, workshops, about page,
 all six keyboard guides and Hopa phrase guide are implemented in English/Turkish.
-Feedback prepares an email draft with the selected form or page; automatic delivery
-from the website is not configured. Other phrase dialects explicitly show that
-translations are unavailable. Admin editing and native mobile support remain deferred. Some combinations with unclear
-or inconsistent support in the original code are explicitly unavailable; see the
-exact list in [migration/README.md](migration/README.md). The old SQL export has
-not been fully reconciled with the newly generated forms.
+Feedback submits to the original Google Apps Script destination, with timeout/error
+handling and an email/copy fallback. See [delivery verification](docs/feedback.md).
+The three unfinished phrase guides preserve the original prompts and placeholders.
+Future admin editing will use source data and generation; old direct database
+writes will not be copied. Public old-API functions already have new equivalents;
+[the inventory](docs/legacy-api.md) records the owner’s decision to retire old
+API contracts and bookmark compatibility.
+All requests from the authoritative maintainer dump are reconciled. Remaining
+linguistic questions concern coverage beyond that source.
 
 ## How it works
 
@@ -118,6 +125,8 @@ not been fully reconciled with the newly generated forms.
    support a future mobile client.
 
 Changing a rule or lexical entry means building a new image and database release.
+A static Cloudflare version has been discussed but is not implemented; the current
+website still requires the API. Feedback itself is independent of that API.
 
 ## Development without Docker
 
@@ -154,6 +163,7 @@ available after a database is generated.
 ```bash
 lazcon build --output artifacts/release.sqlite
 python scripts/verify_release.py artifacts/release.sqlite
+python scripts/verify_maintainer_release.py artifacts/release.sqlite
 lazcon serve --database artifacts/release.sqlite
 ```
 
@@ -161,9 +171,9 @@ Stop the preview API before starting this server on the same port. In database
 mode, **both forward conjugation and reverse lookup use the generated database**.
 There is no silent fallback to runtime generation for missing database rows.
 
-The full build currently produces **1,278,826 forms** from 327 lexical entries,
+The full build currently produces **1,303,622 forms** from 327 lexical entries,
 covering the supported feature matrix in [migration/README.md](migration/README.md).
-The resulting SQLite file is approximately 452 MiB. Generated files live in the
+The resulting SQLite file is approximately 471 MiB. Generated files live in the
 Git-ignored `artifacts/` directory. Generation takes several minutes, depending
 on the machine, and records progress on stderr.
 
@@ -273,10 +283,9 @@ Keep existing IDs stable and assign a new ID to each new entry. Homographs and
 different verb classes remain separate records. Each principal part carries its
 own dialect list. Run the tests and build a new database release after changes.
 
-`scripts/import_legacy.py` is a one-time/reproducibility import. Rerunning it
-replaces the imported lexicon and reference snapshot from the old source; it is
-not the normal editing workflow. Do not regenerate reference fixtures merely to
-make a changed rule pass tests.
+The one-time legacy importer and fixture-capture scripts were retired with the
+old app. They remain recoverable from [Git history](docs/legacy-archive.md).
+Do not regenerate reference fixtures merely to make a changed rule pass tests.
 
 ## Known review items
 
@@ -284,6 +293,7 @@ make a changed rule pass tests.
   retained and reported, but its applicability is not guessed.
 - The published coverage is all supported reference combinations, not a claim
   that every construction in Laz has been implemented or linguistically reviewed.
-- The old PostgreSQL dump has not undergone a complete row-by-row reconciliation.
-- Admin editing, the broader learning portal, user accounts and native/offline
-  mobile clients are outside this first release.
+- Every request in the authoritative maintainer dump passes exhaustive verification;
+  additional generated combinations remain outside that source’s coverage.
+- New admin editing, static-data hosting, user accounts and native/offline clients
+  are separate future work. The public learning pages are already migrated.

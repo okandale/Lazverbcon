@@ -1,16 +1,19 @@
 # Website migration checklist
 
-Last audited: 2026-09-29, against the checked-in original frontend/backend and
-the public pages at [lazuri.org](https://lazuri.org/).
+Last updated: 2026-10-01. Original frontend/backend audited locally; unfinished
+phrase pages rechecked on [lazuri.org](https://lazuri.org/) on 2026-10-01.
 
 **The supported conjugation engine and public learning pages are migrated.**
-Remaining work is translations, reviewed linguistic/data decisions, exact legacy
-ID compatibility, optional automatic feedback delivery, admin and hosting. This
+The owner confirmed feedback delivery works on 2026-10-01. Remaining work concerns
+reviewed linguistic/data decisions, future admin tooling and hosting. Old bookmarks and old API contracts
+are intentionally retired by owner decision on 2026-10-01.
+Unfinished translations are authoring work, not a migration blocker; their original
+placeholders are preserved. This
 file tracks the completed pages and remaining work. Keep it updated as work
 lands; completing an engine test does not complete a website item.
 
-Status meanings: **Done** = implemented and checked; **Partial** = some behavior
-exists but the original page or workflow is missing; **Missing** = not migrated;
+Status meanings: **Done** = implemented and checked; **Retired** = intentionally not carried over; **Partial** = some behavior
+exists but the original page or workflow is missing; **Missing** = not migrated; **Implemented** = code complete, external verification pending;
 **Deferred** = deliberately postponed; **Needs evidence** = source behavior or
 content must be resolved before completing it.
 
@@ -30,11 +33,11 @@ content must be resolved before completing it.
 | WEB-10 | `/about` | Done | About page rewritten around the project, dialects, contributions and acknowledgements. No broken component imports carried over. |
 | WEB-11 | `/resources/phrase-guide` | Done | Restored phrase index and all four dialect URLs, preserving QR destinations. Each dialect has its correct heading; unavailable translations are clearly identified. |
 | WEB-12 | `/resources/phrase-guide/hopa` | Done | Transcribed all 24 Hopa phrases and 12 vocabulary rows into `apps/web/src/site/phrases.ts`. Four categories, bilingual meanings, expandable vocabulary, copy buttons and persistent category links implemented. Laz spelling preserved; only obvious English/Turkish typos corrected. |
-| WEB-13 | `/resources/phrase-guide/pazar`, `/ardesen`, `/findikli-arhavi` under the same phrase-guide prefix | Needs evidence | All three routes now have correct dialect names, an explicit unavailable-content message, a Hopa link and contact details. Remaining: reviewed Pazar/Ardeşen/Fındıklı–Arhavi phrases. The live originals contained placeholder translations; none were invented. |
-| WEB-14 | Conjugator feedback form | Partial | Feedback page prepares an email draft to `info@lazuri.org` with form, correction, explanation and optional conjugation/phrase context. User opens their mail app or copies the message; the UI never claims it sent anything. Tests confirm no network submission. Remaining only if desired: automatic delivery from the website, requiring a chosen receiving service and delivery test. Old JSONP integration was removed. |
+| WEB-13 | `/resources/phrase-guide/pazar`, `/ardesen`, `/findikli-arhavi` under the same phrase-guide prefix | Done | Restored each live page’s Market, Pharmacy and Restaurant tabs with the original English prompt and `...` translation placeholder. Correct dialect headings and explicit pending labels; independent editable data in `draftGuides`. Completing translations is future authoring work, not migration. |
+| WEB-14 | Conjugator feedback form | Done | Sends the original three fields to the same Google Apps Script deployment; context is included in the explanation. Isolated JSONP frame, 20-second timeout, callback validation, duplicate-submit protection, cleanup, retained text and email/copy fallback. Local success/failure tests pass. The owner confirmed live feedback works on 2026-10-01. See [feedback delivery](feedback.md). |
 | WEB-15 | Contact, support and acknowledgements | Done | Restored contact, support and acknowledgements. Corrected the Institute acknowledgement to `lazenstitu.com`; partner/support destinations retained from the old site. |
 | WEB-16 | English/Turkish language choice | Done | All new public pages support English/Turkish, with local preference storage and explicit language query links. Shared links override the stored preference. Language persistence and Turkish mobile navigation checked. |
-| WEB-17 | `/v2/verbs`, `/v2/verb/:verbID/:verbType` | Partial | `/v2/verbs` permanently redirects to `/verbs`, preserving query parameters. Old `/v2/verb/:id/:class` links return a recovery page (HTTP 410) pointing to search. Remaining: a verified mapping of historical production IDs to current entries; a local numeric ID is not reliable proof of the production identity. The duplicate conjugator stays retired. |
+| WEB-17 | `/v2/verbs`, `/v2/verb/:verbID/:verbType` | Retired | Owner confirmed on 2026-10-01 that preserving old bookmarks is unnecessary. Keep the existing directory redirect and detail recovery page; no historical ID mapping or exact redirects are required. |
 
 ### Reverse result grouping — implemented
 
@@ -47,12 +50,12 @@ All original requests remain in the API's `variants` list and the card's
 that support its representative optional-preverb setting; individual settings
 can also be opened from the details. Reset clears input, results and shared query.
 
-Checked with five backend regression tests and frontend tests for grouped dialect
+Historical verification on 2026-09-29: checked with five backend regression tests and frontend tests for grouped dialect
 selection, opening an individual optional-preverb variant, and resetting search.
 All 14 focused backend tests and 21 frontend tests pass, as do the production
 build and the local full-catalog HTTP smoke check. Browser verification confirmed
 three `doviba` cards and opening the nominative group with AS/PZ/HO selected.
-Server deployment of this change still requires pushing and rebuilding the image.
+Deployment status must be checked against the current release; these counts describe the September baseline.
 
 Investigation on 2026-09-29: `doviba` has 18 underlying exact rows in the full catalog:
 
@@ -86,10 +89,10 @@ lookup of the selected `doviguram` form.
 
 | ID | Feature | Status | Remaining work and completion check |
 | --- | --- | --- | --- |
-| OPS-01 | `/admin`, `/admin/panel`, `/admin/logout`, `/admin/manage-verbs`, `/admin/add-verb` | Deferred | User requested deciding on editing tools after the core works. Old source includes login, protected browsing and add-verb submission; complete edit/delete behavior has not been established. Define the desired editing workflow first. Changes should update versioned lexical data, validate it, rebuild and publish SQLite. No live admin login or writes were attempted. |
+| OPS-01 | Old admin login and direct database editor | Retired | User confirmed on 2026-10-01: do not copy direct database editing endpoints. Future admin tools should edit versioned source definitions, preview, generate, verify and publish. This is new authoring functionality, not unfinished old-admin migration. |
 | OPS-02 | Old public URLs and bookmarks | Done | Public routes load directly and on refresh. Unknown pages show a recovery page with HTTP 404; missing API/assets remain 404 rather than receiving an HTML success. Old detail links have deliberate 410 handling. Tests cover all public routes, query-preserving redirect, missing files and method handling. |
-| OPS-03 | Old API paths and response formats | Deferred | New typed API is implemented, but it is not a compatibility layer for every old Flask route. Inventory external consumers before retiring old endpoints; add adapters only where needed. Internal new frontend already uses the new contract. |
-| OPS-04 | Old `/update` deployment webhook | Deferred | Not migrated. Current approach builds a reproducible image/database release. Choose the hosting provider and deployment trigger when hosting starts; no need to restore server-side source updates automatically. |
+| OPS-03 | Old API paths and response formats | Retired | Owner confirmed on 2026-10-01 that the only API users are the owner and author, both aware of the migration. Use the new contract; no old-format adapters are required. Public equivalents are documented in the [endpoint inventory](legacy-api.md). |
+| OPS-04 | Old `/update` deployment webhook | Retired | Use a build/test/publish workflow. No server-side source-update hook will be copied. Static Cloudflare publishing is being considered; its exporter/browser lookups are not implemented yet. |
 | OPS-05 | Docker deployment verification | In progress | Image build, reference verification, container startup and HTTP health check passed on the Debian VM on 2026-09-29 after correcting release-directory traversal permissions. The server reported the full catalog: 327 entries, 1,278,826 forms and no generation errors. The build now verifies application setup as the runtime user. Before launch, run the full HTTP smoke check and verify HTTPS/domain routing, restart and release rollback. |
 | OPS-06 | Native mobile client | Deferred | Website is the current target. A future client can use the same API. No app implementation is required for website parity. |
 
@@ -179,21 +182,42 @@ coverage or source review beyond the completed parity check.
 - [x] Searchable lexicon, dialect comparison, character insertion, copied forms,
   English/Turkish explorer, shared selection/reverse links and reverse-to-form flow.
 - [x] Full comparison of 1,511,672 previous requests with zero differences;
-  current catalog contains 1,278,826 form records. This proves migration parity
-  with that baseline, not completeness of all Laz grammar or the website.
+  that historical catalog contained 1,278,826 form records. The current schema 2
+  release contains 1,303,622 forms across 1,298,134 requests; all dump requests pass.
+  This does not establish linguistic validity outside dump coverage.
 
-## Remaining implementation order
+## Repository cleanup — completed 2026-10-01
 
-1. Obtain reviewed phrases for WEB-13; extend the existing phrase data/components.
-2. Decide whether automatic feedback delivery is needed (WEB-14). Email drafts
-   work now without a service or credentials.
-3. Obtain a trustworthy production ID/entry mapping for WEB-17 and inventory
-   external API consumers before adding any compatibility adapters (OPS-03).
-4. Resolve LANG/DATA items as examples and reviewed decisions become available.
-5. Define admin editing (OPS-01) and the hosting workflow (OPS-04/05) when requested.
+Removed the old application, obsolete SQL/dump/development database, one-time
+import/capture scripts and stray terminal-output file from the active branch.
+Retained frozen regression rules, fixtures, mapping/provenance records, current
+assets and unfinished phrase placeholders. The extraction AST check passed before
+removal; a checksum test now protects the complete reference snapshot.
+[Recovery instructions](legacy-archive.md) identify the exact Git commit.
+Uploads and generated databases are untouched. No merge or deployment was made.
 
-No ordinary public page is left blocked by the engine. Do not mark translations,
-linguistic corrections or external message delivery complete without evidence.
+## Remaining work
+
+1. Resolve LANG/DATA items only as reviewed examples and decisions become available.
+2. Implement and benchmark a static data exporter/browser lookup layer if proceeding
+   with Cloudflare hosting; keep the working API deployment until replacement is verified.
+3. Design future admin editing around source data and the generator. Old direct
+   database writes and the `/update` webhook are intentionally retired.
+
+### Authoring work outside migration
+
+The missing Laz translations on Pazar, Ardeşen and Fındıklı–Arhavi pages remain
+unfinished, matching the original website. Their three categories and prompts
+are preserved in `draftGuides` in `apps/web/src/site/phrases.ts`. The author can
+replace each `laz: null` independently; no Hopa forms are substituted. These are
+content tasks, not blockers to retiring the old application.
+
+### Documentation corrections on 2026-10-01
+
+Updated current release counts, explicit-prefix support, feedback behaviour and
+contributor setup. Older parity reports remain historical evidence. These stale
+documentation statements did not indicate additional missing conjugation rules.
+See [the current parity report](maintainer-parity.md) for the verified scope.
 
 ## Implementation and verification
 
@@ -201,7 +225,7 @@ linguistic corrections or external message delivery complete without evidence.
 - Content source notes and deliberate editorial changes: [content sources](content-sources.md).
 - Server route handling: `apps/api/src/laz_api/website.py`.
 - Frontend journey tests cover language persistence, phrase category/history,
-  unavailable dialects, feedback draft/context and directory identity/pagination.
+  unfinished dialect placeholders, feedback submission/fallback/context and directory identity/pagination.
 - Backend route tests cover direct loads, redirects, real missing-page status,
   missing assets/API paths, HEAD and unsupported methods.
 - Existing conjugator journeys pass with the new navigation. Engine rules and
@@ -210,6 +234,8 @@ linguistic corrections or external message delivery complete without evidence.
   mobile home, keyboard guide, directory, conjugator and feedback entry point.
 
 ## Evidence and audit limits
+
+Original source paths below are historical; see [Git recovery](legacy-archive.md).
 
 - Local route inventory: `laz_verb_conjugator/frontend/src/App.jsx`.
 - Local page sources: `laz_verb_conjugator/frontend/src/components/`, including

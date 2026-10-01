@@ -1,10 +1,15 @@
 # Lazverbcon remake: architecture and migration
 
-Date: 29 September 2026. Status: core rule migration complete. The typed engine, SQLite publisher, API and mobile-friendly website are implemented. All twelve paradigms use named rule stages; the legacy snapshot is test-only. See the [setup guide](../README.md) for the actual repository layout and [migration notes](../migration/README.md) for coverage and unresolved data issues.
+Updated: 1 October 2026. Status: core rule migration complete. The typed engine, SQLite publisher, API and mobile-friendly website are implemented. All twelve paradigms use named rule stages; the legacy snapshot is test-only. See the [setup guide](../README.md) for the actual repository layout and [migration notes](../migration/README.md) for coverage and unresolved data issues.
 
-## Decision
+## Current implementation
 
 Build a mobile-friendly website with **React, TypeScript and Vite**, backed by **FastAPI**, a standalone **Python conjugation package**, and **SQLite**. Keep these in one repository and deploy one backend application.
+
+A static Cloudflare website with generated data files is now under consideration.
+That exporter and browser lookup layer are not implemented yet; this document
+describes the working API/SQLite architecture. Future administration should edit
+source definitions and publish verified releases, not modify generated rows.
 
 The database recommendation was revised after discussing the write-once/read-many workload. PostgreSQL was initially proposed partly for possible future editorial workflows; those are deferred and do not justify a separate database service now.
 
@@ -12,7 +17,7 @@ The user confirmed that a mobile-friendly website is the first target and that a
 
 The main maintainability improvement comes from separating linguistic rules, lexical data, API contracts and presentation. Changing Flask alone would not solve the current problems.
 
-## What the repository tells us
+## Historical source audit
 
 | Finding | Evidence | Consequence |
 | --- | --- | --- |
@@ -25,7 +30,9 @@ The main maintainability improvement comes from separating linguistic rules, lex
 | The frontends speak different API vocabularies. | `VerbConjugator.jsx` and `v2/VerbDetails.jsx` differ in person codes, dialect codes, request shape and mood encoding. | Define one API schema and generate the TypeScript client from it. |
 | Existing tests are useful but insufficient for parity. | `tests/test_api.py` expects an older response shape; `test_conjugations.py` compares only the first common response key. | Compare every dialect, grammatical analysis and accepted surface variant. |
 
-Paths in this table are relative to `laz_verb_conjugator/`, except the root SQL dump. Counts describe this checkout, not the live website.
+Paths in this table refer to the retired `laz_verb_conjugator/` tree, except the
+root SQL dump. These are historical findings, not current application files.
+See [the archive and recovery instructions](legacy-archive.md).
 
 Two data losses deserve explicit migration cases. The old loader overwrites six same-category duplicate infinitives. The SQL export also collapses spelling/dialect pairs even though 52 such pairs have multiple categories in the source data. The export notebook's saved output records generation errors and later dropped rows; all stored optional-prefix values are null. Preserve the original records and review these differences before declaring the dump complete.
 
@@ -129,7 +136,7 @@ The relational model should cover lexical entries, dialect-specific principal-pa
 
 If a form needs a reviewed editorial override, store the override separately with its reason and provenance. Pass these authored overrides into the engine and apply them consistently to forward results and generated reverse entries so rebuilding the index cannot erase the correction.
 
-**Published serving:** both forward conjugation and reverse lookup query the generated SQLite database. The engine runs during generation and in an explicit development preview mode. Missing generated requests return `not_generated`; the API never silently falls back to computing a form. Normalized search keys are indexed during generation. The current full build contains 1,278,826 form records from 1,273,322 grammatical requests and 327 lexical entries.
+**Published serving:** both forward conjugation and reverse lookup query the generated SQLite database. The engine runs during generation and in an explicit development preview mode. Missing generated requests return `not_generated`; the API never silently falls back to computing a form. Normalized search keys are indexed during generation. The current full build contains 1,303,622 form records from 1,298,134 grammatical requests and 327 lexical entries.
 
 Preserve exact, alternate-spelling and broader search tiers as separate match types. Search normalization must not change the spelling returned to the learner. Treat broad matches as approximate. Prefix suggestions and linguistic equivalence need separate tests.
 
@@ -158,7 +165,11 @@ Generate the TypeScript API client from OpenAPI and check for schema drift in CI
 
 Prioritize the conjugator, searchable lexicon, reverse lookup, dialect comparison, English/Turkish interface, special-character input and copy/share behavior. Keep UI state local or in a small reducer; share searches through URL parameters. Centralize translations and accessible controls.
 
-Treat admin editing, feedback integration and the broader learning-portal content as subsequent scope decisions. Existing feedback currently uses an external Google Apps Script; retaining that integration needs an explicit product decision when that feature is implemented.
+The public learning pages are migrated, including the original unfinished phrase
+placeholders. Feedback uses the original Google Apps Script destination with
+timeout/error handling and an email fallback. The owner confirmed
+[feedback delivery](feedback.md) works on 2026-10-01. Old direct-database admin writes are intentionally retired.
+See the [API inventory](legacy-api.md) for public equivalents and compatibility scope.
 
 ## Migration sequence and completion checks
 
@@ -196,12 +207,19 @@ Use one API service with a local read-only SQLite file, with the website served 
 
 Revisit the admin editor once adding or correcting an entry has a reliable validation and publication path.
 
+Old bookmark redirects and old API compatibility are intentionally retired: the
+owner confirmed on 2026-10-01 that neither is required. Existing recovery pages
+remain, and known API users will use the new contract.
+
 ## What remains uncertain
 
 Live-site access is optional for understanding and migrating the implementation. Source inspection and local execution expose the rules more directly. The live site can help compare deployed outputs, interface behavior and any production-only corrections. A current data export can supply production-only data without live administrative access. Neither source code nor matching the live site establishes linguistic correctness; disputed forms still need reviewed examples.
 
-- Which historical mismatches represent corrections versus regressions. The maintainer's linguistic judgment is needed when concrete examples are available.
-- Whether the checked-in lexicon and dump include the latest edits made on the live site.
-- Whether the first public release needs all learning-portal pages in addition to the core language tools.
+- Linguistic validity for generated combinations absent from the authoritative dump.
+- Static export sizes and mobile lookup performance before switching hosting.
 
-The core implementation passes 5,460 Python tests. Its complete SQLite build finished without unexpected engine failures, and all 4,836 independent reference cases match the published database. These checks establish regression evidence; they do not settle linguistic disagreements or reconcile the historical SQL dump. The runtime rule adapter has been removed. All 1,511,672 previous requests match the new rule implementation; potential optatives have separate complete reference checks.
+The latest maintainer dump is owner-confirmed authoritative. All 582,147 rows
+pass engine and SQLite verification: 483,471 matching conjugations and 98,676
+equivalent rejections, with zero discrepancies. The runtime rule adapter has been
+removed. Historical reference checks remain as additional regression evidence;
+see [the current parity report](maintainer-parity.md) for counts and scope.
