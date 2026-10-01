@@ -82,7 +82,40 @@ For an exact local check of Pages redirects and headers, you can instead run:
 npx wrangler@4 pages dev artifacts/pages --port 8001
 ```
 
-## Upload a test site to Cloudflare Pages
+## Deploy through GitHub (preferred)
+
+The test project is connected to `lewisccz/Lazverbcon`, branch
+`codex/static-export`. Push fixes to that fork and branch to trigger deployment.
+Pushing only to the original `okandale/Lazverbcon` repository does not update the fork.
+
+For a new project, choose **Workers & Pages → Create application → Continue to
+Pages → Connect to Git**. The current dashboard puts the Pages link below the
+Workers creation form. Select the fork, then configure:
+
+| Setting | Value |
+| --- | --- |
+| Production branch | `codex/static-export` |
+| Framework preset | None |
+| Root directory | Leave blank |
+| Build output directory | `artifacts/pages` |
+
+Build command:
+
+```bash
+python -m venv .venv && .venv/bin/pip install -r requirements.lock && .venv/bin/pip install --no-deps . && pnpm --dir apps/web install --frozen-lockfile && .venv/bin/lazcon build --output artifacts/cloudflare.sqlite && .venv/bin/python scripts/build_static.py --database artifacts/cloudflare.sqlite
+```
+
+Environment variables: `PYTHON_VERSION=3.14`, `NODE_VERSION=24`,
+`PNPM_VERSION=11.25.0`, `SKIP_DEPENDENCY_INSTALL=1`.
+
+The initial hosted build succeeded in about nine minutes. After deployment, add
+`new.lazuri.org` under **Custom domains → Set up a domain** and follow the DNS
+prompts. The existing apex-domain site stays separate.
+
+See [Git integration](https://developers.cloudflare.com/pages/get-started/git-integration/)
+and [custom domains](https://developers.cloudflare.com/pages/configuration/custom-domains/).
+
+## Alternative: upload a build manually
 
 Run these commands on your computer, in the repository root:
 
@@ -100,7 +133,7 @@ run only the deploy command. Wrangler prints the preview URL. `static-preview`
 is a Cloudflare deployment label; it does not switch or merge the Git branch.
 These commands create a separate test project and preview deployment.
 
-Use Wrangler for this release: the output has more than 1,000 files, which exceeds
+For manual uploads, use Wrangler: the output has more than 1,000 files, which exceeds
 the dashboard drag-and-drop limit. Wrangler supports 20,000 files and 25 MiB per
 file. No build command or backend environment variables are needed for a direct
 upload. If you want Git-triggered Cloudflare builds later, create a separate Git
@@ -123,6 +156,8 @@ After upload, check:
 ```
 artifacts/pages/
   index.html, 404.html, _redirects, _headers
+  conjugator.html, verbs.html, …  # One HTML shell per public route
+  keyboard/*.html, resources/…   # Nested page shells
   assets/                         # JS and CSS
   images/                         # Existing public images
   data/<content-release-id>/
@@ -147,8 +182,12 @@ several verb files. Long-lived tabs may need a reload after a new deployment if 
 previous release's uncached file is no longer available; failed loads show a retry/
 reload message rather than falling back to a different data release.
 
-Explicit page rewrites preserve deep links. `404.html` disables Pages' blanket SPA
-fallback so absent data/assets stay HTTP errors. See
+Every public route has a matching HTML file, using Pages' native clean URLs:
+`conjugator.html` is served at `/conjugator`, for example. Do not replace these
+files with rewrites to `/index.html`: the first hosted deployment showed that
+Pages canonicalizes that rewrite target to `/`, sending visitors back to home.
+`_redirects` now contains only the legacy verb-directory redirect. `404.html`
+disables Pages' blanket SPA fallback so absent data/assets stay HTTP errors. See
 [Serving Pages](https://developers.cloudflare.com/pages/configuration/serving-pages/),
 [redirects](https://developers.cloudflare.com/pages/configuration/redirects/), and
 [headers](https://developers.cloudflare.com/pages/configuration/headers/).
@@ -195,7 +234,20 @@ Release `103fa843388fca222dbe`:
 - Complete site: 1,197 uploaded files, about 108 MiB before HTTP compression.
 - 6,670 Python tests and 43 frontend tests passed, including the smaller static fixture.
 
-These are local checks. Cloudflare upload and a feedback receipt from the Pages
-origin remain deployment checks for the test site. Forms outside the maintainer
+The first GitHub-connected Cloudflare build uploaded all files successfully, but
+HTTP inspection caught `/conjugator?lang=en` redirecting to `/?lang=en` with 308.
+The route-file fix rebuilds successfully and has regression coverage for all 18
+non-home pages. Its live deployment still needs the following check:
+
+```bash
+.venv/bin/python scripts/smoke_static.py https://lazverbcon-6g0.pages.dev
+```
+
+This checks every public URL with and without trailing slashes, preserved query
+parameters, and genuine 404 responses for missing pages, assets, data and API URLs.
+The optional local Cloudflare runtime check was not run because permission to
+install/run Wrangler was declined. Vite preview does not verify Cloudflare routing.
+
+A feedback receipt from the Pages origin remains a deployment check. Forms outside the maintainer
 fixture retain the existing migration coverage limits; exporting does not add new
 linguistic validation.

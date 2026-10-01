@@ -259,7 +259,11 @@ Original source paths below are historical; see [Git recovery](legacy-archive.md
 - [x] Preserve content pages, shared URLs, language selection and feedback delivery code.
 - [x] Verify every maintainer fixture request and every exported search reference.
 - [x] Add reproducible Pages build, cache/route configuration and CI verification.
-- [ ] Deploy the separate Pages test project and check its public preview URL.
+- [x] Deploy the separate Pages test project through the user's GitHub fork.
+- [ ] Redeploy the route-file fix and run `scripts/smoke_static.py` against the public URL.
+  The first deployment generated/uploaded the full release, but the index.html
+  rewrites redirected public page URLs to home. Native page files replace those
+  rewrites; all 18 non-home routes have local regression coverage.
 - [ ] Confirm feedback receipt from the Pages origin (existing destination unchanged).
 
 The remaining items are deployment verification. See [static hosting](static-hosting.md)

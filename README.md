@@ -17,7 +17,8 @@ After installing the development dependencies below:
 ```
 
 Use your current full catalog path. This creates `artifacts/pages`, ready to
-upload with Wrangler. See [build, preview and Pages deployment instructions](docs/static-hosting.md).
+upload or publish through Cloudflare's GitHub integration. See
+[build, preview and Pages deployment instructions](docs/static-hosting.md).
 Generated data and build folders remain Git-ignored.
 
 ## API version: Docker

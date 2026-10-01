@@ -15,6 +15,24 @@ from laz_api.website import PUBLIC_PAGES
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def write_page_routes(site):
+    """Use Pages' native clean-URL files instead of rewriting to index.html.
+
+    Pages canonicalizes /index.html to /. A 200 rewrite to that filename can
+    therefore send the browser back to the home page and lose its route.
+    /conjugator.html is served at /conjugator without changing the requested page.
+    """
+    shell = (site / "index.html").read_bytes()
+    for route in sorted(PUBLIC_PAGES):
+        if route:
+            page = site / f"{route}.html"
+            page.parent.mkdir(parents=True, exist_ok=True)
+            page.write_bytes(shell)
+    # Keep real 404s for missing pages, data and assets, instead of SPA fallback.
+    (site / "404.html").write_bytes(shell)
+    (site / "_redirects").write_text("/v2/verbs /verbs 301\n")
+
+
 def build(database, output, data=None):
     output = output.resolve()
     marker = ".laz-static-build"
@@ -44,16 +62,7 @@ def build(database, output, data=None):
             check=True,
         )
         shutil.copytree(data, site / "data" / manifest["release"])
-        # Explicit page rewrites and a 404 disable Pages' blanket SPA fallback.
-        # Missing data files must remain errors, never a successful HTML response.
-        routes = [
-            f"/{route}{suffix} /index.html 200"
-            for route in sorted(PUBLIC_PAGES)
-            if route
-            for suffix in ("", "/")
-        ]
-        (site / "_redirects").write_text("\n".join(["/v2/verbs /verbs 301", *routes]) + "\n")
-        shutil.copyfile(site / "index.html", site / "404.html")
+        write_page_routes(site)
         (site / "_headers").write_text(
             "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n"
             "/data/*\n  Cache-Control: public, max-age=31536000, immutable\n"
