@@ -49,3 +49,41 @@ jobs:
         run: docker compose logs
       - if: always()
         run: docker compose down
+  static-site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          cache: pip
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '11.25.0'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+          cache-dependency-path: apps/web/pnpm-lock.yaml
+      - run: pip install -r requirements.lock && pip install --no-deps -e .
+      - run: pnpm --dir apps/web install --frozen-lockfile
+      # Small shards deliberately exercise suggestions across file boundaries.
+      - run: python scripts/static_test_cases.py artifacts/static-test
+      - run: pnpm --dir apps/web exec vitest run src/api/static.integration.test.mjs
+        env:
+          LAZ_STATIC_TEST_DIR: ../../artifacts/static-test
+      - run: lazcon build --output artifacts/release.sqlite
+      - run: lazcon export-static --database artifacts/release.sqlite --output artifacts/static-data
+      - run: python scripts/verify_static.py artifacts/static-data artifacts/release.sqlite
+      - run: python scripts/static_test_cases.py artifacts/static-full-test --database artifacts/release.sqlite
+      - run: pnpm --dir apps/web exec vitest run src/api/static.integration.test.mjs
+        env:
+          LAZ_STATIC_TEST_DIR: ../../artifacts/static-full-test
+          LAZ_STATIC_DATA: ../../artifacts/static-data
+      - run: python scripts/build_static.py --data artifacts/static-data --output artifacts/pages
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cloudflare-pages
+          path: artifacts/pages
+          retention-days: 7

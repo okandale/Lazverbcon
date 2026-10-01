@@ -4,7 +4,23 @@ A mobile-friendly Laz verb explorer, an independent Python conjugation engine,
 and a reproducible SQLite publisher. The active tree contains the new app.
 The original application is preserved in Git history; see [legacy recovery](docs/legacy-archive.md).
 
-## Quick start: Docker
+## Static website: Cloudflare Pages
+
+The public website can now run entirely from static files. Python generates a
+verified SQLite catalog locally; the exporter turns it into small JSON files.
+The browser loads the selected verb and search results as needed.
+
+After installing the development dependencies below:
+
+```bash
+.venv/bin/python scripts/build_static.py --database artifacts/cleanup-2026-10-01.sqlite
+```
+
+Use your current full catalog path. This creates `artifacts/pages`, ready to
+upload with Wrangler. See [build, preview and Pages deployment instructions](docs/static-hosting.md).
+Generated data and build folders remain Git-ignored.
+
+## API version: Docker
 
 With Docker and [Docker Compose](https://docs.docker.com/reference/compose-file/services/)
 installed and running, run this from the repository root:

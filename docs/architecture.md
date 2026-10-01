@@ -4,12 +4,15 @@ Updated: 1 October 2026. Status: core rule migration complete. The typed engine,
 
 ## Current implementation
 
-Build a mobile-friendly website with **React, TypeScript and Vite**, backed by **FastAPI**, a standalone **Python conjugation package**, and **SQLite**. Keep these in one repository and deploy one backend application.
+The website uses **React, TypeScript and Vite**. The public static build runs on
+Cloudflare Pages without an API server. A standalone **Python conjugation package**
+generates and verifies **SQLite** locally, then exports small JSON files for the
+browser. The **FastAPI** deployment remains available for comparison and API use.
 
-A static Cloudflare website with generated data files is now under consideration.
-That exporter and browser lookup layer are not implemented yet; this document
-describes the working API/SQLite architecture. Future administration should edit
-source definitions and publish verified releases, not modify generated rows.
+The [static hosting guide](static-hosting.md) describes the implemented exporter,
+browser query layer and deployment. The API sections below describe the retained
+server deployment. Future administration should edit source definitions and
+publish verified releases, not modify generated rows.
 
 The database recommendation was revised after discussing the write-once/read-many workload. PostgreSQL was initially proposed partly for possible future editorial workflows; those are deferred and do not justify a separate database service now.
 

@@ -4,6 +4,9 @@
 /lewis-upload/
 /.pnpm-store/
 /.ruff_cache/
+.wrangler/
+.dev.vars
+.dev.vars.*
 *.tsbuildinfo
 node_modules/
 apps/web/dist/

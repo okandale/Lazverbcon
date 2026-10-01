@@ -22,6 +22,10 @@ def main():
     build.add_argument(
         "--verb", action="append", help="Limit by exact infinitive or entry ID; repeatable"
     )
+    export = commands.add_parser("export-static", help="Export a catalog for browser-only hosting")
+    export.add_argument("--database", type=Path, required=True)
+    export.add_argument("--output", type=Path, required=True)
+    export.add_argument("--allow-partial", action="store_true")
     query = commands.add_parser("conjugate", help="Inspect a concrete engine request")
     query.add_argument("verb")
     query.add_argument("--dialect", choices=list(Dialect), default="AS")
@@ -54,6 +58,15 @@ def main():
             print(str(exc), file=sys.stderr)
             raise SystemExit(1) from exc
         print(json.dumps(report, ensure_ascii=False, indent=2))
+    elif args.command == "export-static":
+        from .static_export import export_catalog
+
+        print(
+            json.dumps(
+                export_catalog(args.database, args.output, allow_partial=args.allow_partial),
+                indent=2,
+            )
+        )
     elif args.command == "conjugate":
         entries = [e for e in load_entries() if args.verb in (e.id, e.infinitive)]
         if not entries:

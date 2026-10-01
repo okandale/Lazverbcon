@@ -251,3 +251,17 @@ Original source paths below are historical; see [Git recovery](legacy-archive.md
   were not tested. This is a public page/source audit, not a production data audit.
 - The live phrase pages and revised events text show that the checkout does not
   contain all current site content. Consult both sources during the remaining work.
+
+## Static publishing (1 October 2026)
+
+- [x] Export every catalog request and form into bounded static files.
+- [x] Browser forward/reverse lookup, suggestions, option validation and lexical search.
+- [x] Preserve content pages, shared URLs, language selection and feedback delivery code.
+- [x] Verify every maintainer fixture request and every exported search reference.
+- [x] Add reproducible Pages build, cache/route configuration and CI verification.
+- [ ] Deploy the separate Pages test project and check its public preview URL.
+- [ ] Confirm feedback receipt from the Pages origin (existing destination unchanged).
+
+The remaining items are deployment verification. See [static hosting](static-hosting.md)
+for commands, output sizes and the browser/API parity checks. The existing API and
+Docker build remain available; they are not required by the static public site.

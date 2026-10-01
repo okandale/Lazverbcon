@@ -1,9 +1,14 @@
 import createClient from "openapi-fetch";
 import type { components, paths } from "./schema";
+import { createStaticFetch } from "./static";
+
+const transport = import.meta.env.VITE_STATIC_DATA
+  ? createStaticFetch(import.meta.env.VITE_STATIC_DATA)
+  : (request: globalThis.Request) => globalThis.fetch(request);
 
 export const api = createClient<paths>({
   baseUrl: window.location.origin,
-  fetch: (request) => globalThis.fetch(request),
+  fetch: transport,
 });
 export type Entry = components["schemas"]["Entry"];
 export type Request = components["schemas"]["ConjugationRequest"];
