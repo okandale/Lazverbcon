@@ -60,6 +60,12 @@ class Causative(StrEnum):
     DOUBLE = "double"
 
 
+class OptionalPrefix(StrEnum):
+    NONE = "none"
+    KO = "ko"
+    DO = "do"
+
+
 @dataclass(frozen=True)
 class PrincipalPart:
     form: str
@@ -93,6 +99,7 @@ class Features:
     applicative: bool = False
     causative: Causative = Causative.NONE
     optional_preverb: bool = False
+    optional_prefix: OptionalPrefix = OptionalPrefix.NONE
 
 
 @dataclass(frozen=True, order=True)

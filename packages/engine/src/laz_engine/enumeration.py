@@ -1,12 +1,28 @@
 """Finite, documented coverage of the reference engine's supported interface."""
 
+from dataclasses import replace
 from itertools import product
 
+from .maintainer import prefixes
 from .models import Causative, Derivation, Entry, Features, Mood, Person, Tense, VerbClass
 from .validation import validate
 
 
 def iter_features(entry: Entry, profile: str = "full"):
+    seen = set()
+    for features in _regular_features(entry, profile):
+        if features not in seen:
+            seen.add(features)
+            yield features
+        if profile == "full" and not features.optional_preverb:
+            for prefix in prefixes(entry.id, features.dialect):
+                explicit = replace(features, optional_prefix=prefix)
+                if explicit not in seen and validate(entry, explicit) is None:
+                    seen.add(explicit)
+                    yield explicit
+
+
+def _regular_features(entry: Entry, profile: str = "full"):
     if profile not in {"core", "full"}:
         raise ValueError("Profile must be core or full")
     tenses = (Tense.PRESENT,) if profile == "core" else tuple(Tense)

@@ -3,6 +3,36 @@
 The [website migration checklist](migration-backlog.md) tracks missing pages,
 integrations and the language/data decisions alongside this engine guide.
 
+## Authoritative conjugation target
+
+On 2026-10-01 the project owner confirmed that `lewis-upload/lazverbcon2.dump`
+is the latest, authoritative database. It includes manual corrections absent
+from the original notebooks and frozen engine. When they disagree, target the
+dump's conjugations. Agreement with the frozen engine does not justify keeping
+a conflicting output.
+
+Implement corrections in the rules and versioned lexical data, then regenerate
+SQLite. Use explicit, narrowly scoped lexical exceptions where necessary to
+preserve manual corrections; do not patch the generated database or require the
+ignored upload at runtime. Generalize a rule only as far as the evidence supports.
+
+For each correction, retain the dump row IDs, grammatical inputs and expected
+outputs in regression evidence. Keep the frozen reference unchanged and record
+intentional departures separately. Reconcile legacy identities so every dump
+row is accounted for, including N/A rows as structured unsupported results.
+Different prefixes, meanings, dialects and grammatical analyses must remain
+distinguishable.
+
+Completion requires reproducing the dump's conjugations for every resolved
+request after a clean rebuild, with no unexplained differences or unmapped rows.
+Report apparent dump errors or contradictory records to the owner with concrete
+examples before excluding or changing them. A suspected import problem is not
+permission to discard a stored correction. Additional requests absent from the
+dump remain separately validated; absence alone does not mean they are invalid.
+
+See the [initial exhaustive comparison](database-comparison-2026-10-01.md) and
+[completed dump verification](maintainer-parity.md).
+
 ## Runtime flow
 
 `laz_engine.engine.conjugate(entry, features)` accepts one entry, dialect, subject,
@@ -34,6 +64,8 @@ merge similar-looking rules without comparing their outputs.
 | Shared, identical preverb branches | `paradigms/dative_preverbs.py`, `paradigms/ergative_preverbs.py` |
 | Compound handling and phonetic changes | `rules/phonology.py` |
 | Ordered preverb recognition | `rules/preverbs.py` |
+| Explicit `ko`/`do` attachment | `rules/optional_prefixes.py` |
+| Attested prefix availability per entry/dialect | `data/maintainer.json` |
 | Vowel markers | `rules/markers.py` |
 | Endings independent of the stem | `rules/endings.py` |
 | Dialect pronouns used for display | `rules/pronouns.py` |
@@ -50,6 +82,31 @@ different branches remain with their own tense. Large tables use the order
 1sg, 2sg, 3sg, 1pl, 2pl, 3pl. Display pronouns never determine person IDs.
 
 ## Verification
+
+Every Docker build now runs `scripts/verify_maintainer_release.py` against the
+fresh SQLite catalog. The compressed test fixture contains expected spelling/frame
+sets and source row IDs for every dump request. It is never loaded by the runtime
+engine. The same verifier without a database argument checks the pure engine.
+It fails on missing forms, extra forms for an attested request, wrong frames,
+rejected valid requests or accepted N/A combinations.
+
+```bash
+python scripts/verify_maintainer_release.py
+lazcon build --output artifacts/next.sqlite
+python scripts/verify_maintainer_release.py artifacts/next.sqlite
+```
+
+The former boolean `optional_preverb` remains for old shared links. New requests
+use `optional_prefix` (`none`, `ko`, `do`); the two settings cannot be combined.
+Explicit prefixes use the base form independently of the old boolean rule.
+
+`tests/fixtures/maintainer-corrections.json` records corrected dump spellings,
+row IDs and neighboring unchanged cases. It takes precedence over the frozen
+engine for those exact requests. Its 96 inferred applicative/simple-causative
+cases are explicitly labeled and preserve the existing equivalence; they are
+not presented as rows stored in the dump. Both pytest and the Docker release
+check verify these cases. See [the correction report](rule-corrections-2026-10-01.md)
+for the rule scope and remaining differences.
 
 Run `pytest -q` for the fixed reference fixtures, cross-entry comparisons,
 potential optative coverage and API/catalog tests. The frozen implementation in

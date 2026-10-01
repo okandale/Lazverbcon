@@ -17,6 +17,7 @@ const features: Match["features"] = {
   applicative: false,
   causative: "none",
   optional_preverb: false,
+  optional_prefix: "none",
 };
 const form: Match["form"] = {
   spelling: "doviba",
@@ -84,4 +85,31 @@ it("opens all grouped dialects when their optional-preverb setting agrees", () =
     })),
   };
   expect(requestFromMatch(group).dialects).toEqual(["AS", "PZ", "HO"]);
+});
+
+it("preserves explicit prefixes when opening grouped results", () => {
+  const explicit: Match = {
+    ...match,
+    features: { ...features, optional_prefix: "ko" },
+    variants: [
+      { features: { ...features, optional_prefix: "ko" }, form },
+      { features: { ...features, dialect: "PZ", optional_prefix: "do" }, form },
+    ],
+  };
+  expect(requestFromMatch(explicit)).toMatchObject({
+    dialects: ["AS"],
+    optional_prefix: "ko",
+    optional_preverb: false,
+  });
+  const onSelect = vi.fn();
+  render(<ReverseMatch match={explicit} language="en" onSelect={onSelect} />);
+  fireEvent.click(screen.getByText("Dialects and options"));
+  fireEvent.click(
+    screen.getByRole("button", { name: "Explore this form: Pazar · do" }),
+  );
+  expect(requestFromMatch(onSelect.mock.calls[0][0])).toMatchObject({
+    dialects: ["PZ"],
+    optional_prefix: "do",
+    optional_preverb: false,
+  });
 });

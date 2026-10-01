@@ -286,15 +286,39 @@ export function App() {
                             />
                             {t.applicative}
                           </label>
-                          <label className="check">
-                            <input
-                              type="checkbox"
-                              checked={draft.optional_preverb ?? false}
-                              onChange={(e) =>
-                                update("optional_preverb", e.target.checked)
+                          <label className="field">
+                            <span>{t.optional}</span>
+                            <select
+                              value={
+                                draft.optional_preverb
+                                  ? "legacy"
+                                  : (draft.optional_prefix ?? "none")
                               }
-                            />
-                            {t.optional}
+                              onChange={(e) => {
+                                setDraft((previous) => ({
+                                  ...previous,
+                                  optional_preverb: e.target.value === "legacy",
+                                  optional_prefix:
+                                    e.target.value === "legacy"
+                                      ? "none"
+                                      : (e.target.value as
+                                          "none" | "ko" | "do"),
+                                }));
+                                setSubmitted(null);
+                                setNotice("");
+                              }}
+                            >
+                              <option value="none">{t.none}</option>
+                              <option value="ko">ko</option>
+                              <option value="do">do</option>
+                              {draft.optional_preverb && (
+                                <option value="legacy">
+                                  {language === "en"
+                                    ? "Previous setting"
+                                    : "Önceki seçenek"}
+                                </option>
+                              )}
+                            </select>
                           </label>
                         </div>
                       </details>

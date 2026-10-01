@@ -15,8 +15,16 @@ export function ReverseMatch({
   const t = labels[language];
   const n = names[language];
   const dialects = [...new Set(match.variants.map((v) => v.features.dialect))];
+  const prefixLabel = (features: Match["features"]) =>
+    features.optional_prefix && features.optional_prefix !== "none"
+      ? features.optional_prefix
+      : features.optional_preverb
+        ? t.optional
+        : language === "en"
+          ? "No optional preverb"
+          : "İsteğe bağlı ön fiil yok";
   const mixedPreverbs =
-    new Set(match.variants.map((v) => v.features.optional_preverb)).size > 1;
+    new Set(match.variants.map((v) => prefixLabel(v.features))).size > 1;
   return (
     <article className="match">
       <div>
@@ -37,8 +45,10 @@ export function ReverseMatch({
           {match.features.causative !== "none" &&
             ` · ${t.causative}: ${n[match.features.causative]}`}
           {!mixedPreverbs &&
-            match.features.optional_preverb &&
-            ` · ${t.optional}`}
+            (match.features.optional_preverb ||
+              (match.features.optional_prefix &&
+                match.features.optional_prefix !== "none")) &&
+            ` · ${prefixLabel(match.features)}`}
         </small>
         <details className="analysis-details">
           <summary>
@@ -49,8 +59,8 @@ export function ReverseMatch({
           {mixedPreverbs && (
             <p>
               {language === "en"
-                ? "This spelling occurs with and without the optional preverb."
-                : "Bu biçim, isteğe bağlı ön fiille ve ön fiilsiz oluşur."}
+                ? "Several prefix settings give this spelling."
+                : "Birden fazla ön ek seçeneği bu biçimi verir."}
             </p>
           )}
           <ul>
@@ -58,15 +68,11 @@ export function ReverseMatch({
               <li key={index}>
                 <span>
                   {dialectNames[variant.features.dialect]} ·{" "}
-                  {variant.features.optional_preverb
-                    ? t.optional
-                    : language === "en"
-                      ? "No optional preverb"
-                      : "İsteğe bağlı ön fiil yok"}
+                  {prefixLabel(variant.features)}
                 </span>
                 <button
                   type="button"
-                  aria-label={`${t.open}: ${dialectNames[variant.features.dialect]} · ${variant.features.optional_preverb ? t.optional : language === "en" ? "No optional preverb" : "İsteğe bağlı ön fiil yok"}`}
+                  aria-label={`${t.open}: ${dialectNames[variant.features.dialect]} · ${prefixLabel(variant.features)}`}
                   onClick={() =>
                     onSelect({ ...match, ...variant, variants: [variant] })
                   }

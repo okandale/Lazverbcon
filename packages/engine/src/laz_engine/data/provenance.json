@@ -15,5 +15,18 @@
     "laz_verb_conjugator/backend/notebooks/tvm_tve_presentperf.py": "1849070d9949496653190ab467762b1ed9ed79889c188b4e72495377331e53a0",
     "laz_verb_conjugator/backend/utils.py": "5f15f7c73c8ec3fd0c27594df020f8b2354ef631076a7179b9ab4faea6bbcf1a",
     "laz_verb_conjugator/backend/data/verb_data.json": "87b52396858c8c453f4d45067440b3437f79e5afdd7716d3e4efbe7c180f26e4"
+  },
+  "maintainer_updates": {
+    "source": "lazverbcon2.dump",
+    "sha256": "54964059bff2c7dbd5ae465235ce649f1a49491299116ccbf51757d0a280c35d",
+    "lexicon": [
+      {
+        "entry_id": "verb-0086",
+        "legacy_verb_id": "1357",
+        "change": "Add Hopa principal part meǩorums from the latest corrected dump."
+      }
+    ],
+    "mapping_ledger": "migration/maintainer-mappings.json",
+    "prefix_metadata": "data/maintainer.json"
   }
 }

@@ -71,6 +71,10 @@ def _prepare_stem(form: Morphology) -> None:
     form.preverb = find_preverb(
         request.main_infinitive, preverbs_rules, excluded=request.infinitive in preverb_exceptions
     )
+    # The corrected dump recognizes e- here only for applicative eç̌opu.
+    # Adding e to the general future table changes other attested forms.
+    if request.infinitive == "eç̌opu" and request.applicative:
+        form.preverb = "e"
     form.root = process_compound_verb(form.principal_part)
     if form.preverb and form.root.startswith(form.preverb):
         form.root = form.root[len(form.preverb) :]
@@ -110,6 +114,9 @@ def _apply_markers(form: Morphology) -> None:
 def _apply_preverbs(form: Morphology) -> None:
     """Apply preverbs for ergative future."""
     request = form.request
+    if request.infinitive == "eç̌opu" and request.applicative:
+        _echopu_applicative_agreement(form)
+        return
     if (
         request.infinitive == "gonǯǩu"
         and (request.obj in ("O3_Singular", "O3_Plural") or request.obj is None)
@@ -266,6 +273,25 @@ def _apply_preverbs(form: Morphology) -> None:
                 if form.root.startswith("n"):
                     form.root = form.root[1:]
                 form.prefix = form.adjusted_prefix
+
+
+def _echopu_applicative_agreement(form: Morphology) -> None:
+    """Place agreement after e-; use y- when no agreement consonant intervenes."""
+    request = form.request
+    if request.obj in ("O2_Singular", "O2_Plural") and request.subject not in (
+        "S2_Singular",
+        "S2_Plural",
+    ):
+        form.prefix = "eg"
+    elif request.obj in ("O1_Singular", "O1_Plural") and request.subject not in (
+        "S1_Singular",
+        "S1_Plural",
+    ):
+        form.prefix = "em"
+    elif request.subject in ("S1_Singular", "S1_Plural"):
+        form.prefix = "e" + adjust_prefix("v", form.first_letter, form.phonetic_rules_v)
+    else:
+        form.prefix = "y"
 
 
 def _adjust_stem(form: Morphology) -> None:

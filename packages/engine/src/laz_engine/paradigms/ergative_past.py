@@ -360,6 +360,15 @@ def _finish_form(form: Morphology) -> str:
         and (not request.causative)
     ):
         form.prefix = "(do)p̌"
+        # lazverbcon2 rows 362779/815/851 and 362995/363031/067 correct
+        # only singular I -> you; the dump retains p̌ in plural requests.
+        if (
+            request.infinitive == "oxenu"
+            and request.region in ("AŞ", "PZ", "FA")
+            and request.subject == "S1_Singular"
+            and request.obj == "O2_Singular"
+        ):
+            form.prefix = "(do)ǩ"
         form.final_root = "qv" if request.region in "HO" else ""
     elif (
         request.infinitive in ("oxenu", "oxvenu")

@@ -1,5 +1,6 @@
 """Pure conjugation: validate, select a paradigm, and return explicit form variants."""
 
+from dataclasses import replace
 from functools import lru_cache
 from importlib import import_module
 
@@ -12,14 +13,16 @@ from .models import (
     Features,
     Form,
     Mood,
+    OptionalPrefix,
     Result,
     Tense,
     VerbClass,
 )
 from .paradigms.state import RuleRequest
+from .rules.optional_prefixes import attach
 from .rules.phonology import get_first_word, process_compound_verb
 from .rules.pronouns import get_personal_pronouns
-from .validation import unavailable, validate
+from .validation import unavailable, validate, validate_base
 
 PAST_AS_PROGRESSIVE = frozenset({"uğun", "oçkinu", "uyonun", "uqoun", "unon"})
 PARADIGMS = {
@@ -95,6 +98,25 @@ def negative_imperative(spelling: str, entry: Entry, dialect: Dialect) -> str:
 
 def conjugate(entry: Entry, features: Features) -> Result:
     problem = validate(entry, features)
+    if problem:
+        return problem
+    return conjugate_regular(entry, features)
+
+
+def conjugate_regular(entry: Entry, features: Features) -> Result:
+    """General rules only; used to audit whether an exception is still needed."""
+    if features.optional_prefix != OptionalPrefix.NONE:
+        base = conjugate_regular(entry, replace(features, optional_prefix=OptionalPrefix.NONE))
+        return replace(
+            base,
+            forms=tuple(
+                sorted(
+                    replace(form, spelling=attach(form.spelling, features.optional_prefix))
+                    for form in base.forms
+                )
+            ),
+        )
+    problem = validate_base(entry, features)
     if problem:
         return problem
     code, tense, mood, frame = select_rule(entry, features)

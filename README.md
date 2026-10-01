@@ -14,7 +14,8 @@ docker compose up --build -d
 ```
 
 Open **http://localhost:8080**. Docker builds the website, installs Python,
-generates the full SQLite database, checks all 4,836 reference cases, and packages
+generates the full SQLite database, checks the historical reference cases and
+every conjugation/rejection in the maintainer's dump, and packages
 everything into one image. No local Python, Node or database setup is required.
 The first build downloads dependencies and generates about 452 MiB of data, so
 allow several minutes. Later builds reuse cached steps when their inputs have
@@ -62,6 +63,16 @@ includes a complete image build and HTTP smoke check. Docker is unavailable in
 the implementation workspace.
 
 ## Migration status
+
+The latest maintainer dump, `lazverbcon2.dump`, is the authoritative conjugation
+target. Every one of its 582,147 rows is covered by the release checks, including
+98,676 rejection rows. Explicit `ko`/`do` prefixes, corrected grammar and lexical
+mappings are implemented. See the [complete verification report](docs/maintainer-parity.md).
+This verifies all attested requests; the generator also supports combinations
+absent from the dump, which do not acquire linguistic validation from this check.
+
+This update uses SQLite schema 2. Rebuild the image/database; existing schema 1
+files are retained as historical evidence and cannot serve the new prefix field.
 
 Reverse lookup groups equivalent spellings across dialects and unchanged
 optional-preverb settings. Counts and pagination refer to groups. Each result's

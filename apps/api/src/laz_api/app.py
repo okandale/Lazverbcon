@@ -18,6 +18,7 @@ from laz_engine.models import (
     Features,
     Form,
     Mood,
+    OptionalPrefix,
     Person,
     PrincipalPart,
     Tense,
@@ -46,6 +47,7 @@ class ConjugationRequest(BaseModel):
     applicative: bool = False
     causative: Causative = Causative.NONE
     optional_preverb: bool = False
+    optional_prefix: OptionalPrefix = OptionalPrefix.NONE
 
 
 class Cell(BaseModel):
@@ -179,6 +181,7 @@ def create_app(database: Path | None = None) -> FastAPI:
                         request.applicative,
                         request.causative,
                         request.optional_preverb,
+                        request.optional_prefix,
                     )
                     restriction = validate(entry, features)
                     try:
@@ -220,6 +223,7 @@ def create_app(database: Path | None = None) -> FastAPI:
             "applicative": [False, True],
             "causative": list(Causative),
             "optional_preverb": [False, True],
+            "optional_prefix": list(OptionalPrefix),
         }
         result = {}
         for field, values in fields.items():
@@ -243,6 +247,7 @@ def create_app(database: Path | None = None) -> FastAPI:
                             candidate.applicative,
                             candidate.causative,
                             candidate.optional_preverb,
+                            candidate.optional_prefix,
                         ),
                     )
                     for subject in subjects

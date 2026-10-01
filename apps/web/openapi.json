@@ -456,6 +456,10 @@
             "type": "boolean",
             "title": "Optional Preverb",
             "default": false
+          },
+          "optional_prefix": {
+            "$ref": "#/components/schemas/OptionalPrefix",
+            "default": "none"
           }
         },
         "additionalProperties": false,
@@ -609,6 +613,10 @@
             "type": "boolean",
             "title": "Optional Preverb",
             "default": false
+          },
+          "optional_prefix": {
+            "$ref": "#/components/schemas/OptionalPrefix",
+            "default": "none"
           }
         },
         "type": "object",
@@ -768,6 +776,15 @@
           "reason"
         ],
         "title": "Option"
+      },
+      "OptionalPrefix": {
+        "type": "string",
+        "enum": [
+          "none",
+          "ko",
+          "do"
+        ],
+        "title": "OptionalPrefix"
       },
       "OptionsResponse": {
         "properties": {

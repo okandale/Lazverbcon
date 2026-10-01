@@ -95,14 +95,23 @@ lookup of the selected `doviguram` form.
 
 ## Engine and data decisions
 
+**Source of truth (owner confirmed 2026-10-01):** `lewis-upload/lazverbcon2.dump`
+contains the latest conjugations and manual corrections. Implement its outputs
+in rules/source data and regenerate SQLite; notebooks and frozen-rule parity
+cannot override it. Report apparent dump errors before making exceptions. See
+the [acceptance and correction policy](rules.md#authoritative-conjugation-target).
+
 See [the rule guide](rules.md) and [migration evidence](../migration/README.md)
 for exact implementation details and tests. These are unresolved language/data
-questions, separate from the missing public pages.
+questions outside the dump's verified coverage, separate from missing public
+pages. Every request actually present in `lazverbcon2.dump` now passes the engine
+and rebuilt-SQLite checks; see [the final report](maintainer-parity.md).
 
 - [ ] **LANG-01:** Define passive optative/imperative and potential imperative
   with reviewed input/output examples; these currently return unsupported.
-- [ ] **LANG-02:** Resolve potential markers, passive simple causative, and
-  optional preverbs in potential/perfect. Source flags lack usable rules.
+- [ ] **LANG-02:** Resolve potential markers and passive simple causative outside
+  the attested dump requests. Explicit optional prefixes in potential/perfect
+  are implemented and verified; the old boolean option keeps its old restrictions.
 - [ ] **LANG-03:** Resolve TVM object/marker branches versus the original
   service restriction before changing accepted combinations.
 - [ ] **LANG-04:** Assign a supported dialect to the orphan `osinapu` principal
@@ -110,23 +119,54 @@ questions, separate from the missing public pages.
 - [ ] **LANG-05:** Review suspicious inherited behavior, including future
   `ele` preverb data and the potential `ceçamu` comparison/assignment branch.
   Preserve current outputs until reviewed examples justify a correction.
-- [ ] **DATA-01:** Reconcile the historical SQL export with the new lexicon and
-  generated forms, accounting for collapsed lexical identities and export losses.
-  This has not been done row by row; a mismatch alone is not proof of a rule error.
-- [ ] **DATA-02:** Resolve the concrete `doviba` discrepancy. Historical SQL rows
-  19959/19971 attach the nominative, unmarked optative in PZ/AS to “to pour”
-  (verb IDs 36/37); row 19995 attaches it in HO to “to flow, to leak” (verb ID 39).
-  The migrated lexicon/reference yields the nominative form for “to flow, to leak”
-  in all three dialects, plus ergative applicative analyses for “to pour”. Review
-  the original data/export mapping and linguistic examples before changing those
-  meanings, dialect assignments or marker rules. UI grouping alone cannot resolve
-  this discrepancy. The old import notebook demonstrably loses class identity:
-  cell 30 (zero-based) deduplicates on `(dialect_id, infinitive)`, and cell 63
-  joins generated forms on that same pair. The SQL dump enforces that unique
-  pair too. This can attach nominative forms to the surviving ergative entry;
-  it supports an export-mapping explanation, not changing the new engine's
-  independently preserved lexical identities. Full historical reconciliation
-  (DATA-01) and the validity of the extra marker analyses remain unresolved.
+- [x] **DATA-01:** All 582,147 dump rows reconciled and verified: 483,471 exact
+  conjugation/frame matches and 98,676 equivalent rejections. Zero spelling,
+  frame, support or row-mapping differences remain. Both the pure engine and
+  a fresh SQLite build pass all 580,129 canonical requests. Docker checks them
+  on every build. [Evidence and scope](maintainer-parity.md).
+- [x] **DATA-02 (dump mapping):** Mixed-class legacy records, including `dobalu`,
+  are mapped by each form's frame for ordinary constructions and by construction
+  for derived forms. Nominative `doviba` rows retain their spelling and grammatical
+  features under the existing nominative entry. The ledger records all legacy
+  IDs; no dump conjugation was discarded. Additional analyses generated for
+  combinations absent from the dump are not validated by dump parity (DATA-04).
+
+### Cases identified by the 2026-10-01 database audit
+
+- [x] **LANG-06:** Explicit `ko`/`do` selection, vowel contraction, optional
+  notation and particle attachment implemented in the engine, API and UI.
+  Availability comes from attested entry/dialect pairs. Old boolean links remain
+  supported separately. All explicit-prefix dump requests pass full verification.
+- [x] **LANG-07 (rules):** Hopa dative past-progressive -en stems retain `r`
+  for the five attested subjects without an object; `oqvapu` keeps its attested
+  shorter ending. All 80 directly mapped dump rows now match. The same rule
+  reproduces the 5 `ožiru` spellings under its existing dative entry; DATA-01
+  resolves their attachment to the old mixed-class record.
+- [x] **LANG-08:** All 192 applicative `eç̌opu` future corrections implemented
+  (64 each in AS/PZ/FA). Agreement follows `e-`, with `y-` before the vowel marker
+  when no agreement consonant intervenes. Kept this specific to the attested
+  construction: changing the general future preverb table breaks other dump forms.
+- [x] **LANG-09:** All 6 `oxenu` past corrections implemented (AS/PZ/FA,
+  no causative or simple causative). Singular I → you uses `(do)ǩi`.
+  Other person combinations retain the dump's existing outputs.
+- [x] **DATA-03:** The `oçindu` duplicates have identical meanings and principal
+  parts in the overlapping dialects; map to `verb-0142`, which also covers Hopa.
+  Added Hopa `meǩorums` to `meǩoru` from dump record 1357. All 580 affected rows
+  pass; the original distinct source IDs remain in the mapping evidence.
+- [ ] **DATA-04 (outside dump coverage):** Review extra generated combinations
+  separately before claiming linguistic validation beyond the dump. The full
+  catalog has 820,151 forms for requests absent from the mapped dump. There are
+  no extra or missing outputs for any request that the dump does contain.
+- [ ] **DATA-05 (source convention review):** The dump writes `komot giğur`
+  (e.g. row 568322), placing the optional prefix before the negative particle.
+  This exact convention is preserved. Linguistic confirmation can be sought
+  later; no source spelling was silently changed or excluded.
+
+The initial audit supplied authoritative correction examples. The first rule
+update is documented in [the correction report](rule-corrections-2026-10-01.md).
+The subsequent [complete verification](maintainer-parity.md) resolves the prefix,
+support and lexical-mapping differences. Open language items above concern
+coverage or source review beyond the completed parity check.
 
 ## Already implemented
 

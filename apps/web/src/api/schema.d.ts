@@ -186,6 +186,8 @@ export interface components {
        * @default false
        */
       optional_preverb: boolean;
+      /** @default none */
+      optional_prefix: components["schemas"]["OptionalPrefix"];
     };
     /** ConjugationResponse */
     ConjugationResponse: {
@@ -252,6 +254,8 @@ export interface components {
        * @default false
        */
       optional_preverb: boolean;
+      /** @default none */
+      optional_prefix: components["schemas"]["OptionalPrefix"];
     };
     /** Form */
     Form: {
@@ -297,6 +301,11 @@ export interface components {
       /** Reason Code */
       reason_code?: string | null;
     };
+    /**
+     * OptionalPrefix
+     * @enum {string}
+     */
+    OptionalPrefix: "none" | "ko" | "do";
     /** OptionsResponse */
     OptionsResponse: {
       /** Dialects */

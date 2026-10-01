@@ -10,10 +10,13 @@ laz_verb_conjugator
 lazverbcon.sql
 lazverbcon.dump
 artifacts
+lewis-upload
 tests/*
 !tests/fixtures/
 tests/fixtures/*
 !tests/fixtures/reference.json
+!tests/fixtures/maintainer-corrections.json
+!tests/fixtures/maintainer-release.jsonl.gz
 docs
 migration
 .env

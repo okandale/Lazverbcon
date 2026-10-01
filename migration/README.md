@@ -3,6 +3,19 @@
 This document covers the engine. For website pages, integrations and remaining
 work, use the [website migration checklist](../docs/migration-backlog.md).
 
+The owner confirmed on 2026-10-01 that `lewis-upload/lazverbcon2.dump` is the
+authoritative conjugation target, including manual corrections absent from this
+reference. Historical parity below is not parity with that dump. Follow the
+[rule update policy](../docs/rules.md#authoritative-conjugation-target) when they
+differ; preserve this frozen reference and record intentional corrections.
+
+All requests in that dump now pass the engine verification. The complete
+[parity report](../docs/maintainer-parity.md) documents the corrected rules,
+797 mappings of legacy records/classes, and independent release verification.
+`maintainer-mappings.json` retains legacy verb IDs and mapping reasons. The
+compressed fixture under `tests/fixtures/` contains expected outputs only for
+testing; the installed engine generates forms from rules and lexical data.
+
 The new public engine is `laz_engine.engine.conjugate(Entry, Features)`. Its input
 models, lexical identity, validation, construction dispatch and output handling
 are independent of Flask, the old database and the original request service.

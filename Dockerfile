@@ -16,8 +16,12 @@ RUN pip install --no-cache-dir -r requirements.lock && pip install --no-cache-di
 FROM backend AS catalog
 RUN lazcon build --output /release/catalog.sqlite
 COPY scripts/verify_release.py /app/scripts/verify_release.py
+COPY scripts/verify_maintainer_release.py /app/scripts/verify_maintainer_release.py
 COPY tests/fixtures/reference.json /app/tests/fixtures/reference.json
+COPY tests/fixtures/maintainer-corrections.json /app/tests/fixtures/maintainer-corrections.json
+COPY tests/fixtures/maintainer-release.jsonl.gz /app/tests/fixtures/maintainer-release.jsonl.gz
 RUN python scripts/verify_release.py /release/catalog.sqlite > /release/verification.json
+RUN python scripts/verify_maintainer_release.py /release/catalog.sqlite > /release/maintainer-verification.json
 
 FROM backend AS runtime
 COPY --from=catalog /release/ /app/release/

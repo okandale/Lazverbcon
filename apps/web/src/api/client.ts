@@ -22,6 +22,7 @@ export const defaults: Request = {
   applicative: false,
   causative: "none",
   optional_preverb: false,
+  optional_prefix: "none",
 };
 
 export async function requireData<T>(result: {
@@ -44,7 +45,9 @@ export function requestFromMatch(match: Match): Request {
       match.variants
         .filter(
           (variant) =>
-            variant.features.optional_preverb === features.optional_preverb,
+            variant.features.optional_preverb === features.optional_preverb &&
+            (variant.features.optional_prefix ?? "none") ===
+              (features.optional_prefix ?? "none"),
         )
         .map((variant) => variant.features.dialect),
     ),

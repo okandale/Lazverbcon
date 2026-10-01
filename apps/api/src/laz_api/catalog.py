@@ -17,7 +17,7 @@ from laz_engine.lexicon import load_entries, search_key
 from laz_engine.models import EngineFailure, Entry, Features
 from laz_engine.orthography import broad_key, strict_key
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 SCHEMA = """
 CREATE TABLE metadata (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE TABLE entries (id TEXT PRIMARY KEY, data TEXT NOT NULL, search TEXT NOT NULL);
@@ -64,7 +64,7 @@ def unpack_form(encoded: str, features: dict) -> dict:
 def engine_revision() -> str:
     digest = hashlib.sha256()
     root = Path(str(files("laz_engine")))
-    for path in sorted(root.rglob("*.py")):
+    for path in sorted(p for p in root.rglob("*") if p.suffix in (".py", ".json")):
         digest.update(str(path.relative_to(root)).encode())
         digest.update(path.read_bytes())
     return digest.hexdigest()
@@ -200,7 +200,9 @@ class Catalog:
                 db.execute("SELECT value FROM metadata WHERE key='manifest'").fetchone()[0]
             )
         if self.manifest["schema_version"] != SCHEMA_VERSION or self.manifest["status"] != "ready":
-            raise ValueError("Unsupported or unpublished database")
+            raise ValueError(
+                "Unsupported or unpublished database; rebuild it with the current lazcon build command."
+            )
 
     def connect(self):
         # sqlite Connection.__exit__ does not close the handle; use closing below.
@@ -279,7 +281,7 @@ class Catalog:
                             {
                                 k: v
                                 for k, v in features.items()
-                                if k not in ("dialect", "optional_preverb")
+                                if k not in ("dialect", "optional_preverb", "optional_prefix")
                             },
                         ]
                     )
@@ -295,6 +297,7 @@ class Catalog:
                         group["variants"],
                         key=lambda v: (
                             v["features"]["optional_preverb"],
+                            v["features"]["optional_prefix"],
                             v["features"]["dialect"],
                             canonical(v),
                         ),

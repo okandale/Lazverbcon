@@ -4,7 +4,20 @@ Unsupported means outside the verified reference interface, not a claim that a
 construction cannot exist in Laz. See migration/README.md for coverage decisions.
 """
 
-from .models import Causative, Derivation, Entry, Features, Mood, Result, Tense, VerbClass
+from dataclasses import replace
+
+from .maintainer import prefixes
+from .models import (
+    Causative,
+    Derivation,
+    Entry,
+    Features,
+    Mood,
+    OptionalPrefix,
+    Result,
+    Tense,
+    VerbClass,
+)
 
 MARKER_REQUIRED = frozenset({"gexvamu", "cexvamu", "otebriǩu", "oteşekkyuru"})
 NO_OBJECT = frozenset({"coxons", "cozun", "gyožin"})
@@ -15,6 +28,24 @@ def unavailable(code: str, message: str) -> Result:
 
 
 def validate(entry: Entry, f: Features) -> Result | None:
+    if f.optional_preverb and f.optional_prefix != OptionalPrefix.NONE:
+        return unavailable(
+            "prefix_conflict", "Choose an explicit prefix or the legacy option, not both."
+        )
+    if f.dialect not in entry.dialects:
+        return unavailable(
+            "dialect_unavailable", "This entry has no principal part in this dialect."
+        )
+    if f.optional_prefix != OptionalPrefix.NONE:
+        if f.optional_prefix not in prefixes(entry.id, f.dialect):
+            return unavailable(
+                "prefix_unavailable", "This prefix is not attested for this verb and dialect."
+            )
+        f = replace(f, optional_prefix=OptionalPrefix.NONE)
+    return validate_base(entry, f)
+
+
+def validate_base(entry: Entry, f: Features) -> Result | None:
     markers = f.applicative or f.causative != Causative.NONE
     if f.dialect not in entry.dialects:
         return unavailable(

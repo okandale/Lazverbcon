@@ -1,10 +1,11 @@
 """Cross-entry regression checks against the frozen, separately executed rules."""
 
 import sys
-from dataclasses import replace
+from dataclasses import asdict, replace
 from pathlib import Path
 
 import pytest
+from laz_api.catalog import canonical
 from laz_engine.engine import conjugate
 from laz_engine.lexicon import load_entries
 from laz_engine.models import Causative, Derivation, Features, Mood, Person, Tense, VerbClass
@@ -16,7 +17,7 @@ from migration.reference.rules.tvm_tve_potential import conjugate_potential_form
 
 
 @pytest.mark.parametrize("entry", load_entries(), ids=lambda entry: entry.id)
-def test_all_entries_against_frozen_rules(entry):
+def test_all_entries_against_frozen_rules(entry, maintainer_cases):
     for dialect in entry.dialects:
         for subject in Person:
             base = Features(dialect, subject)
@@ -39,6 +40,16 @@ def test_all_entries_against_frozen_rules(entry):
                 ]
             for features in scenarios:
                 expected = reference_conjugate(entry, features)
+                correction = maintainer_cases.get((entry.id, canonical(asdict(features))))
+                if correction:
+                    # Only the explicitly recorded spelling changes supersede
+                    # the frozen engine; retain all frame/pronoun/status checks.
+                    assert len(expected.forms) == len(correction["expected"]) == 1
+                    assert expected.forms[0].frame == correction["frame"]
+                    expected = replace(
+                        expected,
+                        forms=(replace(expected.forms[0], spelling=correction["expected"][0]),),
+                    )
                 actual = conjugate(entry, features)
                 assert actual == expected, (entry.id, features, expected, actual)
 

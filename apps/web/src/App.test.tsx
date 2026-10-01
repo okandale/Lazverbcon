@@ -33,6 +33,7 @@ const features = {
   applicative: false,
   causative: "none",
   optional_preverb: false,
+  optional_prefix: "none",
 };
 const form = {
   spelling: "visinapam",
@@ -99,6 +100,25 @@ function mount() {
 }
 
 describe("conjugator journeys", () => {
+  it("clears old results and submits the selected explicit prefix", async () => {
+    mount();
+    await screen.findByText("visinapam");
+    fireEvent.change(screen.getByLabelText("Optional preverb"), {
+      target: { value: "do" },
+    });
+    expect(screen.queryByText("visinapam")).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: /Conjugate verb/ }));
+    await waitFor(() =>
+      expect(calls.at(-1)).toMatchObject({
+        optional_prefix: "do",
+        optional_preverb: false,
+      }),
+    );
+    expect(
+      JSON.parse(new URLSearchParams(window.location.search).get("selection")!),
+    ).toMatchObject({ optional_prefix: "do", optional_preverb: false });
+  });
+
   it("shows forms and clears them when the selection changes", async () => {
     mount();
     await screen.findByText("visinapam");

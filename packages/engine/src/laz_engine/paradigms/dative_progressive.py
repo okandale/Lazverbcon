@@ -109,6 +109,17 @@ def _select_ending(form: Morphology) -> None:
     """Select ending for dative progressive."""
     request = form.request
     form.suffix = form.suffixes[request.subject]
+    # Maintainer dump: Hopa -en stems retain r before the progressive ending
+    # without an object. oqvapu retains the older ending; 3sg is not attested
+    # in these corrected rows. Explicit-object endings are selected below.
+    if (
+        request.region == "HO"
+        and not request.obj
+        and request.subject != "S3_Singular"
+        and form.root.endswith("en")
+        and request.infinitive != "oqvapu"
+    ):
+        form.suffix = "r" + form.suffix
     if form.root.endswith("en"):
         form.root = form.root[:-1]
     if form.root.endswith("s"):

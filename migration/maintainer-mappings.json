@@ -1,0 +1,6381 @@
+{
+  "source_sha256": "54964059bff2c7dbd5ae465235ce649f1a49491299116ccbf51757d0a280c35d",
+  "mappings": {
+    "1:TVM": {
+      "entry_id": "verb-0001",
+      "legacy_verb_id": "1",
+      "infinitive": "avara doskudu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "2:TVM": {
+      "entry_id": "verb-0001",
+      "legacy_verb_id": "2",
+      "infinitive": "avara doskudu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "3:TVM": {
+      "entry_id": "verb-0001",
+      "legacy_verb_id": "3",
+      "infinitive": "avara doskudu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "4:TVM": {
+      "entry_id": "verb-0001",
+      "legacy_verb_id": "4",
+      "infinitive": "avara doskudu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "5:TVE": {
+      "entry_id": "verb-0002",
+      "legacy_verb_id": "5",
+      "infinitive": "cebazgu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "6:TVE": {
+      "entry_id": "verb-0002",
+      "legacy_verb_id": "6",
+      "infinitive": "cebazgu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "7:TVE": {
+      "entry_id": "verb-0003",
+      "legacy_verb_id": "7",
+      "infinitive": "cebgaru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "16:IVD": {
+      "entry_id": "verb-0008",
+      "legacy_verb_id": "16",
+      "infinitive": "cedginu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "17:IVD": {
+      "entry_id": "verb-0008",
+      "legacy_verb_id": "17",
+      "infinitive": "cedginu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "12:TVM": {
+      "entry_id": "verb-0006",
+      "legacy_verb_id": "12",
+      "infinitive": "cegapu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "13:TVM": {
+      "entry_id": "verb-0006",
+      "legacy_verb_id": "13",
+      "infinitive": "cegapu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "14:TVE": {
+      "entry_id": "verb-0007",
+      "legacy_verb_id": "14",
+      "infinitive": "ceginu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "15:TVE": {
+      "entry_id": "verb-0007",
+      "legacy_verb_id": "15",
+      "infinitive": "ceginu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "18:TVE": {
+      "entry_id": "verb-0009",
+      "legacy_verb_id": "18",
+      "infinitive": "celabalu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "19:TVE": {
+      "entry_id": "verb-0009",
+      "legacy_verb_id": "19",
+      "infinitive": "celabalu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "20:TVE": {
+      "entry_id": "verb-0010",
+      "legacy_verb_id": "20",
+      "infinitive": "cemp̌onu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "21:TVM": {
+      "entry_id": "verb-0011",
+      "legacy_verb_id": "21",
+      "infinitive": "cexunu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "22:TVM": {
+      "entry_id": "verb-0011",
+      "legacy_verb_id": "22",
+      "infinitive": "cexunu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "652:TVE": {
+      "entry_id": "verb-0327",
+      "legacy_verb_id": "652",
+      "infinitive": "cexvamu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "653:TVE": {
+      "entry_id": "verb-0327",
+      "legacy_verb_id": "653",
+      "infinitive": "cexvamu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "23:TVE": {
+      "entry_id": "verb-0012",
+      "legacy_verb_id": "23",
+      "infinitive": "ceyonu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "8:TVE": {
+      "entry_id": "verb-0004",
+      "legacy_verb_id": "8",
+      "infinitive": "ceçamu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "9:TVE": {
+      "entry_id": "verb-0004",
+      "legacy_verb_id": "9",
+      "infinitive": "ceçamu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "10:TVE": {
+      "entry_id": "verb-0005",
+      "legacy_verb_id": "10",
+      "infinitive": "ceç̌u",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "11:TVE": {
+      "entry_id": "verb-0005",
+      "legacy_verb_id": "11",
+      "infinitive": "ceç̌u",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "25:TVE": {
+      "entry_id": "verb-0014",
+      "legacy_verb_id": "25",
+      "infinitive": "coxo gedvalu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1330:TVE": {
+      "entry_id": "verb-0014",
+      "legacy_verb_id": "1330",
+      "infinitive": "coxo gedvalu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "30:IVD": {
+      "entry_id": "verb-0017",
+      "legacy_verb_id": "30",
+      "infinitive": "diç̌irs",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "31:IVD": {
+      "entry_id": "verb-0017",
+      "legacy_verb_id": "31",
+      "infinitive": "diç̌irs",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "32:TVM": {
+      "entry_id": "verb-0018",
+      "legacy_verb_id": "32",
+      "infinitive": "dobadu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "33:TVM": {
+      "entry_id": "verb-0018",
+      "legacy_verb_id": "33",
+      "infinitive": "dobadu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "34:TVM": {
+      "entry_id": "verb-0018",
+      "legacy_verb_id": "34",
+      "infinitive": "dobadu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "35:TVM": {
+      "entry_id": "verb-0018",
+      "legacy_verb_id": "35",
+      "infinitive": "dobadu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "36:TVE": {
+      "entry_id": "verb-0019",
+      "legacy_verb_id": "36",
+      "infinitive": "dobalu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "36:TVM": {
+      "entry_id": "verb-0020",
+      "legacy_verb_id": "36",
+      "infinitive": "dobalu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "37:TVE": {
+      "entry_id": "verb-0019",
+      "legacy_verb_id": "37",
+      "infinitive": "dobalu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "37:TVM": {
+      "entry_id": "verb-0020",
+      "legacy_verb_id": "37",
+      "infinitive": "dobalu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "38:TVE": {
+      "entry_id": "verb-0019",
+      "legacy_verb_id": "38",
+      "infinitive": "dobalu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "38:TVM": {
+      "entry_id": "verb-0020",
+      "legacy_verb_id": "38",
+      "infinitive": "dobalu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "39:TVE": {
+      "entry_id": "verb-0019",
+      "legacy_verb_id": "39",
+      "infinitive": "dobalu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "39:TVM": {
+      "entry_id": "verb-0020",
+      "legacy_verb_id": "39",
+      "infinitive": "dobalu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "40:TVE": {
+      "entry_id": "verb-0021",
+      "legacy_verb_id": "40",
+      "infinitive": "dobazginapu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "41:TVE": {
+      "entry_id": "verb-0021",
+      "legacy_verb_id": "41",
+      "infinitive": "dobazginapu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "42:TVE": {
+      "entry_id": "verb-0021",
+      "legacy_verb_id": "42",
+      "infinitive": "dobazginapu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1331:TVE": {
+      "entry_id": "verb-0021",
+      "legacy_verb_id": "1331",
+      "infinitive": "dobazginapu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "43:IVD": {
+      "entry_id": "verb-0022",
+      "legacy_verb_id": "43",
+      "infinitive": "dodginu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "44:IVD": {
+      "entry_id": "verb-0022",
+      "legacy_verb_id": "44",
+      "infinitive": "dodginu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "45:IVD": {
+      "entry_id": "verb-0022",
+      "legacy_verb_id": "45",
+      "infinitive": "dodginu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "1318:IVD": {
+      "entry_id": "verb-0022",
+      "legacy_verb_id": "1318",
+      "infinitive": "dodginu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "46:TVM": {
+      "entry_id": "verb-0023",
+      "legacy_verb_id": "46",
+      "infinitive": "dodgitu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "47:TVM": {
+      "entry_id": "verb-0023",
+      "legacy_verb_id": "47",
+      "infinitive": "dodgitu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "48:TVM": {
+      "entry_id": "verb-0023",
+      "legacy_verb_id": "48",
+      "infinitive": "dodgitu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "49:TVM": {
+      "entry_id": "verb-0023",
+      "legacy_verb_id": "49",
+      "infinitive": "dodgitu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "50:TVE": {
+      "entry_id": "verb-0024",
+      "legacy_verb_id": "50",
+      "infinitive": "dodumu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "51:TVE": {
+      "entry_id": "verb-0024",
+      "legacy_verb_id": "51",
+      "infinitive": "dodumu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "52:TVE": {
+      "entry_id": "verb-0024",
+      "legacy_verb_id": "52",
+      "infinitive": "dodumu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1332:TVE": {
+      "entry_id": "verb-0024",
+      "legacy_verb_id": "1332",
+      "infinitive": "dodumu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "53:TVE": {
+      "entry_id": "verb-0025",
+      "legacy_verb_id": "53",
+      "infinitive": "dodvumu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "54:TVE": {
+      "entry_id": "verb-0026",
+      "legacy_verb_id": "54",
+      "infinitive": "doguru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "55:TVE": {
+      "entry_id": "verb-0026",
+      "legacy_verb_id": "55",
+      "infinitive": "doguru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "56:TVE": {
+      "entry_id": "verb-0026",
+      "legacy_verb_id": "56",
+      "infinitive": "doguru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1333:TVE": {
+      "entry_id": "verb-0026",
+      "legacy_verb_id": "1333",
+      "infinitive": "doguru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "57:TVM": {
+      "entry_id": "verb-0027",
+      "legacy_verb_id": "57",
+      "infinitive": "dogutu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "58:TVM": {
+      "entry_id": "verb-0027",
+      "legacy_verb_id": "58",
+      "infinitive": "dogutu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "59:TVM": {
+      "entry_id": "verb-0027",
+      "legacy_verb_id": "59",
+      "infinitive": "dogutu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "60:TVE": {
+      "entry_id": "verb-0028",
+      "legacy_verb_id": "60",
+      "infinitive": "doinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "61:TVE": {
+      "entry_id": "verb-0028",
+      "legacy_verb_id": "61",
+      "infinitive": "doinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "62:TVE": {
+      "entry_id": "verb-0028",
+      "legacy_verb_id": "62",
+      "infinitive": "doinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1334:TVE": {
+      "entry_id": "verb-0028",
+      "legacy_verb_id": "1334",
+      "infinitive": "doinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "65:TVE": {
+      "entry_id": "verb-0030",
+      "legacy_verb_id": "65",
+      "infinitive": "doloç̌aru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "66:TVE": {
+      "entry_id": "verb-0030",
+      "legacy_verb_id": "66",
+      "infinitive": "doloç̌aru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "67:TVE": {
+      "entry_id": "verb-0030",
+      "legacy_verb_id": "67",
+      "infinitive": "doloç̌aru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1335:TVE": {
+      "entry_id": "verb-0030",
+      "legacy_verb_id": "1335",
+      "infinitive": "doloç̌aru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "68:TVE": {
+      "entry_id": "verb-0031",
+      "legacy_verb_id": "68",
+      "infinitive": "domçinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "69:TVE": {
+      "entry_id": "verb-0031",
+      "legacy_verb_id": "69",
+      "infinitive": "domçinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "74:TVM": {
+      "entry_id": "verb-0033",
+      "legacy_verb_id": "74",
+      "infinitive": "doskidu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "73:TVM": {
+      "entry_id": "verb-0033",
+      "legacy_verb_id": "73",
+      "infinitive": "doskidu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "75:TVM": {
+      "entry_id": "verb-0034",
+      "legacy_verb_id": "75",
+      "infinitive": "dosǩudu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "76:TVM": {
+      "entry_id": "verb-0034",
+      "legacy_verb_id": "76",
+      "infinitive": "dosǩudu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "79:TVE": {
+      "entry_id": "verb-0036",
+      "legacy_verb_id": "79",
+      "infinitive": "dotanu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "79:TVM": {
+      "entry_id": "verb-0037",
+      "legacy_verb_id": "79",
+      "infinitive": "dotanu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "80:TVE": {
+      "entry_id": "verb-0036",
+      "legacy_verb_id": "80",
+      "infinitive": "dotanu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "80:TVM": {
+      "entry_id": "verb-0037",
+      "legacy_verb_id": "80",
+      "infinitive": "dotanu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "81:TVE": {
+      "entry_id": "verb-0036",
+      "legacy_verb_id": "81",
+      "infinitive": "dotanu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "81:TVM": {
+      "entry_id": "verb-0037",
+      "legacy_verb_id": "81",
+      "infinitive": "dotanu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "82:TVE": {
+      "entry_id": "verb-0036",
+      "legacy_verb_id": "82",
+      "infinitive": "dotanu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "82:TVM": {
+      "entry_id": "verb-0037",
+      "legacy_verb_id": "82",
+      "infinitive": "dotanu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "70:TVE": {
+      "entry_id": "verb-0032",
+      "legacy_verb_id": "70",
+      "infinitive": "doşinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "71:TVE": {
+      "entry_id": "verb-0032",
+      "legacy_verb_id": "71",
+      "infinitive": "doşinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "72:TVE": {
+      "entry_id": "verb-0032",
+      "legacy_verb_id": "72",
+      "infinitive": "doşinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "77:TVM": {
+      "entry_id": "verb-0035",
+      "legacy_verb_id": "77",
+      "infinitive": "doşǩvalu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "78:TVM": {
+      "entry_id": "verb-0035",
+      "legacy_verb_id": "78",
+      "infinitive": "doşǩvalu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "63:TVE": {
+      "entry_id": "verb-0029",
+      "legacy_verb_id": "63",
+      "infinitive": "doǩanu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "64:TVE": {
+      "entry_id": "verb-0029",
+      "legacy_verb_id": "64",
+      "infinitive": "doǩanu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1307:IVD": {
+      "entry_id": "verb-0038",
+      "legacy_verb_id": "1307",
+      "infinitive": "doǯonu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "83:IVD": {
+      "entry_id": "verb-0038",
+      "legacy_verb_id": "83",
+      "infinitive": "doǯonu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "1312:IVD": {
+      "entry_id": "verb-0038",
+      "legacy_verb_id": "1312",
+      "infinitive": "doǯonu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "1336:IVD": {
+      "entry_id": "verb-0038",
+      "legacy_verb_id": "1336",
+      "infinitive": "doǯonu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "84:IVD": {
+      "entry_id": "verb-0039",
+      "legacy_verb_id": "84",
+      "infinitive": "dvaç̌irs",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "85:IVD": {
+      "entry_id": "verb-0039",
+      "legacy_verb_id": "85",
+      "infinitive": "dvaç̌irs",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "89:TVE": {
+      "entry_id": "verb-0041",
+      "legacy_verb_id": "89",
+      "infinitive": "elaşinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "90:TVE": {
+      "entry_id": "verb-0041",
+      "legacy_verb_id": "90",
+      "infinitive": "elaşinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "91:TVE": {
+      "entry_id": "verb-0041",
+      "legacy_verb_id": "91",
+      "infinitive": "elaşinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1337:TVE": {
+      "entry_id": "verb-0041",
+      "legacy_verb_id": "1337",
+      "infinitive": "elaşinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "92:TVE": {
+      "entry_id": "verb-0042",
+      "legacy_verb_id": "92",
+      "infinitive": "eoçvalu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "93:TVE": {
+      "entry_id": "verb-0042",
+      "legacy_verb_id": "93",
+      "infinitive": "eoçvalu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "94:TVE": {
+      "entry_id": "verb-0042",
+      "legacy_verb_id": "94",
+      "infinitive": "eoçvalu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "95:TVE": {
+      "entry_id": "verb-0043",
+      "legacy_verb_id": "95",
+      "infinitive": "exondvalu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "96:TVE": {
+      "entry_id": "verb-0043",
+      "legacy_verb_id": "96",
+      "infinitive": "exondvalu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "97:TVE": {
+      "entry_id": "verb-0043",
+      "legacy_verb_id": "97",
+      "infinitive": "exondvalu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "86:TVE": {
+      "entry_id": "verb-0040",
+      "legacy_verb_id": "86",
+      "infinitive": "eç̌opu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "87:TVE": {
+      "entry_id": "verb-0040",
+      "legacy_verb_id": "87",
+      "infinitive": "eç̌opu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "88:TVE": {
+      "entry_id": "verb-0040",
+      "legacy_verb_id": "88",
+      "infinitive": "eç̌opu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "106:TVE": {
+      "entry_id": "verb-0047",
+      "legacy_verb_id": "106",
+      "infinitive": "gamaqonu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "107:TVE": {
+      "entry_id": "verb-0048",
+      "legacy_verb_id": "107",
+      "infinitive": "gamayonu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "108:TVE": {
+      "entry_id": "verb-0048",
+      "legacy_verb_id": "108",
+      "infinitive": "gamayonu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "109:TVE": {
+      "entry_id": "verb-0048",
+      "legacy_verb_id": "109",
+      "infinitive": "gamayonu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "98:TVE": {
+      "entry_id": "verb-0044",
+      "legacy_verb_id": "98",
+      "infinitive": "gamaçamu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "99:TVE": {
+      "entry_id": "verb-0044",
+      "legacy_verb_id": "99",
+      "infinitive": "gamaçamu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "100:TVE": {
+      "entry_id": "verb-0044",
+      "legacy_verb_id": "100",
+      "infinitive": "gamaçamu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1338:TVE": {
+      "entry_id": "verb-0044",
+      "legacy_verb_id": "1338",
+      "infinitive": "gamaçamu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "101:TVM": {
+      "entry_id": "verb-0045",
+      "legacy_verb_id": "101",
+      "infinitive": "gamaǩatu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "102:TVM": {
+      "entry_id": "verb-0045",
+      "legacy_verb_id": "102",
+      "infinitive": "gamaǩatu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "103:TVM": {
+      "entry_id": "verb-0045",
+      "legacy_verb_id": "103",
+      "infinitive": "gamaǩatu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "104:TVM": {
+      "entry_id": "verb-0045",
+      "legacy_verb_id": "104",
+      "infinitive": "gamaǩatu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "105:TVE": {
+      "entry_id": "verb-0046",
+      "legacy_verb_id": "105",
+      "infinitive": "gamaǩat̆u",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "110:TVE": {
+      "entry_id": "verb-0049",
+      "legacy_verb_id": "110",
+      "infinitive": "gebažgu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1339:TVE": {
+      "entry_id": "verb-0049",
+      "legacy_verb_id": "1339",
+      "infinitive": "gebažgu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "113:TVM": {
+      "entry_id": "verb-0052",
+      "legacy_verb_id": "113",
+      "infinitive": "gegapu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "114:TVM": {
+      "entry_id": "verb-0052",
+      "legacy_verb_id": "114",
+      "infinitive": "gegapu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "115:TVE": {
+      "entry_id": "verb-0053",
+      "legacy_verb_id": "115",
+      "infinitive": "geginu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1340:TVE": {
+      "entry_id": "verb-0053",
+      "legacy_verb_id": "1340",
+      "infinitive": "geginu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "119:TVE": {
+      "entry_id": "verb-0056",
+      "legacy_verb_id": "119",
+      "infinitive": "geloǩidu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1341:TVE": {
+      "entry_id": "verb-0056",
+      "legacy_verb_id": "1341",
+      "infinitive": "geloǩidu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "120:TVE": {
+      "entry_id": "verb-0057",
+      "legacy_verb_id": "120",
+      "infinitive": "gemgaru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "121:TVE": {
+      "entry_id": "verb-0057",
+      "legacy_verb_id": "121",
+      "infinitive": "gemgaru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "122:TVE": {
+      "entry_id": "verb-0058",
+      "legacy_verb_id": "122",
+      "infinitive": "gemp̌onu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1342:TVE": {
+      "entry_id": "verb-0058",
+      "legacy_verb_id": "1342",
+      "infinitive": "gemp̌onu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "123:TVM": {
+      "entry_id": "verb-0059",
+      "legacy_verb_id": "123",
+      "infinitive": "gent̆onu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "124:TVM": {
+      "entry_id": "verb-0059",
+      "legacy_verb_id": "124",
+      "infinitive": "gent̆onu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "125:TVM": {
+      "entry_id": "verb-0060",
+      "legacy_verb_id": "125",
+      "infinitive": "gexunu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "126:TVM": {
+      "entry_id": "verb-0060",
+      "legacy_verb_id": "126",
+      "infinitive": "gexunu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "651:TVE": {
+      "entry_id": "verb-0326",
+      "legacy_verb_id": "651",
+      "infinitive": "gexvamu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1343:TVE": {
+      "entry_id": "verb-0326",
+      "legacy_verb_id": "1343",
+      "infinitive": "gexvamu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "111:TVE": {
+      "entry_id": "verb-0050",
+      "legacy_verb_id": "111",
+      "infinitive": "geçamu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1344:TVE": {
+      "entry_id": "verb-0050",
+      "legacy_verb_id": "1344",
+      "infinitive": "geçamu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "112:TVE": {
+      "entry_id": "verb-0051",
+      "legacy_verb_id": "112",
+      "infinitive": "geç̌ǩu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1345:TVE": {
+      "entry_id": "verb-0051",
+      "legacy_verb_id": "1345",
+      "infinitive": "geç̌ǩu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "116:TVE": {
+      "entry_id": "verb-0054",
+      "legacy_verb_id": "116",
+      "infinitive": "geǩordinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "117:TVM": {
+      "entry_id": "verb-0055",
+      "legacy_verb_id": "117",
+      "infinitive": "geǩordu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "118:TVM": {
+      "entry_id": "verb-0055",
+      "legacy_verb_id": "118",
+      "infinitive": "geǩordu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "127:TVE": {
+      "entry_id": "verb-0061",
+      "legacy_verb_id": "127",
+      "infinitive": "geǯipxu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "128:TVE": {
+      "entry_id": "verb-0062",
+      "legacy_verb_id": "128",
+      "infinitive": "geǯopxu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "129:TVE": {
+      "entry_id": "verb-0063",
+      "legacy_verb_id": "129",
+      "infinitive": "giloǩidu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "134:TVE": {
+      "entry_id": "verb-0065",
+      "legacy_verb_id": "134",
+      "infinitive": "golusu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "135:TVE": {
+      "entry_id": "verb-0065",
+      "legacy_verb_id": "135",
+      "infinitive": "golusu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "137:TVM": {
+      "entry_id": "verb-0067",
+      "legacy_verb_id": "137",
+      "infinitive": "gondunu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "138:TVM": {
+      "entry_id": "verb-0067",
+      "legacy_verb_id": "138",
+      "infinitive": "gondunu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "139:TVM": {
+      "entry_id": "verb-0067",
+      "legacy_verb_id": "139",
+      "infinitive": "gondunu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "140:TVM": {
+      "entry_id": "verb-0067",
+      "legacy_verb_id": "140",
+      "infinitive": "gondunu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "136:IVD": {
+      "entry_id": "verb-0066",
+      "legacy_verb_id": "136",
+      "infinitive": "gonç̌elu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "1346:IVD": {
+      "entry_id": "verb-0066",
+      "legacy_verb_id": "1346",
+      "infinitive": "gonç̌elu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "142:TVE": {
+      "entry_id": "verb-0069",
+      "legacy_verb_id": "142",
+      "infinitive": "gonǯu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "143:TVE": {
+      "entry_id": "verb-0069",
+      "legacy_verb_id": "143",
+      "infinitive": "gonǯu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "144:TVE": {
+      "entry_id": "verb-0069",
+      "legacy_verb_id": "144",
+      "infinitive": "gonǯu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "141:TVE": {
+      "entry_id": "verb-0068",
+      "legacy_verb_id": "141",
+      "infinitive": "gonǯǩu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "148:TVE": {
+      "entry_id": "verb-0072",
+      "legacy_verb_id": "148",
+      "infinitive": "goxiru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "149:TVE": {
+      "entry_id": "verb-0072",
+      "legacy_verb_id": "149",
+      "infinitive": "goxiru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "150:TVE": {
+      "entry_id": "verb-0072",
+      "legacy_verb_id": "150",
+      "infinitive": "goxiru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1347:TVE": {
+      "entry_id": "verb-0072",
+      "legacy_verb_id": "1347",
+      "infinitive": "goxiru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "145:IVD": {
+      "entry_id": "verb-0070",
+      "legacy_verb_id": "145",
+      "infinitive": "goşinu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "145:TVE": {
+      "entry_id": "verb-0071",
+      "legacy_verb_id": "145",
+      "infinitive": "goşinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "146:IVD": {
+      "entry_id": "verb-0070",
+      "legacy_verb_id": "146",
+      "infinitive": "goşinu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "146:TVE": {
+      "entry_id": "verb-0071",
+      "legacy_verb_id": "146",
+      "infinitive": "goşinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "147:IVD": {
+      "entry_id": "verb-0070",
+      "legacy_verb_id": "147",
+      "infinitive": "goşinu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "147:TVE": {
+      "entry_id": "verb-0071",
+      "legacy_verb_id": "147",
+      "infinitive": "goşinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1348:IVD": {
+      "entry_id": "verb-0070",
+      "legacy_verb_id": "1348",
+      "infinitive": "goşinu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "1348:TVE": {
+      "entry_id": "verb-0071",
+      "legacy_verb_id": "1348",
+      "infinitive": "goşinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "130:TVM": {
+      "entry_id": "verb-0064",
+      "legacy_verb_id": "130",
+      "infinitive": "goǩuʒxu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "131:TVM": {
+      "entry_id": "verb-0064",
+      "legacy_verb_id": "131",
+      "infinitive": "goǩuʒxu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "132:TVM": {
+      "entry_id": "verb-0064",
+      "legacy_verb_id": "132",
+      "infinitive": "goǩuʒxu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "133:TVM": {
+      "entry_id": "verb-0064",
+      "legacy_verb_id": "133",
+      "infinitive": "goǩuʒxu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "151:IVD": {
+      "entry_id": "verb-0073",
+      "legacy_verb_id": "151",
+      "infinitive": "guri donç̌inu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "156:TVM": {
+      "entry_id": "verb-0075",
+      "legacy_verb_id": "156",
+      "infinitive": "guri mentxu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "157:TVM": {
+      "entry_id": "verb-0075",
+      "legacy_verb_id": "157",
+      "infinitive": "guri mentxu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "158:TVM": {
+      "entry_id": "verb-0075",
+      "legacy_verb_id": "158",
+      "infinitive": "guri mentxu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "152:IVD": {
+      "entry_id": "verb-0074",
+      "legacy_verb_id": "152",
+      "infinitive": "guris meç̌valu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "153:IVD": {
+      "entry_id": "verb-0074",
+      "legacy_verb_id": "153",
+      "infinitive": "guris meç̌valu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "154:IVD": {
+      "entry_id": "verb-0074",
+      "legacy_verb_id": "154",
+      "infinitive": "guris meç̌valu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "155:IVD": {
+      "entry_id": "verb-0074",
+      "legacy_verb_id": "155",
+      "infinitive": "guris meç̌valu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "169:TVM": {
+      "entry_id": "verb-0081",
+      "legacy_verb_id": "169",
+      "infinitive": "lumcun",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "170:TVM": {
+      "entry_id": "verb-0081",
+      "legacy_verb_id": "170",
+      "infinitive": "lumcun",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "1319:TVM": {
+      "entry_id": "verb-0081",
+      "legacy_verb_id": "1319",
+      "infinitive": "lumcun",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "1349:TVM": {
+      "entry_id": "verb-0081",
+      "legacy_verb_id": "1349",
+      "infinitive": "lumcun",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "171:TVE": {
+      "entry_id": "verb-0082",
+      "legacy_verb_id": "171",
+      "infinitive": "mebazgu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1350:TVE": {
+      "entry_id": "verb-0082",
+      "legacy_verb_id": "1350",
+      "infinitive": "mebazgu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "183:TVE": {
+      "entry_id": "verb-0089",
+      "legacy_verb_id": "183",
+      "infinitive": "memgvapinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "184:TVE": {
+      "entry_id": "verb-0089",
+      "legacy_verb_id": "184",
+      "infinitive": "memgvapinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "185:TVE": {
+      "entry_id": "verb-0089",
+      "legacy_verb_id": "185",
+      "infinitive": "memgvapinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1351:TVE": {
+      "entry_id": "verb-0089",
+      "legacy_verb_id": "1351",
+      "infinitive": "memgvapinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "186:IVD": {
+      "entry_id": "verb-0090",
+      "legacy_verb_id": "186",
+      "infinitive": "memgvapu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "186:TVE": {
+      "entry_id": "verb-0091",
+      "legacy_verb_id": "186",
+      "infinitive": "memgvapu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "187:IVD": {
+      "entry_id": "verb-0090",
+      "legacy_verb_id": "187",
+      "infinitive": "memgvapu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "187:TVE": {
+      "entry_id": "verb-0091",
+      "legacy_verb_id": "187",
+      "infinitive": "memgvapu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "188:IVD": {
+      "entry_id": "verb-0090",
+      "legacy_verb_id": "188",
+      "infinitive": "memgvapu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "188:TVE": {
+      "entry_id": "verb-0091",
+      "legacy_verb_id": "188",
+      "infinitive": "memgvapu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1320:IVD": {
+      "entry_id": "verb-0090",
+      "legacy_verb_id": "1320",
+      "infinitive": "memgvapu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "1320:TVE": {
+      "entry_id": "verb-0091",
+      "legacy_verb_id": "1320",
+      "infinitive": "memgvapu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "182:TVE": {
+      "entry_id": "verb-0088",
+      "legacy_verb_id": "182",
+      "infinitive": "memçinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1352:TVE": {
+      "entry_id": "verb-0088",
+      "legacy_verb_id": "1352",
+      "infinitive": "memçinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "189:TVE": {
+      "entry_id": "verb-0092",
+      "legacy_verb_id": "189",
+      "infinitive": "mendoğmalu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "190:TVE": {
+      "entry_id": "verb-0092",
+      "legacy_verb_id": "190",
+      "infinitive": "mendoğmalu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "191:TVE": {
+      "entry_id": "verb-0092",
+      "legacy_verb_id": "191",
+      "infinitive": "mendoğmalu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1353:TVE": {
+      "entry_id": "verb-0092",
+      "legacy_verb_id": "1353",
+      "infinitive": "mendoğmalu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "192:TVE": {
+      "entry_id": "verb-0093",
+      "legacy_verb_id": "192",
+      "infinitive": "meoçamu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "193:TVE": {
+      "entry_id": "verb-0093",
+      "legacy_verb_id": "193",
+      "infinitive": "meoçamu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "194:TVE": {
+      "entry_id": "verb-0093",
+      "legacy_verb_id": "194",
+      "infinitive": "meoçamu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "205:TVE": {
+      "entry_id": "verb-0098",
+      "legacy_verb_id": "205",
+      "infinitive": "met̆işu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "206:TVE": {
+      "entry_id": "verb-0098",
+      "legacy_verb_id": "206",
+      "infinitive": "met̆işu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "207:TVE": {
+      "entry_id": "verb-0098",
+      "legacy_verb_id": "207",
+      "infinitive": "met̆işu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "172:TVE": {
+      "entry_id": "verb-0083",
+      "legacy_verb_id": "172",
+      "infinitive": "meçamu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "173:TVE": {
+      "entry_id": "verb-0083",
+      "legacy_verb_id": "173",
+      "infinitive": "meçamu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "174:TVE": {
+      "entry_id": "verb-0083",
+      "legacy_verb_id": "174",
+      "infinitive": "meçamu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1354:TVE": {
+      "entry_id": "verb-0083",
+      "legacy_verb_id": "1354",
+      "infinitive": "meçamu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "202:TVE": {
+      "entry_id": "verb-0097",
+      "legacy_verb_id": "202",
+      "infinitive": "meşvelu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "203:TVE": {
+      "entry_id": "verb-0097",
+      "legacy_verb_id": "203",
+      "infinitive": "meşvelu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "204:TVE": {
+      "entry_id": "verb-0097",
+      "legacy_verb_id": "204",
+      "infinitive": "meşvelu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1355:TVE": {
+      "entry_id": "verb-0097",
+      "legacy_verb_id": "1355",
+      "infinitive": "meşvelu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "195:TVE": {
+      "entry_id": "verb-0094",
+      "legacy_verb_id": "195",
+      "infinitive": "meşǩidu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "196:TVE": {
+      "entry_id": "verb-0094",
+      "legacy_verb_id": "196",
+      "infinitive": "meşǩidu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "197:TVE": {
+      "entry_id": "verb-0094",
+      "legacy_verb_id": "197",
+      "infinitive": "meşǩidu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "198:TVE": {
+      "entry_id": "verb-0095",
+      "legacy_verb_id": "198",
+      "infinitive": "meşǩvidu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "199:TVE": {
+      "entry_id": "verb-0096",
+      "legacy_verb_id": "199",
+      "infinitive": "meşǩvu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "200:TVE": {
+      "entry_id": "verb-0096",
+      "legacy_verb_id": "200",
+      "infinitive": "meşǩvu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "201:TVE": {
+      "entry_id": "verb-0096",
+      "legacy_verb_id": "201",
+      "infinitive": "meşǩvu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1356:TVE": {
+      "entry_id": "verb-0096",
+      "legacy_verb_id": "1356",
+      "infinitive": "meşǩvu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "175:TVE": {
+      "entry_id": "verb-0084",
+      "legacy_verb_id": "175",
+      "infinitive": "meǩap̌inu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "176:TVE": {
+      "entry_id": "verb-0084",
+      "legacy_verb_id": "176",
+      "infinitive": "meǩap̌inu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "177:TVE": {
+      "entry_id": "verb-0084",
+      "legacy_verb_id": "177",
+      "infinitive": "meǩap̌inu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "178:TVE": {
+      "entry_id": "verb-0085",
+      "legacy_verb_id": "178",
+      "infinitive": "meǩiru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "179:TVE": {
+      "entry_id": "verb-0086",
+      "legacy_verb_id": "179",
+      "infinitive": "meǩoru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "179:TVM": {
+      "entry_id": "verb-0087",
+      "legacy_verb_id": "179",
+      "infinitive": "meǩoru",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "180:TVE": {
+      "entry_id": "verb-0086",
+      "legacy_verb_id": "180",
+      "infinitive": "meǩoru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "180:TVM": {
+      "entry_id": "verb-0087",
+      "legacy_verb_id": "180",
+      "infinitive": "meǩoru",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "181:TVE": {
+      "entry_id": "verb-0086",
+      "legacy_verb_id": "181",
+      "infinitive": "meǩoru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "181:TVM": {
+      "entry_id": "verb-0087",
+      "legacy_verb_id": "181",
+      "infinitive": "meǩoru",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "1357:TVM": {
+      "entry_id": "verb-0087",
+      "legacy_verb_id": "1357",
+      "infinitive": "meǩoru",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "1357:TVE": {
+      "entry_id": "verb-0086",
+      "legacy_verb_id": "1357",
+      "infinitive": "meǩoru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "210:TVE": {
+      "entry_id": "verb-0100",
+      "legacy_verb_id": "210",
+      "infinitive": "meǯodu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "211:TVE": {
+      "entry_id": "verb-0100",
+      "legacy_verb_id": "211",
+      "infinitive": "meǯodu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "208:TVE": {
+      "entry_id": "verb-0099",
+      "legacy_verb_id": "208",
+      "infinitive": "meǯǩodu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "209:TVE": {
+      "entry_id": "verb-0099",
+      "legacy_verb_id": "209",
+      "infinitive": "meǯǩodu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "212:TVE": {
+      "entry_id": "verb-0101",
+      "legacy_verb_id": "212",
+      "infinitive": "mijaçamu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "215:TVE": {
+      "entry_id": "verb-0103",
+      "legacy_verb_id": "215",
+      "infinitive": "monžinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "215:TVM": {
+      "entry_id": "verb-0104",
+      "legacy_verb_id": "215",
+      "infinitive": "monžinu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "216:TVE": {
+      "entry_id": "verb-0103",
+      "legacy_verb_id": "216",
+      "infinitive": "monžinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "216:TVM": {
+      "entry_id": "verb-0104",
+      "legacy_verb_id": "216",
+      "infinitive": "monžinu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "217:TVE": {
+      "entry_id": "verb-0103",
+      "legacy_verb_id": "217",
+      "infinitive": "monžinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "217:TVM": {
+      "entry_id": "verb-0104",
+      "legacy_verb_id": "217",
+      "infinitive": "monžinu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "218:TVE": {
+      "entry_id": "verb-0103",
+      "legacy_verb_id": "218",
+      "infinitive": "monžinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "218:TVM": {
+      "entry_id": "verb-0104",
+      "legacy_verb_id": "218",
+      "infinitive": "monžinu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "219:TVM": {
+      "entry_id": "verb-0105",
+      "legacy_verb_id": "219",
+      "infinitive": "moselu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "220:TVM": {
+      "entry_id": "verb-0105",
+      "legacy_verb_id": "220",
+      "infinitive": "moselu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "221:TVM": {
+      "entry_id": "verb-0105",
+      "legacy_verb_id": "221",
+      "infinitive": "moselu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "222:TVM": {
+      "entry_id": "verb-0105",
+      "legacy_verb_id": "222",
+      "infinitive": "moselu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "223:TVM": {
+      "entry_id": "verb-0106",
+      "legacy_verb_id": "223",
+      "infinitive": "moskidu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "224:TVM": {
+      "entry_id": "verb-0106",
+      "legacy_verb_id": "224",
+      "infinitive": "moskidu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "225:TVM": {
+      "entry_id": "verb-0107",
+      "legacy_verb_id": "225",
+      "infinitive": "mosǩudu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "226:TVM": {
+      "entry_id": "verb-0107",
+      "legacy_verb_id": "226",
+      "infinitive": "mosǩudu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "213:TVE": {
+      "entry_id": "verb-0102",
+      "legacy_verb_id": "213",
+      "infinitive": "moğerdinams",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "214:TVE": {
+      "entry_id": "verb-0102",
+      "legacy_verb_id": "214",
+      "infinitive": "moğerdinams",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1313:TVE": {
+      "entry_id": "verb-0102",
+      "legacy_verb_id": "1313",
+      "infinitive": "moğerdinams",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "227:TVE": {
+      "entry_id": "verb-0108",
+      "legacy_verb_id": "227",
+      "infinitive": "moşvacu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "228:TVE": {
+      "entry_id": "verb-0108",
+      "legacy_verb_id": "228",
+      "infinitive": "moşvacu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "229:TVE": {
+      "entry_id": "verb-0108",
+      "legacy_verb_id": "229",
+      "infinitive": "moşvacu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "512:TVE": {
+      "entry_id": "verb-0108",
+      "legacy_verb_id": "512",
+      "infinitive": "moşvacu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "512:TVM": {
+      "entry_id": "verb-0253",
+      "legacy_verb_id": "512",
+      "infinitive": "moşvacu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "231:IVD": {
+      "entry_id": "verb-0110",
+      "legacy_verb_id": "231",
+      "infinitive": "moǯondu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "232:IVD": {
+      "entry_id": "verb-0110",
+      "legacy_verb_id": "232",
+      "infinitive": "moǯondu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "233:TVM": {
+      "entry_id": "verb-0111",
+      "legacy_verb_id": "233",
+      "infinitive": "moǯoxvalu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "230:TVE": {
+      "entry_id": "verb-0109",
+      "legacy_verb_id": "230",
+      "infinitive": "moǯǩimu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "234:TVM": {
+      "entry_id": "verb-0112",
+      "legacy_verb_id": "234",
+      "infinitive": "obadu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "235:TVM": {
+      "entry_id": "verb-0112",
+      "legacy_verb_id": "235",
+      "infinitive": "obadu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "236:TVM": {
+      "entry_id": "verb-0112",
+      "legacy_verb_id": "236",
+      "infinitive": "obadu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "237:TVM": {
+      "entry_id": "verb-0112",
+      "legacy_verb_id": "237",
+      "infinitive": "obadu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "238:TVE": {
+      "entry_id": "verb-0113",
+      "legacy_verb_id": "238",
+      "infinitive": "obaxu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1358:TVE": {
+      "entry_id": "verb-0113",
+      "legacy_verb_id": "1358",
+      "infinitive": "obaxu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "239:TVE": {
+      "entry_id": "verb-0114",
+      "legacy_verb_id": "239",
+      "infinitive": "obgaru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "240:TVE": {
+      "entry_id": "verb-0114",
+      "legacy_verb_id": "240",
+      "infinitive": "obgaru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "241:TVE": {
+      "entry_id": "verb-0115",
+      "legacy_verb_id": "241",
+      "infinitive": "obiru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "242:TVE": {
+      "entry_id": "verb-0115",
+      "legacy_verb_id": "242",
+      "infinitive": "obiru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "243:TVE": {
+      "entry_id": "verb-0115",
+      "legacy_verb_id": "243",
+      "infinitive": "obiru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "244:TVE": {
+      "entry_id": "verb-0115",
+      "legacy_verb_id": "244",
+      "infinitive": "obiru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "245:TVM": {
+      "entry_id": "verb-0116",
+      "legacy_verb_id": "245",
+      "infinitive": "obodu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "246:TVM": {
+      "entry_id": "verb-0116",
+      "legacy_verb_id": "246",
+      "infinitive": "obodu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "247:TVM": {
+      "entry_id": "verb-0116",
+      "legacy_verb_id": "247",
+      "infinitive": "obodu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "248:TVM": {
+      "entry_id": "verb-0116",
+      "legacy_verb_id": "248",
+      "infinitive": "obodu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "249:TVE": {
+      "entry_id": "verb-0117",
+      "legacy_verb_id": "249",
+      "infinitive": "obonu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1314:TVE": {
+      "entry_id": "verb-0117",
+      "legacy_verb_id": "1314",
+      "infinitive": "obonu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1308:TVE": {
+      "entry_id": "verb-0117",
+      "legacy_verb_id": "1308",
+      "infinitive": "obonu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1321:TVE": {
+      "entry_id": "verb-0117",
+      "legacy_verb_id": "1321",
+      "infinitive": "obonu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "266:TVE": {
+      "entry_id": "verb-0125",
+      "legacy_verb_id": "266",
+      "infinitive": "oceru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "267:TVE": {
+      "entry_id": "verb-0126",
+      "legacy_verb_id": "267",
+      "infinitive": "ocginu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1359:TVE": {
+      "entry_id": "verb-0126",
+      "legacy_verb_id": "1359",
+      "infinitive": "ocginu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "290:TVE": {
+      "entry_id": "verb-0140",
+      "legacy_verb_id": "290",
+      "infinitive": "ocoxu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1360:TVE": {
+      "entry_id": "verb-0140",
+      "legacy_verb_id": "1360",
+      "infinitive": "ocoxu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "306:TVE": {
+      "entry_id": "verb-0149",
+      "legacy_verb_id": "306",
+      "infinitive": "ogibu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "306:TVM": {
+      "entry_id": "verb-0150",
+      "legacy_verb_id": "306",
+      "infinitive": "ogibu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "307:TVE": {
+      "entry_id": "verb-0151",
+      "legacy_verb_id": "307",
+      "infinitive": "ognu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "308:TVE": {
+      "entry_id": "verb-0151",
+      "legacy_verb_id": "308",
+      "infinitive": "ognu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "309:TVE": {
+      "entry_id": "verb-0151",
+      "legacy_verb_id": "309",
+      "infinitive": "ognu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1361:TVE": {
+      "entry_id": "verb-0151",
+      "legacy_verb_id": "1361",
+      "infinitive": "ognu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "310:TVE": {
+      "entry_id": "verb-0152",
+      "legacy_verb_id": "310",
+      "infinitive": "ogoru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "311:TVE": {
+      "entry_id": "verb-0152",
+      "legacy_verb_id": "311",
+      "infinitive": "ogoru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "312:TVE": {
+      "entry_id": "verb-0152",
+      "legacy_verb_id": "312",
+      "infinitive": "ogoru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1362:TVE": {
+      "entry_id": "verb-0152",
+      "legacy_verb_id": "1362",
+      "infinitive": "ogoru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "317:TVE": {
+      "entry_id": "verb-0154",
+      "legacy_verb_id": "317",
+      "infinitive": "ogzalu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "318:TVE": {
+      "entry_id": "verb-0154",
+      "legacy_verb_id": "318",
+      "infinitive": "ogzalu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "319:TVE": {
+      "entry_id": "verb-0154",
+      "legacy_verb_id": "319",
+      "infinitive": "ogzalu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "320:TVE": {
+      "entry_id": "verb-0154",
+      "legacy_verb_id": "320",
+      "infinitive": "ogzalu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "321:TVE": {
+      "entry_id": "verb-0155",
+      "legacy_verb_id": "321",
+      "infinitive": "ogzu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "322:TVE": {
+      "entry_id": "verb-0155",
+      "legacy_verb_id": "322",
+      "infinitive": "ogzu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "323:TVE": {
+      "entry_id": "verb-0155",
+      "legacy_verb_id": "323",
+      "infinitive": "ogzu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1363:TVE": {
+      "entry_id": "verb-0155",
+      "legacy_verb_id": "1363",
+      "infinitive": "ogzu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "324:TVE": {
+      "entry_id": "verb-0156",
+      "legacy_verb_id": "324",
+      "infinitive": "ojginu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "325:TVE": {
+      "entry_id": "verb-0156",
+      "legacy_verb_id": "325",
+      "infinitive": "ojginu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "326:TVE": {
+      "entry_id": "verb-0157",
+      "legacy_verb_id": "326",
+      "infinitive": "okadu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "327:TVE": {
+      "entry_id": "verb-0157",
+      "legacy_verb_id": "327",
+      "infinitive": "okadu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "328:TVE": {
+      "entry_id": "verb-0157",
+      "legacy_verb_id": "328",
+      "infinitive": "okadu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1364:TVE": {
+      "entry_id": "verb-0157",
+      "legacy_verb_id": "1364",
+      "infinitive": "okadu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "360:TVE": {
+      "entry_id": "verb-0172",
+      "legacy_verb_id": "360",
+      "infinitive": "okosu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "361:TVE": {
+      "entry_id": "verb-0172",
+      "legacy_verb_id": "361",
+      "infinitive": "okosu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "362:TVE": {
+      "entry_id": "verb-0172",
+      "legacy_verb_id": "362",
+      "infinitive": "okosu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1365:TVE": {
+      "entry_id": "verb-0172",
+      "legacy_verb_id": "1365",
+      "infinitive": "okosu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "373:TVE": {
+      "entry_id": "verb-0177",
+      "legacy_verb_id": "373",
+      "infinitive": "olafu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "375:TVE": {
+      "entry_id": "verb-0179",
+      "legacy_verb_id": "375",
+      "infinitive": "olalu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1315:TVE": {
+      "entry_id": "verb-0179",
+      "legacy_verb_id": "1315",
+      "infinitive": "olalu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1309:TVE": {
+      "entry_id": "verb-0179",
+      "legacy_verb_id": "1309",
+      "infinitive": "olalu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1322:TVE": {
+      "entry_id": "verb-0179",
+      "legacy_verb_id": "1322",
+      "infinitive": "olalu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "376:TVE": {
+      "entry_id": "verb-0180",
+      "legacy_verb_id": "376",
+      "infinitive": "olasiru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1366:TVE": {
+      "entry_id": "verb-0180",
+      "legacy_verb_id": "1366",
+      "infinitive": "olasiru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "377:TVE": {
+      "entry_id": "verb-0181",
+      "legacy_verb_id": "377",
+      "infinitive": "olast̆u",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "378:TVE": {
+      "entry_id": "verb-0181",
+      "legacy_verb_id": "378",
+      "infinitive": "olast̆u",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "379:TVE": {
+      "entry_id": "verb-0182",
+      "legacy_verb_id": "379",
+      "infinitive": "olaxinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "380:TVE": {
+      "entry_id": "verb-0182",
+      "legacy_verb_id": "380",
+      "infinitive": "olaxinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "381:TVE": {
+      "entry_id": "verb-0182",
+      "legacy_verb_id": "381",
+      "infinitive": "olaxinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "374:TVE": {
+      "entry_id": "verb-0178",
+      "legacy_verb_id": "374",
+      "infinitive": "olaǩirdu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "382:IVD": {
+      "entry_id": "verb-0183",
+      "legacy_verb_id": "382",
+      "infinitive": "olimbu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "383:TVM": {
+      "entry_id": "verb-0184",
+      "legacy_verb_id": "383",
+      "infinitive": "olva",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "384:TVM": {
+      "entry_id": "verb-0184",
+      "legacy_verb_id": "384",
+      "infinitive": "olva",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "397:TVE": {
+      "entry_id": "verb-0190",
+      "legacy_verb_id": "397",
+      "infinitive": "omeselu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "398:TVE": {
+      "entry_id": "verb-0190",
+      "legacy_verb_id": "398",
+      "infinitive": "omeselu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "399:TVE": {
+      "entry_id": "verb-0190",
+      "legacy_verb_id": "399",
+      "infinitive": "omeselu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1367:TVE": {
+      "entry_id": "verb-0190",
+      "legacy_verb_id": "1367",
+      "infinitive": "omeselu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "400:TVE": {
+      "entry_id": "verb-0191",
+      "legacy_verb_id": "400",
+      "infinitive": "omgaru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "401:TVE": {
+      "entry_id": "verb-0191",
+      "legacy_verb_id": "401",
+      "infinitive": "omgaru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "406:TVE": {
+      "entry_id": "verb-0193",
+      "legacy_verb_id": "406",
+      "infinitive": "omku",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "407:TVE": {
+      "entry_id": "verb-0193",
+      "legacy_verb_id": "407",
+      "infinitive": "omku",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "408:TVE": {
+      "entry_id": "verb-0193",
+      "legacy_verb_id": "408",
+      "infinitive": "omku",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1368:TVE": {
+      "entry_id": "verb-0193",
+      "legacy_verb_id": "1368",
+      "infinitive": "omku",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "409:TVM": {
+      "entry_id": "verb-0194",
+      "legacy_verb_id": "409",
+      "infinitive": "omonǩanu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "410:TVM": {
+      "entry_id": "verb-0194",
+      "legacy_verb_id": "410",
+      "infinitive": "omonǩanu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "411:TVM": {
+      "entry_id": "verb-0194",
+      "legacy_verb_id": "411",
+      "infinitive": "omonǩanu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "412:TVM": {
+      "entry_id": "verb-0194",
+      "legacy_verb_id": "412",
+      "infinitive": "omonǩanu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "388:TVE": {
+      "entry_id": "verb-0186",
+      "legacy_verb_id": "388",
+      "infinitive": "omçinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1369:TVE": {
+      "entry_id": "verb-0186",
+      "legacy_verb_id": "1369",
+      "infinitive": "omçinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "396:TVE": {
+      "entry_id": "verb-0189",
+      "legacy_verb_id": "396",
+      "infinitive": "omçviru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "385:TVE": {
+      "entry_id": "verb-0185",
+      "legacy_verb_id": "385",
+      "infinitive": "omç̌eşu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "386:TVE": {
+      "entry_id": "verb-0185",
+      "legacy_verb_id": "386",
+      "infinitive": "omç̌eşu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "387:TVE": {
+      "entry_id": "verb-0185",
+      "legacy_verb_id": "387",
+      "infinitive": "omç̌eşu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "392:IVD": {
+      "entry_id": "verb-0188",
+      "legacy_verb_id": "392",
+      "infinitive": "omç̌u",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "393:IVD": {
+      "entry_id": "verb-0188",
+      "legacy_verb_id": "393",
+      "infinitive": "omç̌u",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "394:IVD": {
+      "entry_id": "verb-0188",
+      "legacy_verb_id": "394",
+      "infinitive": "omç̌u",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "395:IVD": {
+      "entry_id": "verb-0188",
+      "legacy_verb_id": "395",
+      "infinitive": "omç̌u",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "389:TVE": {
+      "entry_id": "verb-0187",
+      "legacy_verb_id": "389",
+      "infinitive": "omç̌ǩeşu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "390:TVE": {
+      "entry_id": "verb-0187",
+      "legacy_verb_id": "390",
+      "infinitive": "omç̌ǩeşu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "391:TVE": {
+      "entry_id": "verb-0187",
+      "legacy_verb_id": "391",
+      "infinitive": "omç̌ǩeşu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1370:TVE": {
+      "entry_id": "verb-0187",
+      "legacy_verb_id": "1370",
+      "infinitive": "omç̌ǩeşu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "413:IVD": {
+      "entry_id": "verb-0195",
+      "legacy_verb_id": "413",
+      "infinitive": "omşkironu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "414:IVD": {
+      "entry_id": "verb-0196",
+      "legacy_verb_id": "414",
+      "infinitive": "omşkorinu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "415:IVD": {
+      "entry_id": "verb-0196",
+      "legacy_verb_id": "415",
+      "infinitive": "omşkorinu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "416:IVD": {
+      "entry_id": "verb-0196",
+      "legacy_verb_id": "416",
+      "infinitive": "omşkorinu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "402:TVM": {
+      "entry_id": "verb-0192",
+      "legacy_verb_id": "402",
+      "infinitive": "omǩolanu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "403:TVM": {
+      "entry_id": "verb-0192",
+      "legacy_verb_id": "403",
+      "infinitive": "omǩolanu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "404:TVM": {
+      "entry_id": "verb-0192",
+      "legacy_verb_id": "404",
+      "infinitive": "omǩolanu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "405:TVM": {
+      "entry_id": "verb-0192",
+      "legacy_verb_id": "405",
+      "infinitive": "omǩolanu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "417:TVM": {
+      "entry_id": "verb-0197",
+      "legacy_verb_id": "417",
+      "infinitive": "omʒikanu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "418:TVM": {
+      "entry_id": "verb-0197",
+      "legacy_verb_id": "418",
+      "infinitive": "omʒikanu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "419:TVM": {
+      "entry_id": "verb-0197",
+      "legacy_verb_id": "419",
+      "infinitive": "omʒikanu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "420:TVE": {
+      "entry_id": "verb-0198",
+      "legacy_verb_id": "420",
+      "infinitive": "onaxu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "426:TVE": {
+      "entry_id": "verb-0203",
+      "legacy_verb_id": "426",
+      "infinitive": "onciru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "427:TVE": {
+      "entry_id": "verb-0203",
+      "legacy_verb_id": "427",
+      "infinitive": "onciru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "428:TVE": {
+      "entry_id": "verb-0203",
+      "legacy_verb_id": "428",
+      "infinitive": "onciru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "429:TVE": {
+      "entry_id": "verb-0203",
+      "legacy_verb_id": "429",
+      "infinitive": "onciru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "425:IVD": {
+      "entry_id": "verb-0202",
+      "legacy_verb_id": "425",
+      "infinitive": "oncğore oqvapu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "422:IVD": {
+      "entry_id": "verb-0200",
+      "legacy_verb_id": "422",
+      "infinitive": "oncğore ovapu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "423:IVD": {
+      "entry_id": "verb-0201",
+      "legacy_verb_id": "423",
+      "infinitive": "oncğore oyapu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "424:IVD": {
+      "entry_id": "verb-0201",
+      "legacy_verb_id": "424",
+      "infinitive": "oncğore oyapu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "430:TVE": {
+      "entry_id": "verb-0204",
+      "legacy_verb_id": "430",
+      "infinitive": "onçiru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "431:TVE": {
+      "entry_id": "verb-0204",
+      "legacy_verb_id": "431",
+      "infinitive": "onçiru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "432:TVE": {
+      "entry_id": "verb-0205",
+      "legacy_verb_id": "432",
+      "infinitive": "onçviru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "421:TVE": {
+      "entry_id": "verb-0199",
+      "legacy_verb_id": "421",
+      "infinitive": "onç̌aru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "433:TVE": {
+      "entry_id": "verb-0206",
+      "legacy_verb_id": "433",
+      "infinitive": "onǩanu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "434:TVE": {
+      "entry_id": "verb-0206",
+      "legacy_verb_id": "434",
+      "infinitive": "onǩanu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "435:TVE": {
+      "entry_id": "verb-0206",
+      "legacy_verb_id": "435",
+      "infinitive": "onǩanu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "436:TVE": {
+      "entry_id": "verb-0206",
+      "legacy_verb_id": "436",
+      "infinitive": "onǩanu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "438:TVM": {
+      "entry_id": "verb-0208",
+      "legacy_verb_id": "438",
+      "infinitive": "onǩapu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "437:TVE": {
+      "entry_id": "verb-0207",
+      "legacy_verb_id": "437",
+      "infinitive": "onǩap̌u",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "439:TVE": {
+      "entry_id": "verb-0209",
+      "legacy_verb_id": "439",
+      "infinitive": "onǩilu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "441:TVE": {
+      "entry_id": "verb-0211",
+      "legacy_verb_id": "441",
+      "infinitive": "opatxu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "450:TVE": {
+      "entry_id": "verb-0217",
+      "legacy_verb_id": "450",
+      "infinitive": "opsimu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "451:TVM": {
+      "entry_id": "verb-0218",
+      "legacy_verb_id": "451",
+      "infinitive": "oputxu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "452:TVM": {
+      "entry_id": "verb-0218",
+      "legacy_verb_id": "452",
+      "infinitive": "oputxu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "453:TVM": {
+      "entry_id": "verb-0218",
+      "legacy_verb_id": "453",
+      "infinitive": "oputxu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "454:TVM": {
+      "entry_id": "verb-0218",
+      "legacy_verb_id": "454",
+      "infinitive": "oputxu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "440:TVE": {
+      "entry_id": "verb-0210",
+      "legacy_verb_id": "440",
+      "infinitive": "op̌aramitu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "443:TVE": {
+      "entry_id": "verb-0213",
+      "legacy_verb_id": "443",
+      "infinitive": "op̌içu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "444:TVE": {
+      "entry_id": "verb-0213",
+      "legacy_verb_id": "444",
+      "infinitive": "op̌içu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "442:TVE": {
+      "entry_id": "verb-0212",
+      "legacy_verb_id": "442",
+      "infinitive": "op̌içvu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1323:TVE": {
+      "entry_id": "verb-0212",
+      "legacy_verb_id": "1323",
+      "infinitive": "op̌içvu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "445:TVE": {
+      "entry_id": "verb-0215",
+      "legacy_verb_id": "445",
+      "infinitive": "op̌lanu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "445:TVM": {
+      "entry_id": "verb-0214",
+      "legacy_verb_id": "445",
+      "infinitive": "op̌lanu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "446:TVE": {
+      "entry_id": "verb-0215",
+      "legacy_verb_id": "446",
+      "infinitive": "op̌lanu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "446:TVM": {
+      "entry_id": "verb-0214",
+      "legacy_verb_id": "446",
+      "infinitive": "op̌lanu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "447:TVE": {
+      "entry_id": "verb-0215",
+      "legacy_verb_id": "447",
+      "infinitive": "op̌lanu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "447:TVM": {
+      "entry_id": "verb-0214",
+      "legacy_verb_id": "447",
+      "infinitive": "op̌lanu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "1371:TVE": {
+      "entry_id": "verb-0215",
+      "legacy_verb_id": "1371",
+      "infinitive": "op̌lanu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1371:TVM": {
+      "entry_id": "verb-0214",
+      "legacy_verb_id": "1371",
+      "infinitive": "op̌lanu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "448:TVM": {
+      "entry_id": "verb-0216",
+      "legacy_verb_id": "448",
+      "infinitive": "op̌riǩanu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "449:TVM": {
+      "entry_id": "verb-0216",
+      "legacy_verb_id": "449",
+      "infinitive": "op̌riǩanu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "455:IVD": {
+      "entry_id": "verb-0219",
+      "legacy_verb_id": "455",
+      "infinitive": "oqominu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "456:TVE": {
+      "entry_id": "verb-0220",
+      "legacy_verb_id": "456",
+      "infinitive": "oqondinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "457:TVE": {
+      "entry_id": "verb-0221",
+      "legacy_verb_id": "457",
+      "infinitive": "oqoropu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "458:TVE": {
+      "entry_id": "verb-0222",
+      "legacy_verb_id": "458",
+      "infinitive": "oqoru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "459:TVE": {
+      "entry_id": "verb-0223",
+      "legacy_verb_id": "459",
+      "infinitive": "oquru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "460:IVD": {
+      "entry_id": "verb-0224",
+      "legacy_verb_id": "460",
+      "infinitive": "oqvapu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "460:TVM": {
+      "entry_id": "verb-0225",
+      "legacy_verb_id": "460",
+      "infinitive": "oqvapu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "461:TVE": {
+      "entry_id": "verb-0226",
+      "legacy_verb_id": "461",
+      "infinitive": "oqvilu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "462:TVE": {
+      "entry_id": "verb-0227",
+      "legacy_verb_id": "462",
+      "infinitive": "ordu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "462:TVM": {
+      "entry_id": "verb-0228",
+      "legacy_verb_id": "462",
+      "infinitive": "ordu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "463:TVE": {
+      "entry_id": "verb-0227",
+      "legacy_verb_id": "463",
+      "infinitive": "ordu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "463:TVM": {
+      "entry_id": "verb-0228",
+      "legacy_verb_id": "463",
+      "infinitive": "ordu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "464:TVE": {
+      "entry_id": "verb-0227",
+      "legacy_verb_id": "464",
+      "infinitive": "ordu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "464:TVM": {
+      "entry_id": "verb-0228",
+      "legacy_verb_id": "464",
+      "infinitive": "ordu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "465:TVE": {
+      "entry_id": "verb-0227",
+      "legacy_verb_id": "465",
+      "infinitive": "ordu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "465:TVM": {
+      "entry_id": "verb-0228",
+      "legacy_verb_id": "465",
+      "infinitive": "ordu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "466:IVD": {
+      "entry_id": "verb-0229",
+      "legacy_verb_id": "466",
+      "infinitive": "oropu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "467:TVE": {
+      "entry_id": "verb-0230",
+      "legacy_verb_id": "467",
+      "infinitive": "oropu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "468:TVE": {
+      "entry_id": "verb-0231",
+      "legacy_verb_id": "468",
+      "infinitive": "osiminu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "469:TVE": {
+      "entry_id": "verb-0232",
+      "legacy_verb_id": "469",
+      "infinitive": "osinapu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "470:TVE": {
+      "entry_id": "verb-0232",
+      "legacy_verb_id": "470",
+      "infinitive": "osinapu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "471:TVE": {
+      "entry_id": "verb-0232",
+      "legacy_verb_id": "471",
+      "infinitive": "osinapu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "479:TVE": {
+      "entry_id": "verb-0236",
+      "legacy_verb_id": "479",
+      "infinitive": "oskedinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "480:TVE": {
+      "entry_id": "verb-0236",
+      "legacy_verb_id": "480",
+      "infinitive": "oskedinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1372:TVE": {
+      "entry_id": "verb-0236",
+      "legacy_verb_id": "1372",
+      "infinitive": "oskedinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1324:TVE": {
+      "entry_id": "verb-0236",
+      "legacy_verb_id": "1324",
+      "infinitive": "oskedinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "481:TVM": {
+      "entry_id": "verb-0237",
+      "legacy_verb_id": "481",
+      "infinitive": "oskidu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "482:TVM": {
+      "entry_id": "verb-0237",
+      "legacy_verb_id": "482",
+      "infinitive": "oskidu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "498:TVE": {
+      "entry_id": "verb-0245",
+      "legacy_verb_id": "498",
+      "infinitive": "oslebinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "500:TVE": {
+      "entry_id": "verb-0247",
+      "legacy_verb_id": "500",
+      "infinitive": "osteru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "501:TVE": {
+      "entry_id": "verb-0247",
+      "legacy_verb_id": "501",
+      "infinitive": "osteru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "502:TVE": {
+      "entry_id": "verb-0248",
+      "legacy_verb_id": "502",
+      "infinitive": "ostibu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "503:TVE": {
+      "entry_id": "verb-0248",
+      "legacy_verb_id": "503",
+      "infinitive": "ostibu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "504:TVM": {
+      "entry_id": "verb-0249",
+      "legacy_verb_id": "504",
+      "infinitive": "ostibu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "505:TVM": {
+      "entry_id": "verb-0250",
+      "legacy_verb_id": "505",
+      "infinitive": "ostu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "506:TVM": {
+      "entry_id": "verb-0250",
+      "legacy_verb_id": "506",
+      "infinitive": "ostu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "507:TVM": {
+      "entry_id": "verb-0250",
+      "legacy_verb_id": "507",
+      "infinitive": "ostu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "508:TVE": {
+      "entry_id": "verb-0251",
+      "legacy_verb_id": "508",
+      "infinitive": "ost̆u",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "513:TVE": {
+      "entry_id": "verb-0254",
+      "legacy_verb_id": "513",
+      "infinitive": "osvaru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "485:TVM": {
+      "entry_id": "verb-0239",
+      "legacy_verb_id": "485",
+      "infinitive": "osǩudu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "486:TVM": {
+      "entry_id": "verb-0239",
+      "legacy_verb_id": "486",
+      "infinitive": "osǩudu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "516:TVE": {
+      "entry_id": "verb-0256",
+      "legacy_verb_id": "516",
+      "infinitive": "otanu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "517:TVE": {
+      "entry_id": "verb-0256",
+      "legacy_verb_id": "517",
+      "infinitive": "otanu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "518:TVE": {
+      "entry_id": "verb-0256",
+      "legacy_verb_id": "518",
+      "infinitive": "otanu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1373:TVE": {
+      "entry_id": "verb-0256",
+      "legacy_verb_id": "1373",
+      "infinitive": "otanu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "523:TVE": {
+      "entry_id": "verb-0259",
+      "legacy_verb_id": "523",
+      "infinitive": "otebriǩu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "524:TVE": {
+      "entry_id": "verb-0259",
+      "legacy_verb_id": "524",
+      "infinitive": "otebriǩu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "525:TVE": {
+      "entry_id": "verb-0259",
+      "legacy_verb_id": "525",
+      "infinitive": "otebriǩu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "526:TVE": {
+      "entry_id": "verb-0259",
+      "legacy_verb_id": "526",
+      "infinitive": "otebriǩu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "527:TVE": {
+      "entry_id": "verb-0260",
+      "legacy_verb_id": "527",
+      "infinitive": "oteşekkyuru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "528:TVE": {
+      "entry_id": "verb-0260",
+      "legacy_verb_id": "528",
+      "infinitive": "oteşekkyuru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "529:TVE": {
+      "entry_id": "verb-0260",
+      "legacy_verb_id": "529",
+      "infinitive": "oteşekkyuru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1374:TVE": {
+      "entry_id": "verb-0260",
+      "legacy_verb_id": "1374",
+      "infinitive": "oteşekkyuru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "530:TVE": {
+      "entry_id": "verb-0261",
+      "legacy_verb_id": "530",
+      "infinitive": "otiru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "538:TVE": {
+      "entry_id": "verb-0265",
+      "legacy_verb_id": "538",
+      "infinitive": "otku",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "539:TVE": {
+      "entry_id": "verb-0265",
+      "legacy_verb_id": "539",
+      "infinitive": "otku",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "540:TVE": {
+      "entry_id": "verb-0265",
+      "legacy_verb_id": "540",
+      "infinitive": "otku",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1375:TVE": {
+      "entry_id": "verb-0265",
+      "legacy_verb_id": "1375",
+      "infinitive": "otku",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "542:TVE": {
+      "entry_id": "verb-0267",
+      "legacy_verb_id": "542",
+      "infinitive": "otoru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "543:TVE": {
+      "entry_id": "verb-0267",
+      "legacy_verb_id": "543",
+      "infinitive": "otoru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "544:TVE": {
+      "entry_id": "verb-0267",
+      "legacy_verb_id": "544",
+      "infinitive": "otoru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1376:TVE": {
+      "entry_id": "verb-0267",
+      "legacy_verb_id": "1376",
+      "infinitive": "otoru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "519:TVE": {
+      "entry_id": "verb-0257",
+      "legacy_verb_id": "519",
+      "infinitive": "ot̆at̆u",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "520:TVE": {
+      "entry_id": "verb-0258",
+      "legacy_verb_id": "520",
+      "infinitive": "ot̆axu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "521:TVE": {
+      "entry_id": "verb-0258",
+      "legacy_verb_id": "521",
+      "infinitive": "ot̆axu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "522:TVE": {
+      "entry_id": "verb-0258",
+      "legacy_verb_id": "522",
+      "infinitive": "ot̆axu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1377:TVE": {
+      "entry_id": "verb-0258",
+      "legacy_verb_id": "1377",
+      "infinitive": "ot̆axu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "531:TVE": {
+      "entry_id": "verb-0262",
+      "legacy_verb_id": "531",
+      "infinitive": "ot̆işu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "532:TVE": {
+      "entry_id": "verb-0262",
+      "legacy_verb_id": "532",
+      "infinitive": "ot̆işu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "533:TVE": {
+      "entry_id": "verb-0262",
+      "legacy_verb_id": "533",
+      "infinitive": "ot̆işu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1378:TVE": {
+      "entry_id": "verb-0262",
+      "legacy_verb_id": "1378",
+      "infinitive": "ot̆işu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "514:TVE": {
+      "entry_id": "verb-0255",
+      "legacy_verb_id": "514",
+      "infinitive": "ot̆rağodu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "515:TVE": {
+      "entry_id": "verb-0255",
+      "legacy_verb_id": "515",
+      "infinitive": "ot̆rağodu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "536:TVE": {
+      "entry_id": "verb-0264",
+      "legacy_verb_id": "536",
+      "infinitive": "ot̆ǩoçu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "536:TVM": {
+      "entry_id": "verb-0263",
+      "legacy_verb_id": "536",
+      "infinitive": "ot̆ǩoçu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "534:TVM": {
+      "entry_id": "verb-0263",
+      "legacy_verb_id": "534",
+      "infinitive": "ot̆ǩoçu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "535:TVM": {
+      "entry_id": "verb-0263",
+      "legacy_verb_id": "535",
+      "infinitive": "ot̆ǩoçu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "537:TVM": {
+      "entry_id": "verb-0263",
+      "legacy_verb_id": "537",
+      "infinitive": "ot̆ǩoçu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "541:TVE": {
+      "entry_id": "verb-0266",
+      "legacy_verb_id": "541",
+      "infinitive": "ot̆ǩu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "545:TVE": {
+      "entry_id": "verb-0268",
+      "legacy_verb_id": "545",
+      "infinitive": "oucu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "546:TVE": {
+      "entry_id": "verb-0269",
+      "legacy_verb_id": "546",
+      "infinitive": "ovalu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "547:IVD": {
+      "entry_id": "verb-0270",
+      "legacy_verb_id": "547",
+      "infinitive": "ovapu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "547:TVM": {
+      "entry_id": "verb-0271",
+      "legacy_verb_id": "547",
+      "infinitive": "ovapu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "549:TVE": {
+      "entry_id": "verb-0273",
+      "legacy_verb_id": "549",
+      "infinitive": "oxandu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "550:TVE": {
+      "entry_id": "verb-0274",
+      "legacy_verb_id": "550",
+      "infinitive": "oxap̌aru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "551:TVE": {
+      "entry_id": "verb-0275",
+      "legacy_verb_id": "551",
+      "infinitive": "oxaresiru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "552:TVE": {
+      "entry_id": "verb-0275",
+      "legacy_verb_id": "552",
+      "infinitive": "oxaresiru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "553:TVE": {
+      "entry_id": "verb-0275",
+      "legacy_verb_id": "553",
+      "infinitive": "oxaresiru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "554:TVE": {
+      "entry_id": "verb-0276",
+      "legacy_verb_id": "554",
+      "infinitive": "oxarsuvu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "555:TVE": {
+      "entry_id": "verb-0276",
+      "legacy_verb_id": "555",
+      "infinitive": "oxarsuvu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "556:TVE": {
+      "entry_id": "verb-0276",
+      "legacy_verb_id": "556",
+      "infinitive": "oxarsuvu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "557:TVE": {
+      "entry_id": "verb-0278",
+      "legacy_verb_id": "557",
+      "infinitive": "oxat̆iru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "558:TVE": {
+      "entry_id": "verb-0278",
+      "legacy_verb_id": "558",
+      "infinitive": "oxat̆iru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "559:TVE": {
+      "entry_id": "verb-0278",
+      "legacy_verb_id": "559",
+      "infinitive": "oxat̆iru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1379:TVE": {
+      "entry_id": "verb-0278",
+      "legacy_verb_id": "1379",
+      "infinitive": "oxat̆iru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "560:TVE": {
+      "entry_id": "verb-0279",
+      "legacy_verb_id": "560",
+      "infinitive": "oxaziru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "561:TVE": {
+      "entry_id": "verb-0279",
+      "legacy_verb_id": "561",
+      "infinitive": "oxaziru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1380:TVE": {
+      "entry_id": "verb-0279",
+      "legacy_verb_id": "1380",
+      "infinitive": "oxaziru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "548:TVE": {
+      "entry_id": "verb-0272",
+      "legacy_verb_id": "548",
+      "infinitive": "oxaçǩu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "562:TVE": {
+      "entry_id": "verb-0280",
+      "legacy_verb_id": "562",
+      "infinitive": "oxažiru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "563:TVE": {
+      "entry_id": "verb-0280",
+      "legacy_verb_id": "563",
+      "infinitive": "oxažiru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "567:TVM": {
+      "entry_id": "verb-0282",
+      "legacy_verb_id": "567",
+      "infinitive": "oxelu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "565:TVM": {
+      "entry_id": "verb-0282",
+      "legacy_verb_id": "565",
+      "infinitive": "oxelu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "566:TVM": {
+      "entry_id": "verb-0282",
+      "legacy_verb_id": "566",
+      "infinitive": "oxelu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "568:TVM": {
+      "entry_id": "verb-0282",
+      "legacy_verb_id": "568",
+      "infinitive": "oxelu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "569:TVE": {
+      "entry_id": "verb-0283",
+      "legacy_verb_id": "569",
+      "infinitive": "oxenu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "570:TVE": {
+      "entry_id": "verb-0283",
+      "legacy_verb_id": "570",
+      "infinitive": "oxenu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1325:TVE": {
+      "entry_id": "verb-0283",
+      "legacy_verb_id": "1325",
+      "infinitive": "oxenu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "571:TVE": {
+      "entry_id": "verb-0284",
+      "legacy_verb_id": "571",
+      "infinitive": "oxerxu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1381:TVE": {
+      "entry_id": "verb-0284",
+      "legacy_verb_id": "1381",
+      "infinitive": "oxerxu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "572:TVE": {
+      "entry_id": "verb-0285",
+      "legacy_verb_id": "572",
+      "infinitive": "oxmaru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "573:TVE": {
+      "entry_id": "verb-0285",
+      "legacy_verb_id": "573",
+      "infinitive": "oxmaru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "574:TVE": {
+      "entry_id": "verb-0285",
+      "legacy_verb_id": "574",
+      "infinitive": "oxmaru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "575:TVE": {
+      "entry_id": "verb-0285",
+      "legacy_verb_id": "575",
+      "infinitive": "oxmaru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "576:TVE": {
+      "entry_id": "verb-0286",
+      "legacy_verb_id": "576",
+      "infinitive": "oxomu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "577:TVE": {
+      "entry_id": "verb-0287",
+      "legacy_verb_id": "577",
+      "infinitive": "oxop̌u",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "578:TVE": {
+      "entry_id": "verb-0287",
+      "legacy_verb_id": "578",
+      "infinitive": "oxop̌u",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "579:TVE": {
+      "entry_id": "verb-0287",
+      "legacy_verb_id": "579",
+      "infinitive": "oxop̌u",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "580:TVE": {
+      "entry_id": "verb-0288",
+      "legacy_verb_id": "580",
+      "infinitive": "oxoşkvinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "581:TVE": {
+      "entry_id": "verb-0288",
+      "legacy_verb_id": "581",
+      "infinitive": "oxoşkvinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "582:TVE": {
+      "entry_id": "verb-0288",
+      "legacy_verb_id": "582",
+      "infinitive": "oxoşkvinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1382:TVE": {
+      "entry_id": "verb-0288",
+      "legacy_verb_id": "1382",
+      "infinitive": "oxoşkvinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "583:TVE": {
+      "entry_id": "verb-0289",
+      "legacy_verb_id": "583",
+      "infinitive": "oxoǯonu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "584:TVE": {
+      "entry_id": "verb-0289",
+      "legacy_verb_id": "584",
+      "infinitive": "oxoǯonu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "585:TVE": {
+      "entry_id": "verb-0289",
+      "legacy_verb_id": "585",
+      "infinitive": "oxoǯonu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1383:TVE": {
+      "entry_id": "verb-0289",
+      "legacy_verb_id": "1383",
+      "infinitive": "oxoǯonu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "586:TVM": {
+      "entry_id": "verb-0290",
+      "legacy_verb_id": "586",
+      "infinitive": "oxtimu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "587:TVM": {
+      "entry_id": "verb-0290",
+      "legacy_verb_id": "587",
+      "infinitive": "oxtimu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "588:TVE": {
+      "entry_id": "verb-0291",
+      "legacy_verb_id": "588",
+      "infinitive": "oxu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "589:TVE": {
+      "entry_id": "verb-0291",
+      "legacy_verb_id": "589",
+      "infinitive": "oxu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "590:TVE": {
+      "entry_id": "verb-0291",
+      "legacy_verb_id": "590",
+      "infinitive": "oxu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1384:TVE": {
+      "entry_id": "verb-0291",
+      "legacy_verb_id": "1384",
+      "infinitive": "oxu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "591:TVE": {
+      "entry_id": "verb-0292",
+      "legacy_verb_id": "591",
+      "infinitive": "oxvenu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "564:TVM": {
+      "entry_id": "verb-0281",
+      "legacy_verb_id": "564",
+      "infinitive": "oxçinu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "592:IVD": {
+      "entry_id": "verb-0293",
+      "legacy_verb_id": "592",
+      "infinitive": "oyapu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "592:TVM": {
+      "entry_id": "verb-0294",
+      "legacy_verb_id": "592",
+      "infinitive": "oyapu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "593:IVD": {
+      "entry_id": "verb-0293",
+      "legacy_verb_id": "593",
+      "infinitive": "oyapu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "593:TVM": {
+      "entry_id": "verb-0294",
+      "legacy_verb_id": "593",
+      "infinitive": "oyapu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "594:TVE": {
+      "entry_id": "verb-0295",
+      "legacy_verb_id": "594",
+      "infinitive": "oyondrinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "595:TVE": {
+      "entry_id": "verb-0295",
+      "legacy_verb_id": "595",
+      "infinitive": "oyondrinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "596:TVE": {
+      "entry_id": "verb-0295",
+      "legacy_verb_id": "596",
+      "infinitive": "oyondrinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "597:TVE": {
+      "entry_id": "verb-0296",
+      "legacy_verb_id": "597",
+      "infinitive": "oyondru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "598:TVE": {
+      "entry_id": "verb-0296",
+      "legacy_verb_id": "598",
+      "infinitive": "oyondru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "599:TVE": {
+      "entry_id": "verb-0296",
+      "legacy_verb_id": "599",
+      "infinitive": "oyondru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "600:TVE": {
+      "entry_id": "verb-0297",
+      "legacy_verb_id": "600",
+      "infinitive": "oyoxu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "601:TVE": {
+      "entry_id": "verb-0297",
+      "legacy_verb_id": "601",
+      "infinitive": "oyoxu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "251:TVE": {
+      "entry_id": "verb-0119",
+      "legacy_verb_id": "251",
+      "infinitive": "oçalişu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "252:TVE": {
+      "entry_id": "verb-0119",
+      "legacy_verb_id": "252",
+      "infinitive": "oçalişu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "253:TVE": {
+      "entry_id": "verb-0119",
+      "legacy_verb_id": "253",
+      "infinitive": "oçalişu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1385:TVE": {
+      "entry_id": "verb-0119",
+      "legacy_verb_id": "1385",
+      "infinitive": "oçalişu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "257:TVE": {
+      "entry_id": "verb-0121",
+      "legacy_verb_id": "257",
+      "infinitive": "oçaminu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "257:TVM": {
+      "entry_id": "verb-0120",
+      "legacy_verb_id": "257",
+      "infinitive": "oçaminu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "256:TVE": {
+      "entry_id": "verb-0121",
+      "legacy_verb_id": "256",
+      "infinitive": "oçaminu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "256:TVM": {
+      "entry_id": "verb-0120",
+      "legacy_verb_id": "256",
+      "infinitive": "oçaminu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "254:TVM": {
+      "entry_id": "verb-0120",
+      "legacy_verb_id": "254",
+      "infinitive": "oçaminu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "255:TVM": {
+      "entry_id": "verb-0120",
+      "legacy_verb_id": "255",
+      "infinitive": "oçaminu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "258:TVE": {
+      "entry_id": "verb-0122",
+      "legacy_verb_id": "258",
+      "infinitive": "oçamu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "259:TVE": {
+      "entry_id": "verb-0122",
+      "legacy_verb_id": "259",
+      "infinitive": "oçamu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "260:TVE": {
+      "entry_id": "verb-0122",
+      "legacy_verb_id": "260",
+      "infinitive": "oçamu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1386:TVE": {
+      "entry_id": "verb-0122",
+      "legacy_verb_id": "1386",
+      "infinitive": "oçamu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "263:TVE": {
+      "entry_id": "verb-0124",
+      "legacy_verb_id": "263",
+      "infinitive": "oçedinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "264:TVE": {
+      "entry_id": "verb-0124",
+      "legacy_verb_id": "264",
+      "infinitive": "oçedinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "265:TVE": {
+      "entry_id": "verb-0124",
+      "legacy_verb_id": "265",
+      "infinitive": "oçedinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "268:TVM": {
+      "entry_id": "verb-0127",
+      "legacy_verb_id": "268",
+      "infinitive": "oçilu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "269:IVD": {
+      "entry_id": "verb-0142",
+      "legacy_verb_id": "269",
+      "infinitive": "oçindu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "equivalent_duplicate"
+    },
+    "270:IVD": {
+      "entry_id": "verb-0142",
+      "legacy_verb_id": "270",
+      "infinitive": "oçindu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "equivalent_duplicate"
+    },
+    "271:IVD": {
+      "entry_id": "verb-0142",
+      "legacy_verb_id": "271",
+      "infinitive": "oçindu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "equivalent_duplicate"
+    },
+    "295:IVD": {
+      "entry_id": "verb-0142",
+      "legacy_verb_id": "295",
+      "infinitive": "oçindu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "272:TVE": {
+      "entry_id": "verb-0129",
+      "legacy_verb_id": "272",
+      "infinitive": "oçinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "273:TVE": {
+      "entry_id": "verb-0129",
+      "legacy_verb_id": "273",
+      "infinitive": "oçinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1387:TVE": {
+      "entry_id": "verb-0129",
+      "legacy_verb_id": "1387",
+      "infinitive": "oçinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1326:TVE": {
+      "entry_id": "verb-0129",
+      "legacy_verb_id": "1326",
+      "infinitive": "oçinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "274:IVD": {
+      "entry_id": "verb-0130",
+      "legacy_verb_id": "274",
+      "infinitive": "oçit̆inu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "276:IVD": {
+      "entry_id": "verb-0132",
+      "legacy_verb_id": "276",
+      "infinitive": "oçkinu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "277:IVD": {
+      "entry_id": "verb-0132",
+      "legacy_verb_id": "277",
+      "infinitive": "oçkinu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "283:TVE": {
+      "entry_id": "verb-0137",
+      "legacy_verb_id": "283",
+      "infinitive": "oçodinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "283:TVM": {
+      "entry_id": "verb-0138",
+      "legacy_verb_id": "283",
+      "infinitive": "oçodinu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "284:TVE": {
+      "entry_id": "verb-0137",
+      "legacy_verb_id": "284",
+      "infinitive": "oçodinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "284:TVM": {
+      "entry_id": "verb-0138",
+      "legacy_verb_id": "284",
+      "infinitive": "oçodinu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "285:TVE": {
+      "entry_id": "verb-0137",
+      "legacy_verb_id": "285",
+      "infinitive": "oçodinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "285:TVM": {
+      "entry_id": "verb-0138",
+      "legacy_verb_id": "285",
+      "infinitive": "oçodinu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "286:TVE": {
+      "entry_id": "verb-0137",
+      "legacy_verb_id": "286",
+      "infinitive": "oçodinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "286:TVM": {
+      "entry_id": "verb-0138",
+      "legacy_verb_id": "286",
+      "infinitive": "oçodinu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "291:TVE": {
+      "entry_id": "verb-0141",
+      "legacy_verb_id": "291",
+      "infinitive": "oçu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "292:TVE": {
+      "entry_id": "verb-0141",
+      "legacy_verb_id": "292",
+      "infinitive": "oçu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "293:TVE": {
+      "entry_id": "verb-0141",
+      "legacy_verb_id": "293",
+      "infinitive": "oçu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "294:TVE": {
+      "entry_id": "verb-0141",
+      "legacy_verb_id": "294",
+      "infinitive": "oçu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "278:TVE": {
+      "entry_id": "verb-0133",
+      "legacy_verb_id": "278",
+      "infinitive": "oçǩiru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "250:TVE": {
+      "entry_id": "verb-0118",
+      "legacy_verb_id": "250",
+      "infinitive": "oç̌abu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "261:TVE": {
+      "entry_id": "verb-0123",
+      "legacy_verb_id": "261",
+      "infinitive": "oç̌aru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "262:TVE": {
+      "entry_id": "verb-0123",
+      "legacy_verb_id": "262",
+      "infinitive": "oç̌aru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1388:TVE": {
+      "entry_id": "verb-0123",
+      "legacy_verb_id": "1388",
+      "infinitive": "oç̌aru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "287:TVE": {
+      "entry_id": "verb-0139",
+      "legacy_verb_id": "287",
+      "infinitive": "oç̌opu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "288:TVE": {
+      "entry_id": "verb-0139",
+      "legacy_verb_id": "288",
+      "infinitive": "oç̌opu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "289:TVE": {
+      "entry_id": "verb-0139",
+      "legacy_verb_id": "289",
+      "infinitive": "oç̌opu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1389:TVE": {
+      "entry_id": "verb-0139",
+      "legacy_verb_id": "1389",
+      "infinitive": "oç̌opu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "296:IVD": {
+      "entry_id": "verb-0143",
+      "legacy_verb_id": "296",
+      "infinitive": "oç̌u",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "296:TVE": {
+      "entry_id": "verb-0144",
+      "legacy_verb_id": "296",
+      "infinitive": "oç̌u",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "297:IVD": {
+      "entry_id": "verb-0143",
+      "legacy_verb_id": "297",
+      "infinitive": "oç̌u",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "297:TVE": {
+      "entry_id": "verb-0144",
+      "legacy_verb_id": "297",
+      "infinitive": "oç̌u",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "298:IVD": {
+      "entry_id": "verb-0143",
+      "legacy_verb_id": "298",
+      "infinitive": "oç̌u",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "298:TVE": {
+      "entry_id": "verb-0144",
+      "legacy_verb_id": "298",
+      "infinitive": "oç̌u",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "299:IVD": {
+      "entry_id": "verb-0143",
+      "legacy_verb_id": "299",
+      "infinitive": "oç̌u",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "299:TVE": {
+      "entry_id": "verb-0144",
+      "legacy_verb_id": "299",
+      "infinitive": "oç̌u",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "300:TVE": {
+      "entry_id": "verb-0145",
+      "legacy_verb_id": "300",
+      "infinitive": "oç̌uç̌u",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "275:TVE": {
+      "entry_id": "verb-0131",
+      "legacy_verb_id": "275",
+      "infinitive": "oç̌ǩadu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "279:TVE": {
+      "entry_id": "verb-0134",
+      "legacy_verb_id": "279",
+      "infinitive": "oç̌ǩiru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "280:TVE": {
+      "entry_id": "verb-0135",
+      "legacy_verb_id": "280",
+      "infinitive": "oç̌ǩomu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "281:TVE": {
+      "entry_id": "verb-0135",
+      "legacy_verb_id": "281",
+      "infinitive": "oç̌ǩomu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "282:TVE": {
+      "entry_id": "verb-0136",
+      "legacy_verb_id": "282",
+      "infinitive": "oç̌ǩoru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1390:TVE": {
+      "entry_id": "verb-0136",
+      "legacy_verb_id": "1390",
+      "infinitive": "oç̌ǩoru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "302:TVE": {
+      "entry_id": "verb-0147",
+      "legacy_verb_id": "302",
+      "infinitive": "oğaru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "303:TVE": {
+      "entry_id": "verb-0147",
+      "legacy_verb_id": "303",
+      "infinitive": "oğaru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "304:TVE": {
+      "entry_id": "verb-0147",
+      "legacy_verb_id": "304",
+      "infinitive": "oğaru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1391:TVE": {
+      "entry_id": "verb-0147",
+      "legacy_verb_id": "1391",
+      "infinitive": "oğaru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "301:TVE": {
+      "entry_id": "verb-0146",
+      "legacy_verb_id": "301",
+      "infinitive": "oğarğalu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "305:TVE": {
+      "entry_id": "verb-0148",
+      "legacy_verb_id": "305",
+      "infinitive": "oğerdinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "313:TVM": {
+      "entry_id": "verb-0153",
+      "legacy_verb_id": "313",
+      "infinitive": "oğuru",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "314:TVM": {
+      "entry_id": "verb-0153",
+      "legacy_verb_id": "314",
+      "infinitive": "oğuru",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "315:TVM": {
+      "entry_id": "verb-0153",
+      "legacy_verb_id": "315",
+      "infinitive": "oğuru",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "316:TVM": {
+      "entry_id": "verb-0153",
+      "legacy_verb_id": "316",
+      "infinitive": "oğuru",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "472:TVE": {
+      "entry_id": "verb-0233",
+      "legacy_verb_id": "472",
+      "infinitive": "oşinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1327:TVE": {
+      "entry_id": "verb-0233",
+      "legacy_verb_id": "1327",
+      "infinitive": "oşinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1392:TVE": {
+      "entry_id": "verb-0233",
+      "legacy_verb_id": "1392",
+      "infinitive": "oşinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "473:TVE": {
+      "entry_id": "verb-0234",
+      "legacy_verb_id": "473",
+      "infinitive": "oşiru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "474:TVE": {
+      "entry_id": "verb-0234",
+      "legacy_verb_id": "474",
+      "infinitive": "oşiru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "475:TVE": {
+      "entry_id": "verb-0234",
+      "legacy_verb_id": "475",
+      "infinitive": "oşiru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1393:TVE": {
+      "entry_id": "verb-0234",
+      "legacy_verb_id": "1393",
+      "infinitive": "oşiru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "476:IVD": {
+      "entry_id": "verb-0235",
+      "legacy_verb_id": "476",
+      "infinitive": "oşit̆inu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "477:IVD": {
+      "entry_id": "verb-0235",
+      "legacy_verb_id": "477",
+      "infinitive": "oşit̆inu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "478:IVD": {
+      "entry_id": "verb-0235",
+      "legacy_verb_id": "478",
+      "infinitive": "oşit̆inu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "489:IVD": {
+      "entry_id": "verb-0241",
+      "legacy_verb_id": "489",
+      "infinitive": "oşkurinu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "490:IVD": {
+      "entry_id": "verb-0241",
+      "legacy_verb_id": "490",
+      "infinitive": "oşkurinu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "491:IVD": {
+      "entry_id": "verb-0241",
+      "legacy_verb_id": "491",
+      "infinitive": "oşkurinu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "492:IVD": {
+      "entry_id": "verb-0241",
+      "legacy_verb_id": "492",
+      "infinitive": "oşkurinu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "499:TVM": {
+      "entry_id": "verb-0246",
+      "legacy_verb_id": "499",
+      "infinitive": "oşolu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "509:TVE": {
+      "entry_id": "verb-0252",
+      "legacy_verb_id": "509",
+      "infinitive": "oşu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "510:TVE": {
+      "entry_id": "verb-0252",
+      "legacy_verb_id": "510",
+      "infinitive": "oşu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "511:TVE": {
+      "entry_id": "verb-0252",
+      "legacy_verb_id": "511",
+      "infinitive": "oşu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1394:TVE": {
+      "entry_id": "verb-0252",
+      "legacy_verb_id": "1394",
+      "infinitive": "oşu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "493:TVM": {
+      "entry_id": "verb-0242",
+      "legacy_verb_id": "493",
+      "infinitive": "oşǩidu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "483:TVE": {
+      "entry_id": "verb-0238",
+      "legacy_verb_id": "483",
+      "infinitive": "oşǩinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "484:TVE": {
+      "entry_id": "verb-0238",
+      "legacy_verb_id": "484",
+      "infinitive": "oşǩinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "494:TVE": {
+      "entry_id": "verb-0243",
+      "legacy_verb_id": "494",
+      "infinitive": "oşǩomu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "495:TVE": {
+      "entry_id": "verb-0243",
+      "legacy_verb_id": "495",
+      "infinitive": "oşǩomu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "496:TVE": {
+      "entry_id": "verb-0244",
+      "legacy_verb_id": "496",
+      "infinitive": "oşǩoru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "497:TVE": {
+      "entry_id": "verb-0244",
+      "legacy_verb_id": "497",
+      "infinitive": "oşǩoru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "487:IVD": {
+      "entry_id": "verb-0240",
+      "legacy_verb_id": "487",
+      "infinitive": "oşǩunu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "488:IVD": {
+      "entry_id": "verb-0240",
+      "legacy_verb_id": "488",
+      "infinitive": "oşǩunu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "602:IVD": {
+      "entry_id": "verb-0299",
+      "legacy_verb_id": "602",
+      "infinitive": "ožiru",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "602:TVE": {
+      "entry_id": "verb-0298",
+      "legacy_verb_id": "602",
+      "infinitive": "ožiru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1316:TVE": {
+      "entry_id": "verb-0298",
+      "legacy_verb_id": "1316",
+      "infinitive": "ožiru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1310:TVE": {
+      "entry_id": "verb-0298",
+      "legacy_verb_id": "1310",
+      "infinitive": "ožiru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1328:TVE": {
+      "entry_id": "verb-0298",
+      "legacy_verb_id": "1328",
+      "infinitive": "ožiru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "603:TVM": {
+      "entry_id": "verb-0300",
+      "legacy_verb_id": "603",
+      "infinitive": "ožiʒu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "329:TVE": {
+      "entry_id": "verb-0158",
+      "legacy_verb_id": "329",
+      "infinitive": "oǩap̌u",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "330:TVE": {
+      "entry_id": "verb-0158",
+      "legacy_verb_id": "330",
+      "infinitive": "oǩap̌u",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "331:TVE": {
+      "entry_id": "verb-0158",
+      "legacy_verb_id": "331",
+      "infinitive": "oǩap̌u",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "333:TVE": {
+      "entry_id": "verb-0160",
+      "legacy_verb_id": "333",
+      "infinitive": "oǩiru",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "332:TVE": {
+      "entry_id": "verb-0159",
+      "legacy_verb_id": "332",
+      "infinitive": "oǩiru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "334:TVE": {
+      "entry_id": "verb-0161",
+      "legacy_verb_id": "334",
+      "infinitive": "oǩitxu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "335:TVE": {
+      "entry_id": "verb-0161",
+      "legacy_verb_id": "335",
+      "infinitive": "oǩitxu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "336:TVE": {
+      "entry_id": "verb-0161",
+      "legacy_verb_id": "336",
+      "infinitive": "oǩitxu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1395:TVE": {
+      "entry_id": "verb-0161",
+      "legacy_verb_id": "1395",
+      "infinitive": "oǩitxu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "337:TVE": {
+      "entry_id": "verb-0162",
+      "legacy_verb_id": "337",
+      "infinitive": "oǩiu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "338:TVE": {
+      "entry_id": "verb-0163",
+      "legacy_verb_id": "338",
+      "infinitive": "oǩobğu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1396:TVE": {
+      "entry_id": "verb-0163",
+      "legacy_verb_id": "1396",
+      "infinitive": "oǩobğu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "341:IVD": {
+      "entry_id": "verb-0165",
+      "legacy_verb_id": "341",
+      "infinitive": "oǩomandu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "342:IVD": {
+      "entry_id": "verb-0165",
+      "legacy_verb_id": "342",
+      "infinitive": "oǩomandu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "343:TVM": {
+      "entry_id": "verb-0166",
+      "legacy_verb_id": "343",
+      "infinitive": "oǩonağuru",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "344:TVM": {
+      "entry_id": "verb-0166",
+      "legacy_verb_id": "344",
+      "infinitive": "oǩonağuru",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "345:TVM": {
+      "entry_id": "verb-0166",
+      "legacy_verb_id": "345",
+      "infinitive": "oǩonağuru",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "346:TVM": {
+      "entry_id": "verb-0166",
+      "legacy_verb_id": "346",
+      "infinitive": "oǩonağuru",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "347:TVE": {
+      "entry_id": "verb-0167",
+      "legacy_verb_id": "347",
+      "infinitive": "oǩont̆alu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "348:TVE": {
+      "entry_id": "verb-0167",
+      "legacy_verb_id": "348",
+      "infinitive": "oǩont̆alu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "349:TVE": {
+      "entry_id": "verb-0167",
+      "legacy_verb_id": "349",
+      "infinitive": "oǩont̆alu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1397:TVE": {
+      "entry_id": "verb-0167",
+      "legacy_verb_id": "1397",
+      "infinitive": "oǩont̆alu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "350:TVE": {
+      "entry_id": "verb-0168",
+      "legacy_verb_id": "350",
+      "infinitive": "oǩoreʒxu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "351:TVE": {
+      "entry_id": "verb-0168",
+      "legacy_verb_id": "351",
+      "infinitive": "oǩoreʒxu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "352:TVE": {
+      "entry_id": "verb-0168",
+      "legacy_verb_id": "352",
+      "infinitive": "oǩoreʒxu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1398:TVE": {
+      "entry_id": "verb-0168",
+      "legacy_verb_id": "1398",
+      "infinitive": "oǩoreʒxu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "353:TVE": {
+      "entry_id": "verb-0169",
+      "legacy_verb_id": "353",
+      "infinitive": "oǩorinu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "354:TVE": {
+      "entry_id": "verb-0169",
+      "legacy_verb_id": "354",
+      "infinitive": "oǩorinu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "355:TVE": {
+      "entry_id": "verb-0169",
+      "legacy_verb_id": "355",
+      "infinitive": "oǩorinu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "356:TVE": {
+      "entry_id": "verb-0170",
+      "legacy_verb_id": "356",
+      "infinitive": "oǩortu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "357:TVE": {
+      "entry_id": "verb-0170",
+      "legacy_verb_id": "357",
+      "infinitive": "oǩortu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1399:TVE": {
+      "entry_id": "verb-0170",
+      "legacy_verb_id": "1399",
+      "infinitive": "oǩortu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "358:TVE": {
+      "entry_id": "verb-0171",
+      "legacy_verb_id": "358",
+      "infinitive": "oǩoru",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "359:TVE": {
+      "entry_id": "verb-0171",
+      "legacy_verb_id": "359",
+      "infinitive": "oǩoru",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1400:TVE": {
+      "entry_id": "verb-0171",
+      "legacy_verb_id": "1400",
+      "infinitive": "oǩoru",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "363:TVM": {
+      "entry_id": "verb-0173",
+      "legacy_verb_id": "363",
+      "infinitive": "oǩovelu",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "364:TVM": {
+      "entry_id": "verb-0173",
+      "legacy_verb_id": "364",
+      "infinitive": "oǩovelu",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "365:TVM": {
+      "entry_id": "verb-0173",
+      "legacy_verb_id": "365",
+      "infinitive": "oǩovelu",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "366:TVM": {
+      "entry_id": "verb-0173",
+      "legacy_verb_id": "366",
+      "infinitive": "oǩovelu",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "339:TVE": {
+      "entry_id": "verb-0164",
+      "legacy_verb_id": "339",
+      "infinitive": "oǩoğmalu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "340:TVE": {
+      "entry_id": "verb-0164",
+      "legacy_verb_id": "340",
+      "infinitive": "oǩoğmalu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "368:TVE": {
+      "entry_id": "verb-0174",
+      "legacy_verb_id": "368",
+      "infinitive": "oǩoǯǩu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "367:TVE": {
+      "entry_id": "verb-0174",
+      "legacy_verb_id": "367",
+      "infinitive": "oǩoǯǩu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "369:TVE": {
+      "entry_id": "verb-0174",
+      "legacy_verb_id": "369",
+      "infinitive": "oǩoǯǩu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1401:TVE": {
+      "entry_id": "verb-0174",
+      "legacy_verb_id": "1401",
+      "infinitive": "oǩoǯǩu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "372:TVE": {
+      "entry_id": "verb-0176",
+      "legacy_verb_id": "372",
+      "infinitive": "oǩriu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "607:TVE": {
+      "entry_id": "verb-0302",
+      "legacy_verb_id": "607",
+      "infinitive": "oǯamu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "608:TVE": {
+      "entry_id": "verb-0303",
+      "legacy_verb_id": "608",
+      "infinitive": "oǯilu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "609:TVE": {
+      "entry_id": "verb-0303",
+      "legacy_verb_id": "609",
+      "infinitive": "oǯilu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1329:TVE": {
+      "entry_id": "verb-0303",
+      "legacy_verb_id": "1329",
+      "infinitive": "oǯilu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1402:TVE": {
+      "entry_id": "verb-0303",
+      "legacy_verb_id": "1402",
+      "infinitive": "oǯilu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "618:TVE": {
+      "entry_id": "verb-0310",
+      "legacy_verb_id": "618",
+      "infinitive": "oǯodu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "619:TVE": {
+      "entry_id": "verb-0310",
+      "legacy_verb_id": "619",
+      "infinitive": "oǯodu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "620:TVE": {
+      "entry_id": "verb-0311",
+      "legacy_verb_id": "620",
+      "infinitive": "oǯu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "621:TVE": {
+      "entry_id": "verb-0311",
+      "legacy_verb_id": "621",
+      "infinitive": "oǯu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "622:TVE": {
+      "entry_id": "verb-0311",
+      "legacy_verb_id": "622",
+      "infinitive": "oǯu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "623:IVD": {
+      "entry_id": "verb-0312",
+      "legacy_verb_id": "623",
+      "infinitive": "oǯunu",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "623:TVE": {
+      "entry_id": "verb-0313",
+      "legacy_verb_id": "623",
+      "infinitive": "oǯunu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "624:IVD": {
+      "entry_id": "verb-0312",
+      "legacy_verb_id": "624",
+      "infinitive": "oǯunu",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "624:TVE": {
+      "entry_id": "verb-0313",
+      "legacy_verb_id": "624",
+      "infinitive": "oǯunu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "625:TVE": {
+      "entry_id": "verb-0313",
+      "legacy_verb_id": "625",
+      "infinitive": "oǯunu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "610:TVE": {
+      "entry_id": "verb-0304",
+      "legacy_verb_id": "610",
+      "infinitive": "oǯǩedu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "611:TVE": {
+      "entry_id": "verb-0304",
+      "legacy_verb_id": "611",
+      "infinitive": "oǯǩedu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "612:TVE": {
+      "entry_id": "verb-0304",
+      "legacy_verb_id": "612",
+      "infinitive": "oǯǩedu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "613:TVE": {
+      "entry_id": "verb-0304",
+      "legacy_verb_id": "613",
+      "infinitive": "oǯǩedu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "614:TVE": {
+      "entry_id": "verb-0305",
+      "legacy_verb_id": "614",
+      "infinitive": "oǯǩidu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "615:TVE": {
+      "entry_id": "verb-0306",
+      "legacy_verb_id": "615",
+      "infinitive": "oǯǩu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "616:IVD": {
+      "entry_id": "verb-0307",
+      "legacy_verb_id": "616",
+      "infinitive": "oǯǩunu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "617:IVD": {
+      "entry_id": "verb-0307",
+      "legacy_verb_id": "617",
+      "infinitive": "oǯǩunu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "617:TVE": {
+      "entry_id": "verb-0309",
+      "legacy_verb_id": "617",
+      "infinitive": "oǯǩunu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "reviewed_paradigm_mapping"
+    },
+    "604:TVE": {
+      "entry_id": "verb-0301",
+      "legacy_verb_id": "604",
+      "infinitive": "oʒadu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "605:TVE": {
+      "entry_id": "verb-0301",
+      "legacy_verb_id": "605",
+      "infinitive": "oʒadu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "606:TVE": {
+      "entry_id": "verb-0301",
+      "legacy_verb_id": "606",
+      "infinitive": "oʒadu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1403:TVE": {
+      "entry_id": "verb-0301",
+      "legacy_verb_id": "1403",
+      "infinitive": "oʒadu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "627:TVE": {
+      "entry_id": "verb-0315",
+      "legacy_verb_id": "627",
+      "infinitive": "oʒxunu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "628:TVE": {
+      "entry_id": "verb-0315",
+      "legacy_verb_id": "628",
+      "infinitive": "oʒxunu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "629:TVE": {
+      "entry_id": "verb-0315",
+      "legacy_verb_id": "629",
+      "infinitive": "oʒxunu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "630:TVM": {
+      "entry_id": "verb-0316",
+      "legacy_verb_id": "630",
+      "infinitive": "ren",
+      "dialect": "FA",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "631:TVM": {
+      "entry_id": "verb-0316",
+      "legacy_verb_id": "631",
+      "infinitive": "ren",
+      "dialect": "HO",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "1311:TVM": {
+      "entry_id": "verb-0316",
+      "legacy_verb_id": "1311",
+      "infinitive": "ren",
+      "dialect": "AS",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "1317:TVM": {
+      "entry_id": "verb-0316",
+      "legacy_verb_id": "1317",
+      "infinitive": "ren",
+      "dialect": "PZ",
+      "verb_class": "TVM",
+      "basis": "metadata_and_frame"
+    },
+    "636:IVD": {
+      "entry_id": "verb-0318",
+      "legacy_verb_id": "636",
+      "infinitive": "unon",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "637:IVD": {
+      "entry_id": "verb-0318",
+      "legacy_verb_id": "637",
+      "infinitive": "unon",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "638:IVD": {
+      "entry_id": "verb-0319",
+      "legacy_verb_id": "638",
+      "infinitive": "uqoun",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "639:IVD": {
+      "entry_id": "verb-0320",
+      "legacy_verb_id": "639",
+      "infinitive": "uyonun",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "640:IVD": {
+      "entry_id": "verb-0320",
+      "legacy_verb_id": "640",
+      "infinitive": "uyonun",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "641:IVD": {
+      "entry_id": "verb-0320",
+      "legacy_verb_id": "641",
+      "infinitive": "uyonun",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "632:IVD": {
+      "entry_id": "verb-0317",
+      "legacy_verb_id": "632",
+      "infinitive": "uğun",
+      "dialect": "PZ",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "633:IVD": {
+      "entry_id": "verb-0317",
+      "legacy_verb_id": "633",
+      "infinitive": "uğun",
+      "dialect": "AS",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "634:IVD": {
+      "entry_id": "verb-0317",
+      "legacy_verb_id": "634",
+      "infinitive": "uğun",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "635:IVD": {
+      "entry_id": "verb-0317",
+      "legacy_verb_id": "635",
+      "infinitive": "uğun",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "645:TVE": {
+      "entry_id": "verb-0322",
+      "legacy_verb_id": "645",
+      "infinitive": "xe oǩotvaʒinu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "642:TVE": {
+      "entry_id": "verb-0321",
+      "legacy_verb_id": "642",
+      "infinitive": "xe oǩoç̌apxu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "643:TVE": {
+      "entry_id": "verb-0321",
+      "legacy_verb_id": "643",
+      "infinitive": "xe oǩoç̌apxu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "644:TVE": {
+      "entry_id": "verb-0321",
+      "legacy_verb_id": "644",
+      "infinitive": "xe oǩoç̌apxu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "646:TVE": {
+      "entry_id": "verb-0323",
+      "legacy_verb_id": "646",
+      "infinitive": "yeç̌opu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "647:TVE": {
+      "entry_id": "verb-0324",
+      "legacy_verb_id": "647",
+      "infinitive": "yoxo cedvalu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "648:TVE": {
+      "entry_id": "verb-0324",
+      "legacy_verb_id": "648",
+      "infinitive": "yoxo cedvalu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "649:TVE": {
+      "entry_id": "verb-0325",
+      "legacy_verb_id": "649",
+      "infinitive": "zop̌ini",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "650:TVE": {
+      "entry_id": "verb-0325",
+      "legacy_verb_id": "650",
+      "infinitive": "zop̌ini",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "27:TVE": {
+      "entry_id": "verb-0016",
+      "legacy_verb_id": "27",
+      "infinitive": "çxomi oç̌opu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "28:TVE": {
+      "entry_id": "verb-0016",
+      "legacy_verb_id": "28",
+      "infinitive": "çxomi oç̌opu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "29:TVE": {
+      "entry_id": "verb-0016",
+      "legacy_verb_id": "29",
+      "infinitive": "çxomi oç̌opu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "1404:TVE": {
+      "entry_id": "verb-0016",
+      "legacy_verb_id": "1404",
+      "infinitive": "çxomi oç̌opu",
+      "dialect": "HO",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "161:IVD": {
+      "entry_id": "verb-0077",
+      "legacy_verb_id": "161",
+      "infinitive": "ǩai doǯonu",
+      "dialect": "FA",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "162:IVD": {
+      "entry_id": "verb-0078",
+      "legacy_verb_id": "162",
+      "infinitive": "ǩai oǯonu",
+      "dialect": "HO",
+      "verb_class": "IVD",
+      "basis": "metadata_and_frame"
+    },
+    "163:TVE": {
+      "entry_id": "verb-0079",
+      "legacy_verb_id": "163",
+      "infinitive": "ǩoǩoǯalu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "164:TVE": {
+      "entry_id": "verb-0079",
+      "legacy_verb_id": "164",
+      "infinitive": "ǩoǩoǯalu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "165:TVE": {
+      "entry_id": "verb-0079",
+      "legacy_verb_id": "165",
+      "infinitive": "ǩoǩoǯalu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "166:TVE": {
+      "entry_id": "verb-0080",
+      "legacy_verb_id": "166",
+      "infinitive": "ǩuçxe medgalu",
+      "dialect": "PZ",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "167:TVE": {
+      "entry_id": "verb-0080",
+      "legacy_verb_id": "167",
+      "infinitive": "ǩuçxe medgalu",
+      "dialect": "AS",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    },
+    "168:TVE": {
+      "entry_id": "verb-0080",
+      "legacy_verb_id": "168",
+      "infinitive": "ǩuçxe medgalu",
+      "dialect": "FA",
+      "verb_class": "TVE",
+      "basis": "metadata_and_frame"
+    }
+  }
+}

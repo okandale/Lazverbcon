@@ -8,6 +8,7 @@ const values = {
   mood: ["indicative", "optative", "imperative", "negative_imperative"],
   derivation: ["none", "potential", "passive"],
   causative: ["none", "simple", "double"],
+  optional_prefix: ["none", "ko", "do"],
 };
 
 /** Validate URL data before it reaches controls; API validation remains authoritative. */
@@ -48,6 +49,8 @@ export function parseSelection(encoded: string | null): Request {
         result[field] = data[field];
       }
     }
+    if (result.optional_preverb && result.optional_prefix !== "none")
+      return { ...defaults };
     return result as Request;
   } catch {
     return { ...defaults };

@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 # Reproducible remake build outputs
 /artifacts/
+/lewis-upload/
 /.pnpm-store/
 /.ruff_cache/
 *.tsbuildinfo
