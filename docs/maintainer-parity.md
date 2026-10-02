@@ -1,5 +1,14 @@
 # Full parity with lazverbcon2.dump
 
+**Scope correction, 2026-10-02:** the checks below establish conjugated
+spelling/frame sets and accepted/rejected status. They do not check displayed
+pronouns. An independent comparison found **61 pronoun-table positions** where
+the retained notebook tables differ from the dump's `pronoun` table. This is an
+open migration gap, tracked as DATA-06. See the complete
+[behaviour review](conjugation-behaviour-details.md#d-displayed-pronouns-a-newly-identified-migration-gap)
+for every difference and other request/data-handling changes. “Full parity”
+here must not be read as equivalence of all user-visible database fields.
+
 All **582,147 source rows** pass against both the pure engine and a freshly
 built SQLite catalog. The comparison uses **580,129 canonical grammatical
 requests**, accounting for duplicate source rows without dropping their IDs.

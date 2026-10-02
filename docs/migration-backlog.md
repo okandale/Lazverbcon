@@ -1,9 +1,12 @@
 # Website migration checklist
 
-Last updated: 2026-10-01. Original frontend/backend audited locally; unfinished
+Last updated: 2026-10-02. Original frontend/backend audited locally; unfinished
 phrase pages rechecked on [lazuri.org](https://lazuri.org/) on 2026-10-01.
 
 **The supported conjugation engine and public learning pages are migrated.**
+The 2026-10-02 audit identified a remaining displayed-pronoun migration gap
+(DATA-06); the earlier dump comparison covered spelling/frame sets and status,
+not every displayed field. See the [full behaviour review](conjugation-behaviour-review.md).
 The owner confirmed feedback delivery works on 2026-10-01. Remaining work concerns
 reviewed linguistic/data decisions, future admin tooling and hosting. Old bookmarks and old API contracts
 are intentionally retired by owner decision on 2026-10-01.
@@ -106,8 +109,8 @@ the [acceptance and correction policy](rules.md#authoritative-conjugation-target
 
 See [the rule guide](rules.md) and [migration evidence](../migration/README.md)
 for exact implementation details and tests. These are unresolved language/data
-questions outside the dump's verified coverage, separate from missing public
-pages. Every request actually present in `lazverbcon2.dump` now passes the engine
+questions and the displayed-pronoun gap below, separate from missing public
+pages. Every request actually present in `lazverbcon2.dump` now passes the spelling/frame/status engine
 and rebuilt-SQLite checks; see [the final report](maintainer-parity.md).
 
 - [ ] **LANG-01:** Define passive optative/imperative and potential imperative
@@ -164,12 +167,25 @@ and rebuilt-SQLite checks; see [the final report](maintainer-parity.md).
   (e.g. row 568322), placing the optional prefix before the negative particle.
   This exact convention is preserved. Linguistic confirmation can be sought
   later; no source spelling was silently changed or excluded.
+- [ ] **DATA-06 (displayed pronouns):** The original notebook pronoun tables
+  retained by the remake differ from the authoritative dump's `pronoun` table
+  in 61 of 480 compared rule/dialect/person display positions. The old database
+  endpoint used the dump table. Align display data with the dump unless a
+  specific source error is identified, add independent pronoun verification,
+  and regenerate/publish affected output. No runtime fix was made during the
+  audit. All differences are listed in [section D of the behaviour review](conjugation-behaviour-details.md#d-displayed-pronouns-a-newly-identified-migration-gap).
+- [ ] **LANG-10 (full behavioural review):** Obtain the author's decisions on
+  the [behaviour inventory](conjugation-behaviour-review.md), including productive
+  extensions, explicit-prefix scope, potential optative, unmarked perfect for
+  marker-required verbs, TVM/derived-construction restrictions and lexical
+  identity mappings. Record decisions per item; do not treat the extra 820,151
+  forms as linguistically approved solely because the source code generates them.
 
 The initial audit supplied authoritative correction examples. The first rule
 update is documented in [the correction report](rule-corrections-2026-10-01.md).
 The subsequent [complete verification](maintainer-parity.md) resolves the prefix,
-support and lexical-mapping differences. Open language items above concern
-coverage or source review beyond the completed parity check.
+support and lexical-mapping differences. Open items concern coverage and source
+review, plus displayed pronouns that the earlier parity check did not include.
 
 ## Already implemented
 
