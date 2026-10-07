@@ -22,6 +22,13 @@ def main():
             "--onedir",
             "--name",
             "Lazuri Admin",
+            # Editable installs use import hooks that PyInstaller cannot analyze.
+            "--paths",
+            str(ROOT / "apps/admin/src"),
+            "--paths",
+            str(ROOT / "apps/api/src"),
+            "--paths",
+            str(ROOT / "packages/engine/src"),
             "--collect-submodules",
             "laz_engine.paradigms",
             "--collect-data",
