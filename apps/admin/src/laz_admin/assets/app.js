@@ -5,8 +5,7 @@ if (token) sessionStorage.setItem("laz-session", token);
 history.replaceState(null, "", "/");
 const main = document.querySelector("#main"),
   dialog = document.querySelector("#dialog");
-const actor = document.querySelector("#actor"),
-  notice = document.querySelector("#notice");
+const notice = document.querySelector("#notice");
 const state = {
   tab: "overview",
   offset: 0,
@@ -24,8 +23,12 @@ const esc = (x) =>
   );
 const pretty = (x) => esc(JSON.stringify(x, null, 2));
 const name = () => {
-  if (!actor.value.trim()) throw Error("Enter your name at the top first.");
-  return actor.value.trim();
+  const value = state.status.settings.actor?.trim();
+  if (!value) {
+    editActor();
+    throw Error("Save your editor name, then try again.");
+  }
+  return value;
 };
 const notify = (text, error = false) => {
   notice.textContent = text;
@@ -110,6 +113,26 @@ function modal(html, submit) {
   });
   dialog.showModal();
 }
+function updateActor() {
+  const value = state.status.settings.actor?.trim();
+  document.querySelector("#set-actor").textContent = value
+    ? `Editor: ${value}`
+    : "Set editor name";
+}
+function editActor() {
+  if (dialog.open) return;
+  modal(
+    `<h2>Editor name</h2><p>Saved on this computer and recorded with your changes.</p><label>Your name<input name="actor" autocomplete="name" value="${esc(state.status.settings.actor || "")}" required></label>`,
+    async (form) => {
+      const value = form.get("actor").trim();
+      if (!value) throw Error("Enter your name.");
+      await api("settings", { ...state.status.settings, actor: value });
+      notify("Editor name saved.");
+    },
+  );
+  dialog.querySelector('[name="actor"]').focus();
+}
+button("set-actor", editActor);
 button("close", () => dialog.close());
 document.querySelectorAll("[data-tab]").forEach(
   (b) =>
@@ -126,6 +149,7 @@ button("stop", async () => {
 });
 async function refresh() {
   state.status = await api("status");
+  updateActor();
   await render();
 }
 async function render() {
@@ -134,7 +158,7 @@ async function render() {
     .forEach((b) => b.classList.toggle("active", b.dataset.tab === state.tab));
   const s = state.status;
   if (state.tab === "overview") {
-    main.innerHTML = `<h2>Your editing project</h2><div class="grid"><div class="card"><h3>${s.entries} verbs</h3><p>${s.records.toLocaleString()} approved grammatical requests</p></div><div class="card"><h3>${s.pending.toLocaleString()} proposals</h3><p>Pending changes are not published.</p></div><div class="card"><h3>Revision ${esc(s.revision)}</h3><p>Database and history stay on this computer.</p></div></div><div class="card"><h3>Start here</h3><ol><li>Import the maintainer baseline once, or restore a project backup.</li><li>Open a verb, edit forms or generate proposals.</li><li>Review changes before approving them.</li><li>Export and publish when ready.</li></ol>${!s.entries ? `<button id="seed" ${s.seed_available ? "" : "disabled"}>Import maintainer baseline</button><p class="muted">Imports authoritative conjugations and pronouns. Generated-only predictions are not automatically approved.</p>` : ""}<p>Project folder: <code>${esc(s.directory)}</code></p></div>`;
+    main.innerHTML = `<h2>Your editing project</h2><div class="grid"><div class="card"><h3>${s.entries} verbs</h3><p>${s.records.toLocaleString()} approved grammatical requests</p></div><div class="card"><h3>${s.pending.toLocaleString()} proposals</h3><p>Pending changes are not published.</p></div><div class="card"><h3>Revision ${esc(s.revision)}</h3><p>Database and history stay on this computer.</p></div></div><div class="card"><h3>${s.entries ? "Workflow" : "Start a project"}</h3><ol>${!s.entries ? "<li>Import the original database once, or restore a current project backup in Backups.</li>" : ""}<li>Open a verb, edit forms or generate proposals.</li><li>Review changes before approving them.</li><li>Export and publish when ready.</li></ol>${!s.entries ? `<button id="seed" ${s.seed_available ? "" : "disabled"}>Import original database</button><p class="muted">One-time import of the original maintainer’s conjugations and pronouns. To continue an existing project, restore its current backup instead.</p>` : ""}<p>Project folder: <code>${esc(s.directory)}</code></p></div>`;
     button("seed", async () => {
       await api("seed", { actor: name() });
       notify("Baseline import started.");
@@ -269,7 +293,98 @@ async function render() {
   } else if (state.tab === "publish") {
     const rows = await api("exports");
     const settings = s.settings;
-    main.innerHTML = `<h2>Publish approved data</h2><p>Export creates a fixed snapshot. GitHub publishing updates the release pointer; Cloudflare then builds the website. Draft proposals and history stay private.</p><button id="export" class="primary">Export approved snapshot</button><div class="card"><h3>GitHub connection</h3><label>Repository<input id="repository" value="${esc(settings.repository || "")}" placeholder="owner/Lazverbcon"></label><label>Pages branch<input id="branch" value="${esc(settings.branch || "codex/static-export")}"></label><label>GitHub token (used for this publication only)<input type="password" id="github-token" autocomplete="off"></label><p class="muted">Use a fine-grained token with Contents read/write access to this public repository. Configure Pages once using the instructions in docs/admin-app.md. The token is not saved.</p><label><input type="checkbox" id="publish-confirm"> I have reviewed the export and want to publish it to the configured test website.</label></div>${rows.map((r) => `<article class="card"><h3>Revision ${r.revision}</h3><p>${r.forms.toLocaleString()} forms · release ${esc(r.release)}</p><div class="toolbar"><button data-export-download="${esc(r.filename)}">Download ZIP</button><button data-preview="${esc(r.filename)}" ${s.preview_available ? "" : "disabled"}>Preview website</button><button data-publish="${esc(r.filename)}">Publish to GitHub</button></div></article>`).join("")}`;
+    main.innerHTML = `<h2>Publish approved data</h2><p>Export creates a fixed snapshot. GitHub publishing updates the release pointer; Cloudflare then builds the website. Draft proposals and history stay private.</p><button id="export" class="primary">Export approved snapshot</button><div class="card"><h3>Publish destination</h3><p>The website is the Cloudflare Pages project connected to this repository and branch. Set its domain in Cloudflare.</p><label>Repository<input id="repository" value="${esc(settings.repository || "")}" placeholder="owner/Lazverbcon"></label><label>Pages branch<input id="branch" value="${esc(settings.branch || "codex/static-export")}"></label><label>GitHub token<input type="password" id="github-token" autocomplete="off"></label><p class="muted">Use a fine-grained token with Contents read/write access to this public repository. Configure Pages once using the instructions in docs/admin-app.md. Tokens stay out of the project database and backups.</p><p id="credential-status" class="muted"></p>${s.credential_storage_available ? `<div class="toolbar"><button id="remember-token">Remember token on this computer</button><button id="forget-token">Forget saved token</button></div><p class="muted">Optional. Uses Windows Credential Manager for your Windows account on this computer.</p>` : ""}<label><input type="checkbox" id="publish-confirm"> I have reviewed the export and approve publishing to <span id="publish-destination"></span>.</label></div>${rows.map((r) => `<article class="card"><h3>Revision ${r.revision}</h3><p>${r.forms.toLocaleString()} forms · release ${esc(r.release)}</p><div class="toolbar"><button data-export-download="${esc(r.filename)}">Download ZIP</button><button data-preview="${esc(r.filename)}" ${s.preview_available ? "" : "disabled"}>Preview website</button><button data-publish="${esc(r.filename)}">Publish to GitHub</button></div></article>`).join("")}`;
+    const destinationInputs = ["repository", "branch"].map((id) =>
+      document.getElementById(id),
+    );
+    const updateDestination = () => {
+      const [repository, branch] = destinationInputs.map((input) =>
+        input.value.trim(),
+      );
+      document.querySelector("#publish-destination").textContent =
+        repository && branch
+          ? `${repository} (${branch})`
+          : "the repository and branch above";
+      document.querySelector("#publish-confirm").checked = false;
+    };
+    destinationInputs.forEach((input) =>
+      input.addEventListener("input", updateDestination),
+    );
+    updateDestination();
+    let credentialRequest = 0;
+    let savedCredential = false;
+    const loadCredential = async () => {
+      const request = ++credentialRequest;
+      savedCredential = false;
+      const repository = document.querySelector("#repository").value.trim();
+      const message = document.querySelector("#credential-status");
+      const input = document.querySelector("#github-token");
+      for (const id of ["remember-token", "forget-token"]) {
+        const control = document.getElementById(id);
+        if (control)
+          control.disabled = !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(
+            repository,
+          );
+      }
+      input.placeholder = "Paste a token";
+      if (!s.credential_storage_available) {
+        message.textContent =
+          "Enter a token for each publication. Remembering tokens is available on Windows.";
+        return;
+      }
+      if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(repository)) {
+        message.textContent = "Enter a repository to check for a saved token.";
+        return;
+      }
+      message.textContent = "Checking for a saved token…";
+      try {
+        const result = await api(
+          "github-credential?repository=" + encodeURIComponent(repository),
+        );
+        if (request !== credentialRequest || !message.isConnected) return;
+        savedCredential = result.saved;
+        message.textContent = savedCredential
+          ? "Saved token available for this repository. Leave the field blank to use it."
+          : "No token saved for this repository. Paste one to publish or remember it.";
+        input.placeholder = savedCredential
+          ? "Use saved token, or paste a replacement"
+          : "Paste a token";
+      } catch (error) {
+        if (request === credentialRequest && message.isConnected)
+          message.textContent = `${error.message}. You can still enter a token for this publication.`;
+      }
+    };
+    document.querySelector("#repository").addEventListener("input", () => {
+      document.querySelector("#github-token").value = "";
+      void loadCredential();
+    });
+    button("remember-token", async () => {
+      const input = document.querySelector("#github-token");
+      const secret = input.value;
+      input.value = "";
+      await api("github-credential", {
+        repository: document.querySelector("#repository").value.trim(),
+        token: secret,
+      });
+      await loadCredential();
+      notify(
+        "Token saved in Windows Credential Manager. Saving does not publish the website.",
+      );
+    });
+    button("forget-token", async () => {
+      await api(
+        "github-credential",
+        {
+          repository: document.querySelector("#repository").value.trim(),
+        },
+        "DELETE",
+      );
+      await loadCredential();
+      notify(
+        "Saved token removed from this computer. This does not revoke it on GitHub.",
+      );
+    });
+    await loadCredential();
     button("export", async () => {
       await api("export", { actor: name() });
       notify("Export started.");
@@ -296,26 +411,30 @@ async function render() {
             throw Error("Confirm publication first.");
           const input = document.querySelector("#github-token");
           const secret = input.value;
-          if (!secret) throw Error("Enter a GitHub token");
+          if (!secret && !savedCredential)
+            throw Error(
+              "Enter a GitHub token or remember one for this repository.",
+            );
           input.value = "";
           await api("publish", {
             filename: b.dataset.publish,
             actor: name(),
             token: secret,
-            repository: document.querySelector("#repository").value,
-            branch: document.querySelector("#branch").value,
+            repository: document.querySelector("#repository").value.trim(),
+            branch: document.querySelector("#branch").value.trim(),
           });
           notify("Publishing started.");
         })),
     );
   } else if (state.tab === "settings") {
     const v = s.settings;
-    main.innerHTML = `<h2>Settings</h2><form id="settings" class="card"><label>Editor name<input name="actor" value="${esc(actor.value)}" required></label><label>Additional backup folder<input name="backup_directory" value="${esc(v.backup_directory || "")}" placeholder="For example a folder inside OneDrive or an external drive"></label><p>Completed backups are copied here. The live database stays in the local project folder.</p><label>GitHub repository<input name="repository" value="${esc(v.repository || "")}" placeholder="owner/repository"></label><label>Pages branch<input name="branch" value="${esc(v.branch || "codex/static-export")}"></label><button type="submit">Save settings</button></form><p>Project: <code>${esc(s.project)}</code><br>Data folder: <code>${esc(s.directory)}</code></p>`;
+    main.innerHTML = `<h2>Settings</h2><form id="settings" class="card"><label>Editor name<input name="actor" value="${esc(v.actor || "")}" autocomplete="name" required></label><label>Additional backup folder<input name="backup_directory" value="${esc(v.backup_directory || "")}" placeholder="For example a folder inside OneDrive or an external drive"></label><p>Completed backups are copied here. The live database stays in the local project folder.</p><label>GitHub repository<input name="repository" value="${esc(v.repository || "")}" placeholder="owner/repository"></label><label>Pages branch<input name="branch" value="${esc(v.branch || "codex/static-export")}"></label><button type="submit">Save settings</button></form><p>Project: <code>${esc(s.project)}</code><br>Data folder: <code>${esc(s.directory)}</code></p>`;
     document.querySelector("#settings").onsubmit = run(async (e) => {
       e.preventDefault();
       const value = Object.fromEntries(new FormData(e.target));
+      value.actor = value.actor.trim();
+      if (!value.actor) throw Error("Enter your name.");
       await api("settings", value);
-      actor.value = value.actor;
       notify("Settings saved.");
       await refresh();
     });
@@ -580,8 +699,9 @@ async function poll() {
 const polling = setInterval(poll, 2000);
 try {
   state.status = await api("status");
-  actor.value = state.status.settings.actor || "";
+  updateActor();
   await render();
+  if (!state.status.settings.actor?.trim()) editActor();
 } catch (e) {
   main.textContent = "Open this page using the Lazuri Admin launcher.";
   notify(e.message, true);

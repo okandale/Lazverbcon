@@ -11,6 +11,7 @@ on:
       - 'packages/engine/**'
       - 'scripts/*admin*'
       - 'tests/test_admin.py'
+      - 'tests/test_admin_credentials.py'
       - 'tests/fixtures/maintainer-release.jsonl.gz'
       - 'pyproject.toml'
       - 'requirements.lock'
@@ -29,7 +30,7 @@ jobs:
       - run: python -m pip install -r requirements.lock
       - run: python -m pip install --no-deps -e .
       - run: python -m pip install pyinstaller==6.22.3
-      - run: python -m pytest -q tests/test_admin.py
+      - run: python -m pytest -q tests/test_admin.py tests/test_admin_credentials.py
       - uses: pnpm/action-setup@v4
         with:
           version: '11.25.0'

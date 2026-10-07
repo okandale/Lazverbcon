@@ -17,6 +17,7 @@ from laz_api.static_export import DIMENSIONS
 from laz_engine.models import Features
 from starlette.concurrency import run_in_threadpool
 
+from .credentials import WindowsCredentials, credential_target, validate_token
 from .preview import Preview
 from .publish import export_release, publish
 from .store import Store, parse_import
@@ -52,10 +53,16 @@ class Jobs:
 
 
 def create_app(
-    store: Store, token=None, seed_path=None, shutdown=lambda: None, preview_assets=None
+    store: Store,
+    token=None,
+    seed_path=None,
+    shutdown=lambda: None,
+    preview_assets=None,
+    credentials=None,
 ):
     token = token or secrets.token_urlsafe(32)
     preview = Preview(store, preview_assets)
+    credentials = credentials if credentials is not None else WindowsCredentials()
 
     @asynccontextmanager
     async def lifespan(app):
@@ -145,6 +152,7 @@ def create_app(
             "settings": store.settings(),
             "seed_available": bool(seed_path and Path(seed_path).exists()),
             "preview_available": preview.available,
+            "credential_storage_available": credentials.available,
             "dimensions": dict(zip(Features.__dataclass_fields__, DIMENSIONS, strict=True)),
         }
 
@@ -283,17 +291,47 @@ def create_app(
 
     @app.post("/api/publish")
     def publish_release(body: dict):
+        supplied = body.get("token", "")
+        if not isinstance(supplied, str):
+            raise ValueError("Enter a GitHub token")
+        secret = supplied.strip()
+        if not secret:
+            secret = credentials.get(
+                credential_target(store.status()["project"], body["repository"])
+            )
+        if not secret:
+            raise ValueError("Enter a GitHub token or remember one for this repository")
+        secret = validate_token(secret)
         return jobs.start(
             "Publish to GitHub",
             lambda p, c: publish(
                 store,
                 body["filename"],
                 body["actor"],
-                body["token"],
+                secret,
                 body["repository"],
                 body["branch"],
             ),
         )
+
+    @app.get("/api/github-credential")
+    def credential_status(repository: str = ""):
+        saved = False
+        if repository and credentials.available:
+            saved = bool(credentials.get(credential_target(store.status()["project"], repository)))
+        return {"available": credentials.available, "saved": saved}
+
+    @app.post("/api/github-credential")
+    def remember_credential(body: dict):
+        target = credential_target(store.status()["project"], body["repository"])
+        credentials.save(target, validate_token(body["token"]))
+        return {"saved": True}
+
+    @app.delete("/api/github-credential")
+    def forget_credential(body: dict):
+        target = credential_target(store.status()["project"], body["repository"])
+        credentials.delete(target)
+        return {"saved": False}
 
     @app.post("/api/preview")
     def preview_release(body: dict):

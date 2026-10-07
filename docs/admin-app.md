@@ -17,6 +17,9 @@ website preview. Python, Docker, Node and Git are not needed on that computer.
 The executable is unsigned; distributing a signed installer is future work.
 
 The project lives in `%LOCALAPPDATA%\LazuriAdmin`, separately from the program.
+`master.sqlite` contains the approved forms, proposals, settings and history;
+backups and exports are subfolders of that project folder. Keep the full extracted
+program folder together, including its `_internal` folder. The EXE alone is not portable.
 To update the app, stop it and extract the newer package into a new program
 folder. Open the new executable. It uses the same project without regenerating
 its contents. Unsupported database versions are refused without modifying them.
@@ -28,12 +31,14 @@ saved changes. Interactive testing on the intended Windows computer remains.
 
 ## Start a project
 
-1. Enter your name for the change history.
-2. Choose **Import maintainer baseline** on Overview. This is available only in
+1. Save your name in the first-run prompt. The header shows **Editor: your name**;
+   click it or use Settings to change it. It is saved for future launches.
+2. Choose **Import original database** on Overview. This is available only in
    an empty project. Alternatively, restore an existing admin backup.
-3. In **Settings**, save your editor name and an additional backup folder if wanted.
+3. In **Settings**, configure an additional backup folder if wanted.
 
-“Maintainer baseline” means the conjugations extracted from the supplied original
+The original database import (called “maintainer baseline” in earlier builds)
+means the conjugations extracted from the supplied original
 `lazverbcon2.dump`, bundled with the app as compressed JSON. The button imports
 those stored answers into SQLite; it does not run the rules. It uses the dump
 pronoun table: 327 verbs, 580,129 grammatical requests and 483,471
@@ -46,6 +51,10 @@ The pronoun snapshot is `apps/admin/src/laz_admin/data/pronouns.json`, extracted
 from the dump's 144 pronoun rows. It fixes display data for approved exports;
 the Python rule modules retain their existing pronouns for proposals, so differences
 remain visible for review. The private dump is not bundled or uploaded.
+
+The bundled snapshot is a migration aid. It cannot overwrite an existing project
+and does not run when updating the program. After migration, use current project
+backups to move or recover the database; the original snapshot lacks later edits.
 
 ## Edit, generate and review
 
@@ -146,6 +155,9 @@ the public deployment.
 The connected Pages repository is currently **lewisccz/Lazverbcon**, branch
 **codex/static-export**. Get this application code into that fork first. Pushing
 only to `okandale/Lazverbcon` does not update the fork or its website.
+These are the current test project's settings, not a restriction. Publication
+can target another public repository and branch connected to Pages. Cloudflare
+controls the domain, including `lazuri.org` when ready; the admin does not choose it.
 
 1. In Pages build settings, retain **Framework: None**, an empty root directory,
    and output directory **artifacts/pages**. Replace the generating build command
@@ -159,8 +171,10 @@ only to `okandale/Lazverbcon` does not update the fork or its website.
    `SKIP_DEPENDENCY_INSTALL=1`. Keep existing feedback configuration unchanged.
 3. In the admin's Settings, save repository `lewisccz/Lazverbcon` and branch
    `codex/static-export`. Use a GitHub fine-grained token authorized for that
-   public repository, with **Contents: read and write**. Enter it in Publish;
-   it is used for that operation and is never saved to settings or the database.
+   public repository, with **Contents: read and write**. Enter it in Publish.
+   On Windows, **Remember token on this computer** optionally stores it in
+   Windows Credential Manager. Leave the field blank to publish with that token.
+   Otherwise, the token is used for one publication and cleared from the field.
 4. Export, preview, confirm the destination and click **Publish to GitHub**.
 5. Check the Cloudflare deployment result, then test the conjugator and reverse
    lookup on the test domain. A successful upload is not proof of deployment.
@@ -186,6 +200,23 @@ project; this records a publication event without rolling back the working datab
 
 The first live publication and interactive Windows testing remain deployment checks;
 automated tests use a fake GitHub service and do not send credentials or alter Pages.
+
+### Remember a token on Windows
+
+Saving is explicit and does not publish anything. The saved token belongs to the
+current Windows account, computer, admin project and repository. It survives app
+updates and restarts. Changing repository requires its own saved token or manual entry.
+The token is never returned to the browser or included in the SQLite database,
+exports, history or backups. Restoring a backup on another computer requires entering
+the token there. A token entered for one publication does not replace the saved one.
+
+Windows normally does not ask for your password or PIN when the app saves or uses
+a generic credential; it uses your signed-in account. Other software running as
+that Windows user can also access generic credentials. See
+[Microsoft's credential documentation](https://learn.microsoft.com/en-us/windows/win32/api/wincred/ns-wincred-credentialw).
+**Forget saved token** removes this app's stored copy; it does not revoke the token
+on GitHub. If secure storage fails or the app runs on macOS/Linux, enter a token
+for that publication. There is no fallback that saves it in a plain file.
 
 ## Run from source
 

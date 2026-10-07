@@ -64,6 +64,14 @@ def main():
             assert (
                 status["seed_available"] and status["preview_available"] and status["entries"] == 0
             )
+            assert status["credential_storage_available"]
+            # A dummy token tests the actual Windows vault, never a real GitHub account.
+            credential_repo = "lazuri-admin-test/package-smoke"
+            assert api(
+                "github-credential",
+                {"repository": credential_repo, "token": "ghp_PackageSmoke_NotARealToken"},
+            ) == {"saved": True}
+            assert api("github-credential?repository=" + credential_repo)["saved"]
             with urllib.request.urlopen(root, timeout=15) as response:
                 assert b"Lazuri Admin" in response.read()
             api(
@@ -147,6 +155,18 @@ def main():
                 time.sleep(0.25)
             assert status["records"] == 1 and status["entries"] == 1
             assert any(event["entity"] == "record" for event in api("history"))
+            assert api("github-credential?repository=" + credential_repo)["saved"]
+            with urllib.request.urlopen(
+                urllib.request.Request(
+                    root + "/api/github-credential",
+                    method="DELETE",
+                    data=json.dumps({"repository": credential_repo}).encode(),
+                    headers=headers,
+                ),
+                timeout=15,
+            ) as response:
+                assert json.load(response) == {"saved": False}
+            assert not api("github-credential?repository=" + credential_repo)["saved"]
             api("shutdown", {})
             child.wait(timeout=15)
             assert child.returncode == 0

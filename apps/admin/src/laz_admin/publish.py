@@ -20,6 +20,7 @@ from laz_api.static_export import export_catalog
 from laz_engine.lexicon import search_key
 from laz_engine.orthography import broad_key, strict_key
 
+from .credentials import validate_token
 from .store import now
 
 POINTER = "published/catalog.json"
@@ -135,7 +136,7 @@ def export_release(store, actor, progress=lambda n: None, cancelled=lambda: Fals
 
 class GitHub:
     def __init__(self, token):
-        self.token = token
+        self.token = validate_token(token)
 
     def request(self, method, path, data=None, binary=False):
         url = (

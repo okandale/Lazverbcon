@@ -11,9 +11,10 @@ bookmark compatibility were deliberately retired by the owner.
 
 ## Deployment checks
 
-- [ ] Test launch, editing, approval, backup and restore on the intended Windows
+- [ ] Complete editing, approval, backup and restore checks on the intended Windows
       computer. CI covers the packaged launcher, generation, approval, export,
       preview, backup and reopening saved data.
+      The owner confirmed interactive launch and original-data import on 7 October.
 - [ ] Bring the current code into the Pages-connected fork and switch its build
       to `scripts/build_published.py`.
 - [ ] Publish the first approved admin export and verify the test domain: direct
@@ -53,6 +54,8 @@ These are not missing migration pages or requirements for the current workflow:
   mismatch report and recorded correction context; no button exists yet.
 - A one-step latest-data preview; current preview uses an explicit export snapshot.
 - Signed Windows distribution and update notifications.
+- Remove the first-run original database snapshot from routine builds after
+  migration and a verified current backup. Keep its import fixture for regression tests.
 - Import mapping tools and multi-editor synchronization, if needed later.
 - Complete the Laz translations in `draftGuides` in
   `apps/web/src/site/phrases.ts` when the author supplies them. Keep all remaining

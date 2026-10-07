@@ -87,7 +87,7 @@ python scripts/run_admin.py --data-dir artifacts/admin-dev
 ```
 
 The launcher opens an authenticated localhost URL in your browser. Enter your
-name, then choose **Import maintainer baseline** on Overview to load the data
+name, then choose **Import original database** on Overview to load the data
 extracted from `lazverbcon2.dump`. A full project backup can instead be restored
 through **Backups**.
 
