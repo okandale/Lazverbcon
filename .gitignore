@@ -10,6 +10,7 @@
 *.tsbuildinfo
 node_modules/
 apps/web/dist/
+/apps/web/public/data/preview/
 .DS_Store
 *Lazverbcon.code-workspace
 # Generated databases and SQLite sidecar files

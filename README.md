@@ -4,6 +4,12 @@ A mobile-friendly Laz verb explorer, an independent Python conjugation engine,
 and a local admin app with an approved SQLite master. The active tree contains the new app.
 The original application is preserved in Git history; see [legacy recovery](docs/legacy-archive.md).
 
+## Start developing locally
+
+See [local development](docs/local-development.md) for cloning the current branch,
+running the public website with automatic reload, and starting the separate admin.
+The public website can preview an approved export with just Node and pnpm.
+
 ## Local admin app
 
 Run `lazadmin` from an installed source checkout, or use the Windows package
@@ -326,5 +332,5 @@ Do not regenerate reference fixtures merely to make a changed rule pass tests.
   that every construction in Laz has been implemented or linguistically reviewed.
 - Every request in the authoritative maintainer dump passes exhaustive verification;
   additional generated combinations remain outside that source’s coverage.
-- New admin editing, static-data hosting, user accounts and native/offline clients
-  are separate future work. The public learning pages are already migrated.
+- Local admin editing and static-data hosting are implemented. User accounts and
+  native/offline clients remain separate future work.
