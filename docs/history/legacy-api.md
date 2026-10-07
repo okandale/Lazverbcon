@@ -1,7 +1,10 @@
+> Historical record. Deployment commands, counts and editorial policies below
+> describe the earlier migration. Use the [current guides](../README.md).
+
 # Old API inventory
 
 Audited on 2026-10-01 from the original Flask `app.py`, `verbs.py` and `admin.py`,
-now preserved in [Git history](legacy-archive.md).
+now preserved in [Git history](../legacy-archive.md).
 The old API includes public lookup functions as well as administration. Public
 features already exist in the new app, but the new API has its own request/response
 format and entry IDs. That distinction is API compatibility, not missing UI behaviour.
@@ -48,4 +51,4 @@ should change source lexical definitions, preview generated forms, run validatio
 then publish a versioned release. It should not patch the generated catalog.
 
 Feedback is separate from these endpoints. It submits directly to the original
-Google Apps Script deployment; see [feedback delivery](feedback.md).
+Google Apps Script deployment; see [feedback delivery](../feedback.md).

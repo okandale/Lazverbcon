@@ -37,19 +37,7 @@ jobs:
       - run: git diff --exit-code -- src/api/schema.d.ts
       - run: pnpm test
       - run: pnpm build
-  container:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v4
-      - run: docker compose build
-      - run: docker compose up -d --wait --wait-timeout 60
-      - run: python3 scripts/smoke_server.py
-      - if: failure()
-        run: docker compose logs
-      - if: always()
-        run: docker compose down
-  static-site:
+  static-export-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -77,6 +65,8 @@ jobs:
       - run: pnpm --dir apps/web exec vitest run src/api/static.integration.test.mjs
         env:
           LAZ_STATIC_TEST_DIR: ../../artifacts/static-test
+      # Disposable generated catalogs test engine/export parity; they never
+      # update the admin master or become a published website release.
       - run: lazcon build --output artifacts/release.sqlite
       - run: lazcon export-static --database artifacts/release.sqlite --output artifacts/static-data
       - run: python scripts/verify_static.py artifacts/static-data artifacts/release.sqlite
@@ -86,8 +76,3 @@ jobs:
           LAZ_STATIC_TEST_DIR: ../../artifacts/static-full-test
           LAZ_STATIC_DATA: ../../artifacts/static-data
       - run: python scripts/build_static.py --data artifacts/static-data --output artifacts/pages
-      - uses: actions/upload-artifact@v4
-        with:
-          name: cloudflare-pages
-          path: artifacts/pages
-          retention-days: 7

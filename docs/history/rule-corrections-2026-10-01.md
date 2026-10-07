@@ -1,3 +1,6 @@
+> Historical record. Deployment commands, counts and editorial policies below
+> describe the earlier migration. Use the [current guides](../README.md).
+
 # Maintainer database corrections — first rule update
 
 Historical first-batch report. The remaining dump differences described here
@@ -104,4 +107,4 @@ the existing local preview and remote deployment have not been restarted.
   missing Hopa `meǩoru` (DATA-01/02/03).
 - Full parity must account for every dump row, not merely pass these fixtures.
 
-The [migration checklist](migration-backlog.md) tracks this remaining work.
+The [migration checklist](migration-audit.md) tracks this remaining work.

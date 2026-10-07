@@ -33,8 +33,10 @@ saved changes. Interactive testing on the intended Windows computer remains.
    an empty project. Alternatively, restore an existing admin backup.
 3. In **Settings**, save your editor name and an additional backup folder if wanted.
 
-The bundled baseline comes from the reconciled `lazverbcon2.dump` fixture and
-its original pronoun table: 327 verbs, 580,129 grammatical requests and 483,471
+“Maintainer baseline” means the conjugations extracted from the supplied original
+`lazverbcon2.dump`, bundled with the app as compressed JSON. The button imports
+those stored answers into SQLite; it does not run the rules. It uses the dump
+pronoun table: 327 verbs, 580,129 grammatical requests and 483,471
 form records. The 98,676 rejected source rows are retained as unsupported requests.
 Original row IDs are retained as provenance. Generated combinations absent from
 the source are **not** automatically approved. This produces fewer public analyses
@@ -92,10 +94,17 @@ shape only; substitute a real entry ID and linguistically verified content:
 [
   {
     "entry_id": "verb-0001",
-    "features": {"dialect": "AS", "subject": "1sg"},
+    "features": { "dialect": "AS", "subject": "1sg" },
     "value": {
       "status": "ok",
-      "forms": [{"spelling": "example", "frame": "Nominative", "subject_pronoun": "ma", "object_pronoun": ""}],
+      "forms": [
+        {
+          "spelling": "example",
+          "frame": "Nominative",
+          "subject_pronoun": "ma",
+          "object_pronoun": ""
+        }
+      ],
       "source": "Author review"
     }
   }
@@ -180,19 +189,9 @@ automated tests use a fake GitHub service and do not send credentials or alter P
 
 ## Run from source
 
-From the repository root, after installing Python dependencies and the editable
-package (`python -m pip install -r requirements.lock` and `python -m pip install --no-deps -e .`):
-
-```bash
-pnpm --dir apps/web install --frozen-lockfile
-python scripts/build_admin_preview.py
-lazadmin
-```
-
-Activate your virtual environment first. On macOS/Linux, `.venv/bin/lazadmin`
-also works directly. `--data-dir artifacts/admin-prototype` selects a separate
-development project, and `--no-browser` prints the authenticated launch URL.
-On macOS the default data folder is `~/Library/Application Support/LazuriAdmin`;
+See [local development](local-development.md#admin-run-from-source) for cloning,
+installing dependencies and running the admin with a separate development database.
+On macOS the default user data folder is `~/Library/Application Support/LazuriAdmin`;
 on Linux it is `$XDG_DATA_HOME/lazuri-admin` or `~/.local/share/lazuri-admin`.
 
 Development checks:

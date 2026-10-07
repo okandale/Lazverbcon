@@ -8,7 +8,7 @@ Page/conjugation context is appended to `explanation`; no server changes are
 required. The destination behind that script is managed outside this repository.
 
 The user approved retaining this integration on 2026-10-01. It works independently
-of FastAPI and can remain in a future static website.
+of FastAPI and is included in the static public website.
 
 ## Behaviour
 
@@ -38,6 +38,7 @@ duplicate submission, retry, email fallback and Turkish confirmation. Tests use
 local responses and do not submit feedback to production.
 
 On 2026-10-01 the owner confirmed that feedback worked after testing the migrated
-integration. Live delivery is therefore marked verified in the migration checklist.
+integration. Receipt from the Pages origin remains a deployment check in the
+[checklist](migration-backlog.md).
 This confirmation is owner-reported; the automated tests use local responses and
 do not send production feedback. No receiving-script change was required.

@@ -1,3 +1,6 @@
+> Historical record. Deployment commands, counts and editorial policies below
+> describe the earlier migration. Use the [current guides](../README.md).
+
 # Old database comparison — 1 October 2026
 
 This is the initial baseline. All dump-row differences listed below have since
@@ -10,7 +13,7 @@ latest corrected database, including manual edits. Its conjugations take
 precedence over the notebooks and frozen engine. The results below describe the
 initial comparison, before implementing those corrections. Apparent dump errors
 must be reported for review rather than silently excluded. See the
-[rule update policy](rules.md#authoritative-conjugation-target).
+[rule update policy](../rules.md#authoritative-conjugation-target).
 
 The uploaded `lewis-upload/lazverbcon2.dump` is a PostgreSQL **custom archive**,
 not SQLite. Its archive metadata says PostgreSQL/pg_dump 15.19, created

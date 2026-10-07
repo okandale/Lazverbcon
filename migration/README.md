@@ -1,118 +1,25 @@
-# Reference engine and migration coverage
+# Frozen linguistic reference
 
-This document covers the engine. For website pages, integrations and remaining
-work, use the [website migration checklist](../docs/migration-backlog.md).
+This folder contains regression evidence, not another runnable application.
+The active rules are in `packages/engine/src/laz_engine/`.
 
-The owner confirmed on 2026-10-01 that `lewis-upload/lazverbcon2.dump` is the
-authoritative conjugation target, including manual corrections absent from this
-reference. Historical parity below is not parity with that dump. Follow the
-[rule update policy](../docs/rules.md#authoritative-conjugation-target) when they
-differ; preserve this frozen reference and record intentional corrections.
+- `reference/`: the original rules, dispatcher and validation used by tests.
+- `reference-checksums.json`: pins the unchanged reference Python files.
+- `rule-extraction.json`: maps the refactored stages to their original modules.
+- `maintainer-mappings.json`: legacy verb identities and mapping reasons.
 
-All requests in that dump now pass the engine verification. The complete
-[parity report](../docs/maintainer-parity.md) documents the corrected rules,
-797 mappings of legacy records/classes, and independent release verification.
-`maintainer-mappings.json` retains legacy verb IDs and mapping reasons. The
-compressed fixture under `tests/fixtures/` contains expected outputs only for
-testing; the installed engine generates forms from rules and lexical data.
+Do not modify the reference or regenerate expected fixtures just to silence a
+failure. The owner-supplied `lazverbcon2.dump` supersedes conflicting historical
+answers; record reviewed departures with source rows and examples.
 
-The new public engine is `laz_engine.engine.conjugate(Entry, Features)`. Its input
-models, lexical identity, validation, construction dispatch and output handling
-are independent of Flask, the old database and the original request service.
+`tests/fixtures/reference.json` contains original-rule expectations.
+`tests/fixtures/maintainer-release.jsonl.gz` contains extracted dump requests and
+conjugations. The latter is both comparison evidence and the admin's initial
+import source. The engine computes proposals from rules and does not load it.
 
-## Rule migration completed
+The reference is excluded from installed application packages. Keeping it enables
+independent regression checks without retaining two entire applications.
 
-The twelve active implementations live in `packages/engine/src/laz_engine/paradigms/`.
-Each processes a single principal part through explicit stages. Shared preverb
-handlers, phonology, vowel markers, suffix tables and pronouns are separated into
-focused modules. `docs/rules.md` explains their order and editing workflow.
-
-The application no longer imports a legacy rule adapter. Original rule bodies
-are retained in `migration/reference/rules/` strictly as test evidence, together
-with the previous dispatcher and validation. They are excluded from the installed
-Python package and Docker image. The original AST comparison passed before
-removing the old app on 2026-10-01. `reference-checksums.json` now pins all 17
-reference Python files; tests require the complete unchanged snapshot. Output
-tests still compare the refactored implementation to it. The original app and
-one-time import tools remain recoverable from [Git history](../docs/legacy-archive.md).
-
-All **1,511,672 requests** in the first SQLite release match the refactored engine,
-including statuses, complete variant sets, pronouns and grammatical codes. That historical
-release added **4,290 potential optative forms**, for **1,278,826 form records**.
-It contained **1,273,322 stored requests**: impossible person pairs are now rejected
-by common validation before generation, rather than stored as empty requests.
-
-The current schema 2 catalog has **1,303,622 forms** across **1,298,134 requests**.
-The later maintainer corrections supersede the historical totals above.
-
-## What is supported
-
-- All 327 lexical records, with stable entry IDs, class and meaning preserved.
-- All available dialects for each entry (AS/AŞ, PZ, FA, HO).
-- Present, past, future and past progressive in all three base classes.
-- Optative, imperative and negative imperative, with class-specific dispatch.
-- TVE applicative, simple causative, double causative and their combinations.
-- TVE/TVM present perfect, potential and passive; passive double causative.
-- Potential optative, using the original module’s explicit optative ending table.
-- Explicit `ko`/`do` prefixes for attested entry/dialect pairs, including potential
-  and perfect constructions. The legacy optional-preverb boolean remains supported
-  separately with its original restrictions.
-- All six subjects, all six explicit objects and no object, subject to restrictions.
-
-This is coverage of the **supported reference interface**, not a claim that every
-grammatical construction in Laz has been implemented. Non-indicative moods have
-one canonical request tense (`present`); dispatch chooses the underlying rule.
-Passive optatives and imperatives, potential imperatives, potential markers and
-passive simple causative remain explicitly unavailable outside attested dump
-coverage. These need reviewed examples because the source has no usable rule or
-accepts a flag without applying it. Explicit prefixes in potential/perfect are
-now implemented; only the legacy boolean retains its old restrictions.
-TVM object/marker branches conflict with the original service’s TVM-only object
-restriction, so that interface remains restricted pending reviewed examples.
-
-The potential module does contain a complete optative ending table. It is now
-selected explicitly and checked for every non-dative lexical entry, dialect and
-subject against the original function. Its canonical request tense is `present`,
-consistent with the other non-indicative moods.
-
-## Explicit changes to data handling
-
-- Source rows are never deduplicated by infinitive or spelling/dialect pair.
-- Principal parts remain paired with their source dialects.
-- `osinapu` (verb-0232) has an alternative `isinapay` with no dialect field. The
-  orphan principal part is retained and reported, but not assigned to a dialect.
-  Rules may independently generate the same spelling from a valid principal part.
-- Each call uses a context for one entry and dialect. The old loader's accidental
-  overwriting of same-spelling entries cannot choose another entry's principal part.
-- Subject/object codes are carried directly; display pronouns never determine IDs.
-- Legacy `N/A` forms become structured unsupported results, never searchable forms.
-- Dative optatives and their imperatives reject explicit objects during validation,
-  matching the exception already present in `ivd_present.conjugate_present`.
-- IVD imperative uses present optative; TVE imperative uses past. This is selected
-  per entry, so homographs in different classes do not steal one another's dispatch.
-- The past-as-progressive exceptions in the original wrapper are preserved.
-
-Source hashes are recorded in `packages/engine/src/laz_engine/data/provenance.json`.
-The generated database records engine and lexicon hashes and its coverage profile.
-
-## Regression evidence
-
-`tests/fixtures/reference.json` contains 4,836 outputs captured by executing the
-original modules, independently of the new engine. It covers all twelve modules,
-all four dialect codes, subjects, representative objects/markers, moods, compounds,
-Unicode spelling and optional preverbs. The original `scripts/capture_reference.py`
-is archived in Git with the old app; it requires that historical environment
-(including pandas). See [recovery instructions](../docs/legacy-archive.md).
-
-Do not regenerate the fixture file to silence a regression. Inspect differences
-and record any intentional linguistic change with concrete examples first.
-
-Additional tests cover unchanged rule ASTs, lexical identity, concurrent calls,
-API validation, database publication failures, Unicode search, reverse round trips,
-and read-only serving. A complete generation run additionally exercises every
-enumerated combination and refuses publication on unexpected failures.
-
-The earlier `lazverbcon.sql` export remains in Git history as historical evidence. The later
-`lewis-upload/lazverbcon2.dump` is authoritative and every row has been reconciled.
-Its expected conjugations verify generated output; runtime serving does not read
-that dump. See [the final parity report](../docs/maintainer-parity.md).
+See [rule development](../docs/rules.md), [open decisions](../docs/migration-backlog.md),
+and [historical migration reports](../docs/history/README.md). The original app is
+recoverable from [Git history](../docs/legacy-archive.md).

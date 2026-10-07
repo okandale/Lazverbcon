@@ -1,17 +1,20 @@
+> Historical record. Deployment commands, counts and editorial policies below
+> describe the earlier migration. Use the [current guides](../README.md).
+
 # Full parity with lazverbcon2.dump
 
 **Editorial workflow update (2026-10-02):** the local admin baseline and approved
 exports now use the dump pronouns. All 580,129 baseline requests were checked
 for status, spelling, frame and pronouns with zero discrepancies. The generator
 comparison below remains a separate report; its pronoun caveat still applies to
-generated proposals. See [the admin guide](admin-app.md).
+generated proposals. See [the admin guide](../admin-app.md).
 
 **Scope correction, 2026-10-02:** the checks below establish conjugated
 spelling/frame sets and accepted/rejected status. They do not check displayed
 pronouns. An independent comparison found **61 pronoun-table positions** where
 the retained notebook tables differ from the dump's `pronoun` table. This is an
 open migration gap, tracked as DATA-06. See the complete
-[behaviour review](conjugation-behaviour-details.md#d-displayed-pronouns-a-newly-identified-migration-gap)
+[behaviour review](../conjugation-behaviour-details.md#d-displayed-pronouns-a-newly-identified-migration-gap)
 for every difference and other request/data-handling changes. “Full parity”
 here must not be read as equivalence of all user-visible database fields.
 
