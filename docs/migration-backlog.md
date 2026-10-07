@@ -214,9 +214,9 @@ Uploads and generated databases are untouched. No merge or deployment was made.
 ## Remaining work
 
 1. Resolve LANG/DATA items only as reviewed examples and decisions become available.
-2. Run the **Windows Admin** workflow on GitHub, download its EXE bundle and verify
-   launch/edit/backup/restore on the intended Windows machine. The workflow includes
-   packaged generation/export/preview smoke tests; local macOS checks do not replace them.
+2. Download the **Windows Admin** EXE bundle and verify launch/edit/backup/restore
+   on the intended Windows machine. The [Windows CI build passed on 7 October 2026](https://github.com/okandale/Lazverbcon/actions/runs/37603514294),
+   including packaged generation, approval, export, preview, backup and restart tests.
 3. Publish the first approved export through the admin to the Pages-connected fork,
    switch Pages to `scripts/build_published.py`, and verify deployment on the test
    domain. Local tests cover publication conflicts, archive integrity and draft

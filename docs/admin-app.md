@@ -6,8 +6,8 @@ Editing, generating and reviewing work offline. Publishing needs internet access
 
 ## Windows: download and run
 
-After this code is pushed to `codex/static-export`, the **Windows Admin** GitHub
-Actions workflow builds and tests a Windows package. In the repository's
+The **Windows Admin** GitHub Actions workflow builds and tests a Windows package
+on pushes to `codex/static-export`. In the repository's
 **Actions → Windows Admin**, open the successful run and download the
 **Lazuri-Admin-Windows** artifact. Extract the entire ZIP into a program folder.
 
@@ -22,9 +22,9 @@ folder. Open the new executable. It uses the same project without regenerating
 its contents. Unsupported database versions are refused without modifying them.
 There is no automatic updater or multi-user synchronization.
 
-**Build status:** the source workflow is included; a Windows build and packaged
-smoke test must succeed before distributing an EXE. macOS source tests do not
-establish that the Windows executable works.
+**Build status:** the [Windows build and packaged smoke test passed on 7 October 2026](https://github.com/okandale/Lazverbcon/actions/runs/37603514294).
+The runner tested generation, approval, export, preview, backup and restart with
+saved changes. Interactive testing on the intended Windows computer remains.
 
 ## Start a project
 
@@ -175,7 +175,7 @@ leave an unused GitHub Release, but does not change the deployed site's pointer.
 To roll the public site back, publish an earlier export from the current master
 project; this records a publication event without rolling back the working database.
 
-The first live publication and Windows package run remain deployment checks;
+The first live publication and interactive Windows testing remain deployment checks;
 automated tests use a fake GitHub service and do not send credentials or alter Pages.
 
 ## Run from source

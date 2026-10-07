@@ -5,7 +5,8 @@ Proposed on 2 October 2026. Implementation is now in `apps/admin`; see the
 the original plan. The delivered UI uses bundled JavaScript/CSS rather than a
 second React build. Imports use explicit documented columns rather than a mapping
 wizard. Proposal adjustments use reject-and-replace. Windows package execution
-and a live GitHub/Pages publication still need verification on their target systems.
+passed in CI on 7 October 2026. Interactive Windows use and a live GitHub/Pages
+publication still need verification on their target systems.
 
 ## Recommended setup
 
