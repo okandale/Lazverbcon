@@ -8,6 +8,16 @@ from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 
+def wait_for_health(fetch):
+    for attempt in range(30):
+        try:
+            return json.loads(fetch("/api/v1/health"))
+        except (URLError, TimeoutError, ConnectionError):
+            if attempt == 29:
+                raise
+            time.sleep(1)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("url", nargs="?", default="http://127.0.0.1:8080")
@@ -23,14 +33,7 @@ def main():
         with urlopen(request, timeout=3) as response:
             return response.read().decode()
 
-    for attempt in range(30):
-        try:
-            health = json.loads(fetch("/api/v1/health"))
-            break
-        except (URLError, TimeoutError):
-            if attempt == 29:
-                raise
-            time.sleep(1)
+    health = wait_for_health(fetch)
     assert health["status"] == "ok" and health["source"] == "database", health
     assert health["catalog"]["profile"] == "full", health
     html = fetch("/")

@@ -43,7 +43,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker compose build
-      - run: docker compose up -d
+      - run: docker compose up -d --wait --wait-timeout 60
       - run: python3 scripts/smoke_server.py
       - if: failure()
         run: docker compose logs
