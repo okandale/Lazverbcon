@@ -16,6 +16,7 @@ def unpack(archive, destination):
             path = PurePosixPath(member.filename)
             if (
                 path.is_absolute()
+                or member.orig_filename != member.filename
                 or ".." in path.parts
                 or "\\" in member.filename
                 or ":" in member.filename

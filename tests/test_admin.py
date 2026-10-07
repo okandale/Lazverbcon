@@ -51,6 +51,27 @@ def approve(store, value):
     return store.history()[0]["id"]
 
 
+def test_project_creation_closes_database_connections(tmp_path, monkeypatch):
+    connections = []
+    connect = sqlite3.connect
+
+    class TrackedConnection(sqlite3.Connection):
+        closed = False
+
+        def close(self):
+            self.closed = True
+            super().close()
+
+    def tracked_connect(*args, **kwargs):
+        db = connect(*args, **kwargs, factory=TrackedConnection)
+        connections.append(db)
+        return db
+
+    monkeypatch.setattr(sqlite3, "connect", tracked_connect)
+    Store(tmp_path / "project")
+    assert connections and all(db.closed for db in connections)
+
+
 def test_draft_approval_removal_and_undo(project):
     value = item(project)
     project.propose([value], "Author", "First form")
@@ -424,8 +445,11 @@ def test_editor_rejects_foreign_origins_hosts_and_missing_tokens(project):
 )
 def test_archive_refuses_path_traversal(tmp_path, name):
     archive = tmp_path / "bad.zip"
+    member = zipfile.ZipInfo(name)
+    # Preserve a malformed raw name: ZipInfo normalizes backslashes on Windows.
+    member.filename = name
     with zipfile.ZipFile(archive, "w") as dest:
-        dest.writestr(name, "{}")
+        dest.writestr(member, "{}")
     with pytest.raises(ValueError, match="Unsafe"):
         unpack(archive, tmp_path / "unpack")
 

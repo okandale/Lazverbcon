@@ -11,7 +11,7 @@ import shutil
 import sqlite3
 import threading
 import uuid
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 from dataclasses import asdict
 from datetime import datetime, timezone
 from importlib.resources import files
@@ -131,7 +131,7 @@ class Store:
         self.path = self.directory / "master.sqlite"
         self.lock = threading.RLock()
         if not self.path.exists():
-            with sqlite3.connect(self.path) as db:
+            with closing(sqlite3.connect(self.path)) as db, db:
                 db.executescript(SCHEMA)
                 db.executemany(
                     "INSERT INTO meta VALUES (?,?)",
@@ -147,8 +147,6 @@ class Store:
 
     @staticmethod
     def check(path):
-        from contextlib import closing
-
         with closing(sqlite3.connect(Path(path).resolve().as_uri() + "?mode=ro", uri=True)) as db:
             if db.execute("SELECT value FROM meta WHERE key='schema'").fetchone() != (
                 str(VERSION),
@@ -522,8 +520,6 @@ class Store:
         with self.lock:
             backup = self.backup(label="before-restore")
             staging = self.directory / "restore.sqlite"
-            from contextlib import closing
-
             with closing(sqlite3.connect(source.as_uri() + "?mode=ro", uri=True)) as src:
                 with closing(sqlite3.connect(staging)) as dst:
                     src.backup(dst)
