@@ -3,8 +3,14 @@ import { ReverseSearch } from "./features/reverse/ReverseSearch";
 import { Results } from "./features/conjugation/Results";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { api, defaults, requireData, requestFromMatch } from "./api/client";
-import type { Dialect, Match, Request } from "./api/client";
+import {
+  api,
+  defaults,
+  defaultsForEntry,
+  requireData,
+  requestFromMatch,
+} from "./api/client";
+import type { Dialect, Entry, Match, Request } from "./api/client";
 import { dialectNames, labels, names } from "./i18n";
 import { parseSelection } from "./api/selection";
 import { restrictionText } from "./restrictions";
@@ -86,8 +92,8 @@ export function App() {
     setSubmitted(null);
     setNotice("");
   }
-  function choose(id: string) {
-    setDraft({ ...defaults, entry_id: id });
+  function choose(entry: Entry) {
+    setDraft(defaultsForEntry(entry));
     setSubmitted(null);
     setNotice("");
   }
@@ -341,7 +347,7 @@ export function App() {
                         <button
                           type="button"
                           className="text-button"
-                          onClick={() => choose(draft.entry_id)}
+                          onClick={() => selected.data && choose(selected.data)}
                         >
                           {t.reset}
                         </button>

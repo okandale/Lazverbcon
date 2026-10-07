@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { Language } from "../i18n";
-import { api, defaults, requireData } from "../api/client";
+import { api, defaultsForEntry, requireData } from "../api/client";
 import { CharacterBar } from "../features/CharacterBar";
 import { localLink, PageIntro } from "./shared";
 
@@ -84,8 +84,7 @@ export function VerbDirectory({ language: l }: { language: Language }) {
                             "/conjugator?selection=" +
                               encodeURIComponent(
                                 JSON.stringify({
-                                  ...defaults,
-                                  entry_id: entry.id,
+                                  ...defaultsForEntry(entry),
                                 }),
                               ),
                             l,

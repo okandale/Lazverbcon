@@ -28,6 +28,8 @@ type Manifest = {
   alternates: [string, string][];
 };
 type Validation = {
+  mode?: "approved";
+  approved?: Set<number>;
   reasons: (Problem | null)[];
   tables: string[];
   entries: Record<
@@ -184,6 +186,14 @@ export class StaticCatalog {
     tables: string[],
     m: Manifest,
   ): Problem | null {
+    if (v.mode === "approved") {
+      return v.approved?.has(this.code(f, m))
+        ? null
+        : [
+            "not_approved",
+            "This combination has no approved forms in this release.",
+          ];
+    }
     if (f.optional_preverb && f.optional_prefix !== "none")
       return [
         "prefix_conflict",
@@ -204,6 +214,19 @@ export class StaticCatalog {
         "This prefix is not attested for this verb and dialect.",
       ];
     return v.reasons[tables[entry.table].charCodeAt(this.code(f, m, true))];
+  }
+  private async validation(id: string, m: Manifest): Promise<Validation> {
+    const v = await this.load<Validation>("validation.json");
+    if (v.mode !== "approved") return v;
+    const chunks = await Promise.all(
+      Object.values(m.forward[id] ?? {}).map((path) => this.load<Chunk>(path)),
+    );
+    return {
+      ...v,
+      approved: new Set(
+        chunks.flatMap((chunk) => Object.keys(chunk.requests).map(Number)),
+      ),
+    };
   }
   private expand(
     selection: Selection,
@@ -260,11 +283,11 @@ export class StaticCatalog {
     return entry;
   }
   async conjugate(selection: Selection) {
-    const [entry, m, v] = await Promise.all([
+    const [entry, m] = await Promise.all([
       this.entry(selection.entry_id),
       this.manifest(),
-      this.load<Validation>("validation.json"),
     ]);
+    const v = await this.validation(entry.id, m);
     const tables = v.tables.map((table) => atob(table));
     const features = this.expand(
       { ...selection, subject: selection.subject ?? "all" },
@@ -318,17 +341,25 @@ export class StaticCatalog {
     return { entry, source: "database", cells };
   }
   async options(selection: Selection) {
-    const [m, v] = await Promise.all([
+    const [m] = await Promise.all([
       this.manifest(),
-      this.load<Validation>("validation.json"),
       this.entry(selection.entry_id),
     ]);
+    const v = await this.validation(selection.entry_id, m);
     const tables = v.tables.map((table) => atob(table));
     const entry = v.entries[selection.entry_id];
     const dialect =
       selection.dialects?.find((d) => entry.dialects.includes(d)) ??
       entry.dialects[0];
-    const options: Record<string, unknown[]> = {};
+    const options: Record<
+      string,
+      {
+        value: Value;
+        enabled: boolean;
+        reason: string | null;
+        reason_code: string | null;
+      }[]
+    > = {};
     for (let i = 1; i < m.feature_fields.length; i++) {
       const field = m.feature_fields[i];
       const values =
@@ -343,7 +374,13 @@ export class StaticCatalog {
           subject: selection.subject ?? "all",
           [field]: value,
         } as Selection;
-        const problems = this.expand(candidate, [dialect], m).map((f) =>
+        const chosenDialects =
+          v.mode === "approved"
+            ? selection.dialects?.length
+              ? selection.dialects
+              : entry.dialects
+            : [dialect];
+        const problems = this.expand(candidate, chosenDialects, m).map((f) =>
           this.validate(selection.entry_id, f, v, tables, m),
         );
         const problem = problems.includes(null) ? null : problems[0];
@@ -354,6 +391,27 @@ export class StaticCatalog {
           reason_code: problem?.[0] ?? null,
         };
       });
+      // Sparse approved data may require changing two controls together. Keep a
+      // route to an attested selection instead of disabling every value.
+      if (
+        v.mode === "approved" &&
+        !options[field].some((option) => option.enabled)
+      ) {
+        const available = [...(v.approved ?? [])].map((code) =>
+          this.features(code, m),
+        );
+        for (const option of options[field]) {
+          option.enabled = available.some(
+            (f) =>
+              (!selection.dialects?.length ||
+                selection.dialects.includes(f.dialect)) &&
+              (option.value === "all"
+                ? field === "subject" || f.object !== null
+                : f[field] === option.value),
+          );
+          if (option.enabled) option.reason = option.reason_code = null;
+        }
+      }
     }
     return { dialects: entry.dialects, options };
   }

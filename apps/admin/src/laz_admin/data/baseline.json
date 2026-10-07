@@ -1,0 +1,13 @@
+{
+  "source": "lazverbcon2.dump",
+  "source_sha256": "54964059bff2c7dbd5ae465235ce649f1a49491299116ccbf51757d0a280c35d",
+  "pronouns_sha256": "ddd6a5fe5bb95998838613ac4293db014ff0de7329e7a251968f854f57b37572",
+  "pronoun_rows": 144,
+  "fixture_sha256": "1253924191adbc7d07b6750409a6bf70656ae7cc0d266f673cce1002998f562f",
+  "dialect_ids": {
+    "1": "AS",
+    "2": "PZ",
+    "3": "FA",
+    "4": "HO"
+  }
+}

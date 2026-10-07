@@ -22,7 +22,7 @@ export function parseSelection(encoded: string | null): Request {
     const result = { ...defaults } as Record<string, unknown>;
     if (
       typeof data.entry_id !== "string" ||
-      !/^verb-\d{4}$/.test(data.entry_id)
+      !/^[A-Za-z0-9][A-Za-z0-9_-]{0,99}$/.test(data.entry_id)
     )
       return { ...defaults };
     result.entry_id = data.entry_id;
@@ -49,8 +49,6 @@ export function parseSelection(encoded: string | null): Request {
         result[field] = data[field];
       }
     }
-    if (result.optional_preverb && result.optional_prefix !== "none")
-      return { ...defaults };
     return result as Request;
   } catch {
     return { ...defaults };

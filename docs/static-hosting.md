@@ -84,6 +84,11 @@ npx wrangler@4 pages dev artifacts/pages --port 8001
 
 ## Deploy through GitHub (preferred)
 
+**For approved admin data, use [the admin publishing setup](admin-app.md#connect-github-and-cloudflare-once).**
+It downloads a pinned release with `scripts/build_published.py`; it does not run
+the generator. The build command below is the earlier generated-catalog prototype
+workflow. Do not use it for publishing manual admin corrections.
+
 The test project is connected to `lewisccz/Lazverbcon`, branch
 `codex/static-export`. Push fixes to that fork and branch to trigger deployment.
 Pushing only to the original `okandale/Lazverbcon` repository does not update the fork.

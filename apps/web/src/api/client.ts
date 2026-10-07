@@ -20,7 +20,7 @@ export const defaults: Request = {
   entry_id: "verb-0026",
   dialects: ["AS", "PZ", "FA", "HO"],
   subject: "all",
-  object: null,
+  object: "3sg",
   tense: "present",
   mood: "indicative",
   derivation: "none",
@@ -29,6 +29,14 @@ export const defaults: Request = {
   optional_preverb: false,
   optional_prefix: "none",
 };
+
+export function defaultsForEntry(entry: Entry): Request {
+  return {
+    ...defaults,
+    entry_id: entry.id,
+    object: entry.verb_class === "TVE" ? "3sg" : null,
+  };
+}
 
 export async function requireData<T>(result: {
   data?: T;

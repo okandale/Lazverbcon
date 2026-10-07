@@ -1,18 +1,22 @@
 # Lazverbcon remake: architecture and migration
 
-Updated: 1 October 2026. Status: core rule migration complete. The typed engine, SQLite publisher, API and mobile-friendly website are implemented. All twelve paradigms use named rule stages; the legacy snapshot is test-only. See the [setup guide](../README.md) for the actual repository layout and [migration notes](../migration/README.md) for coverage and unresolved data issues.
+Updated: 2 October 2026. Status: core rule migration complete. The typed engine, SQLite publisher, API and mobile-friendly website are implemented. All twelve paradigms use named rule stages; the legacy snapshot is test-only. See the [setup guide](../README.md) for the actual repository layout and [migration notes](../migration/README.md) for coverage and unresolved data issues.
 
 ## Current implementation
 
-The website uses **React, TypeScript and Vite**. The public static build runs on
-Cloudflare Pages without an API server. A standalone **Python conjugation package**
-generates and verifies **SQLite** locally, then exports small JSON files for the
-browser. The **FastAPI** deployment remains available for comparison and API use.
+The website uses **React, TypeScript and Vite** and runs on Cloudflare Pages
+without an API server. The local **FastAPI admin** runs only on loopback, with a
+bundled JavaScript/CSS editor and a persistent **SQLite master**. It is packaged
+for Windows with PyInstaller. The **Python engine** generates review proposals;
+approval changes the master. Manual exceptions do not need a corresponding rule.
 
-The [static hosting guide](static-hosting.md) describes the implemented exporter,
-browser query layer and deployment. The API sections below describe the retained
-server deployment. Future administration should edit source definitions and
-publish verified releases, not modify generated rows.
+Approved snapshots become JSON shards. Publishing puts the ZIP in a GitHub
+Release and commits a checksum-pinned pointer; Pages downloads that export and
+builds the website. The working database, drafts and history stay local.
+See [admin setup](admin-app.md) for the workflow and remaining deployment checks.
+
+The API and generated-catalog sections below also describe the retained optional
+server deployment. That path remains useful for engine development and comparison.
 
 The database recommendation was revised after discussing the write-once/read-many workload. PostgreSQL was initially proposed partly for possible future editorial workflows; those are deferred and do not justify a separate database service now.
 
@@ -48,7 +52,7 @@ Two data losses deserve explicit migration cases. The old loader overwrites six 
 | Styling | Tailwind CSS with a small shared component set | One styling approach and reusable accessible controls. |
 | API | FastAPI + Pydantic | Explicit request/response models, validation and an OpenAPI contract. |
 | Linguistic engine | Typed Python, dataclasses and enums | Preserves the language of the original rules and keeps behavior independently testable. |
-| Storage | SQLite through Python's `sqlite3` module | A generated database file stores the published lexicon and indexed forms without a separate database service. |
+| Storage | SQLite through Python's `sqlite3` module | A persistent editorial master holds approved forms and history; immutable snapshots support static exports and the optional generated-catalog API. |
 | Python workflow | venv, pinned pip dependencies, Ruff, pytest | Reproducible dependencies, consistent formatting and regression tests. |
 | Frontend verification | TypeScript checks, Vitest/Testing Library, browser checks | Covers option interactions and core user journeys. |
 | Local environment and release | Local Python/Node commands, a backend container for deployment, static web assets, GitHub Actions | Reproducible builds and deployment with the generated database bundled into the release. |
@@ -62,25 +66,28 @@ FastAPI's [OpenAPI client generation](https://fastapi.tiangolo.com/advanced/gene
 ## Boundaries
 
 ```mermaid
-flowchart TD
-    Web[Mobile-friendly website] --> API[FastAPI application]
-    Mobile[Future mobile client] -.-> API
-    API --> App[Application services]
-    App --> Engine[Pure Python conjugation engine]
-    App --> Store[SQLite: lexicon and reverse index]
-    Build[Import and generation CLI] --> Engine
-    Build --> Store
-    Reference[Frozen legacy rules and fixtures] --> Compare[Parity checks]
-    Engine --> Compare
+flowchart LR
+    Engine[Python generator] --> Proposals[Review proposals]
+    Imports[CSV and JSON imports] --> Proposals
+    Editor[Local browser editor] --> Proposals
+    Proposals --> Approval[Approve or reject]
+    Approval --> Master[SQLite master and change history]
+    Master --> Backups[Local and external backups]
+    Master --> Export[Approved JSON export]
+    Export --> Preview[Local website preview]
+    Export --> Release[GitHub Release and pinned pointer]
+    Release --> Pages[Cloudflare Pages static website]
 ```
 
-This is a modular monolith: one backend with clear internal modules. The engine is a Python package called directly by the application. It accepts explicit data and returns explicit results; it imports neither the web framework nor database code.
-
-The API and generation CLI use the same engine. A future admin editor can use the same application services for validation, preview and publication.
+The admin store owns transactions, conflict checks and audit history. The exporter
+reads a consistent approved snapshot and has no authority to approve proposals.
+The browser uses approved availability instead of running linguistic rules.
+The engine remains independent of the editor and public website.
 
 ### Current repository
 
 ```text
+apps/admin/src/laz_admin/  # Local editor, master/history, backups and publication
 apps/web/src/               # React controls, lexicon, reverse search and API types
 apps/api/src/laz_api/       # HTTP contracts, SQLite publication/queries and CLI
 packages/engine/src/laz_engine/

@@ -11,8 +11,8 @@ jobs:
           cache: pip
       - run: pip install -r requirements.lock
       - run: pip install --no-deps -e .
-      - run: ruff check packages/engine/src/laz_engine apps/api/src scripts tests
-      - run: ruff format --check packages/engine/src/laz_engine apps/api/src scripts tests
+      - run: ruff check packages/engine/src/laz_engine apps/api/src apps/admin/src scripts tests
+      - run: ruff format --check packages/engine/src/laz_engine apps/api/src apps/admin/src scripts tests
       - run: pytest -q
       - run: lazcon openapi --output /tmp/openapi.json
       - run: diff -u apps/web/openapi.json /tmp/openapi.json
@@ -70,6 +70,10 @@ jobs:
       - run: pnpm --dir apps/web install --frozen-lockfile
       # Small shards deliberately exercise suggestions across file boundaries.
       - run: python scripts/static_test_cases.py artifacts/static-test
+      - run: python scripts/admin_static_test_cases.py artifacts/admin-static-test
+      - run: pnpm --dir apps/web exec vitest run src/api/editorial.integration.test.mjs
+        env:
+          LAZ_ADMIN_STATIC_TEST_DIR: ../../artifacts/admin-static-test
       - run: pnpm --dir apps/web exec vitest run src/api/static.integration.test.mjs
         env:
           LAZ_STATIC_TEST_DIR: ../../artifacts/static-test

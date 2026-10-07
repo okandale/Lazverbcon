@@ -1,5 +1,11 @@
 # Full parity with lazverbcon2.dump
 
+**Editorial workflow update (2026-10-02):** the local admin baseline and approved
+exports now use the dump pronouns. All 580,129 baseline requests were checked
+for status, spelling, frame and pronouns with zero discrepancies. The generator
+comparison below remains a separate report; its pronoun caveat still applies to
+generated proposals. See [the admin guide](admin-app.md).
+
 **Scope correction, 2026-10-02:** the checks below establish conjugated
 spelling/frame sets and accepted/rejected status. They do not check displayed
 pronouns. An independent comparison found **61 pronoun-table positions** where

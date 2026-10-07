@@ -14,12 +14,14 @@ dev = ["pytest>=8,<10", "httpx>=0.27,<1", "ruff>=0.9,<1"]
 
 [project.scripts]
 lazcon = "laz_api.cli:main"
+lazadmin = "laz_admin.launcher:main"
 
 [tool.setuptools.packages.find]
-where = ["packages/engine/src", "apps/api/src"]
+where = ["packages/engine/src", "apps/api/src", "apps/admin/src"]
 
 [tool.setuptools.package-data]
 laz_engine = ["data/*.json"]
+laz_admin = ["data/*.json", "assets/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

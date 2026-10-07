@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Lazuri Admin</title>
+    <link rel="stylesheet" href="/admin-assets/style.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <small>LOCAL EDITOR</small>
+        <h1>Lazuri Admin</h1>
+      </div>
+      <label
+        >Your name
+        <input
+          id="actor"
+          autocomplete="name"
+          placeholder="Name for change history" /></label
+      ><button id="stop">Stop app</button>
+    </header>
+    <nav aria-label="Editor sections">
+      <button data-tab="overview">Overview</button
+      ><button data-tab="entries">Verbs</button
+      ><button data-tab="review">Review</button
+      ><button data-tab="import">Import</button
+      ><button data-tab="history">History</button
+      ><button data-tab="backups">Backups</button
+      ><button data-tab="publish">Publish</button
+      ><button data-tab="settings">Settings</button>
+    </nav>
+    <aside id="job" hidden></aside>
+    <p id="notice" role="status"></p>
+    <main id="main">Opening your project…</main>
+    <dialog id="dialog">
+      <form id="editor">
+        <div id="fields"></div>
+        <footer>
+          <button type="button" id="close">Cancel</button
+          ><button type="submit">Save</button>
+        </footer>
+      </form>
+    </dialog>
+    <script type="module" src="/admin-assets/app.js"></script>
+  </body>
+</html>

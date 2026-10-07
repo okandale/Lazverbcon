@@ -137,7 +137,10 @@ def export_catalog(database: Path, output: Path, *, allow_partial=False, shard_b
         raise ValueError(
             "Static publishing requires a full catalog; use --allow-partial only for tests."
         )
-    if (manifest["engine_revision"], manifest["lexicon_revision"]) != (
+    if not manifest.get("editorial") and (
+        manifest["engine_revision"],
+        manifest["lexicon_revision"],
+    ) != (
         engine_revision(),
         lexicon_revision(),
     ):
@@ -155,14 +158,39 @@ def export_catalog(database: Path, output: Path, *, allow_partial=False, shard_b
             entry_numbers = {entry["id"]: n for n, entry in enumerate(entries)}
             source_entries = {e.id: e for e in load_entries()}
             for entry in entries:
-                if canonical(asdict(source_entries[entry["id"]])) != canonical(entry):
+                if not manifest.get("editorial") and canonical(
+                    asdict(source_entries[entry["id"]])
+                ) != canonical(entry):
                     raise ValueError(
                         f"Catalog entry differs from the source lexicon: {entry['id']}"
                     )
             writer.write("entries.json", entries)
-            writer.write(
-                "validation.json", validation_data([source_entries[e["id"]] for e in entries])
-            )
+            if manifest.get("editorial"):
+                approved = {}
+                for e in entries:
+                    dialects = sorted(
+                        {
+                            json.loads(r[0])[0]
+                            for r in db.execute(
+                                "SELECT DISTINCT features FROM requests WHERE entry_id=?",
+                                (e["id"],),
+                            )
+                        }
+                        | {d for p in e["variants"] for d in p["dialects"]}
+                    )
+                    approved[e["id"]] = {
+                        "table": 0,
+                        "dialects": dialects,
+                        "prefixes": {d: [] for d in dialects},
+                    }
+                writer.write(
+                    "validation.json",
+                    {"mode": "approved", "reasons": [], "tables": [], "entries": approved},
+                )
+            else:
+                writer.write(
+                    "validation.json", validation_data([source_entries[e["id"]] for e in entries])
+                )
             # Store reverse references on disk while streaming the catalog; the
             # exporter never needs all conjugations in Python memory at once.
             db.execute("PRAGMA temp_store=FILE")

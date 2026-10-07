@@ -1,14 +1,27 @@
 # Lazverbcon
 
 A mobile-friendly Laz verb explorer, an independent Python conjugation engine,
-and a reproducible SQLite publisher. The active tree contains the new app.
+and a local admin app with an approved SQLite master. The active tree contains the new app.
 The original application is preserved in Git history; see [legacy recovery](docs/legacy-archive.md).
+
+## Local admin app
+
+Run `lazadmin` from an installed source checkout, or use the Windows package
+built by the **Windows Admin** GitHub Actions workflow. It supports verb editing,
+generation/import proposals, approval, history/undo, backups, website preview
+and publishing approved data to GitHub for Cloudflare Pages.
+
+See [admin setup, Windows downloads and publishing](docs/admin-app.md).
+The database and editor run locally; no hosted admin server is required.
 
 ## Static website: Cloudflare Pages
 
-The public website can now run entirely from static files. Python generates a
-verified SQLite catalog locally; the exporter turns it into small JSON files.
+The public website runs entirely from static files. The admin exports approved
+database records into small JSON files; Pages consumes the pinned release.
 The browser loads the selected verb and search results as needed.
+
+For the approved editorial workflow, follow [the admin publishing guide](docs/admin-app.md#connect-github-and-cloudflare-once).
+The following developer command remains available for **generated** catalogs:
 
 After installing the development dependencies below:
 
@@ -101,7 +114,7 @@ with this version of the app.
 
 **The core engine and public learning pages are migrated.** The page-by-page
 [migration checklist](docs/migration-backlog.md) tracks completed work and the
-remaining data decisions and future administration. Feedback delivery has been
+remaining data decisions and admin deployment checks. Feedback delivery has been
 confirmed by the owner.
 Unfinished phrase translations retain their original placeholders and are authoring
 work outside migration scope.
@@ -122,8 +135,8 @@ all six keyboard guides and Hopa phrase guide are implemented in English/Turkish
 Feedback submits to the original Google Apps Script destination, with timeout/error
 handling and an email/copy fallback. See [delivery verification](docs/feedback.md).
 The three unfinished phrase guides preserve the original prompts and placeholders.
-Future admin editing will use source data and generation; old direct database
-writes will not be copied. Public old-API functions already have new equivalents;
+The local admin now edits approved data through proposals and history; generation
+suggests changes for review. Public old-API functions already have new equivalents;
 [the inventory](docs/legacy-api.md) records the owner’s decision to retire old
 API contracts and bookmark compatibility.
 All requests from the authoritative maintainer dump are reconciled. Remaining
@@ -135,15 +148,16 @@ linguistic questions concern coverage beyond that source.
    and dialects. Same-spelling entries keep separate identities.
 2. **Engine:** pure Python applies the linguistic rules to one verb and one
    grammatical combination. It can run independently of the website or database.
-3. **Build:** the publisher enumerates supported combinations and stores their
-   outputs and grammatical analyses in SQLite. Unexpected failures stop publication.
-4. **Website:** React sends selections to FastAPI. FastAPI reads the published
-   SQLite file for both forward conjugation and reverse lookup. The same API can
-   support a future mobile client.
+3. **Admin:** one persistent master holds approved records, proposals and history.
+   The generator and imports create proposals; reviewed corrections survive future
+   generation. Export produces a consistent snapshot of approved content.
+4. **Website:** the static React app reads JSON shards for forward conjugation,
+   reverse lookup and suggestions. Pages builds consume a checksum-pinned GitHub
+   Release. The optional FastAPI/Docker version continues to support generated catalogs.
 
-Changing a rule or lexical entry means building a new image and database release.
-A static Cloudflare version has been discussed but is not implemented; the current
-website still requires the API. Feedback itself is independent of that API.
+Changing a Python rule does not modify the editorial master. Generate proposals,
+review them and publish a new approved export to update the static website.
+Feedback is independent of the local admin and public API.
 
 ## Development without Docker
 

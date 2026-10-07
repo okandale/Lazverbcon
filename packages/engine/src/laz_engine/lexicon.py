@@ -14,7 +14,7 @@ def search_key(value: str) -> str:
 
 @lru_cache(maxsize=1)
 def load_entries() -> tuple[Entry, ...]:
-    rows = json.loads(files("laz_engine").joinpath("data/entries.json").read_text())
+    rows = json.loads(files("laz_engine").joinpath("data/entries.json").read_text(encoding="utf-8"))
     return tuple(
         Entry(
             id=r["id"],

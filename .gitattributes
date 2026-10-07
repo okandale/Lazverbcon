@@ -1,0 +1,2 @@
+# Keep the recorded pronoun snapshot checksum identical on Windows.
+/apps/admin/src/laz_admin/data/*.json text eol=lf

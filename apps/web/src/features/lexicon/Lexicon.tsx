@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { api, requireData } from "../../api/client";
+import type { Entry } from "../../api/client";
 import { labels } from "../../i18n";
 import type { Language } from "../../i18n";
 import { CharacterBar } from "../CharacterBar";
@@ -12,7 +13,7 @@ export function Lexicon({
 }: {
   language: Language;
   selectedId: string;
-  onSelect: (id: string) => void;
+  onSelect: (entry: Entry) => void;
 }) {
   const t = labels[language];
   const [search, setSearch] = useState("");
@@ -60,7 +61,7 @@ export function Lexicon({
           <button
             key={entry.id}
             className={`entry ${selectedId === entry.id ? "selected" : ""}`}
-            onClick={() => onSelect(entry.id)}
+            onClick={() => onSelect(entry)}
           >
             <span>
               <strong>{entry.infinitive}</strong>

@@ -45,7 +45,7 @@ def build(database, output, data=None):
             data = work / "export"
             print("Exporting the verified catalog…", flush=True)
             print(json.dumps(export_catalog(database, data), indent=2), flush=True)
-        manifest = json.loads((data / "manifest.json").read_text())
+        manifest = json.loads((data / "manifest.json").read_text(encoding="utf-8"))
         if manifest["schema_version"] != 1 or manifest["catalog"]["coverage"] != "full":
             raise ValueError("Public builds require a complete, supported static release")
         for filename, expected in manifest["files"].items():
@@ -54,9 +54,14 @@ def build(database, output, data=None):
                 raise ValueError(f"Static data integrity check failed: {filename}")
         site = work / "site"
         env = dict(os.environ, VITE_STATIC_DATA=f"/data/{manifest['release']}")
-        subprocess.run(["pnpm", "exec", "tsc", "-b"], cwd=ROOT / "apps/web", env=env, check=True)
         subprocess.run(
-            ["pnpm", "exec", "vite", "build", "--outDir", str(site)],
+            [shutil.which("pnpm") or "pnpm", "exec", "tsc", "-b"],
+            cwd=ROOT / "apps/web",
+            env=env,
+            check=True,
+        )
+        subprocess.run(
+            [shutil.which("pnpm") or "pnpm", "exec", "vite", "build", "--outDir", str(site)],
             cwd=ROOT / "apps/web",
             env=env,
             check=True,

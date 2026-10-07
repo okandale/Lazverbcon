@@ -8,7 +8,7 @@ The 2026-10-02 audit identified a remaining displayed-pronoun migration gap
 (DATA-06); the earlier dump comparison covered spelling/frame sets and status,
 not every displayed field. See the [full behaviour review](conjugation-behaviour-review.md).
 The owner confirmed feedback delivery works on 2026-10-01. Remaining work concerns
-reviewed linguistic/data decisions, future admin tooling and hosting. Old bookmarks and old API contracts
+reviewed linguistic/data decisions and verification of the admin packaging/publishing path. Old bookmarks and old API contracts
 are intentionally retired by owner decision on 2026-10-01.
 Unfinished translations are authoring work, not a migration blocker; their original
 placeholders are preserved. This
@@ -92,10 +92,10 @@ lookup of the selected `doviguram` form.
 
 | ID | Feature | Status | Remaining work and completion check |
 | --- | --- | --- | --- |
-| OPS-01 | Old admin login and direct database editor | Retired | User confirmed on 2026-10-01: do not copy direct database editing endpoints. Future admin tools should edit versioned source definitions, preview, generate, verify and publish. This is new authoring functionality, not unfinished old-admin migration. |
+| OPS-01 | Old admin login and direct database editor | Retired | Old endpoints remain retired. On 2026-10-02 the owner approved a local editorial database app: proposals, approval, history, backups and approved static publishing. Implemented separately; see [admin guide](admin-app.md). |
 | OPS-02 | Old public URLs and bookmarks | Done | Public routes load directly and on refresh. Unknown pages show a recovery page with HTTP 404; missing API/assets remain 404 rather than receiving an HTML success. Old detail links have deliberate 410 handling. Tests cover all public routes, query-preserving redirect, missing files and method handling. |
 | OPS-03 | Old API paths and response formats | Retired | Owner confirmed on 2026-10-01 that the only API users are the owner and author, both aware of the migration. Use the new contract; no old-format adapters are required. Public equivalents are documented in the [endpoint inventory](legacy-api.md). |
-| OPS-04 | Old `/update` deployment webhook | Retired | Use a build/test/publish workflow. No server-side source-update hook will be copied. Static Cloudflare publishing is being considered; its exporter/browser lookups are not implemented yet. |
+| OPS-04 | Old `/update` deployment webhook | Retired | Use a build/test/publish workflow. No server-side source-update hook will be copied. Static exporting and browser lookups are implemented. The new approved-release build path still needs its first live deployment check. |
 | OPS-05 | Docker deployment verification | In progress | Image build, reference verification, container startup and HTTP health check passed on the Debian VM on 2026-09-29 after correcting release-directory traversal permissions. The server reported the full catalog: 327 entries, 1,278,826 forms and no generation errors. The build now verifies application setup as the runtime user. Before launch, run the full HTTP smoke check and verify HTTPS/domain routing, restart and release rollback. |
 | OPS-06 | Native mobile client | Deferred | Website is the current target. A future client can use the same API. No app implementation is required for website parity. |
 
@@ -172,8 +172,7 @@ and rebuilt-SQLite checks; see [the final report](maintainer-parity.md).
   in 61 of 480 compared rule/dialect/person display positions. The old database
   endpoint used the dump table. Align display data with the dump unless a
   specific source error is identified, add independent pronoun verification,
-  and regenerate/publish affected output. No runtime fix was made during the
-  audit. All differences are listed in [section D of the behaviour review](conjugation-behaviour-details.md#d-displayed-pronouns-a-newly-identified-migration-gap).
+  and publish affected output. **Implemented in the admin baseline and approved export:** all 580,129 requests were checked with dump pronouns. The generator still proposes its existing rule pronouns. First approved release deployment remains to be checked. All differences are listed in [section D of the behaviour review](conjugation-behaviour-details.md#d-displayed-pronouns-a-newly-identified-migration-gap).
 - [ ] **LANG-10 (full behavioural review):** Obtain the author's decisions on
   the [behaviour inventory](conjugation-behaviour-review.md), including productive
   extensions, explicit-prefix scope, potential optative, unmarked perfect for
@@ -215,10 +214,16 @@ Uploads and generated databases are untouched. No merge or deployment was made.
 ## Remaining work
 
 1. Resolve LANG/DATA items only as reviewed examples and decisions become available.
-2. Implement and benchmark a static data exporter/browser lookup layer if proceeding
-   with Cloudflare hosting; keep the working API deployment until replacement is verified.
-3. Design future admin editing around source data and the generator. Old direct
-   database writes and the `/update` webhook are intentionally retired.
+2. Run the **Windows Admin** workflow on GitHub, download its EXE bundle and verify
+   launch/edit/backup/restore on the intended Windows machine. The workflow includes
+   packaged generation/export/preview smoke tests; local macOS checks do not replace them.
+3. Publish the first approved export through the admin to the Pages-connected fork,
+   switch Pages to `scripts/build_published.py`, and verify deployment on the test
+   domain. Local tests cover publication conflicts, archive integrity and draft
+   exclusion; they do not establish a live GitHub/Cloudflare deployment.
+4. Optional later work: signed Windows installer/update notifications, a richer
+   import mapping wizard and multi-editor synchronization. The current application
+   supports one master editor, documented CSV/JSON imports and explicit backup handover.
 
 ### Authoring work outside migration
 
