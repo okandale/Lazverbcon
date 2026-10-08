@@ -363,7 +363,18 @@ class FakeGitHub:
             }
         if binary:
             return {
-                "browser_download_url": "https://github.com/owner/repo/releases/download/test/catalog.zip"
+                "id": 10,
+                "browser_download_url": "https://github.com/owner/repo/releases/download/untagged-draft/catalog.zip",
+            }
+        if method == "PATCH":
+            return {
+                "assets": [
+                    {
+                        "id": 10,
+                        "state": "uploaded",
+                        "browser_download_url": "https://github.com/owner/repo/releases/download/test/catalog.zip",
+                    }
+                ]
             }
         if method == "PUT":
             if self.fail:
@@ -387,6 +398,9 @@ def test_publish_pins_public_archive_and_protects_against_stale_restore(project)
     publish(*args, github=client)
     assert json.loads(project.status()["remote_base"]) == info["release"]
     assert client.pointer["sha256"] == info["sha256"]
+    assert (
+        client.pointer["url"] == "https://github.com/owner/repo/releases/download/test/catalog.zip"
+    )
     assert set(client.pointer) == {"release", "project", "revision", "sha256", "url"}
     assert "never-save-token" not in str(project.history()) + str(project.settings())
     with project.db(True) as db:
@@ -406,6 +420,21 @@ def test_failed_github_commit_does_not_advance_local_base(project):
     client = FakeGitHub(fail=True)
     with pytest.raises(ValueError, match="Concurrent"):
         publish(project, info["filename"], "Author", "token", "owner/repo", "main", github=client)
+    assert json.loads(project.status()["remote_base"]) is None
+
+
+def test_missing_published_asset_does_not_commit_a_pointer(project):
+    class MissingAsset(FakeGitHub):
+        def request(self, method, path, data=None, binary=False):
+            response = super().request(method, path, data, binary)
+            return {"assets": []} if method == "PATCH" else response
+
+    approve(project, item(project))
+    info = export_release(project, "Author")
+    client = MissingAsset()
+    with pytest.raises(ValueError, match="Published archive is unavailable"):
+        publish(project, info["filename"], "Author", "token", "owner/repo", "main", github=client)
+    assert not any(method == "PUT" for method, _, _ in client.calls)
     assert json.loads(project.status()["remote_base"]) is None
 
 

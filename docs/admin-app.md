@@ -172,6 +172,9 @@ controls the domain, including `lazuri.org` when ready; the admin does not choos
 3. In the admin's Settings, save repository `lewisccz/Lazverbcon` and branch
    `codex/static-export`. Use a GitHub fine-grained token authorized for that
    public repository, with **Contents: read and write**. Enter it in Publish.
+   While the remake branch changes workflow files relative to the default branch,
+   also grant **Workflows: read and write**: GitHub requires this to create the
+   release tag at that commit. See [GitHub's release API requirements](https://docs.github.com/en/rest/releases/releases#create-a-release).
    On Windows, **Remember token on this computer** optionally stores it in
    Windows Credential Manager. Leave the field blank to publish with that token.
    Otherwise, the token is used for one publication and cleared from the field.

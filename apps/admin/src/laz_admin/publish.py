@@ -240,7 +240,11 @@ def publish(store, info_name, actor, token, repository, branch, github=None):
     )
     upload = release["upload_url"].split("{", 1)[0] + "?name=catalog.zip"
     asset = client.request("POST", upload, archive.read_bytes(), binary=True)
-    client.request("PATCH", root + "/releases/" + str(release["id"]), {"draft": False})
+    published = client.request("PATCH", root + "/releases/" + str(release["id"]), {"draft": False})
+    # A draft upload can have an untagged-* URL that changes on publication.
+    asset = next((a for a in published["assets"] if a["id"] == asset["id"]), None)
+    if not asset or asset.get("state") != "uploaded":
+        raise ValueError("Published archive is unavailable; do not update the release pointer")
     public = {k: info[k] for k in ("release", "project", "revision", "sha256")}
     public["url"] = asset["browser_download_url"]
     body = {
