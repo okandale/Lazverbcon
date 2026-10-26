@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import type { Language } from "../i18n";
 import { PageIntro } from "./shared";
 import { sendFeedback } from "./feedbackDelivery";
+import { feedbackContext } from "./feedbackContext";
+import { localLink } from "./shared";
 
 export function Feedback({ language: l }: { language: Language }) {
   const [incorrect, setIncorrect] = useState("");
@@ -14,10 +16,11 @@ export function Feedback({ language: l }: { language: Language }) {
   >("idle");
   const pending = useRef<AbortController | null>(null);
   useEffect(() => () => pending.current?.abort(), []);
-  const context = (
-    new URLSearchParams(window.location.search).get("context") ?? ""
-  ).slice(0, 3000);
-  const body = `Lazuri feedback\n\nForm / text: ${incorrect}\nSuggested correction: ${correction}\nDialect / explanation: ${explanation}${context ? `\n\nPage / selection: ${context}` : ""}`;
+  const context = feedbackContext(
+    new URLSearchParams(window.location.search).get("context") ?? "",
+    l,
+  );
+  const body = `Lazuri feedback\n\nForm / text: ${incorrect}\nSuggested correction: ${correction}\nDialect / explanation: ${explanation}${context ? `\n\n${context.text}` : ""}`;
   return (
     <>
       <PageIntro
@@ -31,8 +34,8 @@ export function Feedback({ language: l }: { language: Language }) {
       <section className="panel prose feedback">
         <p>
           {l === "en"
-            ? "Send a correction to the Lazuri team. You can also prepare an email to info@lazuri.org."
-            : "Lazuri ekibine bir düzeltme gönderin. İsterseniz info@lazuri.org adresine e-posta da hazırlayabilirsiniz."}
+            ? "Send a correction to the Lazuri team."
+            : "Lazuri ekibine bir düzeltme gönderin."}
         </p>
         <form
           onSubmit={async (e) => {
@@ -49,8 +52,7 @@ export function Feedback({ language: l }: { language: Language }) {
                   incorrectWord: incorrect,
                   correction,
                   explanation:
-                    explanation +
-                    (context ? `\n\nPage / selection: ${context}` : ""),
+                    explanation + (context ? `\n\n${context.text}` : ""),
                 },
                 controller.signal,
               );
@@ -122,7 +124,17 @@ export function Feedback({ language: l }: { language: Language }) {
                   ? "Included page and selection"
                   : "Eklenen sayfa ve seçim"}
               </summary>
-              <p className="feedback-context">{context}</p>
+              <dl className="analysis-fields">
+                {context.details.map(([label, value]) => (
+                  <div key={label}>
+                    <dt>{label}</dt>
+                    <dd>{value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <a href={localLink(context.link, l)}>
+                {l === "en" ? "Open this selection" : "Bu seçimi aç"}
+              </a>
             </details>
           )}
           <div className="actions">
@@ -139,17 +151,6 @@ export function Feedback({ language: l }: { language: Language }) {
                   ? "Send feedback"
                   : "Geri bildirim gönder"}
             </button>
-            <button
-              className="text-button"
-              type="button"
-              disabled={delivery === "sending"}
-              onClick={() => {
-                setReady(true);
-                setNotice("");
-              }}
-            >
-              {l === "en" ? "Prepare email instead" : "E-posta hazırla"}
-            </button>
           </div>
         </form>
         <p role={delivery === "error" ? "alert" : "status"}>
@@ -164,11 +165,7 @@ export function Feedback({ language: l }: { language: Language }) {
         </p>
         {ready && (
           <div className="email-draft">
-            <h2>
-              {l === "en"
-                ? "Your message is ready to send."
-                : "Mesajınız gönderilmeye hazır."}
-            </h2>
+            <h2>{l === "en" ? "Send by email" : "E-posta ile gönder"}</h2>
             {delivery !== "error" && (
               <p>
                 {l === "en"

@@ -1,5 +1,5 @@
 import React from "react";
-import type { Dialect, Response } from "../../api/client";
+import type { Dialect, Request, Response } from "../../api/client";
 import { dialectNames, labels, names } from "../../i18n";
 import type { Language } from "../../i18n";
 import { restrictionText } from "../../restrictions";
@@ -8,9 +8,11 @@ const dialects = Object.keys(dialectNames) as Dialect[];
 export function Results({
   data,
   language,
+  object = null,
 }: {
   data: Response;
   language: Language;
+  object?: Request["object"];
 }) {
   const t = labels[language];
   const unavailable = data.cells.filter((c) => c.status !== "ok");
@@ -38,6 +40,7 @@ export function Results({
                 <thead>
                   <tr>
                     <th>{t.subject}</th>
+                    {object != null && <th>{t.object}</th>}
                     <th>{t.forms}</th>
                   </tr>
                 </thead>
@@ -45,13 +48,14 @@ export function Results({
                   {cells.flatMap((cell, i) =>
                     (cell.forms ?? []).map((form, j) => (
                       <tr key={`${i}-${j}`}>
-                        <td>
-                          {form.subject_pronoun}
-                          <small>
-                            {names[language][form.subject]}
-                            {form.object && ` → ${form.object_pronoun}`}
-                          </small>
-                        </td>
+                        <td>{names[language][form.subject]}</td>
+                        {object != null && (
+                          <td>
+                            {form.object
+                              ? names[language][form.object]
+                              : t.none}
+                          </td>
+                        )}
                         <td lang="lzz">{form.spelling}</td>
                       </tr>
                     )),
@@ -63,18 +67,17 @@ export function Results({
         })}
       </div>
       {!data.cells.some((c) => c.status === "ok") && <p>{t.noForms}</p>}
-      {errors.length > 0 && (
-        <details className="issues">
-          <summary>
-            {t.unavailable} ({unavailable.length})
-          </summary>
-          <ul>
-            {errors.map((e, i) => (
-              <li key={i}>{e}</li>
-            ))}
-          </ul>
-        </details>
-      )}
+      {errors.length > 0 &&
+        (!data.cells.some((c) => c.status === "ok") ||
+          unavailable.some((c) => c.status === "error")) && (
+          <div className="selection-notes">
+            <ul>
+              {errors.map((e, i) => (
+                <li key={i}>{e}</li>
+              ))}
+            </ul>
+          </div>
+        )}
     </>
   );
 }

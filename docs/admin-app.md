@@ -152,12 +152,11 @@ the public deployment.
 
 ## Connect GitHub and Cloudflare once
 
-The connected Pages repository is currently **lewisccz/Lazverbcon**, branch
-**codex/static-export**. Get this application code into that fork first. Pushing
-only to `okandale/Lazverbcon` does not update the fork or its website.
-These are the current test project's settings, not a restriction. Publication
-can target another public repository and branch connected to Pages. Cloudflare
-controls the domain, including `lazuri.org` when ready; the admin does not choose it.
+The new Pages project **lazverbcon-new** uses **okandale/Lazverbcon**, branch
+**codex/static-export** (first approved publication verified 8 October 2026).
+Use the same repository and branch in Pages and the admin. Publication can target
+another public repository and branch connected to Pages. Cloudflare controls its
+domain, such as `new.lazuri.org`.
 
 1. In Pages build settings, retain **Framework: None**, an empty root directory,
    and output directory **artifacts/pages**. Replace the generating build command
@@ -169,7 +168,7 @@ controls the domain, including `lazuri.org` when ready; the admin does not choos
 
 2. Keep `PYTHON_VERSION=3.14`, `NODE_VERSION=24`, `PNPM_VERSION=11.25.0` and
    `SKIP_DEPENDENCY_INSTALL=1`. Keep existing feedback configuration unchanged.
-3. In the admin's Settings, save repository `lewisccz/Lazverbcon` and branch
+3. In the admin's Settings, save repository `okandale/Lazverbcon` and branch
    `codex/static-export`. Use a GitHub fine-grained token authorized for that
    public repository, with **Contents: read and write**. Enter it in Publish.
    While the remake branch changes workflow files relative to the default branch,

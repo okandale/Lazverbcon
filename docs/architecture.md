@@ -68,3 +68,8 @@ approved master. See [local development](local-development.md).
 Frozen rules in `migration/reference/` and fixtures in `tests/fixtures/` are
 independent regression evidence. They are not a second application and are not
 installed as part of the engine. See [rule development](rules.md).
+
+The public UI’s Object **None** follows the original lookup convention: search
+both objectless and implicit third-person singular records, then deduplicate
+identical displayed forms. `apps/web/src/api/conjugation.ts` owns that presentation
+behaviour. Explicit objects, engine features and approved records are unchanged.

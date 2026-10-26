@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { api, requireData } from "../../api/client";
 import type { Entry } from "../../api/client";
-import { labels } from "../../i18n";
+import { labels, names } from "../../i18n";
 import type { Language } from "../../i18n";
 import { CharacterBar } from "../CharacterBar";
 
@@ -67,7 +67,9 @@ export function Lexicon({
               <strong>{entry.infinitive}</strong>
               <small>{language === "en" ? entry.english : entry.turkish}</small>
             </span>
-            <span className="class-code">{entry.verb_class}</span>
+            <span className="class-code">
+              {names[language][entry.verb_class]}
+            </span>
           </button>
         ))}
         {verbs.data?.total === 0 && <p>{t.noMatches}</p>}

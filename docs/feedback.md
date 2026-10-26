@@ -4,7 +4,7 @@ The feedback page uses the original Google Apps Script deployment, with the same
 `incorrectWord`, `correction` and `explanation` fields. Its endpoint is defined in
 `apps/web/src/site/feedbackDelivery.ts` and matches `FeedbackForm.jsx` in the
 [archived source](legacy-archive.md).
-Page/conjugation context is appended to `explanation`; no server changes are
+Readable page/conjugation fields are appended to `explanation`; raw selection JSON is not displayed. No server changes are
 required. The destination behind that script is managed outside this repository.
 
 The user approved retaining this integration on 2026-10-01. It works independently
@@ -42,3 +42,7 @@ integration. Receipt from the Pages origin remains a deployment check in the
 [checklist](migration-backlog.md).
 This confirmation is owner-reported; the automated tests use local responses and
 do not send production feedback. No receiving-script change was required.
+
+The 26 October UI review removed the default “Prepare email instead” action.
+Email/copy remain available after a failed or unconfirmed submission. Selection
+context is displayed as labelled fields and an internal “Open this selection” link.

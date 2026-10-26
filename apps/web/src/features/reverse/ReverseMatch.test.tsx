@@ -51,7 +51,9 @@ const match: Match = {
 it("shows combined dialects and opens only dialects supporting the chosen setting", () => {
   const onSelect = vi.fn();
   render(<ReverseMatch match={match} language="en" onSelect={onSelect} />);
-  expect(screen.getByText(/Ardeşen · Pazar · Hopa/)).toBeTruthy();
+  expect(screen.getAllByText(/Ardeşen · Pazar · Hopa/).length).toBeGreaterThan(
+    0,
+  );
   // Collapsed details leave one primary action visible.
   fireEvent.click(screen.getByRole("button", { name: "Explore this form →" }));
   expect(requestFromMatch(onSelect.mock.calls[0][0])).toMatchObject({
@@ -64,7 +66,7 @@ it("shows combined dialects and opens only dialects supporting the chosen settin
 it("keeps a dialect requiring the optional preverb accessible in details", () => {
   const onSelect = vi.fn();
   render(<ReverseMatch match={match} language="en" onSelect={onSelect} />);
-  fireEvent.click(screen.getByText("Dialects and options"));
+  fireEvent.click(screen.getByText("Show analysis"));
   fireEvent.click(
     screen.getByRole("button", {
       name: "Explore this form: Hopa · Optional preverb",
@@ -103,7 +105,7 @@ it("preserves explicit prefixes when opening grouped results", () => {
   });
   const onSelect = vi.fn();
   render(<ReverseMatch match={explicit} language="en" onSelect={onSelect} />);
-  fireEvent.click(screen.getByText("Dialects and options"));
+  fireEvent.click(screen.getByText("Show analysis"));
   fireEvent.click(
     screen.getByRole("button", { name: "Explore this form: Pazar · do" }),
   );
@@ -112,4 +114,24 @@ it("preserves explicit prefixes when opening grouped results", () => {
     optional_prefix: "do",
     optional_preverb: false,
   });
+});
+
+it("shows every grammatical field when the analysis is expanded", () => {
+  render(<ReverseMatch match={match} language="en" onSelect={() => {}} />);
+  fireEvent.click(screen.getByText("Show analysis"));
+  for (const label of [
+    "Infinitive",
+    "Tense / aspect",
+    "Mood",
+    "Dialects",
+    "Subject",
+    "Object",
+    "Verb group",
+    "Derivation",
+    "Markers",
+    "Optional preverb",
+  ])
+    expect(screen.getByText(label, { selector: "dt" })).toBeTruthy();
+  expect(screen.getByText("Optative", { selector: "dd" })).toBeTruthy();
+  expect(screen.getByText("Nominative", { selector: "dd" })).toBeTruthy();
 });

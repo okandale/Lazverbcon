@@ -36,8 +36,8 @@ it("keeps the language across public page links and explicit shared links", () =
   expect(document.documentElement.lang).toBe("tr");
   expect(localStorage.getItem("lazuri-language")).toBe("tr");
   expect(
-    screen.getByRole("link", { name: "Fiiller" }).getAttribute("href"),
-  ).toBe("/verbs?lang=tr");
+    screen.getByRole("link", { name: "Fiil çekimi" }).getAttribute("href"),
+  ).toBe("/conjugator?lang=tr");
   cleanup();
   mount("/about");
   expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
@@ -88,37 +88,31 @@ it.each(["pazar", "ardesen", "findikli-arhavi"])(
     expect(screen.queryByText("İya muǩos ren?")).toBeNull();
   },
 );
-it("prepares feedback with context without submitting to an external service", async () => {
-  const fetch = vi.fn();
-  vi.stubGlobal("fetch", fetch);
+it("shows readable feedback context and only offers email after delivery fails", () => {
   mount(
-    "/feedback?context=" + encodeURIComponent("/conjugator?selection=example"),
+    "/feedback?context=" +
+      encodeURIComponent(
+        "/conjugator?verb=osinapu&selection=" +
+          encodeURIComponent(
+            JSON.stringify({
+              entry_id: "verb-0232",
+              tense: "past",
+              object: null,
+            }),
+          ),
+      ),
   );
-  fireEvent.change(screen.getByLabelText("Form or text to review"), {
-    target: { value: "test form" },
-  });
-  fireEvent.change(screen.getByLabelText("Suggested correction"), {
-    target: { value: "correct form" },
-  });
-  fireEvent.change(screen.getByLabelText("Dialect, example or explanation"), {
-    target: { value: "Hopa example" },
-  });
-  fireEvent.click(
-    screen.getByRole("button", { name: "Prepare email instead" }),
-  );
-  const href = screen
-    .getByRole("link", { name: "Open email app ↗" })
-    .getAttribute("href")!;
-  const body = new URL(href).searchParams.get("body");
-  expect(body).toContain("Hopa example");
-  expect(body).toContain("/conjugator?selection=example");
-  expect(body).toContain("correct form");
-  expect(fetch).not.toHaveBeenCalled();
-  expect(screen.getByText("Nothing has been sent yet.")).toBeTruthy();
-  fireEvent.change(screen.getByLabelText("Form or text to review"), {
-    target: { value: "changed" },
-  });
+  fireEvent.click(screen.getByText("Included page and selection"));
+  expect(screen.getByText("osinapu")).toBeTruthy();
+  expect(screen.getByText("Past")).toBeTruthy();
+  expect(
+    screen
+      .getByRole("link", { name: "Open this selection" })
+      .getAttribute("href"),
+  ).toContain("/conjugator?selection=");
+  expect(screen.queryByText("Prepare email instead")).toBeNull();
   expect(screen.queryByRole("link", { name: "Open email app ↗" })).toBeNull();
+  expect(screen.getByRole("main").textContent).not.toContain("%7B");
 });
 it("links homographs to their own entries and resets directory paging on search", async () => {
   const requests: URL[] = [];
@@ -137,6 +131,7 @@ it("links homographs to their own entries and resets directory paging on search"
               turkish: "bir",
               english: "one",
               verb_class: "TVE",
+              variants: [{ form: "test", dialects: ["AS"] }],
             },
             {
               id: "verb-0002",
@@ -144,6 +139,7 @@ it("links homographs to their own entries and resets directory paging on search"
               turkish: "iki",
               english: "two",
               verb_class: "TVM",
+              variants: [{ form: "test", dialects: ["AS"] }],
             },
           ],
         }),
@@ -185,4 +181,41 @@ it("offers recovery for an unmapped old verb link and a genuine not-found page",
   cleanup();
   mount("/does-not-exist");
   expect(screen.getByText("404")).toBeTruthy();
+});
+
+it("keeps the verb directory out of home cards and global navigation", () => {
+  mount("/");
+  expect(screen.queryByRole("link", { name: /06 Verb list/ })).toBeNull();
+  expect(screen.queryByRole("link", { name: "Verbs" })).toBeNull();
+  expect(
+    screen
+      .getAllByRole("link")
+      .filter((a) => a.classList.contains("resource-card")),
+  ).toHaveLength(5);
+});
+
+it("opens the nested verb list for a legacy trailing-slash directory link", async () => {
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(
+      async () =>
+        new Response(JSON.stringify({ entries: [], total: 0 }), {
+          headers: { "Content-Type": "application/json" },
+        }),
+    ),
+  );
+  mount("/verbs/");
+  expect(
+    await screen.findByRole("textbox", { name: "Search verbs" }),
+  ).toBeTruthy();
+  expect(
+    screen
+      .getByRole("tab", { name: "Verb list" })
+      .getAttribute("aria-selected"),
+  ).toBe("true");
+  expect(
+    screen
+      .getByRole("link", { name: "Conjugator" })
+      .getAttribute("aria-current"),
+  ).toBe("page");
 });

@@ -13,6 +13,7 @@ export const api = createClient<paths>({
 export type Entry = components["schemas"]["Entry"];
 export type Request = components["schemas"]["ConjugationRequest"];
 export type Response = components["schemas"]["ConjugationResponse"];
+export type Options = components["schemas"]["OptionsResponse"];
 export type Match = components["schemas"]["Match"];
 export type Dialect = components["schemas"]["Dialect"];
 
@@ -20,7 +21,7 @@ export const defaults: Request = {
   entry_id: "verb-0026",
   dialects: ["AS", "PZ", "FA", "HO"],
   subject: "all",
-  object: "3sg",
+  object: null,
   tense: "present",
   mood: "indicative",
   derivation: "none",
@@ -34,7 +35,9 @@ export function defaultsForEntry(entry: Entry): Request {
   return {
     ...defaults,
     entry_id: entry.id,
-    object: entry.verb_class === "TVE" ? "3sg" : null,
+    dialects: defaults.dialects!.filter((dialect) =>
+      entry.variants.some((variant) => variant.dialects.includes(dialect)),
+    ),
   };
 }
 

@@ -829,3 +829,38 @@ footer button {
   line-height: 1.6;
   margin-top: 16px;
 }
+
+.option-group {
+  border: 0;
+  padding: 0;
+  margin: 0 0 20px;
+  min-width: 0;
+}
+.option-group legend {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+.analysis-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px 24px;
+}
+.analysis-fields dt {
+  font-weight: 600;
+}
+.analysis-fields dd {
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
+}
+.grammar-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.person-grid {
+  margin-top: 20px;
+}
+@media (max-width: 640px) {
+  .grammar-grid {
+    grid-template-columns: 1fr;
+  }
+}

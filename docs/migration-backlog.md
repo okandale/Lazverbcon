@@ -1,6 +1,6 @@
 # Remaining work
 
-Updated 7 October 2026. The engine, public pages and local admin are implemented.
+Updated 26 October 2026. The engine, public pages and local admin are implemented.
 Feedback delivery was confirmed by the owner on 1 October. The Windows executable
 [build and automated package tests passed](https://github.com/okandale/Lazverbcon/actions/runs/37603514294).
 Original unfinished phrase prompts and translation placeholders are preserved.
@@ -15,16 +15,34 @@ bookmark compatibility were deliberately retired by the owner.
       computer. CI covers the packaged launcher, generation, approval, export,
       preview, backup and reopening saved data.
       The owner confirmed interactive launch and original-data import on 7 October.
-- [ ] Bring the current code into the Pages-connected fork and switch its build
-      to `scripts/build_published.py`.
-- [ ] Publish the first approved admin export and verify the test domain: direct
-      routes, forward/reverse lookups, suggestions and dump-derived pronouns.
+- [x] Connect `okandale/Lazverbcon`, branch `codex/static-export`, to the new
+      `lazverbcon-new` Pages project using `scripts/build_published.py`. The first
+      approved export and its corrected download pointer deployed on 8 October.
+- [ ] Complete live test-domain verification: direct routes, forward/reverse
+      lookups, suggestions and dump-derived pronouns. Recheck the October UI fixes
+      after they are deployed.
 - [ ] Run `scripts/smoke_static.py` against that deployment. Confirm the page-route
       fix prevents redirects back to home.
 - [ ] Confirm feedback receipt from the Pages origin. Its original destination
       remains unchanged.
 
 See [admin publishing](admin-app.md#connect-github-and-cloudflare-once).
+
+## Website feedback — 26 October
+
+Implemented and checked locally against the approved data:
+
+- [x] Object **None** searches objectless and implicit O3SG forms, matching the old query.
+- [x] Normal tables hide Laz pronouns and implicit objects; translated subject labels remain.
+- [x] Reverse analyses expose all recorded grammatical fields.
+- [x] Verb defaults select available dialects, preventing the `osinapu` Hopa warning.
+- [x] Feedback shows readable context; email remains a delivery-failure fallback.
+- [x] Verb list is inside the conjugator, absent from home/global navigation.
+- [x] Derivation is visible with tense/mood; extra markers and prefixes are grouped.
+- [x] Class labels use Ergative, Nominative and Dative (and Turkish equivalents).
+- [x] Detailed bilingual keyboard setup and 46 original illustrations restored.
+- [ ] Verify keyboard installation and switching on physical Windows, Mac, Android
+      and iOS devices. Instructions and screenshots are not a substitute for that check.
 
 ## Linguistic decisions
 

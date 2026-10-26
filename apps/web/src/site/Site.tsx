@@ -6,7 +6,6 @@ import { Keyboard } from "./Keyboard";
 import { guides } from "./keyboards";
 import { phraseDialects } from "./content";
 import { PhraseGuide } from "./PhraseGuide";
-import { VerbDirectory } from "./VerbDirectory";
 import { Feedback } from "./Feedback";
 
 export function Site() {
@@ -15,6 +14,7 @@ export function Site() {
   // Preserve links shared before the learning-center home was restored.
   if (
     path === "/conjugator" ||
+    path === "/verbs" ||
     (path === "/" && (query.has("selection") || query.has("reverse")))
   )
     return <App />;
@@ -27,9 +27,6 @@ function Content({ path }: { path: string }) {
   if (path === "/") {
     page = <Home language={language} />;
     title = language === "en" ? "Learn Laz" : "Lazca öğrenin";
-  } else if (path === "/verbs" || path === "/v2/verbs") {
-    page = <VerbDirectory language={language} />;
-    title = language === "en" ? "Verbs" : "Fiiller";
   } else if (/^\/v2\/verb\/[^/]+\/[^/]+$/.test(path)) {
     page = <NotFound language={language} legacy />;
     title = language === "en" ? "Find a verb" : "Fiil ara";

@@ -19,7 +19,13 @@ function fill(language: "en" | "tr" = "en") {
   window.history.replaceState(
     null,
     "",
-    "/feedback?context=%2Fconjugator%3Fselection%3Dexample",
+    "/feedback?context=" +
+      encodeURIComponent(
+        "/conjugator?verb=osinapu&selection=" +
+          encodeURIComponent(
+            JSON.stringify({ entry_id: "verb-0232", object: null }),
+          ),
+      ),
   );
   const view = render(<Feedback language={language} />);
   const fields = screen.getAllByRole("textbox");
@@ -51,8 +57,9 @@ it("sends context with the legacy fields, prevents duplicates and clears text on
     {
       incorrectWord: "doviba",
       correction: "correction",
-      explanation:
-        "Hopa explanation\n\nPage / selection: /conjugator?selection=example",
+      explanation: expect.stringContaining(
+        "Hopa explanation\n\nPage: Conjugator\nVerb: osinapu",
+      ),
     },
     expect.any(AbortSignal),
   );

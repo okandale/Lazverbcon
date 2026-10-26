@@ -16,8 +16,8 @@ The copied public assets and current page content are retained in `apps/web/`.
 | Events                                      | Live https://lazuri.org/events                                                   | Kept the current no-events state. Did not publish the repo's older class schedule/pricing/signup link as current.                                                                                                                                                                                                                                                                                                        |
 | Hopa phrases                                | https://lazuri.org/resources/phrase-guide/hopa                                   | All 24 phrases across Market (6), Pharmacy (5), Restaurant (7), Hotel (6), plus all 12 Market vocabulary entries. Preserved Laz spelling, capitalization, punctuation and variants verbatim. Fixed English “loafs” and Turkish “receçetesiz” and sentence capitalization. Added Turkish vocabulary labels.                                                                                                               |
 | Other phrase dialects                       | Live phrase-guide index and dialect pages                                        | Rechecked all three categories on all three live pages on 2026-10-01. Restored Market: “How much is this?”, Pharmacy: “I need medicine for a headache”, Restaurant: “I’m vegetarian”, each with `...`. Corrected the shared Pazar heading on other dialects. Added Turkish meanings and explicit pending labels. Independent draft data preserves the author’s starting point; translations are outside migration scope. |
-| Keyboard illustrations                      | `laz_verb_conjugator/frontend/public/images/keyboard/`                           | Copied 12 relevant local illustrations into the new public assets. Labelled them as original-version examples. Did not download third-party media.                                                                                                                                                                                                                                                                       |
-| Keyboard instructions                       | Original six guide components and official Keyman docs below                     | Rewrote shorter English/Turkish steps, linked official help, removed dead video links and unnecessary keyboard-removal walkthroughs. OS shortcut behavior is no longer stated as universal.                                                                                                                                                                                                                              |
+| Keyboard illustrations                      | `laz_verb_conjugator/frontend/public/images/keyboard/`                           | Restored 46 original illustrations, including 34 recovered from Git history during the 26 October review. Images remain labelled as original-version examples; third-party media was not downloaded.                                                                                                                                                                                                                     |
+| Keyboard instructions                       | Original six guide components and official Keyman docs below                     | Restored detailed English/Turkish setup, package installation, system-keyboard activation, switching, typing and optional layout management on 26 October. Rechecked Keyman help. Full Access is explained by iOS version; old shortcuts are identified as version dependent. Dead video placeholders are not active links.                                                                                              |
 | Feedback                                    | Original `FeedbackForm.jsx` endpoint/fields and public `info@lazuri.org` contact | Same Google Apps Script destination restored with isolated JSONP, verified acknowledgements, timeout, retained input and email/copy fallback. See [feedback delivery](feedback.md); the owner confirmed live feedback works on 2026-10-01.                                                                                                                                                                               |
 
 No external forms, email messages or feedback were submitted while migrating.
@@ -61,3 +61,27 @@ Recheck external destinations before a public launch.
 
 Remaining linguistic/content questions and optional integrations are tracked in
 [the migration checklist](migration-backlog.md).
+
+## Website review — 26 October 2026
+
+- The verb directory is a tab inside the conjugator; the old `/verbs` URL still opens it.
+- The UI’s Object **None** matches the original `db_query.py` query: objectless
+  **or O3SG** rows. The browser combines those results and removes identical
+  displayed forms. Engine features and approved database records stay distinct.
+- Normal results use translated subject labels. Implicit objects and Laz subject/object
+  pronouns are hidden; explicitly requested objects use translated labels.
+- Reverse details list tense/aspect, mood, persons, dialects, frame, derivation,
+  markers and prefix options. No linguistic features are inferred from spelling.
+- `osinapu` defaults to its recorded AS/PZ/FA dialects. Its unassigned principal
+  part remains an author decision; Hopa forms have not been invented.
+- Feedback carries readable selection fields. Its only selection link has a clear
+  label and points back to the app. Email is offered after delivery failure.
+- Tense, mood and derivation stay together in the main controls; additional markers
+  and prefixes have separate groups. Verb-class codes use translated group names.
+
+Physical installation of the keyboard on all supported devices remains a manual
+check. The original Android component itself omitted steps 9–24; the missing
+system-keyboard activation instructions were filled using
+[Keyman’s Android setup](https://help.keyman.com/products/android/current-version/start/enabling-system-keyboard).
+iPhone activation follows
+[Keyman’s iOS setup](https://help.keyman.com/products/iphone-and-ipad/current-version/start/installing-system-keyboard).

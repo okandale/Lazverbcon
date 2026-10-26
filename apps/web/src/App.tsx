@@ -13,6 +13,8 @@ import {
 import type { Dialect, Entry, Match, Request } from "./api/client";
 import { dialectNames, labels, names } from "./i18n";
 import { parseSelection } from "./api/selection";
+import { conjugateSelection, selectionOptions } from "./api/conjugation";
+import { VerbDirectory } from "./site/VerbDirectory";
 import { restrictionText } from "./restrictions";
 import { Header, Footer, localLink, useLanguage } from "./site/shared";
 
@@ -34,8 +36,13 @@ export function App() {
       200,
     ),
   );
-  const [tab, setTab] = useState<"conjugate" | "reverse">(() =>
-    reverseQuery ? "reverse" : "conjugate",
+  const [tab, setTab] = useState<"conjugate" | "reverse" | "verbs">(() =>
+    window.location.pathname.replace(/\/+$/, "") === "/verbs" ||
+    new URLSearchParams(window.location.search).get("view") === "verbs"
+      ? "verbs"
+      : reverseQuery
+        ? "reverse"
+        : "conjugate",
   );
   const [draft, setDraft] = useState<Request>(initialRequest);
   const [submitted, setSubmitted] = useState<Request | null>(initialRequest);
@@ -46,6 +53,7 @@ export function App() {
   }, [language]);
   const selected = useQuery({
     queryKey: ["entry", draft.entry_id],
+    enabled: tab === "conjugate",
     queryFn: async ({ signal }) =>
       requireData(
         await api.GET("/api/v1/verbs/{entry_id}", {
@@ -56,11 +64,8 @@ export function App() {
   });
   const capabilities = useQuery({
     queryKey: ["options", draft],
-    enabled: !!selected.data,
-    queryFn: async ({ signal }) =>
-      requireData(
-        await api.POST("/api/v1/conjugation-options", { body: draft, signal }),
-      ),
+    enabled: tab === "conjugate" && !!selected.data,
+    queryFn: ({ signal }) => selectionOptions(draft, signal),
   });
   const selectionNotes = [
     ...new Set(
@@ -81,11 +86,8 @@ export function App() {
   ];
   const results = useQuery({
     queryKey: ["conjugations", submitted],
-    enabled: submitted !== null,
-    queryFn: async ({ signal }) =>
-      requireData(
-        await api.POST("/api/v1/conjugations", { body: submitted!, signal }),
-      ),
+    enabled: submitted !== null && tab === "conjugate",
+    queryFn: ({ signal }) => conjugateSelection(submitted!, signal),
   });
   function update<K extends keyof Request>(key: K, value: Request[K]) {
     setDraft((previous) => ({ ...previous, [key]: value }));
@@ -97,6 +99,17 @@ export function App() {
     setSubmitted(null);
     setNotice("");
   }
+  function switchTab(value: "conjugate" | "reverse" | "verbs") {
+    setTab(value);
+    const url = new URL(window.location.href);
+    url.pathname = "/conjugator";
+    url.searchParams.delete("view");
+    url.searchParams.delete("reverse");
+    if (value === "verbs") url.searchParams.set("view", "verbs");
+    if (value === "reverse" && reverseQuery)
+      url.searchParams.set("reverse", reverseQuery);
+    window.history.replaceState(null, "", url);
+  }
   function submit(event: React.FormEvent) {
     event.preventDefault();
     if (!draft.dialects?.length) {
@@ -106,6 +119,7 @@ export function App() {
     setSubmitted({ ...draft });
     const url = new URL(window.location.href);
     url.searchParams.delete("reverse");
+    url.searchParams.delete("view");
     url.searchParams.set("selection", JSON.stringify(draft));
     window.history.replaceState(null, "", url);
     setNotice("");
@@ -127,7 +141,8 @@ export function App() {
     url.pathname = "/conjugator";
     url.search = "";
     url.searchParams.set("lang", language);
-    if (tab === "reverse") url.searchParams.set("reverse", reverseQuery);
+    if (tab === "verbs") url.searchParams.set("view", "verbs");
+    else if (tab === "reverse") url.searchParams.set("reverse", reverseQuery);
     else url.searchParams.set("selection", JSON.stringify(draft));
     void copy(url.toString(), t.shared);
   }
@@ -138,6 +153,7 @@ export function App() {
     setTab("conjugate");
     const url = new URL(window.location.href);
     url.searchParams.delete("reverse");
+    url.searchParams.delete("view");
     url.searchParams.set("selection", JSON.stringify(request));
     window.history.replaceState(null, "", url);
   }
@@ -170,18 +186,11 @@ export function App() {
           <p className="eyebrow">LAZVERBCON / LAZURİ NENA</p>
           <h1>{t.title}</h1>
           <p>{t.intro}</p>
-          <p className="explorer-links">
-            <a href={localLink("/verbs", language)}>
-              {language === "en"
-                ? "Browse all verbs →"
-                : "Tüm fiilleri incele →"}
-            </a>
-          </p>
           <div className="tabs" role="tablist" aria-label={t.source}>
             <button
               role="tab"
               aria-selected={tab === "conjugate"}
-              onClick={() => setTab("conjugate")}
+              onClick={() => switchTab("conjugate")}
             >
               {t.conjugate}
               <span>↗</span>
@@ -189,10 +198,17 @@ export function App() {
             <button
               role="tab"
               aria-selected={tab === "reverse"}
-              onClick={() => setTab("reverse")}
+              onClick={() => switchTab("reverse")}
             >
               {t.reverse}
               <span>↙</span>
+            </button>
+            <button
+              role="tab"
+              aria-selected={tab === "verbs"}
+              onClick={() => switchTab("verbs")}
+            >
+              {language === "en" ? "Verb list" : "Fiil listesi"}
             </button>
           </div>
         </section>
@@ -227,7 +243,7 @@ export function App() {
                       <span className="verb-number">Aa</span>
                     </div>
                     <form onSubmit={submit}>
-                      <div className="field-grid">
+                      <div className="field-grid grammar-grid">
                         {select("tense", [
                           "present",
                           "past",
@@ -241,6 +257,9 @@ export function App() {
                           "imperative",
                           "negative_imperative",
                         ])}
+                        {select("derivation", ["none", "potential", "passive"])}
+                      </div>
+                      <div className="field-grid person-grid">
                         {select("subject", ["all", ...people])}
                         {select("object", ["", "all", ...people])}
                       </div>
@@ -249,12 +268,25 @@ export function App() {
                         {dialects.map((d) => (
                           <label
                             key={d}
+                            title={
+                              capabilities.data &&
+                              !capabilities.data.dialects.includes(d)
+                                ? language === "en"
+                                  ? "No recorded forms for this dialect"
+                                  : "Bu lehçe için kayıtlı çekim yok"
+                                : undefined
+                            }
                             className={
                               draft.dialects?.includes(d) ? "checked" : ""
                             }
                           >
                             <input
                               type="checkbox"
+                              disabled={
+                                !!capabilities.data &&
+                                !capabilities.data.dialects.includes(d) &&
+                                !draft.dialects?.includes(d)
+                              }
                               aria-label={`${d === "AS" ? "AŞ" : d} ${dialectNames[d]}`}
                               checked={draft.dialects?.includes(d) ?? false}
                               onChange={(e) =>
@@ -275,23 +307,24 @@ export function App() {
                         <summary>
                           {t.more} <span>+</span>
                         </summary>
-                        <div className="field-grid">
-                          {select("derivation", [
-                            "none",
-                            "potential",
-                            "passive",
-                          ])}
-                          {select("causative", ["none", "simple", "double"])}
-                          <label className="check">
-                            <input
-                              type="checkbox"
-                              checked={draft.applicative ?? false}
-                              onChange={(e) =>
-                                update("applicative", e.target.checked)
-                              }
-                            />
-                            {t.applicative}
-                          </label>
+                        <fieldset className="option-group">
+                          <legend>{t.markers}</legend>
+                          <div className="field-grid">
+                            {select("causative", ["none", "simple", "double"])}
+                            <label className="check">
+                              <input
+                                type="checkbox"
+                                checked={draft.applicative ?? false}
+                                onChange={(e) =>
+                                  update("applicative", e.target.checked)
+                                }
+                              />
+                              {t.applicative}
+                            </label>
+                          </div>
+                        </fieldset>
+                        <fieldset className="option-group">
+                          <legend>{t.prefixes}</legend>
                           <label className="field">
                             <span>{t.optional}</span>
                             <select
@@ -326,7 +359,7 @@ export function App() {
                               )}
                             </select>
                           </label>
-                        </div>
+                        </fieldset>
                       </details>
                       {selectionNotes.length > 0 && (
                         <ul className="selection-notes">
@@ -368,7 +401,7 @@ export function App() {
                             .data!.cells.flatMap((c) =>
                               (c.forms ?? []).map(
                                 (f) =>
-                                  `${c.features.dialect} · ${f.subject_pronoun}${f.object ? ` → ${f.object_pronoun}` : ""}: ${f.spelling}`,
+                                  `${c.features.dialect} · ${n[f.subject]}${submitted.object != null && f.object ? ` → ${n[f.object]}` : ""}: ${f.spelling}`,
                               ),
                             )
                             .join("\n"),
@@ -391,12 +424,18 @@ export function App() {
                   <p role="alert">{results.error.message}</p>
                 ) : (
                   results.data && (
-                    <Results data={results.data} language={language} />
+                    <Results
+                      data={results.data}
+                      language={language}
+                      object={submitted?.object}
+                    />
                   )
                 )}
               </section>
             </div>
           </div>
+        ) : tab === "verbs" ? (
+          <VerbDirectory language={language} embedded />
         ) : (
           <ReverseSearch
             language={language}
@@ -422,7 +461,9 @@ export function App() {
                 encodeURIComponent(
                   tab === "reverse"
                     ? `/conjugator?reverse=${encodeURIComponent(reverseQuery)}`
-                    : `/conjugator?selection=${encodeURIComponent(JSON.stringify(submitted ?? draft))}`,
+                    : tab === "verbs"
+                      ? "/conjugator?view=verbs"
+                      : `/conjugator?verb=${encodeURIComponent(selected.data?.infinitive ?? "")}&selection=${encodeURIComponent(JSON.stringify(submitted ?? draft))}`,
                 ),
               language,
             )}

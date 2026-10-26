@@ -9,8 +9,8 @@ Follow [Connect GitHub and Cloudflare](admin-app.md#connect-github-and-cloudflar
 for the exact build command, environment variables and admin settings.
 
 The Pages project must use the repository and branch that the admin publishes to.
-The current test project uses `lewisccz/Lazverbcon`, branch `codex/static-export`;
-pushing the upstream repository alone does not update that fork.
+The test project `lazverbcon-new` uses `okandale/Lazverbcon`, branch
+`codex/static-export`. These settings must match the admin’s publish destination.
 
 Pages reads `published/catalog.json`, downloads the referenced export, verifies
 its checksum, and builds `artifacts/pages`. The first publication must create that

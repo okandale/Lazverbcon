@@ -1,6 +1,35 @@
 import type { Language } from "../i18n";
 import { Card, localLink, PageIntro } from "./shared";
 import { guides } from "./keyboards";
+import type { Guide } from "./keyboards";
+
+function Steps({
+  steps,
+  language,
+}: {
+  steps: Guide["steps"];
+  language: Language;
+}) {
+  return (
+    <ol className="guide-steps">
+      {steps.map((step) => (
+        <li key={step.title.en}>
+          <h2>{step.title[language]}</h2>
+          <p>{step.body[language]}</p>
+          {step.image && (
+            <figure>
+              <img
+                loading="lazy"
+                src={`/images/keyboard/${step.image}`}
+                alt={step.title[language]}
+              />
+            </figure>
+          )}
+        </li>
+      ))}
+    </ol>
+  );
+}
 
 export function Keyboard({
   language: l,
@@ -60,28 +89,18 @@ export function Keyboard({
       </a>
       <div className="guide-layout">
         <article className="panel prose">
-          <ol className="guide-steps">
-            {guide.steps.map((step) => (
-              <li key={step.title.en}>
-                <h2>{step.title[l]}</h2>
-                <p>{step.body[l]}</p>
-                {step.image && (
-                  <figure>
-                    <img
-                      loading="lazy"
-                      src={`/images/keyboard/${step.image}`}
-                      alt={step.title[l]}
-                    />
-                    <figcaption>
-                      {l === "en"
-                        ? "From the original Lazuri guide; menus may look different in newer versions."
-                        : "İlk Lazuri rehberinden; yeni sürümlerde menüler farklı görünebilir."}
-                    </figcaption>
-                  </figure>
-                )}
-              </li>
-            ))}
-          </ol>
+          <p className="page-note">
+            {l === "en"
+              ? "Screenshots are from the original Lazuri guides. Menu names may differ in newer versions."
+              : "Görseller ilk Lazuri rehberlerindendir. Yeni sürümlerde menü adları değişebilir."}
+          </p>
+          <Steps steps={guide.steps} language={l} />
+          {guide.optional?.map((section) => (
+            <details key={section.title.en}>
+              <summary>{section.title[l]}</summary>
+              <Steps steps={section.steps} language={l} />
+            </details>
+          ))}
         </article>
         <aside className="panel guide-links">
           <h2>{l === "en" ? "Downloads & help" : "İndirme ve yardım"}</h2>

@@ -25,6 +25,24 @@ export function ReverseMatch({
           : "İsteğe bağlı ön fiil yok";
   const mixedPreverbs =
     new Set(match.variants.map((v) => prefixLabel(v.features))).size > 1;
+  const markers =
+    [
+      match.features.applicative ? t.applicative : null,
+      match.features.causative !== "none"
+        ? `${t.causative}: ${n[match.features.causative]}`
+        : null,
+    ]
+      .filter(Boolean)
+      .join(" · ") || t.none;
+  const group =
+    n[
+      (
+        { Ergative: "TVE", Nominative: "TVM", Dative: "IVD" } as Record<
+          string,
+          string
+        >
+      )[match.form.frame] ?? match.entry.verb_class
+    ];
   return (
     <article className="match">
       <div>
@@ -38,7 +56,7 @@ export function ReverseMatch({
           {n[match.features.tense]} · {n[match.features.mood]} ·{" "}
           {n[match.features.subject]}
           {match.features.object && ` → ${n[match.features.object]}`}
-          {` · ${n[match.entry.verb_class]}`}
+          {` · ${group}`}
           {match.features.derivation !== "none" &&
             ` · ${n[match.features.derivation]}`}
           {match.features.applicative && ` · ${t.applicative}`}
@@ -52,10 +70,43 @@ export function ReverseMatch({
         </small>
         <details className="analysis-details">
           <summary>
-            {language === "en"
-              ? "Dialects and options"
-              : "Lehçeler ve seçenekler"}
+            {language === "en" ? "Show analysis" : "Çözümlemeyi göster"}
           </summary>
+          <dl className="analysis-fields">
+            {[
+              [
+                language === "en" ? "Infinitive" : "Mastar",
+                match.entry.infinitive,
+              ],
+              [
+                language === "en" ? "Tense / aspect" : "Zaman / görünüş",
+                n[match.features.tense],
+              ],
+              [t.mood, n[match.features.mood]],
+              [t.dialects, dialects.map((d) => dialectNames[d]).join(" · ")],
+              [t.subject, n[match.features.subject]],
+              [
+                t.object,
+                match.features.object ? n[match.features.object] : t.none,
+              ],
+              [language === "en" ? "Verb group" : "Fiil grubu", group],
+              [t.derivation, n[match.features.derivation]],
+              [t.markers, markers],
+              [
+                t.optional,
+                mixedPreverbs
+                  ? language === "en"
+                    ? "See dialect options below"
+                    : "Aşağıdaki lehçe seçeneklerine bakın"
+                  : prefixLabel(match.features),
+              ],
+            ].map(([label, value]) => (
+              <div key={label}>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
           {mixedPreverbs && (
             <p>
               {language === "en"

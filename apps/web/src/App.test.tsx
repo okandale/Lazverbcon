@@ -229,3 +229,31 @@ it("validates shared selections and drops unrelated fields", () => {
     requestFromMatch(match),
   );
 });
+
+it("defaults to None, uses available dialects, and keeps derivation outside More options", async () => {
+  mount();
+  await screen.findByText("visinapam");
+  expect((screen.getByLabelText("Object") as HTMLSelectElement).value).toBe("");
+  fireEvent.click(screen.getByRole("button", { name: /osinapu/ }));
+  expect((screen.getByLabelText("Object") as HTMLSelectElement).value).toBe("");
+  expect(
+    (screen.getByRole("checkbox", { name: "HO Hopa" }) as HTMLInputElement)
+      .checked,
+  ).toBe(false);
+  expect(screen.getByLabelText("Derivation").closest("details")).toBeNull();
+  expect(screen.getByRole("button", { name: /osinapu/ }).textContent).toContain(
+    "Ergative",
+  );
+  expect(screen.queryByText("TVE")).toBeNull();
+});
+it("keeps the verb list inside the conjugator and shares its own view", async () => {
+  mount();
+  fireEvent.click(screen.getByRole("tab", { name: "Verb list" }));
+  expect(
+    await screen.findByRole("textbox", { name: "Search verbs" }),
+  ).toBeTruthy();
+  expect(new URLSearchParams(location.search).get("view")).toBe("verbs");
+  fireEvent.click(screen.getByRole("tab", { name: /Conjugate/ }));
+  expect(new URLSearchParams(location.search).has("view")).toBe(false);
+  expect(location.pathname).toBe("/conjugator");
+});

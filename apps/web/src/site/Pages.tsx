@@ -44,14 +44,6 @@ export function Home({ language: l }: { language: Language }) {
         "Dersler ve yaklaşan etkinlikler hakkında bilgi.",
       ),
     ],
-    [
-      "/verbs",
-      text("Verb list", "Fiil listesi"),
-      text(
-        "Search verbs by their Laz, Turkish or English meaning.",
-        "Fiilleri Lazca, Türkçe veya İngilizce karşılıklarıyla arayın.",
-      ),
-    ],
   ] as const;
   return (
     <>

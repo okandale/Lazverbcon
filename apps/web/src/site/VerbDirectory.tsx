@@ -1,11 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { names } from "../i18n";
 import type { Language } from "../i18n";
 import { api, defaultsForEntry, requireData } from "../api/client";
 import { CharacterBar } from "../features/CharacterBar";
 import { localLink, PageIntro } from "./shared";
 
-export function VerbDirectory({ language: l }: { language: Language }) {
+export function VerbDirectory({
+  language: l,
+  embedded = false,
+}: {
+  language: Language;
+  embedded?: boolean;
+}) {
   const [search, setSearch] = useState(() =>
     (new URLSearchParams(window.location.search).get("q") ?? "").slice(0, 200),
   );
@@ -35,14 +42,16 @@ export function VerbDirectory({ language: l }: { language: Language }) {
   });
   return (
     <>
-      <PageIntro
-        title={l === "en" ? "A lexicon to explore." : "Keşfedilecek fiiller."}
-        description={
-          l === "en"
-            ? "Find a verb in Laz, Turkish or English, then explore its forms."
-            : "Lazca, Türkçe veya İngilizce bir fiil arayın ve çekimlerini inceleyin."
-        }
-      />
+      {!embedded && (
+        <PageIntro
+          title={l === "en" ? "A lexicon to explore." : "Keşfedilecek fiiller."}
+          description={
+            l === "en"
+              ? "Find a verb in Laz, Turkish or English, then explore its forms."
+              : "Lazca, Türkçe veya İngilizce bir fiil arayın ve çekimlerini inceleyin."
+          }
+        />
+      )}
       <section className="panel directory">
         <label className="field">
           <span>{l === "en" ? "Search verbs" : "Fiil ara"}</span>
@@ -95,19 +104,7 @@ export function VerbDirectory({ language: l }: { language: Language }) {
                       </td>
                       <td lang="tr">{entry.turkish}</td>
                       <td lang="en">{entry.english}</td>
-                      <td>
-                        <abbr
-                          title={
-                            {
-                              TVE: "Ergative",
-                              TVM: "Nominative",
-                              IVD: "Dative",
-                            }[entry.verb_class]
-                          }
-                        >
-                          {entry.verb_class}
-                        </abbr>
-                      </td>
+                      <td>{names[l][entry.verb_class]}</td>
                     </tr>
                   ))}
                 </tbody>

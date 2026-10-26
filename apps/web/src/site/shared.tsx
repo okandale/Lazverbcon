@@ -35,7 +35,6 @@ export function localLink(path: string, language: Language) {
 }
 export const navigation = [
   ["/conjugator", text("Conjugator", "Fiil çekimi")],
-  ["/verbs", text("Verbs", "Fiiller")],
   ["/resources/phrase-guide", text("Phrases", "İfadeler")],
   ["/keyboard", text("Keyboard", "Klavye")],
   ["/resources", text("Resources", "Kaynaklar")],
@@ -67,7 +66,11 @@ export function Header({
             <a
               key={url}
               href={localLink(url, language)}
-              aria-current={path === url ? "page" : undefined}
+              aria-current={
+                path === url || (url === "/conjugator" && path === "/verbs")
+                  ? "page"
+                  : undefined
+              }
             >
               {label[language]}
             </a>
