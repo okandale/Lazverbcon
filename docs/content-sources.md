@@ -68,8 +68,8 @@ Remaining linguistic/content questions and optional integrations are tracked in
 - The UI’s Object **None** matches the original `db_query.py` query: objectless
   **or O3SG** rows. The browser combines those results and removes identical
   displayed forms. Engine features and approved database records stay distinct.
-- Normal results use translated subject labels. Implicit objects and Laz subject/object
-  pronouns are hidden; explicitly requested objects use translated labels.
+- Normal results show the Laz subject with a smaller English/Turkish translation
+  underneath. Implicit objects stay hidden; explicitly requested objects use translated labels.
 - Reverse details list tense/aspect, mood, persons, dialects, frame, derivation,
   markers and prefix options. No linguistic features are inferred from spelling.
 - `osinapu` defaults to its recorded AS/PZ/FA dialects. Its unassigned principal
@@ -78,6 +78,8 @@ Remaining linguistic/content questions and optional integrations are tracked in
   label and points back to the app. Email is offered after delivery failure.
 - Tense, mood and derivation stay together in the main controls; additional markers
   and prefixes have separate groups. Verb-class codes use translated group names.
+- Keyboard guides keep download links within the relevant steps. The separate
+  download/help panel is removed; the next typing guide is linked below the instructions.
 
 Physical installation of the keyboard on all supported devices remains a manual
 check. The original Android component itself omitted steps 9–24; the missing

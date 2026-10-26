@@ -30,17 +30,18 @@ const data = {
   ],
 } as Response;
 afterEach(cleanup);
-it("shows the translated subject and hides Laz pronouns and the implicit object", () => {
+it("shows the Laz subject above its translation and hides the implicit object", () => {
   render(<Results data={data} language="en" object={null} />);
-  expect(screen.getByRole("cell", { name: "I" })).toBeTruthy();
+  const subject = screen.getByRole("cell", { name: "ma I" });
+  expect(subject.querySelector('[lang="lzz"]')?.textContent).toBe("ma");
+  expect(subject.querySelector("small")?.textContent).toBe("I");
   expect(screen.getByText("visinapam")).toBeTruthy();
-  expect(screen.queryByText("ma")).toBeNull();
   expect(screen.queryByText("heyas")).toBeNull();
   expect(screen.queryByRole("columnheader", { name: "Object" })).toBeNull();
   expect(screen.queryByText(/Some combinations/)).toBeNull();
 });
 it("distinguishes explicitly requested objects with translated labels", () => {
   render(<Results data={data} language="tr" object="all" />);
-  expect(screen.getByRole("cell", { name: "Ben" })).toBeTruthy();
+  expect(screen.getByRole("cell", { name: "ma Ben" })).toBeTruthy();
   expect(screen.getByRole("cell", { name: "O" })).toBeTruthy();
 });

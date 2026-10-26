@@ -15,7 +15,15 @@ function Steps({
       {steps.map((step) => (
         <li key={step.title.en}>
           <h2>{step.title[language]}</h2>
-          <p>{step.body[language]}</p>
+          <p>
+            {step.body[language]}
+            {step.link && (
+              <>
+                {" "}
+                <a href={step.link.href}>{step.link.label[language]} ↗</a>
+              </>
+            )}
+          </p>
           {step.image && (
             <figure>
               <img
@@ -87,37 +95,26 @@ export function Keyboard({
       <a className="back-link" href={localLink("/keyboard", l)}>
         ← {l === "en" ? "All keyboard guides" : "Tüm klavye rehberleri"}
       </a>
-      <div className="guide-layout">
-        <article className="panel prose">
-          <p className="page-note">
-            {l === "en"
-              ? "Screenshots are from the original Lazuri guides. Menu names may differ in newer versions."
-              : "Görseller ilk Lazuri rehberlerindendir. Yeni sürümlerde menü adları değişebilir."}
-          </p>
-          <Steps steps={guide.steps} language={l} />
-          {guide.optional?.map((section) => (
-            <details key={section.title.en}>
-              <summary>{section.title[l]}</summary>
-              <Steps steps={section.steps} language={l} />
-            </details>
-          ))}
-        </article>
-        <aside className="panel guide-links">
-          <h2>{l === "en" ? "Downloads & help" : "İndirme ve yardım"}</h2>
-          {guide.links.map((link) => (
-            <a key={link.href} href={link.href}>
-              {link.label[l]} ↗
-            </a>
-          ))}
-          <a href={localLink(`/keyboard/${guide.next}`, l)}>
-            {guides[guide.next].title[l]} →
-          </a>
-          <p>
-            {l === "en"
-              ? "These links open the keyboard provider’s site."
-              : "Bu bağlantılar klavye sağlayıcısının sitesini açar."}
-          </p>
-        </aside>
+      <article className="panel prose">
+        <p className="page-note">
+          {l === "en"
+            ? "Screenshots are from the original Lazuri guides. Menu names may differ in newer versions."
+            : "Görseller ilk Lazuri rehberlerindendir. Yeni sürümlerde menü adları değişebilir."}
+        </p>
+        <Steps steps={guide.steps} language={l} />
+        {guide.optional?.map((section) => (
+          <details key={section.title.en}>
+            <summary>{section.title[l]}</summary>
+            <Steps steps={section.steps} language={l} />
+          </details>
+        ))}
+      </article>
+      <div className="card-grid related-guides">
+        <Card
+          href={localLink(`/keyboard/${guide.next}`, l)}
+          title={guides[guide.next].title[l]}
+          description={guides[guide.next].intro[l]}
+        />
       </div>
     </>
   );

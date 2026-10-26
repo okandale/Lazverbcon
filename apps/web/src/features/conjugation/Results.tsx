@@ -48,7 +48,10 @@ export function Results({
                   {cells.flatMap((cell, i) =>
                     (cell.forms ?? []).map((form, j) => (
                       <tr key={`${i}-${j}`}>
-                        <td>{names[language][form.subject]}</td>
+                        <td>
+                          <span lang="lzz">{form.subject_pronoun}</span>{" "}
+                          <small>{names[language][form.subject]}</small>
+                        </td>
                         {object != null && (
                           <td>
                             {form.object

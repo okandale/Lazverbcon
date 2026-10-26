@@ -33,7 +33,7 @@ See [admin publishing](admin-app.md#connect-github-and-cloudflare-once).
 Implemented and checked locally against the approved data:
 
 - [x] Object **None** searches objectless and implicit O3SG forms, matching the old query.
-- [x] Normal tables hide Laz pronouns and implicit objects; translated subject labels remain.
+- [x] Normal tables show Laz subjects with smaller translations underneath; implicit objects stay hidden.
 - [x] Reverse analyses expose all recorded grammatical fields.
 - [x] Verb defaults select available dialects, preventing the `osinapu` Hopa warning.
 - [x] Feedback shows readable context; email remains a delivery-failure fallback.
@@ -41,6 +41,7 @@ Implemented and checked locally against the approved data:
 - [x] Derivation is visible with tense/mood; extra markers and prefixes are grouped.
 - [x] Class labels use Ergative, Nominative and Dative (and Turkish equivalents).
 - [x] Detailed bilingual keyboard setup and 46 original illustrations restored.
+- [x] Keyboard guides link to the typing guide below the steps; downloads stay in the steps without a separate help panel.
 - [ ] Verify keyboard installation and switching on physical Windows, Mac, Android
       and iOS devices. Instructions and screenshots are not a substitute for that check.
 

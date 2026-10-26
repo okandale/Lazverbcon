@@ -1,12 +1,12 @@
 import { text } from "./shared";
 import type { Text } from "./shared";
-type Step = { title: Text; body: Text; image?: string };
+type Link = { label: Text; href: string };
+type Step = { title: Text; body: Text; image?: string; link?: Link };
 export type Guide = {
   title: Text;
   intro: Text;
   steps: Step[];
   optional?: { title: Text; steps: Step[] }[];
-  links: { label: Text; href: string }[];
   next: string;
 };
 const step = (
@@ -15,10 +15,12 @@ const step = (
   bodyEn: string,
   bodyTr: string,
   image?: string,
+  link?: Link,
 ): Step => ({
   title: text(en, tr),
   body: text(bodyEn, bodyTr),
   image,
+  link,
 });
 const keyboard = {
   label: text("Laz keyboard download", "Lazca klavyeyi indirin"),
@@ -71,9 +73,13 @@ export const guides: Record<string, Guide> = {
       step(
         "Download Keyman",
         "Keyman’ı indirin",
-        "Open Keyman for Windows below and choose Download Now. Find the downloaded keyman-…exe in Downloads.",
-        "Aşağıdaki Windows için Keyman bağlantısını açıp Download Now seçeneğine tıklayın. İndirilenler klasöründe keyman-…exe dosyasını bulun.",
+        "Open Keyman for Windows and choose Download Now. Find the downloaded keyman-…exe in Downloads.",
+        "Windows için Keyman bağlantısını açıp Download Now seçeneğine tıklayın. İndirilenler klasöründe keyman-…exe dosyasını bulun.",
         "windows-step1.jpg",
+        {
+          label: text("Keyman for Windows", "Windows için Keyman"),
+          href: "https://keyman.com/windows/download",
+        },
       ),
       step(
         "Open the installer",
@@ -99,9 +105,10 @@ export const guides: Record<string, Guide> = {
       step(
         "Download the Laz package",
         "Lazca paketini indirin",
-        "Open the Laz keyboard download below. Select Laz and choose Install keyboard. If a .kmp package downloads, open it.",
-        "Aşağıdaki Lazca klavye bağlantısını açın. Laz düzenini seçip Install keyboard seçeneğine tıklayın. Bir .kmp paketi indirilirse dosyayı açın.",
+        "Open the Laz keyboard download. Select Laz and choose Install keyboard. If a .kmp package downloads, open it.",
+        "Lazca klavye bağlantısını açın. Laz düzenini seçip Install keyboard seçeneğine tıklayın. Bir .kmp paketi indirilirse dosyayı açın.",
         "windows-step5.jpg",
+        keyboard,
       ),
       step(
         "Open Keyman Configuration",
@@ -139,17 +146,6 @@ export const guides: Record<string, Guide> = {
         "windows-step10.jpg",
       ),
     ],
-    links: [
-      {
-        label: text("Keyman for Windows", "Windows için Keyman"),
-        href: "https://keyman.com/windows/download",
-      },
-      keyboard,
-      {
-        label: text("Official installation help", "Resmî kurulum yardımı"),
-        href: "https://help.keyman.com/products/windows/current-version/start/download-and-install-keyboard",
-      },
-    ],
     next: "computer",
   },
   mac: {
@@ -162,9 +158,13 @@ export const guides: Record<string, Guide> = {
       step(
         "Download Keyman for Mac",
         "Mac için Keyman’ı indirin",
-        "Open the macOS download below and choose Download Now.",
-        "Aşağıdaki macOS indirme bağlantısını açıp Download Now seçeneğine tıklayın.",
+        "Open the macOS download and choose Download Now.",
+        "macOS indirme bağlantısını açıp Download Now seçeneğine tıklayın.",
         "mac-step2.jpg",
+        {
+          label: text("Keyman for macOS", "macOS için Keyman"),
+          href: "https://keyman.com/mac/download",
+        },
       ),
       step(
         "Open the DMG",
@@ -193,13 +193,18 @@ export const guides: Record<string, Guide> = {
         "Choose Done after Keyman has been added. If its Configuration menu does not appear, restart the Mac as described in Keyman’s installation help.",
         "Keyman eklendikten sonra Done (Bitti) seçeneğine tıklayın. Configuration menüsü görünmüyorsa Keyman kurulum yardımında belirtildiği gibi Mac’i yeniden başlatın.",
         "mac-step7.jpg",
+        {
+          label: text("Official macOS setup", "Resmî macOS kurulumu"),
+          href: "https://help.keyman.com/products/mac/current-version/start/install-keyman",
+        },
       ),
       step(
         "Download Laz",
         "Lazcayı indirin",
-        "Open the Laz keyboard page below and download the Laz package.",
-        "Aşağıdaki Lazca klavye sayfasını açıp Laz paketini indirin.",
+        "Open the Laz keyboard page and download the Laz package.",
+        "Lazca klavye sayfasını açıp Laz paketini indirin.",
         "mac-step8.jpg",
+        keyboard,
       ),
       step(
         "Install the package",
@@ -223,21 +228,6 @@ export const guides: Record<string, Guide> = {
         "mac-step11.jpg",
       ),
     ],
-    links: [
-      {
-        label: text("Keyman for macOS", "macOS için Keyman"),
-        href: "https://keyman.com/mac/download",
-      },
-      keyboard,
-      {
-        label: text("Official macOS setup", "Resmî macOS kurulumu"),
-        href: "https://help.keyman.com/products/mac/current-version/start/install-keyman",
-      },
-      {
-        label: text("Install a keyboard on macOS", "macOS’ta klavye yükleme"),
-        href: "https://help.keyman.com/products/mac/current-version/start/install-keyboard",
-      },
-    ],
     next: "computer",
   },
   android: {
@@ -250,8 +240,13 @@ export const guides: Record<string, Guide> = {
       step(
         "Install Keyman",
         "Keyman’ı yükleyin",
-        "Get Keyman from Google Play using the link below and open it.",
-        "Aşağıdaki bağlantıdan Google Play’de Keyman’ı yükleyip açın.",
+        "Get Keyman from Google Play and open it.",
+        "Google Play’den Keyman’ı yükleyip açın.",
+        undefined,
+        {
+          label: text("Keyman on Google Play", "Google Play’de Keyman"),
+          href: "https://play.google.com/store/apps/details?id=com.tavultesoft.kmapro",
+        },
       ),
       step(
         "Add a keyboard",
@@ -315,27 +310,6 @@ export const guides: Record<string, Guide> = {
         "Başka bir uygulamada metin alanını açıp Android’in klavye seçicisinden Keyman’ı seçin. Cihaza göre seçici klavye simgesi, dünya simgesi veya bildirim olarak görünür. Gerekirse Keyman’ın dil menüsünde Lazcayı seçin.",
       ),
     ],
-    links: [
-      {
-        label: text("Keyman on Google Play", "Google Play’de Keyman"),
-        href: "https://play.google.com/store/apps/details?id=com.tavultesoft.kmapro",
-      },
-      keyboard,
-      {
-        label: text(
-          "Android keyboard installation",
-          "Android’de klavye yükleme",
-        ),
-        href: "https://help.keyman.com/products/android/current-version/start/installing-keyboards",
-      },
-      {
-        label: text(
-          "Enable the Android system keyboard",
-          "Android sistem klavyesini etkinleştirme",
-        ),
-        href: "https://help.keyman.com/products/android/current-version/start/enabling-system-keyboard",
-      },
-    ],
     next: "phone",
   },
   iphone: {
@@ -348,8 +322,13 @@ export const guides: Record<string, Guide> = {
       step(
         "Install Keyman",
         "Keyman’ı yükleyin",
-        "Get Keyman from the App Store using the link below and open it.",
-        "Aşağıdaki bağlantıdan App Store’da Keyman’ı yükleyip açın.",
+        "Get Keyman from the App Store and open it.",
+        "App Store’dan Keyman’ı yükleyip açın.",
+        undefined,
+        {
+          label: text("Keyman on the App Store", "App Store’da Keyman"),
+          href: "https://apps.apple.com/app/keyman/id933676545",
+        },
       ),
       step(
         "Add a keyboard",
@@ -410,9 +389,16 @@ export const guides: Record<string, Guide> = {
       step(
         "Check Full Access if the keyboard does not appear",
         "Klavye görünmüyorsa Tam Erişim’i kontrol edin",
-        "Keyman’s current help requires Allow Full Access for its system keyboard on iOS 16 because of an iOS issue. Check the official system-keyboard help below for your version before enabling this broader keyboard permission.",
-        "Keyman’ın güncel yardımı, bir iOS sorunu nedeniyle iOS 16’da sistem klavyesi için Tam Erişime İzin Ver ayarını gerekli belirtir. Bu daha geniş klavye iznini etkinleştirmeden önce sürümünüz için aşağıdaki resmî sistem klavyesi yardımına bakın.",
+        "Keyman’s current help requires Allow Full Access for its system keyboard on iOS 16 because of an iOS issue. Check the official system-keyboard help for your version before enabling this broader keyboard permission.",
+        "Keyman’ın güncel yardımı, bir iOS sorunu nedeniyle iOS 16’da sistem klavyesi için Tam Erişime İzin Ver ayarını gerekli belirtir. Bu daha geniş klavye iznini etkinleştirmeden önce sürümünüz için resmî sistem klavyesi yardımına bakın.",
         "iphone-step10.jpg",
+        {
+          label: text(
+            "Enable Keyman on iPhone & iPad",
+            "iPhone ve iPad’de Keyman’ı etkinleştirme",
+          ),
+          href: "https://help.keyman.com/products/iphone-and-ipad/current-version/start/installing-system-keyboard",
+        },
       ),
       step(
         "Switch to Keyman",
@@ -423,20 +409,6 @@ export const guides: Record<string, Guide> = {
       ),
     ],
     optional: [phoneSettings],
-    links: [
-      {
-        label: text("Keyman on the App Store", "App Store’da Keyman"),
-        href: "https://apps.apple.com/app/keyman/id933676545",
-      },
-      keyboard,
-      {
-        label: text(
-          "Enable Keyman on iPhone & iPad",
-          "iPhone ve iPad’de Keyman’ı etkinleştirme",
-        ),
-        href: "https://help.keyman.com/products/iphone-and-ipad/current-version/start/installing-system-keyboard",
-      },
-    ],
     next: "phone",
   },
   computer: {
@@ -466,6 +438,13 @@ export const guides: Record<string, Guide> = {
         "The original Windows layout uses Alt + Ö and Alt + Ü for the ordinary letters. Its Mac guide gives Command as the modifier. Check the layout diagram and current keyboard help if your installed version behaves differently.",
         "İlk Windows düzeninde normal harfler için Alt + Ö ve Alt + Ü kullanılır. Mac rehberinde değiştirici tuş Command olarak verilir. Yüklü sürümünüz farklı çalışıyorsa düzen görseline ve güncel klavye yardımına bakın.",
         "pc-alt-combinations.jpg",
+        {
+          label: text(
+            "Current Laz keyboard help",
+            "Güncel Lazca klavye yardımı",
+          ),
+          href: "https://help.keyman.com/keyboard/laz",
+        },
       ),
       step(
         "Change input layouts",
@@ -473,13 +452,6 @@ export const guides: Record<string, Guide> = {
         "Use the input-language menu to switch between Laz and another keyboard. On Windows, try Windows + Space; Alt + Shift depends on your settings. On Mac, use the input menu or your configured input-source shortcut.",
         "Lazca ve başka klavye arasında geçmek için giriş dili menüsünü kullanın. Windows’ta Windows + Boşluk’u deneyin; Alt + Shift ayarlarınıza bağlıdır. Mac’te giriş menüsünü veya yapılandırılmış giriş kaynağı kısayolunuzu kullanın.",
       ),
-    ],
-    links: [
-      keyboard,
-      {
-        label: text("Current Laz keyboard help", "Güncel Lazca klavye yardımı"),
-        href: "https://help.keyman.com/keyboard/laz",
-      },
     ],
     next: "phone",
   },
@@ -519,17 +491,6 @@ export const guides: Record<string, Guide> = {
       ),
     ],
     optional: [phoneSettings],
-    links: [
-      keyboard,
-      {
-        label: text("Keyman mobile settings", "Keyman mobil ayarları"),
-        href: "https://help.keyman.com/products/iphone-and-ipad/current-version/basic/config/",
-      },
-      {
-        label: text("Current Laz keyboard help", "Güncel Lazca klavye yardımı"),
-        href: "https://help.keyman.com/keyboard/laz",
-      },
-    ],
     next: "computer",
   },
 };

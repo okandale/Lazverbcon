@@ -197,11 +197,8 @@ a.primary {
   text-decoration: underline;
   text-underline-offset: 4px;
 }
-.guide-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(230px, 1fr);
-  gap: 24px;
-  align-items: start;
+.related-guides {
+  margin-top: 24px;
 }
 .guide-steps {
   list-style: decimal;
@@ -233,27 +230,6 @@ a.primary {
   line-height: 1.5;
   color: #677367;
   margin-top: 10px;
-}
-.guide-links {
-  padding: 24px;
-}
-.guide-links h2 {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-.guide-links a {
-  display: block;
-  padding: 14px 0;
-  border-top: 1px solid #e0e3d9;
-  font-size: 14px;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-.guide-links p {
-  font-size: 12px;
-  color: #677367;
-  line-height: 1.6;
-  margin-top: 20px;
 }
 .category-nav {
   display: flex;
@@ -401,12 +377,6 @@ a.primary {
   }
   .site-header .language {
     margin-left: auto;
-  }
-  .guide-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .guide-links {
-    order: -1;
   }
 }
 @media (max-width: 600px) {
