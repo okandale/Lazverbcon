@@ -102,7 +102,9 @@ def _prepare_stem(form: Morphology) -> None:
     form.preverb = ""
     preverb_exceptions = {"gonǯǩu"}
     form.preverb = find_preverb(
-        request.main_infinitive, preverbs_rules, excluded=request.infinitive in preverb_exceptions
+        request.main_infinitive,
+        preverbs_rules,
+        excluded=request.preverb_lookalike or request.infinitive in preverb_exceptions,
     )
     form.root = process_compound_verb(form.principal_part)
     if form.root in ("imxors", "ipxors") and request.infinitive == "oç̌ǩomu":

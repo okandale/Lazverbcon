@@ -69,7 +69,9 @@ def _prepare_stem(form: Morphology) -> None:
     form.preverb = ""
     preverb_exceptions = {"oǩoreʒxu", "oǩoru", "oxop̌u"}
     form.preverb = find_preverb(
-        request.main_infinitive, preverbs_rules, excluded=request.infinitive in preverb_exceptions
+        request.main_infinitive,
+        preverbs_rules,
+        excluded=request.preverb_lookalike or request.infinitive in preverb_exceptions,
     )
     # The corrected dump recognizes e- here only for applicative eç̌opu.
     # Adding e to the general future table changes other attested forms.
@@ -146,7 +148,7 @@ def _apply_preverbs(form: Morphology) -> None:
             and (form.preverb != "me")
         ):
             form.preverb = form.preverb[:-1] + "y" if form.preverb == "ge" else form.preverb[:-1]
-        if form.preverb == "mo" or request.infinitive.startswith("mo"):
+        if form.preverb == "mo" or request.preverb_startswith("mo"):
             _preverb_mo(form)
         if form.preverb == "me" or (request.use_optional_preverb and (not form.preverb)):
             _preverb_me(form)
@@ -158,11 +160,11 @@ def _apply_preverbs(form: Morphology) -> None:
             _preverb_gol(form)
         elif form.preverb in ("gelo", "gel"):
             _preverb_gelo_gel(form)
-        elif form.preverb == "do" or request.infinitive.startswith("do"):
+        elif form.preverb == "do" or request.preverb_startswith("do"):
             _preverb_do(form)
         elif (
             form.preverb == "ge"
-            or request.infinitive.startswith("ge")
+            or request.preverb_startswith("ge")
             or form.root.startswith(("igyu", "ugyu", "ogyu"))
         ):
             _preverb_ge(form)
@@ -170,18 +172,18 @@ def _apply_preverbs(form: Morphology) -> None:
             _preverb_ela_el(form)
         elif form.preverb == "cel":
             _preverb_cel(form)
-        elif form.preverb == "ce" or request.infinitive.startswith("ce"):
+        elif form.preverb == "ce" or request.preverb_startswith("ce"):
             _preverb_ce(form)
         elif form.preverb == "oxo":
             _preverb_oxo(form)
         elif form.preverb == "oǩo":
             _preverb_oǩo(form)
-        elif form.preverb or request.infinitive.startswith("gama"):
+        elif form.preverb or request.preverb_startswith("gama"):
             form.preverb_form = preverbs_rules.get(form.preverb, form.preverb)
             if isinstance(form.preverb_form, dict):
                 form.preverb_form = form.preverb_form.get(request.subject, form.preverb)
             elif form.preverb in "gama" or (
-                request.infinitive.startswith(("gama", "igama"))
+                request.preverb_startswith(("gama", "igama"))
                 and (not form.root.startswith("gama"))
                 and (
                     request.subject in ["S1_Singular", "S1_Plural"]
@@ -507,7 +509,7 @@ def _preverb_mo(form: Morphology) -> None:
         form.prefix = "mom"
     else:
         form.prefix = ""
-    if request.infinitive.startswith("mo") and (
+    if request.preverb_startswith("mo") and (
         not form.original_root.startswith(("mo", "mu"))
         or (
             form.original_root.startswith("mu")

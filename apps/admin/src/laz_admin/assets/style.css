@@ -226,6 +226,16 @@ footer {
   border-radius: 8px;
   margin: 8px 0;
 }
+.dialect-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+.present-base fieldset {
+  border: 0;
+  padding: 0;
+  margin: 8px 0;
+}
 a {
   color: #216346;
 }

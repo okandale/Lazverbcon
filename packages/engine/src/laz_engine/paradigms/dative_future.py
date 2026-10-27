@@ -85,7 +85,7 @@ def _prepare_stem(form: Morphology) -> None:
     form.preverb = find_preverb(
         request.main_infinitive,
         preverbs_rules,
-        excluded=request.main_infinitive in preverb_exceptions,
+        excluded=request.preverb_lookalike or request.main_infinitive in preverb_exceptions,
     )
     form.root = process_compound_verb(form.principal_part)
     if form.preverb and form.root.startswith(form.preverb):

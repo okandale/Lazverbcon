@@ -96,17 +96,23 @@ def negative_imperative(spelling: str, entry: Entry, dialect: Dialect) -> str:
     return " ".join([*words[:-1], prefix, words[-1]])
 
 
-def conjugate(entry: Entry, features: Features) -> Result:
+def conjugate(entry: Entry, features: Features, *, preverb_lookalike: bool = False) -> Result:
     problem = validate(entry, features)
     if problem:
         return problem
-    return conjugate_regular(entry, features)
+    return conjugate_regular(entry, features, preverb_lookalike=preverb_lookalike)
 
 
-def conjugate_regular(entry: Entry, features: Features) -> Result:
+def conjugate_regular(
+    entry: Entry, features: Features, *, preverb_lookalike: bool = False
+) -> Result:
     """General rules only; used to audit whether an exception is still needed."""
     if features.optional_prefix != OptionalPrefix.NONE:
-        base = conjugate_regular(entry, replace(features, optional_prefix=OptionalPrefix.NONE))
+        base = conjugate_regular(
+            entry,
+            replace(features, optional_prefix=OptionalPrefix.NONE),
+            preverb_lookalike=preverb_lookalike,
+        )
         return replace(
             base,
             forms=tuple(
@@ -137,6 +143,7 @@ def conjugate_regular(entry: Entry, features: Features) -> Result:
         co_verbs=co,
         gyo_verbs=gyo,
         no_verbs=no,
+        preverb_lookalike=preverb_lookalike,
     )
     # Derived constructions start from the infinitive; base classes use principal parts.
     parts = (

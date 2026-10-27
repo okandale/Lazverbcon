@@ -25,6 +25,10 @@ class RuleRequest:
     co_verbs: tuple[str, ...]
     gyo_verbs: tuple[str, ...]
     no_verbs: tuple[str, ...]
+    preverb_lookalike: bool = False
+
+    def preverb_startswith(self, prefix):
+        return not self.preverb_lookalike and self.infinitive.startswith(prefix)
 
 
 @dataclass(slots=True)

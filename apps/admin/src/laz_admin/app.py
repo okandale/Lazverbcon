@@ -177,8 +177,17 @@ def create_app(
     @app.post("/api/entry")
     def save_entry(body: dict):
         return store.save_entry(
-            body["entry"], body["actor"], body.get("reason", ""), body.get("expected")
+            body["entry"],
+            body["actor"],
+            body.get("reason", ""),
+            body.get("expected"),
+            options=body.get("generation_options"),
+            expected_options=body.get("expected_options"),
         )
+
+    @app.get("/api/generation-options/{entry_id}")
+    def generation_options(entry_id: str):
+        return store.generation_options(entry_id)
 
     @app.get("/api/records/{entry_id}")
     def records(entry_id: str, q: str = "", offset: int = 0, filters: str = "{}"):
@@ -193,12 +202,19 @@ def create_app(
         return store.propose(body["items"], body["actor"], body.get("reason", "Manual correction"))
 
     @app.get("/api/proposals")
-    def proposals(offset: int = 0, batch: str | None = None):
-        return store.proposals(batch, offset)
+    def proposals(offset: int = 0, batch: str | None = None, entry_id: str | None = None):
+        return store.proposals(batch, offset, entry_id)
 
     @app.post("/api/review")
     def review(body: dict):
-        return store.review(body["ids"], body["approve"], body["actor"])
+        return store.review(
+            body.get("ids", []),
+            body["approve"],
+            body["actor"],
+            selection_hash=body.get("selection_hash"),
+            batch=body.get("batch"),
+            entry_id=body.get("entry_id"),
+        )
 
     @app.get("/api/history")
     def history(offset: int = 0):
@@ -222,7 +238,12 @@ def create_app(
         return jobs.start(
             "Generate proposals",
             lambda p, c: store.generate(
-                body["entry_id"], body["actor"], body.get("profile", "full"), p, c
+                body["entry_id"],
+                body["actor"],
+                body.get("profile", "full"),
+                p,
+                c,
+                scope=body.get("scope", "auto"),
             ),
         )
 

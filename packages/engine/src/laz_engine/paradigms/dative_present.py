@@ -52,7 +52,7 @@ def _prepare_stem(form: Morphology) -> None:
     form.preverb = find_preverb(
         request.main_infinitive,
         preverbs_rules,
-        excluded=request.main_infinitive in preverb_exceptions,
+        excluded=request.preverb_lookalike or request.main_infinitive in preverb_exceptions,
     )
     form.root = process_compound_verb(form.principal_part)
     if form.preverb and form.root.startswith(form.preverb):
@@ -108,7 +108,7 @@ def _apply_agreement(form: Morphology) -> None:
             form.prefix = "ceg"
         else:
             form.prefix = "c"
-    elif form.preverb == "mo" or request.infinitive.startswith("mo"):
+    elif form.preverb == "mo" or request.preverb_startswith("mo"):
         _preverb_mo(form)
     elif form.preverb:
         _general_preverb_agreement(form)

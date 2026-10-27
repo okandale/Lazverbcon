@@ -18,11 +18,14 @@ from importlib.resources import files
 from pathlib import Path
 
 from laz_api.catalog import canonical
-from laz_engine.engine import conjugate, select_rule
+from laz_engine.engine import conjugate, conjugate_regular, select_rule
 from laz_engine.enumeration import iter_features
 from laz_engine.lexicon import load_entries
-from laz_engine.models import Entry, Features
+from laz_engine.models import Causative, Derivation, Entry, Features, OptionalPrefix
 from pydantic import TypeAdapter
+
+from .generation import excluded
+from .generation import options as generation_options
 
 VERSION = 1
 FEATURE_ADAPTER = TypeAdapter(Features)
@@ -245,18 +248,45 @@ class Store:
                 in f"{r['infinitive']} {r['english']} {r['turkish']} {r['id']}".casefold()
             ]
 
-    def save_entry(self, value, actor, reason, expected=None):
+    @staticmethod
+    def _generation_options(db, entry_id):
+        row = db.execute(
+            "SELECT value FROM meta WHERE key=?", (f"generation:{entry_id}",)
+        ).fetchone()
+        return generation_options(json.loads(row[0]) if row else None)
+
+    def generation_options(self, entry_id):
+        with self.db() as db:
+            if not db.execute("SELECT 1 FROM entries WHERE id=?", (entry_id,)).fetchone():
+                raise ValueError("Unknown entry")
+            return self._generation_options(db, entry_id)
+
+    def save_entry(
+        self, value, actor, reason, expected=None, *, options=None, expected_options=None
+    ):
+        if not actor.strip():
+            raise ValueError("Enter your name for the change history")
         value = entry_data(value)
+        options = generation_options(options) if options is not None else None
         with self.db(True) as db:
             row = db.execute("SELECT data FROM entries WHERE id=?", (value["id"],)).fetchone()
             before = json.loads(row[0]) if row else None
             if before != expected:
                 raise ValueError("Entry changed since it was opened. Reload before saving.")
-            db.execute(
-                "INSERT INTO entries VALUES (?,?) ON CONFLICT(id) DO UPDATE SET data=excluded.data",
-                (value["id"], canonical(value)),
-            )
-            self.event(db, "entry", value["id"], before, value, actor, reason)
+            previous_options = self._generation_options(db, value["id"])
+            if options is not None and generation_options(expected_options) != previous_options:
+                raise ValueError("Generation options changed since opening. Reload before saving.")
+            if before != value:
+                db.execute(
+                    "INSERT INTO entries VALUES (?,?) ON CONFLICT(id) DO UPDATE SET data=excluded.data",
+                    (value["id"], canonical(value)),
+                )
+                self.event(db, "entry", value["id"], before, value, actor, reason)
+            if options is not None and options != previous_options:
+                self.set_meta(db, f"generation:{value['id']}", canonical(options))
+                self.event(
+                    db, "entry_options", value["id"], previous_options, options, actor, reason
+                )
         return value
 
     def records(self, entry_id, query="", offset=0, limit=100, filters=None):
@@ -269,12 +299,29 @@ class Store:
                     where += " AND json_extract(features, ?) IS ?"
                     args += (f"$.{key}", normalized[key])
             count = db.execute(f"SELECT count(*) FROM records WHERE {where}", args).fetchone()[0]
+            available = db.execute(
+                f"SELECT count(*) FROM records WHERE {where} "
+                "AND json_extract(value,'$.status')='ok'",
+                args,
+            ).fetchone()[0]
+            spellings = db.execute(
+                f"SELECT count(DISTINCT json_extract(form.value,'$.spelling')) "
+                f"FROM (SELECT value FROM records WHERE {where}) AS results, "
+                "json_each(results.value,'$.forms') AS form",
+                args,
+            ).fetchone()[0]
             rows = db.execute(
                 f"SELECT * FROM records WHERE {where} ORDER BY json_extract(features,'$.dialect'), json_extract(features,'$.tense'), json_extract(features,'$.subject'), key LIMIT ? OFFSET ?",
                 (*args, min(limit, 200), max(offset, 0)),
             )
             return {
                 "total": count,
+                "entry_total": db.execute(
+                    "SELECT count(*) FROM records WHERE entry_id=?", (entry_id,)
+                ).fetchone()[0],
+                "available": available,
+                "unavailable": count - available,
+                "unique_spellings": spellings,
                 "records": [
                     {
                         **dict(r),
@@ -290,14 +337,25 @@ class Store:
         if not entry:
             raise ValueError("Unknown entry")
         row = db.execute("SELECT value FROM records WHERE key=?", (key,)).fetchone()
-        return digest([entry[0], row[0] if row else None])
+        values = [entry[0], row[0] if row else None]
+        options = self._generation_options(db, entry_id)
+        if options != generation_options():
+            values.append(options)
+        return digest(values)
 
-    def propose(self, items, actor, reason, batch=None):
+    def propose(self, items, actor, reason, batch=None, *, replace_generated_for=None):
         if not actor.strip():
             raise ValueError("Enter your name")
         batch = batch or str(uuid.uuid4())
         count = 0
+        superseded = 0
         with self.db(True) as db:
+            if replace_generated_for:
+                superseded = db.execute(
+                    "UPDATE proposals SET state='superseded' WHERE entry_id=? "
+                    "AND state='pending' AND json_extract(value,'$.source')='Generated proposal'",
+                    (replace_generated_for,),
+                ).rowcount
             for item in items:
                 f = features(item["features"])
                 key = digest([item["entry_id"], f])
@@ -335,13 +393,42 @@ class Store:
                     ),
                 )
                 count += 1
-        return {"batch": batch, "proposals": count}
+        return {"batch": batch, "proposals": count, "superseded": superseded}
 
-    def proposals(self, batch=None, offset=0):
+    @staticmethod
+    def proposal_filter(batch=None, entry_id=None):
+        where, args = "state='pending'", []
+        for field, value in (("batch", batch), ("entry_id", entry_id)):
+            if value:
+                where += f" AND {field}=?"
+                args.append(value)
+        return where, args
+
+    def proposals(self, batch=None, offset=0, entry_id=None):
         with self.db() as db:
-            where = "state='pending'" + (" AND batch=?" if batch else "")
-            args = (batch,) if batch else ()
+            where, args = self.proposal_filter(batch, entry_id)
             count = db.execute(f"SELECT count(*) FROM proposals WHERE {where}", args).fetchone()[0]
+            ids = [
+                r[0]
+                for r in db.execute(f"SELECT id FROM proposals WHERE {where} ORDER BY id", args)
+            ]
+            verbs = [
+                dict(r)
+                for r in db.execute(
+                    "SELECT p.entry_id, json_extract(e.data,'$.infinitive') AS infinitive, "
+                    "count(*) AS total FROM proposals p JOIN entries e ON e.id=p.entry_id "
+                    "WHERE p.state='pending' GROUP BY p.entry_id ORDER BY infinitive,p.entry_id"
+                )
+            ]
+            batch_where, batch_args = self.proposal_filter(entry_id=entry_id)
+            batches = [
+                dict(r)
+                for r in db.execute(
+                    f"SELECT batch,count(*) AS total FROM proposals WHERE {batch_where} "
+                    "GROUP BY batch ORDER BY min(created) DESC,batch",
+                    batch_args,
+                )
+            ]
             rows = db.execute(
                 f"SELECT * FROM proposals WHERE {where} ORDER BY created,id LIMIT 100 OFFSET ?",
                 (*args, max(0, offset)),
@@ -359,14 +446,32 @@ class Store:
                         != r["before_hash"],
                     }
                 )
-            return {"total": count, "proposals": out}
+            return {
+                "total": count,
+                "proposals": out,
+                "verbs": verbs,
+                "batches": batches,
+                "selection_hash": digest(ids),
+            }
 
-    def review(self, ids, approve, actor):
+    def review(self, ids, approve, actor, *, selection_hash=None, batch=None, entry_id=None):
         if not isinstance(approve, bool):
             raise ValueError("Approval must be true or false")
-        if not ids or len(ids) > 10000 or not actor.strip():
+        if not actor.strip() or (selection_hash is None and (not ids or len(ids) > 10000)):
             raise ValueError("Select up to 10,000 proposals and enter your name")
         with self.db(True) as db:
+            if selection_hash is not None:
+                if ids:
+                    raise ValueError("Choose selected proposals or all matching proposals")
+                where, args = self.proposal_filter(batch, entry_id)
+                ids = [
+                    r[0]
+                    for r in db.execute(f"SELECT id FROM proposals WHERE {where} ORDER BY id", args)
+                ]
+                if not ids or digest(ids) != selection_hash:
+                    raise ValueError(
+                        "Pending proposals changed. Reload the review before approving all."
+                    )
             for ident in dict.fromkeys(ids):
                 r = db.execute(
                     "SELECT * FROM proposals WHERE id=? AND state='pending'", (ident,)
@@ -378,6 +483,14 @@ class Store:
                 old = db.execute("SELECT value FROM records WHERE key=?", (r["key"],)).fetchone()
                 before = json.loads(old[0]) if old else None
                 after = json.loads(r["value"]) if r["value"] else None
+                if approve and after and after.get("source") == "Generated proposal":
+                    f = json.loads(r["features"])
+                    if f["optional_preverb"] or (
+                        f["optional_prefix"] != "none" and (not before or before["status"] != "ok")
+                    ):
+                        raise ValueError(
+                            "Unrecorded generated optional-preverb draft. Regenerate this verb before approval."
+                        )
                 if approve:
                     if after is None:
                         db.execute("DELETE FROM records WHERE key=?", (r["key"],))
@@ -426,7 +539,7 @@ class Store:
     def undo(self, ident, actor):
         with self.db(True) as db:
             event = db.execute("SELECT * FROM history WHERE id=?", (ident,)).fetchone()
-            if not event or event["entity"] not in ("entry", "record"):
+            if not event or event["entity"] not in ("entry", "record", "entry_options"):
                 raise ValueError("This history event cannot be reversed individually")
             before = json.loads(event["before_value"]) if event["before_value"] else None
             after = json.loads(event["after_value"]) if event["after_value"] else None
@@ -447,6 +560,10 @@ class Store:
                         "INSERT INTO entries VALUES (?,?) ON CONFLICT(id) DO UPDATE SET data=excluded.data",
                         (event["key"], canonical(before)),
                     )
+            elif event["entity"] == "entry_options":
+                if self._generation_options(db, event["key"]) != after:
+                    raise ValueError("Later edits exist; review them before undoing")
+                self.set_meta(db, f"generation:{event['key']}", canonical(before))
             else:
                 current = db.execute(
                     "SELECT value FROM records WHERE key=?", (event["key"],)
@@ -608,8 +725,22 @@ class Store:
             return {"requests": count, "source_rows": rows}
 
     def generate(
-        self, entry_id, actor, profile="full", progress=lambda n: None, cancelled=lambda: False
+        self,
+        entry_id,
+        actor,
+        profile="full",
+        progress=lambda n: None,
+        cancelled=lambda: False,
+        *,
+        scope="auto",
     ):
+        if profile not in {"core", "full"} or scope not in {
+            "auto",
+            "recorded",
+            "standard",
+            "expanded",
+        }:
+            raise ValueError("Choose a supported generation scope and profile")
         with self.db() as db:
             row = db.execute("SELECT data FROM entries WHERE id=?", (entry_id,)).fetchone()
             if not row:
@@ -617,26 +748,89 @@ class Store:
             entry = ENTRY_ADAPTER.validate_json(row[0])
             entry_hash = digest(json.loads(row[0]))
             revision = self.meta(db, "revision")
+            choices = self._generation_options(db, entry_id)
+            recorded = {
+                r["features"]: json.loads(r["value"])
+                for r in db.execute(
+                    "SELECT features,value FROM records WHERE entry_id=?", (entry_id,)
+                )
+            }
+        if scope == "auto":
+            scope = "recorded" if recorded else "standard"
+        attested = [
+            FEATURE_ADAPTER.validate_json(f)
+            for f, value in recorded.items()
+            if value["status"] == "ok" and not json.loads(f)["optional_preverb"]
+        ]
+        if scope == "recorded":
+            candidates = attested
+        else:
+            candidates = [
+                f
+                for f in iter_features(entry, profile)
+                if not f.optional_preverb
+                and f.optional_prefix == OptionalPrefix.NONE
+                and (
+                    scope == "expanded"
+                    or (
+                        f.derivation == Derivation.NONE
+                        and not f.applicative
+                        and f.causative == Causative.NONE
+                    )
+                )
+            ]
+            # Optional ko/do requests are regenerated only where already recorded,
+            # never extrapolated to another person, construction or dialect.
+            candidates.extend(f for f in attested if f.optional_prefix != OptionalPrefix.NONE)
+        candidates = list(dict.fromkeys(candidates))
+        skipped = sum(excluded(f, choices) for f in candidates)
+        candidates = [f for f in candidates if not excluded(f, choices)]
+        pronouns = json.loads(
+            files("laz_admin").joinpath("data/pronouns.json").read_text(encoding="utf-8")
+        )
         items = []
-        for i, f in enumerate(iter_features(entry, profile)):
+        unsupported = unchanged = form_count = 0
+        spellings = set()
+        for i, f in enumerate(candidates, 1):
             if cancelled():
                 raise ValueError("Cancelled; no proposals saved")
-            result = conjugate(entry, f)
+            # Recorded explicit prefixes are editorial evidence, including verbs
+            # added locally that are absent from the engine's original metadata.
+            result = (
+                conjugate_regular(entry, f, preverb_lookalike=choices["preverb_lookalike"])
+                if f.optional_prefix != OptionalPrefix.NONE
+                else conjugate(entry, f, preverb_lookalike=choices["preverb_lookalike"])
+            )
             if result.status == "ok":
                 forms = [
                     {k: v for k, v in asdict(form).items() if k not in ("subject", "object")}
                     for form in result.forms
                 ]
-                items.append(
-                    {
-                        "entry_id": entry_id,
-                        "features": asdict(f),
-                        "value": {"status": "ok", "forms": forms, "source": "Generated proposal"},
-                    }
+                for form in forms:
+                    for role, person in (("subject", f.subject), ("object", f.object)):
+                        form[f"{role}_pronoun"] = pronouns.get(
+                            f"{f.dialect}|{role[0].upper()}{person.value.upper()}|{form['frame']}"
+                            if person
+                            else "",
+                            "" if person is None else form[f"{role}_pronoun"],
+                        )
+                value = result_data(
+                    {"status": "ok", "forms": forms, "source": "Generated proposal"}
                 )
+                items.append({"entry_id": entry_id, "features": asdict(f), "value": value})
+                unchanged += linguistic_value(
+                    recorded.get(canonical(asdict(f)))
+                ) == linguistic_value(value)
+                form_count += len(forms)
+                spellings.update(form["spelling"] for form in forms)
+            else:
+                unsupported += 1
             if i % 100 == 0:
                 progress(i)
+        progress(len(candidates))
         with self.lock, self.db() as db:
+            if cancelled():
+                raise ValueError("Cancelled; no proposals saved")
             if self.meta(db, "revision") != revision:
                 raise ValueError("Project changed during generation; run it again")
             if (
@@ -648,7 +842,23 @@ class Store:
                 != entry_hash
             ):
                 raise ValueError("Entry changed during generation; run it again")
-            return self.propose(items, actor, "Generated; requires linguistic review")
+            return {
+                **self.propose(
+                    items,
+                    actor,
+                    "Generated; requires linguistic review",
+                    replace_generated_for=entry_id,
+                ),
+                "entry_id": entry_id,
+                "scope": scope,
+                "requests": len(candidates),
+                "forms": form_count,
+                "unique_spellings": len(spellings),
+                "unchanged": unchanged,
+                "unsupported": unsupported,
+                "legacy_skipped": sum(json.loads(f)["optional_preverb"] for f in recorded),
+                "excluded": skipped,
+            }
 
 
 def parse_import(text, kind):

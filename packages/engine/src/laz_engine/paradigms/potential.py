@@ -39,7 +39,9 @@ def _prepare_stem(form: Morphology) -> None:
     form.preverb = ""
     preverb_exceptions = {"oǩoreʒxu", "oǩoru", "oxop̌u"}
     form.preverb = find_preverb(
-        request.main_infinitive, preverbs_rules, excluded=request.infinitive in preverb_exceptions
+        request.main_infinitive,
+        preverbs_rules,
+        excluded=request.preverb_lookalike or request.infinitive in preverb_exceptions,
     )
     if form.preverb and form.root.startswith(form.preverb):
         form.root = form.root[len(form.preverb) : -1]
@@ -95,7 +97,7 @@ def _apply_preverbs(form: Morphology) -> None:
             form.preverb = "gam" if request.subject in ("S3_Singular", "S3_Plural") else "gama"
         form.prefix = form.preverb + subject_markers[request.subject]
     elif (
-        request.infinitive.startswith("gama")
+        request.preverb_startswith("gama")
         and (not form.root.startswith("gama"))
         and (
             request.subject in ["S1_Singular", "S1_Plural"]
@@ -112,7 +114,7 @@ def _apply_preverbs(form: Morphology) -> None:
             if request.region in ("HO", "PZ", "AŞ")
             else "d" + subject_markers[request.subject]
         )
-    elif (form.preverb == "go" or request.infinitive.startswith("go")) and subject_markers[
+    elif (form.preverb == "go" or request.preverb_startswith("go")) and subject_markers[
         request.subject
     ].startswith(("a", "e", "i", "o", "u")):
         form.prefix = (

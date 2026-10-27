@@ -24,6 +24,12 @@ object and construction. It validates the input, selects a paradigm and applies
 its ordered stages independently to each principal part. It returns distinct
 forms or a structured unsupported result. It does not read the admin database.
 
+An optional `preverb_lookalike=True` argument suppresses both initial preverb
+detection and later prefix-based shortcuts. It defaults to false; inherited
+per-paradigm exceptions keep their previous behaviour. The admin saves this
+choice per verb alongside generation exclusions, independently of public entry
+data. Exclusions skip requests before generation; they do not delete manual forms.
+
 For example, ergative present prepares the stem, applies markers and agreement,
 adjusts the construction, selects an ending and joins the form. The order differs
 between paradigms; do not merge similar branches without comparing outputs.

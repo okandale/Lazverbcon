@@ -1,6 +1,6 @@
 # Remaining work
 
-Updated 26 October 2026. The engine, public pages and local admin are implemented.
+Updated 27 October 2026. The engine, public pages and local admin are implemented.
 Feedback delivery was confirmed by the owner on 1 October. The Windows executable
 [build and automated package tests passed](https://github.com/okandale/Lazverbcon/actions/runs/37603514294).
 Original unfinished phrase prompts and translation placeholders are preserved.
@@ -45,6 +45,18 @@ Implemented and checked locally against the approved data:
 - [ ] Verify keyboard installation and switching on physical Windows, Mac, Android
       and iOS devices. Instructions and screenshots are not a substitute for that check.
 
+## Admin feedback — 27 October
+
+Admin generation fixes checked on 27 October: recorded combinations for existing
+verbs, standard scope for new verbs, exact recorded `ko`/`do` availability,
+repeat generation that replaces generated drafts, and approval across review
+pages. The original `doguru`, `oçkinu` and `oxenu` data was checked locally:
+all 9,160 recorded requests matched their generated results, including pronouns.
+The verb editor now has separate present-base textboxes and dialect checkboxes,
+plus saved generation exclusions and an opt-in preverb-lookalike override.
+The author confirmed `oǩoru` as the preverb-lookalike reference. Its inherited
+exception remains active; `okosu` has not been reclassified.
+
 ## Linguistic decisions
 
 Preserve existing outputs until the author provides reviewed examples or decisions.
@@ -59,9 +71,9 @@ Preserve existing outputs until the author provides reviewed examples or decisio
   approving them. Generator coverage is not linguistic approval.
 - **DATA-05:** Confirm the preserved negative-particle prefix convention such as
   `komot giğur`; it has not been silently changed.
-- **DATA-06:** Decide whether to change the generator's displayed pronouns. The
-  admin baseline and approved exports already use the dump's pronouns and passed
-  full import comparison. Live publication remains to be verified above.
+- **DATA-06:** Decide whether to change pronouns in the Python engine itself.
+  The admin baseline, generated admin proposals and approved exports use the
+  dump's pronoun table. Live publication remains to be verified above.
 
 The dated reports and original checklist remain in [history](history/README.md).
 

@@ -5,8 +5,10 @@ import gzip
 import hashlib
 import json
 import sqlite3
+import time
 import zipfile
 from dataclasses import asdict
+from itertools import islice, product
 from pathlib import Path
 
 import pytest
@@ -16,6 +18,8 @@ from laz_admin.archive import unpack
 from laz_admin.publish import export_release, publish, snapshot
 from laz_admin.store import Store, features, parse_import
 from laz_api.catalog import Catalog
+from laz_engine.engine import conjugate
+from laz_engine.models import Derivation, Dialect, Features, Person, Tense
 
 
 @pytest.fixture
@@ -138,7 +142,348 @@ def test_generation_preserves_corrections_and_skips_provenance_only_changes(proj
         project.records(value["entry_id"])["records"][0]["value"]["forms"][0]["spelling"]
         == "author form"
     )
-    assert project.generate(value["entry_id"], "Author", profile="core")["proposals"] == 0
+    repeated = project.generate(value["entry_id"], "Author", profile="core")
+    assert repeated["proposals"] == repeated["superseded"] == 1
+    assert project.status()["pending"] == 1
+    pending = project.proposals()["proposals"]
+    project.review([p["id"] for p in pending], True, "Author")
+    matching = project.generate(value["entry_id"], "Author")
+    assert matching["proposals"] == 0 and matching["unchanged"] == 1
+
+
+def test_new_verb_defaults_to_standard_without_optional_variants(project):
+    result = project.generate(project.entries()[0]["id"], "Author")
+    assert result["scope"] == "standard" and result["proposals"] > 0
+    with project.db() as db:
+        rows = [
+            json.loads(r[0])
+            for r in db.execute("SELECT features FROM proposals WHERE state='pending'")
+        ]
+    assert len(rows) == result["proposals"]
+    assert all(
+        not f["optional_preverb"]
+        and f["optional_prefix"] == "none"
+        and not f["applicative"]
+        and f["causative"] == "none"
+        and f["derivation"] == "none"
+        for f in rows
+    )
+    expanded = project.generate(project.entries()[0]["id"], "Author", scope="expanded")
+    assert expanded["proposals"] > result["proposals"]
+    assert expanded["superseded"] == result["proposals"]
+    with project.db() as db:
+        assert not db.execute(
+            "SELECT 1 FROM proposals WHERE state='pending' AND "
+            "(json_extract(features,'$.optional_preverb')=1 OR json_extract(features,'$.optional_prefix')!='none')"
+        ).fetchone()
+
+
+def test_recorded_generation_does_not_expand_optional_preverbs_or_rejected_combinations(project):
+    # This local verb ID has no engine prefix metadata; approved data is the evidence.
+    original = project.entries()[0]
+    local = project.save_entry({**original, "id": "local-verb"}, "Author", "Local verb")
+    base = {**item(project), "entry_id": local["id"]}
+    optional = {**item(project, dialect="FA", optional_prefix="ko"), "entry_id": local["id"]}
+    rejected = {
+        **item(project, subject="2sg"),
+        "entry_id": local["id"],
+        "value": {"status": "unsupported", "forms": []},
+    }
+    for value in (base, optional, rejected):
+        approve(project, value)
+    result = project.generate(local["id"], "Author")
+    assert result["scope"] == "recorded" and result["requests"] == 2
+    proposed = project.proposals(result["batch"])["proposals"]
+    assert {json.dumps(p["features"], sort_keys=True) for p in proposed} == {
+        json.dumps(v["features"], sort_keys=True) for v in (base, optional)
+    }
+    prefixed = next(p for p in proposed if p["features"]["optional_prefix"] == "ko")
+    assert prefixed["value"]["forms"][0]["spelling"].startswith("ko")
+    assert project.records(local["id"])["unavailable"] == 1
+
+
+def test_regeneration_replaces_old_generated_drafts_and_keeps_manual_work(project):
+    legacy = item(project, optional_preverb=True)
+    legacy["value"]["source"] = "Generated proposal"
+    project.propose([legacy], "Author", "Old generation")
+    old = project.proposals()["proposals"][0]
+    with pytest.raises(ValueError, match="Regenerate"):
+        project.review([old["id"]], True, "Author")
+    manual = item(project, "Manual draft")
+    project.propose([manual], "Author", "Keep my draft")
+    result = project.generate(project.entries()[0]["id"], "Author", profile="core")
+    assert result["superseded"] == 1
+    pending = project.proposals()["proposals"]
+    assert any(p["reason"] == "Keep my draft" for p in pending)
+    assert not any(p["features"]["optional_preverb"] for p in pending)
+    with project.db() as db:
+        assert (
+            db.execute("SELECT state FROM proposals WHERE id=?", (old["id"],)).fetchone()[0]
+            == "superseded"
+        )
+
+
+def test_unrecorded_generated_ko_do_drafts_cannot_be_approved(project):
+    optional = item(project, optional_prefix="do")
+    optional["value"]["source"] = "Generated proposal"
+    project.propose([optional], "Author", "Old extrapolated prefix")
+    with pytest.raises(ValueError, match="Regenerate"):
+        project.review([], True, "Author", selection_hash=project.proposals()["selection_hash"])
+    assert project.status()["records"] == 0
+
+
+def test_bulk_review_spans_pages_but_respects_verb_and_batch_filters(project):
+    values = [
+        item(project, dialect=d, subject=s, tense=t, object=o)
+        for d, s, t, o in islice(
+            product(
+                ("AS", "PZ", "FA", "HO"),
+                ("1sg", "2sg", "3sg", "1pl", "2pl", "3pl"),
+                ("present", "past", "future", "past_progressive", "present_perfect"),
+                (None, "3sg"),
+            ),
+            150,
+        )
+    ]
+    project.propose(values, "Author", "Large import", batch="large")
+    project.propose([item(project, "Other batch")], "Author", "Leave pending", batch="other")
+    selected = project.proposals("large", entry_id=project.entries()[0]["id"])
+    assert selected["total"] == 150 and len(selected["proposals"]) == 100
+    assert (
+        project.review(
+            [], True, "Reviewer", batch="large", selection_hash=selected["selection_hash"]
+        )["reviewed"]
+        == 150
+    )
+    assert project.status()["records"] == 150
+    assert project.status()["pending"] == 1
+    with project.db() as db:
+        assert (
+            db.execute(
+                "SELECT count(*) FROM history WHERE entity='record' AND actor='Reviewer'"
+            ).fetchone()[0]
+            == 150
+        )
+
+
+def test_bulk_review_refuses_a_changed_selection_and_rolls_back_conflicts(project):
+    project.propose([item(project)], "Author", "Initial")
+    selection = project.proposals()["selection_hash"]
+    project.propose([item(project, "Other", subject="2sg")], "Author", "Added later")
+    with pytest.raises(ValueError, match="Pending proposals changed"):
+        project.review([], True, "Reviewer", selection_hash=selection)
+    project.propose([item(project, "Conflicting")], "Author", "Alternative")
+    with pytest.raises(ValueError, match="Conflicting"):
+        project.review([], True, "Reviewer", selection_hash=project.proposals()["selection_hash"])
+    assert project.status()["records"] == 0 and project.status()["pending"] == 3
+    rejected = project.review(
+        [], False, "Reviewer", selection_hash=project.proposals()["selection_hash"]
+    )
+    assert rejected["reviewed"] == 3 and project.status()["pending"] == 0
+
+
+def test_record_counts_distinguish_spellings_requests_and_unavailable_rows(project):
+    approve(project, item(project, "same"))
+    approve(project, item(project, "same", subject="2sg"))
+    approve(
+        project, {**item(project, subject="3sg"), "value": {"status": "unsupported", "forms": []}}
+    )
+    rows = project.records(project.entries()[0]["id"])
+    assert (rows["total"], rows["available"], rows["unique_spellings"], rows["unavailable"]) == (
+        3,
+        2,
+        1,
+        1,
+    )
+    assert project.records(project.entries()[0]["id"], filters={"subject": "2sg"})["total"] == 1
+
+
+def test_generation_api_can_run_repeatedly_and_bulk_review_its_batch(project):
+    with TestClient(create_app(project, "secret"), base_url="http://127.0.0.1") as client:
+        headers = {"X-Laz-Session": "secret"}
+        results = []
+        for _ in range(2):
+            response = client.post(
+                "/api/generate",
+                headers=headers,
+                json={"entry_id": project.entries()[0]["id"], "actor": "Author", "profile": "core"},
+            )
+            assert response.status_code == 200
+            started = response.json()
+            deadline = time.monotonic() + 10
+            while time.monotonic() < deadline:
+                job = client.get("/api/job", headers=headers).json()
+                if job["state"] != "running":
+                    break
+                time.sleep(0.01)
+            assert job["state"] == "complete", job
+            assert job["id"] == started["id"]
+            results.append(job)
+        assert results[0]["id"] != results[1]["id"]
+        assert results[1]["result"]["superseded"] == results[0]["result"]["proposals"]
+        batch = results[1]["result"]["batch"]
+        pending = client.get("/api/proposals", headers=headers, params={"batch": batch}).json()
+        response = client.post(
+            "/api/review",
+            headers=headers,
+            json={
+                "approve": True,
+                "actor": "Author",
+                "batch": batch,
+                "selection_hash": pending["selection_hash"],
+            },
+        )
+        assert response.status_code == 200 and response.json()["reviewed"] == pending["total"]
+
+
+def test_saved_generation_exclusions_preserve_manual_forms_and_log_undo(project):
+    manual = item(project, "Manually entered present")
+    approve(project, manual)
+    project.propose([item(project, "Other draft")], "Author", "Before options changed")
+    original = project.entries()[0]
+    defaults = project.generation_options(original["id"])
+    choices = {
+        "preverb_lookalike": True,
+        "excluded_combinations": [{"tense": "present", "mood": "indicative"}],
+    }
+    project.save_entry(
+        original,
+        "Author",
+        "Present is manual",
+        original,
+        options=choices,
+        expected_options=defaults,
+    )
+    event = project.history()[0]
+    assert event["entity"] == "entry_options"
+    assert project.generation_options(original["id"]) == choices
+    assert project.proposals()["proposals"][0]["conflict"]
+    result = project.generate(original["id"], "Author")
+    assert result["requests"] == 0 and result["excluded"] == 1
+    assert (
+        project.records(original["id"])["records"][0]["value"]["forms"][0]["spelling"]
+        == "Manually entered present"
+    )
+    project.undo(event["id"], "Author")
+    assert project.generation_options(original["id"]) == defaults
+    assert not project.proposals()["proposals"][0]["conflict"]
+
+
+def test_exclusion_rows_match_all_fields_and_cover_multiple_constructions(project):
+    entry = project.entries()[0]
+    before = project.generate(entry["id"], "Author")
+    choices = {
+        "excluded_combinations": [
+            {"tense": "present", "mood": "indicative", "object": None},
+            {"mood": "optative"},
+        ]
+    }
+    project.save_entry(entry, "Author", "Manual exceptions", entry, options=choices)
+    result = project.generate(entry["id"], "Author")
+    assert result["excluded"] > 0 and result["requests"] == before["requests"] - result["excluded"]
+    with project.db() as db:
+        fs = [
+            json.loads(r[0])
+            for r in db.execute("SELECT features FROM proposals WHERE state='pending'")
+        ]
+    assert all(f["mood"] != "optative" for f in fs)
+    assert all(
+        not (f["tense"] == "present" and f["mood"] == "indicative" and f["object"] is None)
+        for f in fs
+    )
+    assert any(
+        f["tense"] == "present" and f["mood"] == "indicative" and f["object"] == "3sg" for f in fs
+    )
+
+
+def test_generation_options_validate_back_up_and_stay_private(project):
+    entry = project.entries()[0]
+    with pytest.raises(ValueError, match="at least one"):
+        project.save_entry(entry, "Author", "", entry, options={"excluded_combinations": [{}]})
+    with pytest.raises(ValueError):
+        project.save_entry(
+            entry, "Author", "", entry, options={"excluded_combinations": [{"tense": "invented"}]}
+        )
+    assert project.generation_options(entry["id"])["excluded_combinations"] == []
+    choices = {"preverb_lookalike": False, "excluded_combinations": [{"tense": "future"}]}
+    project.save_entry(entry, "Author", "Manual future", entry, options=choices)
+    with pytest.raises(ValueError, match="options changed"):
+        project.save_entry(entry, "Author", "Stale", entry, options={})
+    backup = Path(project.backup())
+    project.save_entry(entry, "Author", "Reset", entry, options={}, expected_options=choices)
+    project.restore(backup, "Author")
+    assert project.generation_options(entry["id"]) == choices
+    approve(project, item(project))
+    output = project.directory / "public.sqlite"
+    snapshot(project, output)
+    with Catalog(output).connect() as db:
+        assert "excluded_combinations" not in db.execute("SELECT data FROM entries").fetchone()[0]
+
+
+def test_entry_options_api_and_per_base_dialects(project):
+    entry = project.entries()[0]
+    options = {
+        "preverb_lookalike": True,
+        "excluded_combinations": [{"tense": "present", "mood": "indicative"}],
+    }
+    edited = {
+        **entry,
+        "variants": [
+            {"form": "first", "dialects": ["FA", "PZ"]},
+            {"form": "second", "dialects": ["HO"]},
+        ],
+    }
+    with TestClient(create_app(project, "secret"), base_url="http://127.0.0.1") as client:
+        headers = {"X-Laz-Session": "secret"}
+        response = client.post(
+            "/api/entry",
+            headers=headers,
+            json={
+                "entry": edited,
+                "expected": entry,
+                "actor": "Author",
+                "generation_options": options,
+                "expected_options": {},
+            },
+        )
+        assert response.status_code == 200
+        assert (
+            client.get("/api/generation-options/" + entry["id"], headers=headers).json() == options
+        )
+        assert response.json()["variants"] == edited["variants"]
+
+
+@pytest.mark.parametrize("tense", list(Tense))
+def test_preverb_lookalike_skips_detection_without_changing_default_rules(verb, tense):
+    entry = verb("doguru")
+    f = Features(Dialect.FA, Person.FIRST_SINGULAR, Person.THIRD_SINGULAR, tense=tense)
+    if tense == Tense.PRESENT_PERFECT:
+        f = Features(Dialect.FA, Person.FIRST_SINGULAR, tense=tense)
+    normal = conjugate(entry, f)
+    lookalike = conjugate(entry, f, preverb_lookalike=True)
+    assert normal.status == lookalike.status == "ok"
+    assert all(form.spelling for form in lookalike.forms)
+    assert lookalike != normal
+    assert conjugate(entry, f) == normal
+
+
+@pytest.mark.parametrize(
+    "infinitive,category", [("dodginu", "IVD"), ("dobadu", "TVM"), ("doguru", "TVE")]
+)
+@pytest.mark.parametrize("tense", list(Tense)[:-1])
+def test_preverb_lookalike_works_in_all_base_classes(verb, infinitive, category, tense):
+    entry = verb(infinitive, category)
+    f = Features(entry.dialects[0], Person.FIRST_SINGULAR, tense=tense)
+    result = conjugate(entry, f, preverb_lookalike=True)
+    assert result.status == "ok" and all(form.spelling for form in result.forms)
+
+
+@pytest.mark.parametrize("derivation", [Derivation.PASSIVE, Derivation.POTENTIAL])
+@pytest.mark.parametrize("tense", list(Tense)[:-1])
+def test_preverb_lookalike_works_in_derived_constructions(verb, derivation, tense):
+    entry = verb("doguru")
+    f = Features(Dialect.FA, Person.FIRST_SINGULAR, tense=tense, derivation=derivation)
+    assert conjugate(entry, f, preverb_lookalike=True).status == "ok"
 
 
 def test_cancelled_generation_and_export_leave_no_partial_output(project):

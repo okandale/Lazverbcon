@@ -100,7 +100,7 @@ def _preverb_ela_el(form: Morphology) -> None:
     if (
         form.preverb in "ela"
         or (
-            request.infinitive.startswith(("ela", "uela", "iela", "oel"))
+            request.preverb_startswith(("ela", "uela", "iela", "oel"))
             and (not form.root.startswith("ela"))
             and (
                 request.subject in ["S1_Singular", "S1_Plural"]
@@ -499,7 +499,7 @@ def _preverb_mo(form: Morphology) -> None:
         form.prefix = "mom"
     else:
         form.prefix = ""
-    if request.infinitive.startswith("mo") and (
+    if request.preverb_startswith("mo") and (
         not form.original_root.startswith(("mo", "mu"))
         or (
             form.original_root.startswith("mu")

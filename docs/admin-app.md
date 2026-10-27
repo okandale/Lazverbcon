@@ -49,8 +49,7 @@ than the previous full generated catalog, deliberately.
 
 The pronoun snapshot is `apps/admin/src/laz_admin/data/pronouns.json`, extracted
 from the dump's 144 pronoun rows. It fixes display data for approved exports;
-the Python rule modules retain their existing pronouns for proposals, so differences
-remain visible for review. The private dump is not bundled or uploaded.
+generated proposals also use this pronoun table. The private dump is not bundled or uploaded.
 
 The bundled snapshot is a migration aid. It cannot overwrite an existing project
 and does not run when updating the program. After migration, use current project
@@ -59,20 +58,39 @@ backups to move or recover the database; the original snapshot lacks later edits
 ## Edit, generate and review
 
 - **Verbs:** search an infinitive or meaning, open a verb, and edit its metadata,
-  principal parts or dialects. Use grammatical filters to narrow the form list. Metadata changes take effect immediately in the
+  present bases or dialects. Each present base has its own textbox and dialect
+  checkboxes; add a row for another base. Use grammatical filters to narrow the form list. Metadata changes take effect immediately in the
   master and are logged; a new export/publication is still required for the site.
+- **Edit verb → More options:** save generation exceptions for that verb. The
+  preverb-lookalike checkbox prevents prefix detection for a confirmed stem
+  exception. Exclusion rows can match tense/aspect, mood, derivation, dialect,
+  persons and markers. Selections within a row are combined; any matching row
+  skips generation. For movement verbs, exclude Present + Indicative + derivation
+  None, then enter those forms manually. Apply options, then Save the verb.
+  Options are backed up and logged with before/after values and Undo. They never
+  delete approved forms or prevent those forms from being published.
 - **Add conjugation / Edit:** set the grammatical analysis, spelling alternatives,
   frame and displayed pronouns. Save creates a proposal. To change an existing
   analysis, add its replacement and propose removal of the old request.
-- **Generate proposals:** runs the Python engine for that verb. It never replaces
-  approved forms. Identical linguistic results are skipped even when provenance
-  differs. Generator limitations still apply to generation, while manual forms
-  can use any combination within the supported feature schema.
+- **Generate proposals:** existing verbs default to their approved grammatical
+  combinations. New verbs start with standard tenses, moods and persons, without
+  additional derivations or markers. Choose the expanded scope explicitly to
+  propose those. Optional `ko`/`do` is generated only for exact combinations
+  already recorded for that verb; the legacy boolean option is not generated.
+  Repeating generation replaces that verb's previous generated drafts, keeping
+  manual drafts and approved forms. Matching approved results need no proposal.
+  Completion shows distinct spellings separately from grammatical request counts,
+  and opens the generated batch in Review. Generator limitations still apply;
+  an unavailable output leaves the approved record unchanged.
 - **Review:** compare approved and proposed values, then approve or reject selected
-  proposals. Selection covers the displayed page (100 requests). Stale proposals
+  proposals. Selection covers the displayed page (100 requests). Filter by verb
+  and batch, or use **Approve all** / **Reject all** across every matching page.
+  The confirmation names the scope and count; changes to that selection require
+  refreshing it. Approval remains atomic and logs every change. Stale proposals
   cannot be approved after their entry or approved forms have changed; reject them
   and create a fresh proposal. To adjust a proposal, reject it and create the revised
-  form from the verb page.
+  form from the verb page. Regenerate verbs with old generated optional-preverb
+  drafts before approving them; those drafts are retained as superseded records.
 - **History:** every approved edit and rejection records the editor, time and
   reason. Form history also includes its proposer and import/generation batch.
   Undo writes another event and refuses to overwrite subsequent edits.

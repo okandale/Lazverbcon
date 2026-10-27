@@ -1,3 +1,5 @@
+import { presentBases, generationOptions } from "./entry-editor.js";
+
 const token =
   new URLSearchParams(location.hash.slice(1)).get("session") ||
   sessionStorage.getItem("laz-session");
@@ -12,6 +14,8 @@ const state = {
   entry: null,
   status: null,
   lastJob: null,
+  reviewEntry: "",
+  reviewBatch: "",
 };
 const esc = (x) =>
   String(x ?? "").replace(
@@ -74,10 +78,15 @@ const button = (id, fn) => {
   const el = document.getElementById(id);
   if (el) el.onclick = run(fn);
 };
+const featureLabel = (key) =>
+  ({
+    optional_prefix: "optional preverb",
+    optional_preverb: "legacy rule flag",
+  })[key] || key.replaceAll("_", " ");
 const featuresText = (f) =>
   Object.entries(f)
     .filter(([, v]) => v !== false && v !== null && v !== "none")
-    .map(([k, v]) => `${k.replaceAll("_", " ")}: ${v}`)
+    .map(([k, v]) => `${featureLabel(k)}: ${v}`)
     .join(" · ");
 const resultText = (v, empty = "Remove this request") =>
   v === null
@@ -103,8 +112,10 @@ function pageButtons() {
     await render();
   });
 }
-function modal(html, submit) {
+function modal(html, submit, submitLabel = "Save") {
   document.querySelector("#fields").innerHTML = html;
+  document.querySelector('#editor button[type="submit"]').textContent =
+    submitLabel;
   document.querySelector("#editor").onsubmit = run(async (e) => {
     e.preventDefault();
     await submit(new FormData(e.target));
@@ -194,8 +205,68 @@ async function render() {
         })),
     );
   } else if (state.tab === "review") {
-    const r = await api("proposals?offset=" + state.offset);
-    main.innerHTML = `<h2>Review proposals</h2><p>Approval changes the master database. It does not publish the website.</p><div class="toolbar"><button id="select-all">Select this page</button><button id="approve" class="primary">Approve selected</button><button id="reject">Reject selected</button></div>${r.proposals.map((p) => `<article class="card"><label><input type="checkbox" data-proposal="${p.id}" ${p.conflict ? "disabled" : ""}> ${esc(p.entry_id)} · ${esc(p.actor)}</label><p class="muted">${esc(featuresText(p.features))}</p>${p.conflict ? '<p class="warning">Approved data changed. Reject this proposal and generate or edit again.</p>' : ""}<div class="grid"><section><h3>Approved</h3>${resultText(p.before, "No approved result")}</section><section><h3>Proposed</h3>${resultText(p.value)}</section></div><p>${esc(p.reason)}</p><small>Batch ${esc(p.batch)}</small>${p.conflict ? `<button data-reject="${p.id}">Reject stale proposal</button>` : ""}</article>`).join("") || "<p>No pending proposals.</p>"}${pager(r.total)}`;
+    const params = new URLSearchParams({ offset: state.offset });
+    if (state.reviewEntry) params.set("entry_id", state.reviewEntry);
+    if (state.reviewBatch) params.set("batch", state.reviewBatch);
+    const r = await api("proposals?" + params);
+    if (
+      state.reviewEntry &&
+      !r.verbs.some((v) => v.entry_id === state.reviewEntry)
+    )
+      r.verbs.push({
+        entry_id: state.reviewEntry,
+        infinitive:
+          state.entry?.id === state.reviewEntry
+            ? state.entry.infinitive
+            : state.reviewEntry,
+        total: 0,
+      });
+    if (
+      state.reviewBatch &&
+      !r.batches.some((b) => b.batch === state.reviewBatch)
+    )
+      r.batches.push({ batch: state.reviewBatch, total: 0 });
+    const verbName = (id) =>
+      r.verbs.find((v) => v.entry_id === id)?.infinitive || id;
+    main.innerHTML = `<h2>Review proposals</h2><p>Approval changes the master database. It does not publish the website.</p><div class="toolbar"><label>Verb<select id="review-entry"><option value="">All verbs</option>${r.verbs.map((v) => `<option value="${esc(v.entry_id)}" ${state.reviewEntry === v.entry_id ? "selected" : ""}>${esc(v.infinitive)} (${v.total})</option>`).join("")}</select></label><label>Batch<select id="review-batch"><option value="">All batches</option>${r.batches.map((b) => `<option value="${esc(b.batch)}" ${state.reviewBatch === b.batch ? "selected" : ""}>${esc(b.batch)} (${b.total})</option>`).join("")}</select></label><button id="clear-review">Clear filters</button></div><div class="toolbar"><button id="select-all">Select this page</button><button id="approve" class="primary">Approve selected</button><button id="reject">Reject selected</button><button id="approve-all" ${r.total ? "" : "disabled"}>Approve all ${r.total.toLocaleString()}</button><button id="reject-all" ${r.total ? "" : "disabled"}>Reject all ${r.total.toLocaleString()}</button></div>${r.proposals.map((p) => `<article class="card"><label><input type="checkbox" data-proposal="${p.id}" ${p.conflict ? "disabled" : ""}> ${esc(verbName(p.entry_id))} · ${esc(p.actor)}</label><p class="muted">${esc(featuresText(p.features))}</p>${p.features.optional_preverb ? '<p class="warning">Legacy rule option. This is not a recorded optional ko/do preverb. Regenerate this verb to replace old generated drafts.</p>' : ""}${p.conflict ? '<p class="warning">Approved data changed. Reject this proposal and generate or edit again.</p>' : ""}<div class="grid"><section><h3>Approved</h3>${resultText(p.before, "No approved result")}</section><section><h3>Proposed</h3>${resultText(p.value)}</section></div><p>${esc(p.reason)}</p><small>Batch ${esc(p.batch)}</small>${p.conflict ? `<button data-reject="${p.id}">Reject stale proposal</button>` : ""}</article>`).join("") || "<p>No pending proposals.</p>"}${pager(r.total)}`;
+    document.querySelector("#review-entry").onchange = run(async (e) => {
+      state.reviewEntry = e.target.value;
+      state.reviewBatch = "";
+      state.offset = 0;
+      await render();
+    });
+    document.querySelector("#review-batch").onchange = run(async (e) => {
+      state.reviewBatch = e.target.value;
+      state.offset = 0;
+      await render();
+    });
+    button("clear-review", async () => {
+      state.reviewEntry = state.reviewBatch = "";
+      state.offset = 0;
+      await render();
+    });
+    for (const approve of [true, false])
+      button(approve ? "approve-all" : "reject-all", () => {
+        const action = approve ? "Approve" : "Reject";
+        const scope = `${state.reviewEntry ? verbName(state.reviewEntry) : "all verbs"}${state.reviewBatch ? ", batch " + state.reviewBatch : ", all batches"}`;
+        modal(
+          `<h2>${action} all ${r.total.toLocaleString()} proposals?</h2><p>Scope: ${esc(scope)}. This includes every page of the current filters.</p><p>${approve ? "Each change is recorded in History. Conflicting proposals must be resolved first." : "Approved conjugations stay unchanged. These drafts are retained in the database as rejected proposals."}</p>`,
+          async () => {
+            const result = await api("review", {
+              approve,
+              actor: name(),
+              selection_hash: r.selection_hash,
+              entry_id: state.reviewEntry || null,
+              batch: state.reviewBatch || null,
+            });
+            state.offset = 0;
+            notify(
+              `${result.reviewed.toLocaleString()} proposals ${approve ? "approved" : "rejected"}.`,
+            );
+          },
+          `${action} all`,
+        );
+      });
     button("select-all", () =>
       document
         .querySelectorAll("[data-proposal]:not(:disabled)")
@@ -207,6 +278,7 @@ async function render() {
           ...document.querySelectorAll("[data-proposal]:checked"),
         ].map((c) => c.dataset.proposal);
         await api("review", { ids, approve, actor: name() });
+        state.offset = 0;
         notify(approve ? "Changes approved." : "Proposals rejected.");
         await refresh();
       });
@@ -218,6 +290,7 @@ async function render() {
             approve: false,
             actor: name(),
           });
+          state.offset = 0;
           await refresh();
         })),
     );
@@ -249,7 +322,7 @@ async function render() {
     });
   } else if (state.tab === "history") {
     const rows = await api("history?offset=" + state.offset);
-    main.innerHTML = `<div class="scroll"><table class="history-log" aria-label="Change history"><thead><tr><th scope="col">Date / time</th><th scope="col">Before</th><th scope="col">After</th></tr></thead><tbody>${rows.map((e) => `<tr><td><time datetime="${esc(e.created)}">${esc(new Date(e.created).toLocaleString())}</time>${["entry", "record"].includes(e.entity) ? `<button data-undo="${e.id}" title="Undo creates a new logged change and cannot overwrite later edits">Undo</button>` : ""}</td><td>${e.before_value ? `<pre>${pretty(JSON.parse(e.before_value))}</pre>` : "—"}</td><td>${e.after_value ? `<pre>${pretty(JSON.parse(e.after_value))}</pre>` : "—"}</td></tr>`).join("") || '<tr><td colspan="3">No changes yet.</td></tr>'}</tbody></table></div><div class="toolbar"><button id="prev" ${!state.offset ? "disabled" : ""}>Previous</button><button id="next" ${rows.length < 100 ? "disabled" : ""}>Next</button></div>`;
+    main.innerHTML = `<div class="scroll"><table class="history-log" aria-label="Change history"><thead><tr><th scope="col">Date / time</th><th scope="col">Before</th><th scope="col">After</th></tr></thead><tbody>${rows.map((e) => `<tr><td><time datetime="${esc(e.created)}">${esc(new Date(e.created).toLocaleString())}</time>${["entry", "record", "entry_options"].includes(e.entity) ? `<button data-undo="${e.id}" title="Undo creates a new logged change and cannot overwrite later edits">Undo</button>` : ""}</td><td>${e.before_value ? `<pre>${pretty(JSON.parse(e.before_value))}</pre>` : "—"}</td><td>${e.after_value ? `<pre>${pretty(JSON.parse(e.after_value))}</pre>` : "—"}</td></tr>`).join("") || '<tr><td colspan="3">No changes yet.</td></tr>'}</tbody></table></div><div class="toolbar"><button id="prev" ${!state.offset ? "disabled" : ""}>Previous</button><button id="next" ${rows.length < 100 ? "disabled" : ""}>Next</button></div>`;
     document.querySelectorAll("[data-undo]").forEach(
       (b) =>
         (b.onclick = run(async () => {
@@ -445,12 +518,12 @@ async function showRecords() {
   const r = await api(
     `records/${encodeURIComponent(e.id)}?offset=${state.offset}&q=${encodeURIComponent(state.formQuery || "")}&filters=${encodeURIComponent(JSON.stringify(state.formFilters || {}))}`,
   );
-  main.innerHTML = `<button id="back">← Verbs</button><h2>${esc(e.infinitive)}</h2><p>${esc(e.english)} · ${esc(e.turkish)} · ${esc(e.verb_class)}</p><div class="toolbar"><button id="entry-edit">Edit verb</button><button id="new-form">Add conjugation</button><button id="generate">Generate proposals for this verb</button></div><p>Generated proposals never replace approved forms automatically.</p><div class="toolbar"><input id="form-search" placeholder="Find a spelling" aria-label="Find a spelling" value="${esc(state.formQuery || "")}"><button id="form-go">Search</button></div><details><summary>Filter grammatical features</summary><div class="grid">${Object.entries(
+  main.innerHTML = `<button id="back">← Verbs</button><h2>${esc(e.infinitive)}</h2><p>${esc(e.english)} · ${esc(e.turkish)} · ${esc(e.verb_class)}</p><div class="toolbar"><button id="entry-edit">Edit verb</button><button id="new-form">Add conjugation</button><button id="generate">Generate proposals for this verb</button><button id="entry-review">Review this verb’s proposals</button></div><p>Generated proposals never replace approved forms automatically.</p><p>${r.unique_spellings.toLocaleString()} distinct spellings · ${r.available.toLocaleString()} grammatical combinations with forms · ${r.unavailable.toLocaleString()} unavailable combinations in the current results.</p><p class="muted">Each subject, object, dialect, tense, mood and marker combination is a separate record. Several records can share the same spelling.</p><div class="toolbar"><input id="form-search" placeholder="Find a spelling" aria-label="Find a spelling" value="${esc(state.formQuery || "")}"><button id="form-go">Search</button></div><details><summary>Filter grammatical features</summary><div class="grid">${Object.entries(
     state.status.dimensions,
   )
     .map(
       ([k, values]) =>
-        `<label>${esc(k.replaceAll("_", " "))}<select data-filter="${k}"><option value="">Any</option>${values.map((v) => `<option value="${esc(JSON.stringify(v))}" ${state.formFilters && Object.hasOwn(state.formFilters, k) && state.formFilters[k] === v ? "selected" : ""}>${esc(v === null ? "No object" : String(v))}</option>`).join("")}</select></label>`,
+        `<label>${esc(featureLabel(k))}<select data-filter="${k}"><option value="">Any</option>${values.map((v) => `<option value="${esc(JSON.stringify(v))}" ${state.formFilters && Object.hasOwn(state.formFilters, k) && state.formFilters[k] === v ? "selected" : ""}>${esc(v === null ? "No object" : String(v))}</option>`).join("")}</select></label>`,
     )
     .join(
       "",
@@ -462,9 +535,29 @@ async function showRecords() {
   });
   button("entry-edit", () => editEntry(e));
   button("new-form", () => editForm(null));
+  button("entry-review", async () => {
+    state.reviewEntry = e.id;
+    state.reviewBatch = "";
+    state.offset = 0;
+    state.tab = "review";
+    await render();
+  });
   button("generate", async () => {
-    await api("generate", { entry_id: e.id, actor: name() });
-    notify("Generating proposals.");
+    const choices = await api("generation-options/" + encodeURIComponent(e.id));
+    modal(
+      `<h2>Generate proposals for ${esc(e.infinitive)}</h2><label>Combinations<select name="scope"><option value="auto">${r.entry_total ? "Recorded combinations (default for existing verbs)" : "Standard conjugations (default for new verbs)"}</option><option value="standard">Standard conjugations</option><option value="expanded">Include derivations and additional markers</option></select></label><p>Existing verbs default to the combinations already approved in this database. Standard conjugations cover tenses, moods and persons without extra derivations or markers. The expanded option adds potential, passive, applicative and causative requests for review.</p>${choices.excluded_combinations.length ? `<p>${choices.excluded_combinations.length} saved generation exclusion${choices.excluded_combinations.length === 1 ? "" : "s"} will be applied.</p>` : ""}${choices.preverb_lookalike ? "<p>Preverb-lookalike override is enabled.</p>" : ""}<p>Set exceptions under Edit verb → More options.</p><p>Optional ko/do forms are generated only for their exact recorded combinations. No optional me variants are added. Previous generated drafts for this verb will be replaced; manual drafts and approved forms stay unchanged.</p>`,
+      async (form) => {
+        await api("generate", {
+          entry_id: e.id,
+          actor: name(),
+          scope: form.get("scope"),
+        });
+        notify(
+          "Generating proposals. The completed batch will open in Review.",
+        );
+      },
+      "Generate",
+    );
   });
   button("apply-filters", async () => {
     state.formFilters = Object.fromEntries(
@@ -511,7 +604,7 @@ async function showRecords() {
   );
   pageButtons();
 }
-function editEntry(e) {
+async function editEntry(e) {
   const initial = e || {
     id: "entry-" + crypto.randomUUID(),
     infinitive: "",
@@ -522,8 +615,13 @@ function editEntry(e) {
     issues: [],
     variants: [],
   };
+  const savedOptions = e
+    ? await api("generation-options/" + encodeURIComponent(e.id))
+    : { preverb_lookalike: false, excluded_combinations: [] };
+  let draftOptions = structuredClone(savedOptions);
+  let bases;
   modal(
-    `<h2>${e ? "Edit" : "Add"} verb</h2><div class="grid">${["infinitive", "english", "turkish"].map((k) => `<label>${k}<input name="${k}" value="${esc(initial[k])}" ${k === "infinitive" ? "required" : ""}></label>`).join("")}<label>Class<select name="verb_class">${["IVD", "TVE", "TVM"].map((c) => `<option ${initial.verb_class === c ? "selected" : ""}>${c}</option>`).join("")}</select></label></div><label>Principal parts: one per line, followed by | and dialects<textarea name="variants" required placeholder="isinapams | AS,PZ,FA">${esc(initial.variants.map((p) => p.form + " | " + p.dialects.join(",")).join("\n"))}</textarea></label><p>Dialect codes: AS, PZ, FA, HO. Leave a principal part blank before | for a dialect with manually supplied forms only.</p><label>Explanation<input name="reason"></label>`,
+    `<div class="toolbar"><h2>${e ? "Edit" : "Add"} verb</h2><button type="button" id="entry-options">More options</button></div><p id="options-summary" class="muted"></p><div class="grid">${["infinitive", "english", "turkish"].map((k) => `<label>${k}<input name="${k}" value="${esc(initial[k])}" ${k === "infinitive" ? "required" : ""}></label>`).join("")}<label>Class<select name="verb_class">${["IVD", "TVE", "TVM"].map((c) => `<option ${initial.verb_class === c ? "selected" : ""}>${c}</option>`).join("")}</select></label></div><h3>Present bases</h3><div id="present-bases"></div><button type="button" id="add-base">Add another present base</button><p>Select the dialects that use each base. Add a row when another dialect uses a different base. A blank base with selected dialects allows manually entered forms only.</p><label>Explanation<input name="reason"></label>`,
     async (form) => {
       const value = {
         ...initial,
@@ -533,23 +631,13 @@ function editEntry(e) {
             form.get(k),
           ]),
         ),
-        variants: String(form.get("variants"))
-          .split("\n")
-          .filter((l) => l.trim())
-          .map((l) => {
-            const [word, ds = ""] = l.split("|");
-            return {
-              form: word.trim(),
-              dialects: ds
-                .split(",")
-                .map((d) => d.trim())
-                .filter(Boolean),
-            };
-          }),
+        variants: bases.read(),
       };
       state.entry = await api("entry", {
         entry: value,
         expected: e,
+        generation_options: draftOptions,
+        expected_options: savedOptions,
         actor: name(),
         reason: form.get("reason"),
       });
@@ -557,6 +645,24 @@ function editEntry(e) {
       notify("Verb saved in change history.");
     },
   );
+  bases = presentBases(
+    document.querySelector("#present-bases"),
+    initial.variants,
+  );
+  button("add-base", bases.add);
+  const summary = () => {
+    document.querySelector("#options-summary").textContent =
+      `${draftOptions.preverb_lookalike ? "Preverb lookalike enabled. " : ""}${draftOptions.excluded_combinations.length} generation exclusion${draftOptions.excluded_combinations.length === 1 ? "" : "s"}. Options are saved with this verb.`;
+  };
+  summary();
+  button("entry-options", async () => {
+    const changed = await generationOptions(
+      draftOptions,
+      state.status.dimensions,
+    );
+    if (changed) draftOptions = changed;
+    summary();
+  });
 }
 function editForm(row) {
   const e = state.entry;
@@ -587,22 +693,25 @@ function editForm(row) {
     `<h2>${row ? "Edit" : "Add"} conjugation</h2><div class="grid">${Object.entries(
       state.status.dimensions,
     )
+      .filter(([k]) => k !== "optional_preverb")
       .map(
         ([k, values]) =>
-          `<label>${esc(k.replaceAll("_", " "))}<select name="${k}" ${row ? "disabled" : ""}>${values.map((v) => `<option value="${esc(JSON.stringify(v))}" ${v === f[k] ? "selected" : ""}>${esc(v === null ? "No object" : String(v))}</option>`).join("")}</select></label>`,
+          `<label>${esc(featureLabel(k))}<select name="${k}" ${row ? "disabled" : ""}>${values.map((v) => `<option value="${esc(JSON.stringify(v))}" ${v === f[k] ? "selected" : ""}>${esc(v === null ? "No object" : String(v))}</option>`).join("")}</select></label>`,
       )
       .join(
         "",
-      )}</div>${row ? "<p>To change the grammatical analysis, add a new request and propose removal of this one.</p>" : ""}<label>Status<select name="status"><option value="ok">Forms available</option><option value="unsupported" ${row?.value.status === "unsupported" ? "selected" : ""}>Unsupported combination</option></select></label><div id="variants"></div><button type="button" id="add-variant">Add alternative spelling</button><label>Explanation / source<textarea name="reason" required></textarea></label>`,
+      )}</div><p>Only specify optional ko/do when confirmed for this verb and analysis.</p>${row ? `<p>To change the grammatical analysis, add a new request and propose removal of this one.</p>${f.optional_preverb ? '<p class="warning">This existing record has the legacy rule flag. It is preserved when editing the spelling.</p>' : ""}` : ""}<label>Status<select name="status"><option value="ok">Forms available</option><option value="unsupported" ${row?.value.status === "unsupported" ? "selected" : ""}>Unsupported combination</option></select></label><div id="variants"></div><button type="button" id="add-variant">Add alternative spelling</button><label>Explanation / source<textarea name="reason" required></textarea></label>`,
     async (form) => {
       const fs = row
         ? f
-        : Object.fromEntries(
-            Object.keys(state.status.dimensions).map((k) => [
-              k,
-              JSON.parse(form.get(k)),
-            ]),
-          );
+        : {
+            optional_preverb: false,
+            ...Object.fromEntries(
+              Object.keys(state.status.dimensions)
+                .filter((k) => k !== "optional_preverb")
+                .map((k) => [k, JSON.parse(form.get(k))]),
+            ),
+          };
       const values = [...document.querySelectorAll(".variant")].map((v) =>
         Object.fromEntries(
           [...v.querySelectorAll("[data-field]")].map((input) => [
@@ -675,10 +784,25 @@ async function poll() {
       box.hidden = true;
       if (state.lastJob !== j.id) {
         state.lastJob = j.id;
+        const generation =
+          j.name === "Generate proposals" && j.state === "complete";
+        if (
+          generation &&
+          state.tab === "entries" &&
+          state.entry?.id === j.result.entry_id &&
+          j.result.proposals
+        ) {
+          state.tab = "review";
+          state.reviewEntry = j.result.entry_id;
+          state.reviewBatch = j.result.batch;
+          state.offset = 0;
+        }
         notify(
           j.state === "failed"
             ? j.error
-            : `${j.name} complete. ${JSON.stringify(j.result)}`,
+            : generation
+              ? `${j.result.proposals.toLocaleString()} proposals ready for review. ${j.result.unique_spellings.toLocaleString()} distinct spellings across ${j.result.requests.toLocaleString()} grammatical combinations checked; ${j.result.unchanged.toLocaleString()} already match approved data. ${j.result.excluded ? `${j.result.excluded.toLocaleString()} combinations excluded by your saved settings. ` : ""}${j.result.superseded ? `${j.result.superseded.toLocaleString()} previous generated drafts replaced. ` : ""}${j.result.unsupported ? `${j.result.unsupported.toLocaleString()} combinations could not be generated; their approved records were kept. ` : ""}${j.result.legacy_skipped ? `${j.result.legacy_skipped.toLocaleString()} approved records with a legacy flag were left unchanged for manual review. ` : ""}${!j.result.proposals ? "No new changes need approval. You can generate again after editing the verb or updating the rules." : ""}`
+              : `${j.name} complete. ${JSON.stringify(j.result)}`,
           j.state === "failed",
         );
         await refresh();
